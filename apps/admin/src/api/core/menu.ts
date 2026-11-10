@@ -1,10 +1,14 @@
 import type { RouteRecordStringComponent } from '@vben/types';
 
-import { requestClient } from '#/api/request';
+import type { MenusData } from '#/api/model/menu';
 
-/**
- * 获取用户所有菜单
- */
-export async function getAllMenusApi() {
-  return requestClient.get<RouteRecordStringComponent[]>('/menu/all');
+import { useAccessStore } from '@vben/stores';
+
+import { requestClient } from '#/api/request';
+import { menusToRoutes } from '#/router/menu-adapter';
+
+export async function getAllMenusApi(): Promise<RouteRecordStringComponent[]> {
+  const data = await requestClient.get<MenusData>('/auth/menus');
+  useAccessStore().setAccessCodes(data.permissions ?? []);
+  return menusToRoutes(data.menus ?? []);
 }

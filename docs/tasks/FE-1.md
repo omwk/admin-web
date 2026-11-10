@@ -71,7 +71,7 @@ GET /api/v1/admin/users?page=1&page_size=20&keyword=&status=
 | 文件 | 现状 | 要改成 |
 |---|---|---|
 | `apps/admin/.env.development` | `VITE_NITRO_MOCK=true`、`VITE_GLOB_API_URL=/api` | `VITE_NITRO_MOCK=false`；保留 `/api` 并加 Vite 代理 |
-| `apps/admin/vite.config.ts` | 无代理 | `/api` → `http://127.0.0.1:8080` |
+| `apps/admin/vite.config.ts` | 无代理 | `/api` → `http://127.0.0.1:18080` |
 | `apps/admin/src/api/request.ts` | `responseReturn: 'data'`，无业务码处理 | 响应拦截解信封；错误按 code 映射；注入 Bearer |
 | `apps/admin/src/api/core/auth.ts` | 期望 `{ accessToken }`；refresh 走 cookie | 改为 `TokenPair`（snake_case）；refresh 带 `refresh_token` |
 | `apps/admin/src/api/core/user.ts` | `GET /user/info` | `GET /auth/me` |
@@ -125,7 +125,7 @@ GET /api/v1/admin/users?page=1&page_size=20&keyword=&status=
 
 1. 可登录的测试账号（含 `system:user:list`）
 2. 种子数据：≥3 用户、2 角色、完整菜单树
-3. 本地后端监听 `127.0.0.1:8080`（Vite 代理目标）
+3. 本地后端监听 `127.0.0.1:18080`（8080 是 Windows 保留端口，绑不上）（Vite 代理目标）
 
 ## 7. 风险
 

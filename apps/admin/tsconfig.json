@@ -3,7 +3,8 @@
   "extends": "@vben/tsconfig/web-app.json",
   "compilerOptions": {
     "paths": {
-      "#/*": ["./src/*"]
+      "#/*": ["./src/*"],
+      "vue-router": ["./node_modules/vue-router"]
     }
   },
   "references": [{ "path": "./tsconfig.node.json" }],

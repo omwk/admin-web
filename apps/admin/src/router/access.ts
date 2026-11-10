@@ -1,41 +1,44 @@
-import type {
-  ComponentRecordType,
-  GenerateMenuAndRoutesOptions,
-} from '@vben/types';
+import type { GenerateMenuAndRoutesOptions } from '@vben/types';
 
 import { generateAccessible } from '@vben/access';
-import { preferences } from '@vben/preferences';
-
-import { message } from 'ant-design-vue';
+import { useUserStore } from '@vben/stores';
 
 import { getAllMenusApi } from '#/api';
-import { BasicLayout, IFrameView } from '#/layouts';
-import { $t } from '#/locales';
 
-const forbiddenComponent = () => import('#/views/_core/fallback/forbidden.vue');
+import { componentRegistry } from './component-registry';
+import { findHomePath } from './menu-adapter';
 
 async function generateAccess(options: GenerateMenuAndRoutesOptions) {
-  const pageMap: ComponentRecordType = import.meta.glob('../views/**/*.vue');
-
-  const layoutMap: ComponentRecordType = {
-    BasicLayout,
-    IFrameView,
-  };
-
-  return await generateAccessible(preferences.app.accessMode, {
+  return generateAccessible('backend', {
     ...options,
     fetchMenuListAsync: async () => {
-      message.loading({
-        content: `${$t('common.loadingMenu')}...`,
-        duration: 1.5,
-      });
-      return await getAllMenusApi();
+      const routes = await getAllMenusApi();
+      const userStore = useUserStore();
+      if (userStore.userInfo) {
+        userStore.setUserInfo({
+          ...userStore.userInfo,
+          homePath: findHomePath(routes),
+        });
+      }
+      return [
+        ...routes,
+        {
+          component: '/_core/fallback/no-menu.vue',
+          meta: { hideInMenu: true, title: '首页' },
+          name: 'NoAccessibleMenus',
+          path: '/home',
+        },
+        {
+          component: '/pending/index.vue',
+          meta: { hideInMenu: true, title: '个人资料' },
+          name: 'Profile',
+          path: '/profile',
+        },
+      ];
     },
-    // 可以指定没有权限跳转403页面
-    forbiddenComponent,
-    // 如果 route.meta.menuVisibleWithForbidden = true
-    layoutMap,
-    pageMap,
+    forbiddenComponent: () => import('#/views/_core/fallback/forbidden.vue'),
+    layoutMap: { MenuOutlet: () => import('#/layouts/menu-outlet.vue') },
+    pageMap: componentRegistry,
   });
 }
 

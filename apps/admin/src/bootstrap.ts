@@ -9,6 +9,7 @@ import '@vben/styles/antd';
 
 import { useTitle } from '@vueuse/core';
 
+import { initializeAuthState } from '#/auth/persistence';
 import { $t, setupI18n } from '#/locales';
 
 import { initComponentAdapter } from './adapter/component';
@@ -45,6 +46,7 @@ async function bootstrap(namespace: string) {
 
   // 配置 pinia-tore
   await initStores(app, { namespace });
+  initializeAuthState();
 
   // 安装权限指令
   registerAccessDirective(app);

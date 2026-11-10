@@ -1,4 +1,4 @@
-import { initPreferences } from '@vben/preferences';
+import { initPreferences, updatePreferences } from '@vben/preferences';
 import { unmountGlobalLoading } from '@vben/utils';
 
 import { overridesPreferences, preferencesExtension } from './preferences';
@@ -18,6 +18,17 @@ async function initApplication() {
     extension: preferencesExtension,
     namespace,
     overrides: overridesPreferences,
+  });
+  updatePreferences({
+    app: {
+      accessMode: 'backend',
+      defaultHomePath: '/home',
+      enablePreferences: false,
+      enableRefreshToken: true,
+      locale: 'zh-CN',
+      loginExpiredMode: 'page',
+    },
+    widget: { languageToggle: false },
   });
 
   // 启动应用并挂载

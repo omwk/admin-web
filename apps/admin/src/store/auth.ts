@@ -1,107 +1,134 @@
 import type { Recordable, UserInfo } from '@vben/types';
 
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
 
 import { LOGIN_PATH } from '@vben/constants';
 import { preferences } from '@vben/preferences';
+import { CanceledError, isCancel } from '@vben/request';
 import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 
 import { notification } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
-import { getAccessCodesApi, getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { refreshAccessToken } from '#/auth/refresh';
+import {
+  clearTokens,
+  getAccessToken,
+  getRefreshToken,
+  getSessionVersion,
+  setTokens,
+} from '#/auth/token';
 import { $t } from '#/locales';
+import { resetRoutes, router } from '#/router';
 
 export const useAuthStore = defineStore('auth', () => {
   const accessStore = useAccessStore();
   const userStore = useUserStore();
-  const router = useRouter();
-
   const loginLoading = ref(false);
+  let expiration: Promise<void> | undefined;
 
-  /**
-   * 异步处理登录操作
-   * Asynchronously handle the login process
-   * @param params 登录表单数据
-   */
+  function clearSession() {
+    clearTokens();
+    resetAllStores();
+    resetRoutes();
+    accessStore.$persist?.();
+  }
+
   async function authLogin(
-    params: Recordable<any>,
+    params: Recordable<unknown>,
     onSuccess?: () => Promise<void> | void,
   ) {
-    // 异步处理用户登录操作并获取 accessToken
+    if (loginLoading.value) return { userInfo: null };
+    clearSession();
+    const version = getSessionVersion();
+    loginLoading.value = true;
     let userInfo: null | UserInfo = null;
     try {
-      loginLoading.value = true;
-      const { accessToken } = await loginApi(params);
-
-      // 如果成功获取到 accessToken
-      if (accessToken) {
-        accessStore.setAccessToken(accessToken);
-
-        // 获取用户信息并存储到 accessStore 中
-        const [fetchUserInfoResult, accessCodes] = await Promise.all([
-          fetchUserInfo(),
-          getAccessCodesApi(),
-        ]);
-
-        userInfo = fetchUserInfoResult;
-
-        userStore.setUserInfo(userInfo);
-        accessStore.setAccessCodes(accessCodes);
-
-        if (accessStore.loginExpired) {
-          accessStore.setLoginExpired(false);
-        } else {
-          onSuccess
-            ? await onSuccess?.()
-            : await router.push(
-                userInfo.homePath || preferences.app.defaultHomePath,
-              );
+      const pair = await loginApi({
+        password: String(params.password ?? ''),
+        username: String(params.username ?? ''),
+      });
+      if (version !== getSessionVersion())
+        throw new CanceledError('登录状态已变更');
+      setTokens(pair);
+      userInfo = await fetchUserInfo();
+      if (onSuccess) {
+        await onSuccess();
+      } else {
+        const redirect = router.currentRoute.value.query.redirect;
+        let target = preferences.app.defaultHomePath;
+        if (typeof redirect === 'string') {
+          try {
+            const decoded = decodeURIComponent(redirect);
+            if (
+              decoded.startsWith('/') &&
+              !decoded.startsWith('//') &&
+              !decoded.startsWith('/auth')
+            ) {
+              target = decoded;
+            }
+          } catch {
+            // Ignore malformed redirects and use the authorized home page.
+          }
         }
-
-        if (userInfo?.realName) {
-          notification.success({
-            description: `${$t('authentication.loginSuccessDesc')}:${userInfo?.realName}`,
-            duration: 3,
-            message: $t('authentication.loginSuccess'),
-          });
-        }
+        await router.replace(target);
       }
+      notification.success({
+        description: `${$t('authentication.loginSuccessDesc')}:${userInfo.realName}`,
+        duration: 3,
+        message: $t('authentication.loginSuccess'),
+      });
+    } catch (error) {
+      if (!isCancel(error) && version === getSessionVersion()) clearSession();
+      // Request interceptors already render a local, code-mapped error.
     } finally {
       loginLoading.value = false;
     }
-
-    return {
-      userInfo,
-    };
+    return { userInfo };
   }
 
-  async function logout(redirect: boolean = true) {
-    try {
-      await logoutApi();
-    } catch {
-      // 不做任何处理
+  function expireSession(redirect = true) {
+    if (expiration) return expiration;
+    const current = router.currentRoute.value;
+    clearSession();
+    expiration = router
+      .replace({
+        path: LOGIN_PATH,
+        query:
+          redirect && current.path !== LOGIN_PATH
+            ? { redirect: encodeURIComponent(current.fullPath) }
+            : {},
+      })
+      .then(() => undefined)
+      .finally(() => {
+        expiration = undefined;
+      });
+    return expiration;
+  }
+
+  async function logout(redirect = true) {
+    const accessToken = getAccessToken();
+    const navigation = expireSession(redirect);
+    if (accessToken) {
+      try {
+        await logoutApi(accessToken);
+      } catch {
+        // Local credentials have already been cleared; remote revocation may fail.
+      }
     }
-    resetAllStores();
-    accessStore.setLoginExpired(false);
+    await navigation;
+  }
 
-    // 已经在登录页时不能再带 redirect：此时 currentRoute.fullPath 就是登录页本身，
-    // 再编码一层会得到「登录页?redirect=编码后的登录页」，下一次又在这个基础上再包一层，
-    // 反复登出会让 URL 逐跳变长，且没有上限。
-    // On the login page the current route is the login page itself, so carrying it as
-    // `redirect` would nest one more encoded layer on every repeat.
-    const currentRoute = router.currentRoute.value;
-    const alreadyOnLogin = currentRoute.path === LOGIN_PATH;
-
-    // 回登录页带上当前路由地址
-    await router.replace({
-      path: LOGIN_PATH,
-      query:
-        redirect && !alreadyOnLogin
-          ? { redirect: encodeURIComponent(currentRoute.fullPath) }
-          : {},
-    });
+  async function restoreSession() {
+    if (getAccessToken()) return true;
+    if (!getRefreshToken()) return false;
+    try {
+      await refreshAccessToken();
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   async function fetchUserInfo() {
@@ -117,8 +144,10 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     $reset,
     authLogin,
+    expireSession,
     fetchUserInfo,
     loginLoading,
     logout,
+    restoreSession,
   };
 });

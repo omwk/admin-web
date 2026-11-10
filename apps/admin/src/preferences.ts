@@ -19,7 +19,16 @@ interface WebAntdPreferencesExtension {
 export const overridesPreferences = defineOverridesPreferences({
   // overrides
   app: {
+    accessMode: 'backend',
+    defaultHomePath: '/home',
+    enablePreferences: false,
+    enableRefreshToken: true,
+    locale: 'zh-CN',
+    loginExpiredMode: 'page',
     name: import.meta.env.VITE_APP_TITLE,
+  },
+  widget: {
+    languageToggle: false,
   },
   copyright: appCopyrightPreferences,
 });

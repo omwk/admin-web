@@ -1,55 +1,33 @@
+import type { ApiRequestConfig } from '#/api/client';
+import type {
+  LoginParams as IdentityLoginParams,
+  LoginData,
+  TokenPair,
+} from '#/api/model/identity';
+
 import { baseRequestClient, requestClient } from '#/api/request';
 
 export namespace AuthApi {
-  /** 登录接口参数 */
-  export interface LoginParams {
-    password?: string;
-    username?: string;
-  }
-
-  /** 登录接口返回值 */
-  export interface LoginResult {
-    accessToken: string;
-  }
-
-  export interface RefreshTokenResult {
-    data: string;
-    status: number;
-  }
+  export type LoginParams = IdentityLoginParams;
+  export type LoginResult = LoginData;
+  export type RefreshTokenResult = TokenPair;
 }
 
-/**
- * 登录
- */
-export async function loginApi(data: AuthApi.LoginParams) {
-  return requestClient.post<AuthApi.LoginResult>('/auth/login', data);
+const publicRequest: ApiRequestConfig = { authenticated: false };
+
+export function loginApi(data: IdentityLoginParams) {
+  return requestClient.post<LoginData>('/auth/login', data, publicRequest);
 }
 
-/**
- * 刷新accessToken
- */
-export async function refreshTokenApi() {
-  return baseRequestClient.post<AuthApi.RefreshTokenResult>(
-    '/auth/refresh',
-    undefined,
-    {
-      withCredentials: true,
-    },
-  );
-}
-
-/**
- * 退出登录
- */
-export async function logoutApi() {
-  return baseRequestClient.post('/auth/logout', undefined, {
-    withCredentials: true,
+export function refreshTokenApi(refreshToken: string) {
+  return baseRequestClient.post<TokenPair>('/auth/refresh', {
+    refresh_token: refreshToken,
   });
 }
 
-/**
- * 获取用户权限码
- */
-export async function getAccessCodesApi() {
-  return requestClient.get<string[]>('/auth/codes');
+/** Use a captured Bearer so local logout can invalidate memory immediately. */
+export function logoutApi(accessToken: string) {
+  return baseRequestClient.post<void>('/auth/logout', undefined, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
 }
