@@ -81,15 +81,26 @@ const refreshCount = () =>
   requests.filter((request) => request.path === '/api/v1/auth/refresh').length;
 const userRequestCount = () =>
   requests.filter((request) => request.path === '/api/v1/admin/users').length;
-const waitUsers = async () => {
-  for (const username of ['admin', 'sales01', 'sales02']) {
+const waitUserRows = async (usernames) => {
+  await page.waitForFunction(
+    (count) =>
+      document.querySelectorAll('tbody tr.ant-table-row').length === count,
+    usernames.length,
+  );
+  for (const username of usernames) {
     await page
       .getByRole('cell', { exact: true, name: username })
       .first()
       .waitFor();
   }
-  assert.equal(await page.locator('tbody tr.ant-table-row').count(), 3);
+  assert.equal(
+    await page.locator('tbody tr.ant-table-row').count(),
+    usernames.length,
+  );
+  if (usernames.length === 0)
+    await page.locator('.ant-table-placeholder').waitFor();
 };
+const waitUsers = () => waitUserRows(['admin', 'sales01', 'sales02']);
 const capture = (name) =>
   page.screenshot({
     animations: 'disabled',
@@ -114,13 +125,30 @@ const logout = () =>
     const { useAuthStore } = await import('/src/store/auth.ts');
     await useAuthStore().logout(false);
   });
-const searchUsers = async () => {
+const searchUsers = async (expectedUsernames, filters = {}) => {
   const response = page.waitForResponse(
     (response) => new URL(response.url()).pathname === '/api/v1/admin/users',
   );
   await page.getByRole('button', { name: /查\s*询/ }).click();
-  assert.equal((await response).status(), 200);
-  await waitUsers();
+  const result = await response;
+  assert.equal(result.status(), 200);
+  const query = Object.fromEntries(new URL(result.url()).searchParams);
+  assert.deepEqual(query, { page: '1', page_size: '20', ...filters });
+  const body = await result.json();
+  assert.equal(body.code, 0);
+  assert.equal(body.data.total, expectedUsernames.length);
+  assert.deepEqual(
+    body.data.list.map(({ username }) => username).sort(),
+    [...expectedUsernames].sort(),
+  );
+  if (filters.status)
+    assert.ok(body.data.list.every(({ status }) => status === filters.status));
+  await waitUserRows(expectedUsernames);
+  return {
+    query,
+    total: body.data.total,
+    users: body.data.list.map(({ username, status }) => ({ username, status })),
+  };
 };
 
 try {
@@ -131,6 +159,7 @@ try {
   assert.equal(new URL(page.url()).pathname, '/system/users');
   const menus = menuResponses.at(-1);
   assert.equal(menus.username, admin);
+  assert.equal(menus.permissionCount, 103);
   assert.deepEqual(menus.menus, [
     { name: '系统', path: '/system' },
     { name: '交易', path: '/trade' },
@@ -173,34 +202,60 @@ try {
   checks.push({
     name: 'admin-login-menus-users',
     menus: menus.menus,
+    permissionCount: menus.permissionCount,
     users: userResponses.at(-1),
     storage,
   });
   await capture('users.png');
 
+  await page.getByLabel('关键词', { exact: true }).fill('sales');
+  checks.push({
+    name: 'keyword-sales',
+    ...(await searchUsers(['sales01', 'sales02'], { keyword: 'sales' })),
+  });
+  await capture('search-sales.png');
   await page.getByLabel('关键词', { exact: true }).fill('sales01');
-  await searchUsers();
-  await page.getByLabel('状态', { exact: true }).click();
+  checks.push({
+    name: 'keyword-sales01',
+    ...(await searchUsers(['sales01'], { keyword: 'sales01' })),
+  });
+  await capture('search-sales01.png');
+  await page.getByLabel('关键词', { exact: true }).fill('');
+  await page.getByLabel('状态', { exact: true }).press('ArrowDown');
   await page
     .locator('.ant-select-dropdown')
-    .getByText('锁定', { exact: true })
+    .getByText('停用', { exact: true })
     .click();
-  await searchUsers();
+  checks.push({
+    name: 'status-disabled',
+    ...(await searchUsers([], { status: 'disabled' })),
+  });
+  await capture('status-disabled.png');
+  await page.getByLabel('关键词', { exact: true }).fill('sales');
+  await page.getByLabel('状态', { exact: true }).press('ArrowDown');
+  await page
+    .locator('.ant-select-dropdown')
+    .getByText('启用', { exact: true })
+    .click();
+  checks.push({
+    name: 'keyword-and-status',
+    ...(await searchUsers(['sales01', 'sales02'], {
+      keyword: 'sales',
+      status: 'active',
+    })),
+  });
   const resetResponse = page.waitForResponse(
     (response) => new URL(response.url()).pathname === '/api/v1/admin/users',
   );
   await page.getByRole('button', { name: /重\s*置/ }).click();
-  await resetResponse;
-  await waitUsers();
-  assert.ok(
-    requests
-      .filter((request) => request.path === '/api/v1/admin/users')
-      .every(
-        ({ query }) =>
-          !Object.hasOwn(query, 'keyword') && !Object.hasOwn(query, 'status'),
-      ),
+  const resetResult = await resetResponse;
+  assert.equal(resetResult.status(), 200);
+  assert.deepEqual(
+    Object.fromEntries(new URL(resetResult.url()).searchParams),
+    { page: '1', page_size: '20' },
   );
-  checks.push({ name: 'unsupported-filters-omitted', visibleUsers: 3 });
+  await waitUsers();
+  checks.push({ name: 'reset-filters', visibleUsers: 3 });
 
   const beforeReload = refreshCount();
   await page.reload();

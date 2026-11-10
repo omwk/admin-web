@@ -18,15 +18,12 @@
           "path": "/crm"
         }
       ],
+      "permissionCount": 103,
       "users": {
         "page": 1,
         "page_size": 20,
         "total": 3,
-        "usernames": [
-          "admin",
-          "sales01",
-          "sales02"
-        ]
+        "usernames": ["admin", "sales01", "sales02"]
       },
       "storage": {
         "accessInMemory": true,
@@ -36,7 +33,71 @@
       }
     },
     {
-      "name": "unsupported-filters-omitted",
+      "name": "keyword-sales",
+      "query": {
+        "keyword": "sales",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 2,
+      "users": [
+        {
+          "username": "sales02",
+          "status": "active"
+        },
+        {
+          "username": "sales01",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "name": "keyword-sales01",
+      "query": {
+        "keyword": "sales01",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 1,
+      "users": [
+        {
+          "username": "sales01",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "name": "status-disabled",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "status": "disabled"
+      },
+      "total": 0,
+      "users": []
+    },
+    {
+      "name": "keyword-and-status",
+      "query": {
+        "keyword": "sales",
+        "page": "1",
+        "page_size": "20",
+        "status": "active"
+      },
+      "total": 2,
+      "users": [
+        {
+          "username": "sales02",
+          "status": "active"
+        },
+        {
+          "username": "sales01",
+          "status": "active"
+        }
+      ]
+    },
+    {
+      "name": "reset-filters",
       "visibleUsers": 3
     },
     {
@@ -89,6 +150,16 @@
       "method": "GET",
       "path": "/api/v1/admin/users",
       "query": {
+        "keyword": "sales",
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "query": {
+        "keyword": "sales01",
         "page": "1",
         "page_size": "20"
       }
@@ -98,7 +169,18 @@
       "path": "/api/v1/admin/users",
       "query": {
         "page": "1",
-        "page_size": "20"
+        "page_size": "20",
+        "status": "disabled"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "query": {
+        "keyword": "sales",
+        "page": "1",
+        "page_size": "20",
+        "status": "active"
       }
     },
     {
@@ -247,6 +329,16 @@
     {
       "code": 0,
       "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/admin/users",
       "status": 200
     },
     {
@@ -457,51 +549,43 @@
       "page": 1,
       "page_size": 20,
       "total": 3,
-      "usernames": [
-        "admin",
-        "sales01",
-        "sales02"
-      ]
+      "usernames": ["admin", "sales01", "sales02"]
+    },
+    {
+      "page": 1,
+      "page_size": 20,
+      "total": 2,
+      "usernames": ["sales01", "sales02"]
+    },
+    {
+      "page": 1,
+      "page_size": 20,
+      "total": 1,
+      "usernames": ["sales01"]
+    },
+    {
+      "page": 1,
+      "page_size": 20,
+      "total": 0,
+      "usernames": []
+    },
+    {
+      "page": 1,
+      "page_size": 20,
+      "total": 2,
+      "usernames": ["sales01", "sales02"]
     },
     {
       "page": 1,
       "page_size": 20,
       "total": 3,
-      "usernames": [
-        "admin",
-        "sales01",
-        "sales02"
-      ]
+      "usernames": ["admin", "sales01", "sales02"]
     },
     {
       "page": 1,
       "page_size": 20,
       "total": 3,
-      "usernames": [
-        "admin",
-        "sales01",
-        "sales02"
-      ]
-    },
-    {
-      "page": 1,
-      "page_size": 20,
-      "total": 3,
-      "usernames": [
-        "admin",
-        "sales01",
-        "sales02"
-      ]
-    },
-    {
-      "page": 1,
-      "page_size": 20,
-      "total": 3,
-      "usernames": [
-        "admin",
-        "sales01",
-        "sales02"
-      ]
+      "usernames": ["admin", "sales01", "sales02"]
     }
   ]
 }

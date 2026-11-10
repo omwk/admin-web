@@ -14,7 +14,7 @@ const get = vi.hoisted(() =>
 vi.mock('#/api/request', () => ({ requestClient: { get } }));
 
 describe('read-only users API', () => {
-  it('omits unsupported filters at the API boundary and caps page size at 100', async () => {
+  it('sends normalized server filters with page size capped at 100', async () => {
     await getUsersApi({
       keyword: '  alice  ',
       page: 2,
@@ -22,7 +22,7 @@ describe('read-only users API', () => {
       status: 'active',
     });
     expect(get).toHaveBeenCalledWith('/admin/users', {
-      params: { page: 2, page_size: 100 },
+      params: { keyword: 'alice', page: 2, page_size: 100, status: 'active' },
     });
   });
 

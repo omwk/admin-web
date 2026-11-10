@@ -37,9 +37,8 @@ pnpm typecheck        # 类型检查
 ## 真实后端联调
 
 开发环境的 `/api` 代理到 `http://127.0.0.1:18080`，前端默认端口为 5666。
-登录、菜单、用户列表直接请求真实后端。keyword/status 筛选控件保留，
-请求参数由 `apps/admin/src/api/core/admin-users.ts` 中的
-`USER_FILTERS_ENABLED=false` 暂时关闭，待 BE-1 支持后启用。
+登录、菜单、用户列表直接请求真实后端。用户列表将 keyword/status 筛选参数
+发送到后端：搜索 sales 返回 2 条，搜索 sales01 返回 1 条，可按状态筛选。
 
 启动前端后，在当前终端设置 `FE1_ADMIN_PASSWORD`、`FE1_SALES_PASSWORD`，
 运行 `pnpm --dir apps/admin test:e2e` 做真实浏览器验收。默认使用 admin、sales01；
