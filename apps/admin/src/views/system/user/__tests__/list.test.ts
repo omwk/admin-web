@@ -99,7 +99,7 @@ describe('user list state', () => {
   });
 
   it('renders only locally mapped error text and can retry successfully', async () => {
-    request.mockRejectedValueOnce(new ApiError({ code: 20107, status: 403 }));
+    request.mockRejectedValueOnce(new ApiError({ code: 20_107, status: 403 }));
     const list = useUserList();
     await list.load();
     expect(list.error.value).toBe('没有权限执行此操作');
@@ -110,7 +110,7 @@ describe('user list state', () => {
   });
 });
 
-describe('RFC3339 UTC rendering', () => {
+describe('rFC3339 UTC rendering', () => {
   it('converts UTC and equivalent offsets to the same local display', () => {
     const instant = '2026-11-10T08:00:00Z';
     const date = new Date(instant);

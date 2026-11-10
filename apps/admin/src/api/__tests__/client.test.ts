@@ -34,13 +34,13 @@ describe('identity request client', () => {
   it('rejects nonzero business codes even with HTTP 200, retaining trace ID', async () => {
     const { client, notify } = setup();
     client.instance.defaults.adapter = (config) =>
-      respond(config, envelope(null, 20107));
+      respond(config, envelope(null, 20_107));
     const error = await client
       .get('/admin/users')
       .catch((error: unknown) => error);
     expect(error).toBeInstanceOf(ApiError);
     expect(error).toMatchObject({
-      code: 20107,
+      code: 20_107,
       status: 200,
       traceId: 'trace-test',
     });
@@ -49,11 +49,11 @@ describe('identity request client', () => {
   });
 
   it.each([
-    [401, 20101, '登录已失效，请重新登录'],
-    [403, 20107, '没有权限执行此操作'],
-    [409, 10004, '请求处理中，请稍后重试'],
-    [429, 10005, '请求过于频繁，请稍后重试'],
-    [409, 99999, '数据冲突，请刷新后重试'],
+    [401, 20_101, '登录已失效，请重新登录'],
+    [403, 20_107, '没有权限执行此操作'],
+    [409, 10_004, '请求处理中，请稍后重试'],
+    [429, 10_005, '请求过于频繁，请稍后重试'],
+    [409, 99_999, '数据冲突，请刷新后重试'],
   ])('maps HTTP %i / code %i locally', async (status, code, text) => {
     const { client, notify } = setup();
     client.instance.defaults.adapter = (config) =>
@@ -72,7 +72,7 @@ describe('identity request client', () => {
       calls++;
       expect(config.params).toEqual({ page: 2 });
       return config.headers.Authorization === 'Bearer old-access'
-        ? respond(config, envelope(null, 20102), 401)
+        ? respond(config, envelope(null, 20_102), 401)
         : respond(config, envelope({ list: [1] }));
     };
     await expect(
@@ -83,7 +83,7 @@ describe('identity request client', () => {
     expect(notify).not.toHaveBeenCalled();
   });
 
-  it.each([20101, 20103])(
+  it.each([20_101, 20_103])(
     'expires revoked sessions (%i) without refreshing',
     async (code) => {
       const { auth, client } = setup();
@@ -99,7 +99,7 @@ describe('identity request client', () => {
     const { auth, client, notify } = setup();
     client.instance.defaults.adapter = (config) => {
       expect(config.headers.Authorization).toBeUndefined();
-      return respond(config, envelope(null, 20101), 401);
+      return respond(config, envelope(null, 20_101), 401);
     };
     await expect(
       client.post('/auth/login', {}, { authenticated: false } as never),
@@ -112,7 +112,7 @@ describe('identity request client', () => {
   it('ends a failed replay without another refresh or duplicate notifications', async () => {
     const { auth, client, notify } = setup();
     client.instance.defaults.adapter = (config) =>
-      respond(config, envelope(null, 20102), 401);
+      respond(config, envelope(null, 20_102), 401);
     await expect(client.get('/auth/me')).rejects.toBeInstanceOf(ApiError);
     expect(auth.refreshAccessToken).toHaveBeenCalledTimes(1);
     expect(auth.onSessionExpired).toHaveBeenCalledTimes(1);
@@ -124,10 +124,10 @@ describe('identity request client', () => {
     client.instance.defaults.adapter = (config) => respond(config, '', 204);
     await expect(client.post('/auth/logout')).resolves.toBeUndefined();
     client.instance.defaults.adapter = (config) =>
-      respond(config, envelope(null, 20109), 409);
+      respond(config, envelope(null, 20_109), 409);
     await expect(
       client.post('/auth/refresh', {}, { authenticated: false } as never),
-    ).rejects.toMatchObject({ code: 20109 });
+    ).rejects.toMatchObject({ code: 20_109 });
     expect(notify).not.toHaveBeenCalled();
   });
 
@@ -136,12 +136,12 @@ describe('identity request client', () => {
     async (status) => {
       const { auth, client, notify } = setup();
       auth.refreshAccessToken.mockRejectedValue(
-        new ApiError({ code: 20109, status }),
+        new ApiError({ code: 20_109, status }),
       );
       client.instance.defaults.adapter = (config) =>
-        respond(config, envelope(null, 20102), 401);
+        respond(config, envelope(null, 20_102), 401);
       await expect(client.get('/auth/me')).rejects.toMatchObject({
-        code: 20109,
+        code: 20_109,
       });
       expect(auth.onSessionExpired).not.toHaveBeenCalled();
       expect(notify).not.toHaveBeenCalled();

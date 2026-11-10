@@ -15,7 +15,9 @@ export default defineConfig({
   // - options（含 typeAware）：合并且生效，无例外。
   // 清单与 env/globals 由包导出共享，eslint 桥接同样消费，保持两工具口径一致。
   extends: [...oxlintConfigs],
-  ignorePatterns: [...oxlintIgnorePatterns],
+  // e2e/ 是驱动浏览器的开发脚本，不是产品代码：它在 CI 中不执行，
+  // 也不随应用发布。按产品规则要求它只会带来噪音。
+  ignorePatterns: [...oxlintIgnorePatterns, '**/e2e/**'],
   env: oxlintEnv,
   globals: oxlintGlobals,
   settings: tailwindcssSettings,

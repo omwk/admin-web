@@ -8,10 +8,10 @@ export function normalizeUserQuery(query: UserListQuery = {}) {
   return {
     keyword: query.keyword?.trim() || undefined,
     page: Number.isFinite(query.page)
-      ? Math.max(1, Math.trunc(query.page!))
+      ? Math.max(1, Math.trunc(query.page ?? 0))
       : 1,
     page_size: Number.isFinite(query.page_size)
-      ? Math.min(100, Math.max(1, Math.trunc(query.page_size!)))
+      ? Math.min(100, Math.max(1, Math.trunc(query.page_size ?? 0)))
       : 20,
     status: query.status || undefined,
   };

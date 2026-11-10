@@ -27,7 +27,7 @@ export function refreshTokenApi(refreshToken: string) {
 
 /** Use a captured Bearer so local logout can invalidate memory immediately. */
 export function logoutApi(accessToken: string) {
-  return baseRequestClient.post<void>('/auth/logout', undefined, {
+  return baseRequestClient.post<unknown>('/auth/logout', undefined, {
     headers: { Authorization: `Bearer ${accessToken}` },
   });
 }

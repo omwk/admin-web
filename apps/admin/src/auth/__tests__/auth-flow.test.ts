@@ -16,6 +16,15 @@ import {
   REFRESH_TOKEN_KEY,
 } from '../token';
 
+function dumpStorage(store: Storage): string {
+  const entries: string[] = [];
+  for (let index = 0; index < store.length; index += 1) {
+    const key = store.key(index) ?? '';
+    entries.push(`${key}=${store.getItem(key) ?? ''}`);
+  }
+  return entries.join('&');
+}
+
 const mocks = vi.hoisted(() => ({
   error: vi.fn(),
   replace: vi.fn(async (_location: unknown) => {}),
@@ -70,17 +79,17 @@ beforeEach(async () => {
 describe('application authentication flow', () => {
   it('logs in with snake_case tokens, fetches /auth/me and navigates without persisting access', async () => {
     const calls: string[] = [];
+    let loginPayload: unknown;
+    let loginAuthHeader: unknown;
+    let meAuthHeader: unknown;
     requestClient.instance.defaults.adapter = async (config) => {
-      calls.push(config.url!);
+      calls.push(config.url ?? '');
       if (config.url === '/auth/login') {
-        expect(JSON.parse(config.data as string)).toEqual({
-          username: 'operator',
-          password: 'test-password',
-        });
-        expect(config.headers.Authorization).toBeUndefined();
+        loginPayload = JSON.parse(config.data as string);
+        loginAuthHeader = config.headers.Authorization;
         return respond(config, envelope(pair));
       }
-      expect(config.headers.Authorization).toBe('Bearer real-access-fixture');
+      meAuthHeader = config.headers.Authorization;
       return respond(config, envelope(overview));
     };
     await useAuthStore().authLogin({
@@ -88,6 +97,12 @@ describe('application authentication flow', () => {
       password: 'test-password',
     });
     await nextTick();
+    expect(loginPayload).toEqual({
+      username: 'operator',
+      password: 'test-password',
+    });
+    expect(loginAuthHeader).toBeUndefined();
+    expect(meAuthHeader).toBe('Bearer real-access-fixture');
     expect(calls).toEqual(['/auth/login', '/auth/me']);
     expect(getAccessToken()).toBe(pair.access_token);
     expect(getRefreshToken()).toBe(pair.refresh_token);
@@ -99,12 +114,8 @@ describe('application authentication flow', () => {
     expect(useAccessStore().accessToken).toBeNull();
     expect(mocks.replace).toHaveBeenCalled();
     expect(mocks.success).toHaveBeenCalledTimes(1);
-    expect(JSON.stringify({ ...localStorage })).not.toContain(
-      pair.access_token,
-    );
-    expect(JSON.stringify({ ...localStorage })).not.toContain(
-      pair.refresh_token,
-    );
+    expect(dumpStorage(localStorage)).not.toContain(pair.access_token);
+    expect(dumpStorage(localStorage)).not.toContain(pair.refresh_token);
   });
 
   it('restores a reloaded tab by POSTing refresh_token, without cookies or Bearer', async () => {
@@ -152,9 +163,9 @@ describe('application authentication flow', () => {
     const refresh = vi.fn();
     baseRequestClient.instance.defaults.adapter = refresh;
     requestClient.instance.defaults.adapter = (config) =>
-      respond(config, envelope(null, 20101), 401);
+      respond(config, envelope(null, 20_101), 401);
     await expect(requestClient.get('/auth/me')).rejects.toMatchObject({
-      code: 20101,
+      code: 20_101,
     });
     expect(refresh).not.toHaveBeenCalled();
     expect(getAccessToken()).toBeNull();

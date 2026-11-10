@@ -22,14 +22,13 @@ const menuResponses = [];
 const userResponses = [];
 const responseReads = new Set();
 let failureInfo;
-const browser = await chromium.launch({
-  ...(process.env.FE1_CHROME_EXECUTABLE
-    ? { executablePath: process.env.FE1_CHROME_EXECUTABLE }
-    : process.platform === 'win32'
-      ? { channel: 'chrome' }
-      : {}),
-  headless: true,
-});
+const launchOptions = { headless: true };
+if (process.env.FE1_CHROME_EXECUTABLE) {
+  launchOptions.executablePath = process.env.FE1_CHROME_EXECUTABLE;
+} else if (process.platform === 'win32') {
+  launchOptions.channel = 'chrome';
+}
+const browser = await chromium.launch(launchOptions);
 const context = await browser.newContext({
   locale: 'zh-CN',
   reducedMotion: 'reduce',
@@ -69,7 +68,7 @@ page.on('response', (response) => {
         page: body.data.page,
         page_size: body.data.page_size,
         total: body.data.total,
-        usernames: body.data.list.map((user) => user.username).sort(),
+        usernames: body.data.list.map((user) => user.username).toSorted(),
       });
     }
   })().catch((error) => errors.push(`${path}: ${error.message}`));
@@ -116,7 +115,8 @@ const login = async (username, password, waitForHome) => {
   await page.getByRole('button', { name: 'login', exact: true }).click();
   const result = await response;
   assert.equal(result.status(), 200);
-  assert.equal((await result.json()).code, 0);
+  const resultBody = await result.json();
+  assert.equal(resultBody.code, 0);
   await waitForHome();
   await Promise.all([...responseReads]);
 };
@@ -359,9 +359,9 @@ try {
   console.log(
     JSON.stringify({ checks, errors, apiRequests: requests.length }, null, 2),
   );
-} catch (failure) {
-  failureInfo = { message: failure.message, url: page.url() };
-  throw failure;
+} catch (error) {
+  failureInfo = { message: error.message, url: page.url() };
+  throw error;
 } finally {
   await capture('final-state.png').catch(() => {});
   await logout().catch(() => {});

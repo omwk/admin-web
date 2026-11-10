@@ -36,11 +36,11 @@ export function useUserList() {
       total.value = data.total;
       page.value = data.page;
       pageSize.value = data.page_size;
-    } catch (failure) {
-      if (request !== sequence || isCancel(failure)) return;
+    } catch (error_) {
+      if (request !== sequence || isCancel(error_)) return;
       users.value = [];
       total.value = 0;
-      error.value = toApiError(failure).message;
+      error.value = toApiError(error_).message;
     } finally {
       if (request === sequence) loading.value = false;
     }

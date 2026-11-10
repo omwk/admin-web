@@ -14,6 +14,15 @@ import {
   setTokens,
 } from '../token';
 
+function dumpStorage(store: Storage): string {
+  const entries: string[] = [];
+  for (let index = 0; index < store.length; index += 1) {
+    const key = store.key(index) ?? '';
+    entries.push(`${key}=${store.getItem(key) ?? ''}`);
+  }
+  return entries.join('&');
+}
+
 vi.mock('#/api/core/auth', () => ({ refreshTokenApi: vi.fn() }));
 
 const pair = {
@@ -54,7 +63,7 @@ describe('credential storage and refresh coordination', () => {
     expect(getRefreshToken()).toBe('refresh-old');
     expect(sessionStorage.getItem(REFRESH_TOKEN_KEY)).toBe('refresh-old');
     expect(localStorage.length).toBe(0);
-    expect(JSON.stringify({ ...sessionStorage })).not.toContain('access-old');
+    expect(dumpStorage(sessionStorage)).not.toContain('access-old');
   });
 
   it('restores refresh after module reload while discarding access', async () => {
@@ -82,7 +91,7 @@ describe('credential storage and refresh coordination', () => {
     client.instance.defaults.adapter = async (config) => {
       if (config.headers.Authorization === 'Bearer access-old') {
         original++;
-        return respond(config, envelope(null, 20102), 401);
+        return respond(config, envelope(null, 20_102), 401);
       }
       replayed++;
       return respond(config, envelope(config.url));
@@ -107,8 +116,8 @@ describe('credential storage and refresh coordination', () => {
   it('retries 20109 silently with bounded backoff and the latest stored refresh', async () => {
     const request = vi
       .fn(async (_token: string) => pair)
-      .mockRejectedValueOnce(new ApiError({ code: 20109, status: 409 }))
-      .mockRejectedValueOnce(new ApiError({ code: 20109, status: 401 }));
+      .mockRejectedValueOnce(new ApiError({ code: 20_109, status: 409 }))
+      .mockRejectedValueOnce(new ApiError({ code: 20_109, status: 401 }));
     const { delay, expired, refresh } = setup(request);
     await expect(Promise.all([refresh(), refresh()])).resolves.toEqual([
       'access-new',
@@ -122,15 +131,15 @@ describe('credential storage and refresh coordination', () => {
   it('bounds repeated 20109 below the backend 30-second replay window', async () => {
     const request = vi
       .fn(async (_token: string) => pair)
-      .mockRejectedValue(new ApiError({ code: 20109, status: 409 }));
+      .mockRejectedValue(new ApiError({ code: 20_109, status: 409 }));
     const { delay, expired, refresh } = setup(request);
-    await expect(refresh()).rejects.toMatchObject({ code: 20109 });
+    await expect(refresh()).rejects.toMatchObject({ code: 20_109 });
     expect(request).toHaveBeenCalledTimes(5);
     expect(delay.mock.calls.reduce((sum, [ms]) => sum + ms, 0)).toBe(6000);
     expect(expired).not.toHaveBeenCalled();
   });
 
-  it.each([20101, 20103])(
+  it.each([20_101, 20_103])(
     'expires the session once and rejects every waiter for %i',
     async (code) => {
       const request = vi
@@ -151,9 +160,9 @@ describe('credential storage and refresh coordination', () => {
   it('does not discard the session on temporary backend failures', async () => {
     const request = vi
       .fn(async (_token: string) => pair)
-      .mockRejectedValueOnce(new ApiError({ code: 10002, status: 503 }));
+      .mockRejectedValueOnce(new ApiError({ code: 10_002, status: 503 }));
     const { expired, refresh } = setup(request);
-    await expect(refresh()).rejects.toMatchObject({ code: 10002 });
+    await expect(refresh()).rejects.toMatchObject({ code: 10_002 });
     expect(expired).not.toHaveBeenCalled();
     expect(getRefreshToken()).toBe('refresh-old');
     await expect(refresh()).resolves.toBe('access-new');

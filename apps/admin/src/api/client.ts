@@ -18,7 +18,7 @@ export interface ApiRequestConfig extends RequestClientConfig {
 export interface AuthenticationHandler {
   getAccessToken: () => null | string;
   getSessionVersion?: () => number;
-  onSessionExpired: () => Promise<unknown> | unknown;
+  onSessionExpired: () => unknown;
   refreshAccessToken: () => Promise<string>;
 }
 
@@ -83,14 +83,14 @@ export function createApiClient(
       ) {
         throw new CanceledError('登录状态已变更');
       }
-      if (!config?.authenticated || error.code === 20109) throw error;
+      if (!config?.authenticated || error.code === 20_109) throw error;
 
       // 20101 and 20103 revoke a session; 20102 is natural access expiry.
-      if (error.code === 20101 || error.code === 20103) {
+      if (error.code === 20_101 || error.code === 20_103) {
         await authentication.onSessionExpired();
         throw error;
       }
-      if (error.status !== 401 && error.code !== 20102) throw error;
+      if (error.status !== 401 && error.code !== 20_102) throw error;
       if (config._authRetried) {
         await authentication.onSessionExpired();
         throw error;
@@ -103,17 +103,17 @@ export function createApiClient(
         if (!current || current === config._accessToken) {
           await authentication.refreshAccessToken();
         }
-      } catch (failure) {
-        if (isCancel(failure)) throw failure;
+      } catch (error_) {
+        if (isCancel(error_)) throw error_;
         if (
           config._sessionVersion !== (authentication.getSessionVersion?.() ?? 0)
         ) {
           throw new CanceledError('登录状态已变更');
         }
-        const refreshError = toApiError(failure);
+        const refreshError = toApiError(error_);
         if (
-          (refreshError.status === 401 && refreshError.code !== 20109) ||
-          [20101, 20102, 20103].includes(refreshError.code ?? 0)
+          (refreshError.status === 401 && refreshError.code !== 20_109) ||
+          [20_101, 20_102, 20_103].includes(refreshError.code ?? 0)
         ) {
           await authentication.onSessionExpired();
         }
@@ -124,7 +124,7 @@ export function createApiClient(
       ) {
         throw new CanceledError('登录状态已变更');
       }
-      return client.request(config.url!, config);
+      return client.request(config.url ?? '', config);
     },
   });
 
@@ -134,7 +134,7 @@ export function createApiClient(
       const error = toApiError(failure);
       if (
         !(error.config as ApiRequestConfig | undefined)?.silent &&
-        error.code !== 20109 &&
+        error.code !== 20_109 &&
         !reported.has(error)
       ) {
         reported.add(error);

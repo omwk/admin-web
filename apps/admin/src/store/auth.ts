@@ -45,9 +45,10 @@ export const useAuthStore = defineStore('auth', () => {
     loginLoading.value = true;
     let userInfo: null | UserInfo = null;
     try {
+      const credentials = params as { password?: string; username?: string };
       const pair = await loginApi({
-        password: String(params.password ?? ''),
-        username: String(params.username ?? ''),
+        password: credentials.password ?? '',
+        username: credentials.username ?? '',
       });
       if (version !== getSessionVersion())
         throw new CanceledError('登录状态已变更');

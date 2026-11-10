@@ -9,13 +9,13 @@
 
 ## 1. 范围
 
-| 做 | 不做 |
-|---|---|
-| 登录页接真实后端 | 注册、找回密码、第三方登录 |
-| access/refresh 存储与并发刷新 | 修改后端鉴权逻辑 |
-| `/auth/menus` → 动态路由 | 菜单管理 CRUD |
-| 权限码工具与按钮级演示 | 完整 RBAC 管理界面 |
-| 用户只读列表（分页/筛选） | 用户增删改、角色分配 |
+| 做                            | 不做                       |
+| ----------------------------- | -------------------------- |
+| 登录页接真实后端              | 注册、找回密码、第三方登录 |
+| access/refresh 存储与并发刷新 | 修改后端鉴权逻辑           |
+| `/auth/menus` → 动态路由      | 菜单管理 CRUD              |
+| 权限码工具与按钮级演示        | 完整 RBAC 管理界面         |
+| 用户只读列表（分页/筛选）     | 用户增删改、角色分配       |
 
 ## 2. 后端契约（已确认，勿自行改动）
 
@@ -27,9 +27,17 @@ POST /api/v1/auth/login
 ```
 
 ```json
-{ "code": 0, "message": "ok", "trace_id": "…",
-  "data": { "access_token": "…", "refresh_token": "…",
-            "token_type": "Bearer", "expires_in": 900 } }
+{
+  "code": 0,
+  "message": "ok",
+  "trace_id": "…",
+  "data": {
+    "access_token": "…",
+    "refresh_token": "…",
+    "token_type": "Bearer",
+    "expires_in": 900
+  }
+}
 ```
 
 ### 2.2 刷新
@@ -69,7 +77,7 @@ GET /api/v1/admin/users?page=1&page_size=20&keyword=&status=
 ## 3. 现有代码与改动点
 
 | 文件 | 现状 | 要改成 |
-|---|---|---|
+| --- | --- | --- |
 | `apps/admin/.env.development` | `VITE_NITRO_MOCK=true`、`VITE_GLOB_API_URL=/api` | `VITE_NITRO_MOCK=false`；保留 `/api` 并加 Vite 代理 |
 | `apps/admin/vite.config.ts` | 无代理 | `/api` → `http://127.0.0.1:18080` |
 | `apps/admin/src/api/request.ts` | `responseReturn: 'data'`，无业务码处理 | 响应拦截解信封；错误按 code 映射；注入 Bearer |
@@ -107,7 +115,7 @@ GET /api/v1/admin/users?page=1&page_size=20&keyword=&status=
 ## 5. 验收
 
 | # | 项 | 断言 |
-|---|---|---|
+| --- | --- | --- |
 | 1 | 登录 | 真实账号登录成功，token 落地，跳转首页 |
 | 2 | 菜单渲染 | 侧边栏与后端菜单一致；刷新页面后保持 |
 | 3 | 无权限菜单 | 移除某角色菜单后重新登录，该菜单消失 |
@@ -130,7 +138,7 @@ GET /api/v1/admin/users?page=1&page_size=20&keyword=&status=
 ## 7. 风险
 
 | 风险 | 缓解 |
-|---|---|
+| --- | --- |
 | vben 登录流程内置 mock 逻辑 | 先跑通 `VITE_NITRO_MOCK=false` 下的真实链路，再改 UI |
 | 菜单 `component` 与前端注册表不匹配 | 先打印一次真实菜单树，逐个对齐后再写映射 |
 | 刷新轮换导致多标签页互相踢下线 | 本批接受；多标签协调放 FE-2 |

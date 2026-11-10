@@ -36,7 +36,7 @@ export function menusToRoutes(
         menu.visible !== false &&
         menu.status !== 'disabled',
     )
-    .sort((a, b) => a.sort - b.sort || a.id - b.id)
+    .toSorted((a, b) => a.sort - b.sort || a.id - b.id)
     .map((menu) => {
       const link =
         menu.is_external || menu.type === 'link'
@@ -45,18 +45,20 @@ export function menusToRoutes(
       const candidate = menu.path?.startsWith('/')
         ? menu.path
         : `${parentPath}/${menu.path || `__menu-${menu.id}`}`;
-      const path = link
-        ? `/__external/${menu.id}`
-        : isInternalPath(candidate)
-          ? candidate
-          : `/__invalid/${menu.id}`;
+      let path = candidate;
+      if (link) {
+        path = `/__external/${menu.id}`;
+      } else if (!isInternalPath(candidate)) {
+        path = `/__invalid/${menu.id}`;
+      }
       const children = menusToRoutes(menu.children ?? [], path);
       const isDirectory = menu.type === 'dir' && children.length > 0;
-      const component = link
-        ? '/pending/index.vue'
-        : isDirectory
-          ? 'MenuOutlet'
-          : resolveMenuComponent(menu.component);
+      let component = resolveMenuComponent(menu.component);
+      if (link) {
+        component = '/pending/index.vue';
+      } else if (isDirectory) {
+        component = 'MenuOutlet';
+      }
       const route: RouteRecordStringComponent = {
         children,
         component,

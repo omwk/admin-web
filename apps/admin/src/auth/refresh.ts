@@ -11,7 +11,7 @@ interface RefreshDependencies {
   delay?: (milliseconds: number) => Promise<void>;
   getRefreshToken: () => null | string;
   getSessionVersion: () => number;
-  onSessionExpired: () => Promise<unknown> | unknown;
+  onSessionExpired: () => unknown;
   request: (refreshToken: string) => Promise<TokenPair>;
   setTokens: (pair: TokenPair) => void;
 }
@@ -41,30 +41,30 @@ export function createRefreshCoordinator(dependencies: RefreshDependencies) {
         const token = dependencies.getRefreshToken();
         if (!token) {
           await dependencies.onSessionExpired();
-          throw new ApiError({ code: 20101, status: 401 });
+          throw new ApiError({ code: 20_101, status: 401 });
         }
         try {
           const pair = await dependencies.request(token);
           assertCurrentSession();
           dependencies.setTokens(pair);
           return pair.access_token;
-        } catch (failure) {
+        } catch (error_) {
           assertCurrentSession();
-          const error = toApiError(failure);
-          if (error.code === 20109 && attempt < 4) {
+          const error = toApiError(error_);
+          if (error.code === 20_109 && attempt < 4) {
             await delay(400 * 2 ** attempt);
             continue;
           }
           if (
-            [20101, 20102, 20103].includes(error.code ?? 0) ||
-            (error.status === 401 && error.code !== 20109)
+            [20_101, 20_102, 20_103].includes(error.code ?? 0) ||
+            (error.status === 401 && error.code !== 20_109)
           ) {
             await dependencies.onSessionExpired();
           }
           throw error;
         }
       }
-      throw new ApiError({ code: 20109 });
+      throw new ApiError({ code: 20_109 });
     };
 
     pendingVersion = version;

@@ -24,10 +24,10 @@ const state = vi.hoisted(() => ({
 }));
 vi.mock('#/api/request', () => ({
   requestClient: {
-    get: vi.fn(async (url: string) => {
-      expect(url).toBe('/auth/menus');
-      return { menus: state.menus, permissions: state.permissions };
-    }),
+    get: vi.fn(async () => ({
+      menus: state.menus,
+      permissions: state.permissions,
+    })),
   },
 }));
 

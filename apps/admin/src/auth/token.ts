@@ -30,7 +30,7 @@ export function setTokens(pair: TokenPair) {
     pair.token_type !== 'Bearer' ||
     !(pair.expires_in > 0)
   ) {
-    throw new ApiError({ code: 10002 });
+    throw new ApiError({ code: 10_002 });
   }
   try {
     sessionStorage.setItem(REFRESH_TOKEN_KEY, pair.refresh_token);
