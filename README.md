@@ -10,7 +10,7 @@
 ### 相对上游的改动
 
 | 改动 | 原因 |
-|---|---|
+| --- | --- |
 | 只保留 `apps/admin`（原 `apps/web-antd`） | 不需要同时维护 5 个 UI 变体 |
 | 删除 `apps/web-antdv-next`、`web-ele`、`web-naive`、`web-tdesign` | 同上 |
 | 删除 `apps/backend-mock` | 联调真实后端，不用 mock 服务 |
@@ -19,10 +19,10 @@
 
 ## 环境要求
 
-| 项 | 版本 |
-|---|---|
+| 项   | 版本                     |
+| ---- | ------------------------ |
 | Node | `^22.18.0 \|\| ^24.12.0` |
-| pnpm | `>=11.0.0` |
+| pnpm | `>=11.0.0`               |
 
 ## 常用命令
 
@@ -33,6 +33,18 @@ pnpm build:antd       # 构建管理端
 pnpm lint             # 代码检查
 pnpm typecheck        # 类型检查
 ```
+
+## 真实后端联调
+
+开发环境的 `/api` 代理到 `http://127.0.0.1:18080`，前端默认端口为 5666。
+登录、菜单、用户列表直接请求真实后端。keyword/status 筛选控件保留，
+请求参数由 `apps/admin/src/api/core/admin-users.ts` 中的
+`USER_FILTERS_ENABLED=false` 暂时关闭，待 BE-1 支持后启用。
+
+启动前端后，在当前终端设置 `FE1_ADMIN_PASSWORD`、`FE1_SALES_PASSWORD`，
+运行 `pnpm --dir apps/admin test:e2e` 做真实浏览器验收。默认使用 admin、sales01；
+可用 `FE1_ORIGIN` 覆盖前端地址。验收记录与复现方法见
+[FE-1 联调报告](apps/admin/docs/FE-1-report.md)。
 
 ## 目录结构
 

@@ -82,7 +82,7 @@ onUnmounted(dispose);
 </script>
 
 <template>
-  <Page title="用户管理" description="查看用户信息，按关键词和状态筛选。">
+  <Page title="用户管理" description="查看用户信息，关键词和状态筛选暂未开放。">
     <Card title="用户列表">
       <template #extra>
         <Button

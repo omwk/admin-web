@@ -1,75 +1,109 @@
 {
+  "source": "live backend through the development /api proxy",
+  "origin": "http://127.0.0.1:5666",
   "checks": [
     {
-      "assertion": 1,
-      "evidence": "Fixture credentials → POST /auth/login → GET /auth/me → /auth/menus → /system/users; access absent from both storage objects, refresh present only in sessionStorage."
+      "name": "admin-login-menus-users",
+      "menus": [
+        {
+          "name": "系统",
+          "path": "/system"
+        },
+        {
+          "name": "交易",
+          "path": "/trade"
+        },
+        {
+          "name": "客户",
+          "path": "/crm"
+        }
+      ],
+      "users": {
+        "page": 1,
+        "page_size": 20,
+        "total": 3,
+        "usernames": [
+          "admin",
+          "sales01",
+          "sales02"
+        ]
+      },
+      "storage": {
+        "accessInMemory": true,
+        "accessPersisted": false,
+        "refreshInLocal": false,
+        "refreshInSession": true
+      }
     },
     {
-      "assertion": 2,
-      "evidence": "Reload restores session with one refresh and refetches the backend-provided system/user/role menu tree."
+      "name": "unsupported-filters-omitted",
+      "visibleUsers": 3
     },
     {
-      "assertion": 10,
-      "evidence": "Known unfinished system/role/index renders its placeholder and triggers no invented API requests."
+      "name": "reload-restores-admin",
+      "refreshRequests": 1
     },
     {
-      "assertion": 4,
-      "evidence": "Unknown component unregistered/index resolves to the rendered 404 page with the application layout intact."
+      "name": "five-concurrent-session-restorations",
+      "refreshRequests": 1,
+      "successfulReads": 5
     },
     {
-      "assertion": 5,
-      "evidence": "Five simultaneous /auth/me calls with expired access produced one /auth/refresh and five successful replays; no error toast."
+      "name": "five-concurrent-refreshes",
+      "refreshRequests": 1,
+      "sharedPromise": true,
+      "successfulReads": 5
     },
     {
-      "assertion": 5,
-      "evidence": "First refresh returned HTTP 409/code 20109; one silent retry succeeded and all five queued requests completed."
-    },
-    {
-      "assertion": 7,
-      "evidence": "Keyword search resets page, reset clears keyword, page 2 shows user21; locked status resets to page 1 and shows user03, excluding user01; page_size=200 is sent as 100 and returns 100; RFC3339 08:00Z renders as 16:00 in Asia/Shanghai. Fixture supports filtering; backend filter support still requires integration."
-    },
-    {
-      "assertion": 8,
-      "evidence": "HTTP 403/409/429 rendered the expected local Chinese code mapping, with the sentinel backend message absent from the DOM."
-    },
-    {
-      "assertion": 3,
-      "evidence": "After removing the role menu fixture and relogging, role disappears. Granting system:user:create exposes the demonstration button; clicking performs no write."
-    },
-    {
-      "assertion": 6,
-      "evidence": "A revoked-session HTTP 401/code 20103 response cleared credentials and navigated to login with no refresh."
-    },
-    {
-      "assertion": 8,
-      "evidence": "HTTP 401/code 20103 returns the local session-expired message and clears state."
-    },
-    {
-      "assertion": 10,
-      "evidence": "No uncaught page errors across login, reload, users, placeholders, unknown routes, refresh and revocation."
+      "name": "sales01-empty-menus-and-reload",
+      "userRequests": 0,
+      "refreshRequests": 1
     }
   ],
   "errors": [],
-  "refreshCalls": 4,
   "requests": [
     {
       "method": "POST",
-      "path": "/auth/login",
+      "path": "/api/v1/auth/login",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/menus",
+      "path": "/api/v1/auth/menus",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/admin/users",
+      "path": "/api/v1/admin/users",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
       "query": {
         "page": "1",
         "page_size": "20"
@@ -77,239 +111,397 @@
     },
     {
       "method": "POST",
-      "path": "/auth/refresh",
+      "path": "/api/v1/auth/refresh",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/menus",
+      "path": "/api/v1/auth/menus",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/admin/users",
+      "path": "/api/v1/admin/users",
       "query": {
         "page": "1",
         "page_size": "20"
       }
     },
     {
-      "method": "GET",
-      "path": "/admin/users",
-      "query": {
-        "page": "1",
-        "page_size": "20"
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
+      "query": {}
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "POST",
-      "path": "/auth/refresh",
+      "path": "/api/v1/auth/refresh",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "POST",
-      "path": "/auth/refresh",
+      "path": "/api/v1/auth/logout",
       "query": {}
     },
     {
       "method": "POST",
-      "path": "/auth/refresh",
+      "path": "/api/v1/auth/login",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/me",
       "query": {}
     },
     {
       "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/admin/users",
-      "query": {
-        "keyword": "user02",
-        "page": "1",
-        "page_size": "20"
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/admin/users",
-      "query": {
-        "page": "1",
-        "page_size": "20"
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/admin/users",
-      "query": {
-        "page": "2",
-        "page_size": "20"
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/admin/users",
-      "query": {
-        "page": "1",
-        "page_size": "20",
-        "status": "locked"
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/admin/users",
-      "query": {
-        "page": "1",
-        "page_size": "100"
-      }
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
-    },
-    {
-      "method": "GET",
-      "path": "/auth/me",
+      "path": "/api/v1/auth/menus",
       "query": {}
     },
     {
       "method": "POST",
-      "path": "/auth/logout",
+      "path": "/api/v1/auth/refresh",
+      "query": {}
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "query": {}
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
       "query": {}
     },
     {
       "method": "POST",
-      "path": "/auth/login",
+      "path": "/api/v1/auth/logout",
       "query": {}
+    }
+  ],
+  "responses": [
+    {
+      "code": 0,
+      "path": "/api/v1/auth/login",
+      "status": 200
     },
     {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
     },
     {
-      "method": "GET",
-      "path": "/auth/menus",
-      "query": {}
+      "code": 0,
+      "path": "/api/v1/auth/menus",
+      "status": 200
     },
     {
-      "method": "GET",
-      "path": "/admin/users",
-      "query": {
-        "page": "1",
-        "page_size": "20"
-      }
+      "code": 0,
+      "path": "/api/v1/admin/users",
+      "status": 200
     },
     {
-      "method": "GET",
-      "path": "/auth/me",
-      "query": {}
+      "code": 0,
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/logout",
+      "status": 204
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "code": 0,
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/logout",
+      "status": 204
+    }
+  ],
+  "menuResponses": [
+    {
+      "username": "admin",
+      "roles": [
+        {
+          "id": 1,
+          "code": "super_admin",
+          "name": "超级管理员"
+        }
+      ],
+      "permissionCount": 103,
+      "menus": [
+        {
+          "name": "系统",
+          "path": "/system"
+        },
+        {
+          "name": "交易",
+          "path": "/trade"
+        },
+        {
+          "name": "客户",
+          "path": "/crm"
+        }
+      ]
+    },
+    {
+      "username": "admin",
+      "roles": [
+        {
+          "id": 1,
+          "code": "super_admin",
+          "name": "超级管理员"
+        }
+      ],
+      "permissionCount": 103,
+      "menus": [
+        {
+          "name": "系统",
+          "path": "/system"
+        },
+        {
+          "name": "交易",
+          "path": "/trade"
+        },
+        {
+          "name": "客户",
+          "path": "/crm"
+        }
+      ]
+    },
+    {
+      "username": "sales01",
+      "roles": [],
+      "permissionCount": 0,
+      "menus": []
+    },
+    {
+      "username": "sales01",
+      "roles": [],
+      "permissionCount": 0,
+      "menus": []
+    }
+  ],
+  "userResponses": [
+    {
+      "page": 1,
+      "page_size": 20,
+      "total": 3,
+      "usernames": [
+        "admin",
+        "sales01",
+        "sales02"
+      ]
+    },
+    {
+      "page": 1,
+      "page_size": 20,
+      "total": 3,
+      "usernames": [
+        "admin",
+        "sales01",
+        "sales02"
+      ]
+    },
+    {
+      "page": 1,
+      "page_size": 20,
+      "total": 3,
+      "usernames": [
+        "admin",
+        "sales01",
+        "sales02"
+      ]
+    },
+    {
+      "page": 1,
+      "page_size": 20,
+      "total": 3,
+      "usernames": [
+        "admin",
+        "sales01",
+        "sales02"
+      ]
+    },
+    {
+      "page": 1,
+      "page_size": 20,
+      "total": 3,
+      "usernames": [
+        "admin",
+        "sales01",
+        "sales02"
+      ]
     }
   ]
 }

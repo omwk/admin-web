@@ -1,85 +1,33 @@
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
 import process from 'node:process';
+import { fileURLToPath } from 'node:url';
 
 // eslint-disable-next-line n/no-extraneous-import -- Shared test tooling is declared in the workspace root.
 import { chromium } from 'playwright';
 
-// Contract fixtures exercise the running application. They are not a backend
-// implementation and must never be reported as real-account integration proof.
-const origin = process.env.FE1_ORIGIN || 'http://127.0.0.1:5173';
+const origin = process.env.FE1_ORIGIN || 'http://127.0.0.1:5666';
 const output = new URL('../docs/evidence/', import.meta.url);
+const admin = process.env.FE1_ADMIN_USERNAME || 'admin';
+const sales = process.env.FE1_SALES_USERNAME || 'sales01';
+assert.ok(process.env.FE1_ADMIN_PASSWORD, 'Set FE1_ADMIN_PASSWORD');
+assert.ok(process.env.FE1_SALES_PASSWORD, 'Set FE1_SALES_PASSWORD');
 await mkdir(output, { recursive: true });
+
 const checks = [];
 const errors = [];
 const requests = [];
-let version = 1;
-let expired = false;
-let revoked = false;
-let busyRefresh = 0;
-let refreshCalls = 0;
-let includeRoles = true;
-let createPermission = false;
-let nextError;
-const tokens = () => ({
-  access_token: `fixture-access-${version}`,
-  expires_in: 900,
-  refresh_token: `fixture-refresh-${version}`,
-  token_type: 'Bearer',
-});
-const overview = () => ({
-  permissions: [
-    'system:user:list',
-    ...(createPermission ? ['system:user:create'] : []),
-  ],
-  user: {
-    avatar: '',
-    dept_id: 1,
-    id: 1,
-    is_super: false,
-    nickname: '契约测试用户',
-    roles: [{ code: 'fixture', id: 1, name: '测试角色' }],
-    tenant_id: 1,
-    username: 'fixture-user',
-  },
-});
-const menu = (id, name, path, component, type = 'menu', children = []) => ({
-  children,
-  component,
-  id,
-  is_external: false,
-  keep_alive: false,
-  meta: {},
-  name,
-  parent_id: id === 1 ? 0 : 1,
-  path,
-  sort: id,
-  type,
-});
-const menus = () => [
-  menu(1, '系统', '/system', '', 'dir', [
-    menu(2, '用户', '/system/users', 'system/user/index'),
-    ...(includeRoles
-      ? [menu(3, '角色', '/system/roles', 'system/role/index')]
-      : []),
-    menu(4, '未知组件测试', '/system/unknown', 'unregistered/index'),
-  ]),
-];
-const users = Array.from({ length: 45 }, (_, i) => ({
-  avatar: null,
-  created_at: '2026-11-10T08:00:00Z',
-  dept_id: 1,
-  email: `user${i + 1}@example.test`,
-  id: i + 1,
-  is_super: false,
-  nickname: `测试用户 ${i + 1}`,
-  status: ['active', 'disabled', 'locked'][i % 3],
-  tenant_id: 1,
-  updated_at: '2026-11-10T08:00:00Z',
-  username: `user${String(i + 1).padStart(2, '0')}`,
-}));
+const responses = [];
+const menuResponses = [];
+const userResponses = [];
+const responseReads = new Set();
+let failureInfo;
 const browser = await chromium.launch({
-  executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe',
+  ...(process.env.FE1_CHROME_EXECUTABLE
+    ? { executablePath: process.env.FE1_CHROME_EXECUTABLE }
+    : process.platform === 'win32'
+      ? { channel: 'chrome' }
+      : {}),
   headless: true,
 });
 const context = await browser.newContext({
@@ -90,341 +38,296 @@ const context = await browser.newContext({
 });
 const page = await context.newPage();
 page.on('pageerror', (error) => errors.push(error.message));
-
-await page.route('**/api/v1/**', async (route) => {
-  const request = route.request();
+page.on('request', (request) => {
   const url = new URL(request.url());
-  const path = url.pathname.replace('/api/v1', '');
+  if (!url.pathname.startsWith('/api/v1/')) return;
   requests.push({
     method: request.method(),
-    path,
+    path: url.pathname,
     query: Object.fromEntries(url.searchParams),
   });
-  const answer = (data, status = 200, code = 0) =>
-    route.fulfill({
-      contentType: 'application/json',
-      json: undefined,
-      body: JSON.stringify({
-        code,
-        data,
-        message: 'BACKEND_PRIVATE_MESSAGE_MUST_NOT_RENDER',
-        trace_id: 'fixture-trace',
-      }),
-      status,
-    });
-  if (path === '/auth/login')
-    return answer({ ...tokens(), user: overview().user });
-  if (path === '/auth/logout') return route.fulfill({ body: '', status: 204 });
-  if (path === '/auth/refresh') {
-    refreshCalls++;
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    if (busyRefresh-- > 0) return answer(null, 409, 20109);
-    assert.equal(request.postDataJSON().refresh_token, tokens().refresh_token);
-    version++;
-    expired = false;
-    return answer(tokens());
-  }
-  if (revoked) return answer(null, 401, 20103);
-  if (
-    expired ||
-    request.headers().authorization !== `Bearer ${tokens().access_token}`
-  )
-    return answer(null, 401, 20102);
-  if (nextError) {
-    const failure = nextError;
-    nextError = undefined;
-    return answer(null, failure.status, failure.code);
-  }
-  if (path === '/auth/me') return answer(overview());
-  if (path === '/auth/menus') return answer({ ...overview(), menus: menus() });
-  if (path === '/admin/users') {
-    const keyword = url.searchParams.get('keyword') || '';
-    const status = url.searchParams.get('status') || '';
-    const list = users.filter(
-      (user) =>
-        (!keyword || user.username.includes(keyword)) &&
-        (!status || user.status === status),
-    );
-    const size = Math.min(100, Number(url.searchParams.get('page_size')) || 20);
-    const number = Number(url.searchParams.get('page')) || 1;
-    return answer({
-      list: list.slice((number - 1) * size, number * size),
-      page: number,
-      page_size: size,
-      total: list.length,
-    });
-  }
-  throw new Error(`Unexpected endpoint ${request.method()} ${path}`);
+});
+page.on('response', (response) => {
+  const path = new URL(response.url()).pathname;
+  if (!path.startsWith('/api/v1/')) return;
+  const read = (async () => {
+    const body = response.status() === 204 ? undefined : await response.json();
+    responses.push({ code: body?.code, path, status: response.status() });
+    if (path === '/api/v1/auth/menus' && body?.code === 0) {
+      menuResponses.push({
+        username: body.data.user.username,
+        roles: body.data.user.roles ?? [],
+        permissionCount: body.data.permissions?.length ?? 0,
+        menus: (body.data.menus ?? []).map(({ name, path }) => ({
+          name,
+          path,
+        })),
+      });
+    }
+    if (path === '/api/v1/admin/users' && body?.code === 0) {
+      userResponses.push({
+        page: body.data.page,
+        page_size: body.data.page_size,
+        total: body.data.total,
+        usernames: body.data.list.map((user) => user.username).sort(),
+      });
+    }
+  })().catch((error) => errors.push(`${path}: ${error.message}`));
+  responseReads.add(read);
+  void read.finally(() => responseReads.delete(read));
 });
 
-const waitUsers = () =>
-  page.getByRole('cell', { exact: true, name: 'user01' }).waitFor();
-const login = async () => {
-  await page.getByPlaceholder('请输入用户名').fill('fixture-user');
-  await page.getByPlaceholder('密码', { exact: true }).fill('fixture-password');
-  await page.getByRole('button', { name: 'login', exact: true }).click();
-  await waitUsers();
+const refreshCount = () =>
+  requests.filter((request) => request.path === '/api/v1/auth/refresh').length;
+const userRequestCount = () =>
+  requests.filter((request) => request.path === '/api/v1/admin/users').length;
+const waitUsers = async () => {
+  for (const username of ['admin', 'sales01', 'sales02']) {
+    await page
+      .getByRole('cell', { exact: true, name: username })
+      .first()
+      .waitFor();
+  }
+  assert.equal(await page.locator('tbody tr.ant-table-row').count(), 3);
 };
-const callMe = (count = 1) =>
-  page.evaluate(async (count) => {
-    const { requestClient } = await import('/src/api/request.ts');
-    return Promise.all(
-      Array.from({ length: count }, () =>
-        requestClient
-          .get('/auth/me')
-          .then(() => true)
-          .catch(() => false),
-      ),
-    );
-  }, count);
-
-const capture = async (name) => {
-  await page.evaluate(async () => {
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-    await new Promise((resolve) => requestAnimationFrame(resolve));
-    await Promise.all(
-      document
-        .getAnimations()
-        .filter((animation) =>
-          Number.isFinite(animation.effect?.getComputedTiming().endTime),
-        )
-        .map((animation) => animation.finished.catch(() => {})),
-    );
-  });
-  await page.screenshot({
+const capture = (name) =>
+  page.screenshot({
     animations: 'disabled',
-    path: new URL(name, output).pathname.replace(/^\/(\w:)/, '$1'),
     fullPage: true,
+    path: fileURLToPath(new URL(name, output)),
   });
+const login = async (username, password, waitForHome) => {
+  await page.getByPlaceholder('请输入用户名').fill(username);
+  await page.getByPlaceholder('密码', { exact: true }).fill(password);
+  const response = page.waitForResponse(
+    (response) => new URL(response.url()).pathname === '/api/v1/auth/login',
+  );
+  await page.getByRole('button', { name: 'login', exact: true }).click();
+  const result = await response;
+  assert.equal(result.status(), 200);
+  assert.equal((await result.json()).code, 0);
+  await waitForHome();
+  await Promise.all([...responseReads]);
+};
+const logout = () =>
+  page.evaluate(async () => {
+    const { useAuthStore } = await import('/src/store/auth.ts');
+    await useAuthStore().logout(false);
+  });
+const searchUsers = async () => {
+  const response = page.waitForResponse(
+    (response) => new URL(response.url()).pathname === '/api/v1/admin/users',
+  );
+  await page.getByRole('button', { name: /查\s*询/ }).click();
+  assert.equal((await response).status(), 200);
+  await waitUsers();
 };
 
 try {
   await page.goto(`${origin}/auth/login`);
   await page.getByRole('button', { name: 'login', exact: true }).waitFor();
   await capture('login.png');
-  await login();
+  await login(admin, process.env.FE1_ADMIN_PASSWORD, waitUsers);
   assert.equal(new URL(page.url()).pathname, '/system/users');
-  const storage = await page.evaluate(() => ({
-    local: { ...localStorage },
-    session: { ...sessionStorage },
-  }));
-  assert.ok(Object.values(storage.session).includes(tokens().refresh_token));
-  assert.ok(!JSON.stringify(storage).includes(tokens().access_token));
-  assert.ok(!JSON.stringify(storage.local).includes(tokens().refresh_token));
-  checks.push({
-    assertion: 1,
-    evidence:
-      'Fixture credentials → POST /auth/login → GET /auth/me → /auth/menus → /system/users; access absent from both storage objects, refresh present only in sessionStorage.',
+  const menus = menuResponses.at(-1);
+  assert.equal(menus.username, admin);
+  assert.deepEqual(menus.menus, [
+    { name: '系统', path: '/system' },
+    { name: '交易', path: '/trade' },
+    { name: '客户', path: '/crm' },
+  ]);
+  for (const { name } of menus.menus) {
+    await page.getByText(name, { exact: true }).first().waitFor();
+  }
+  assert.deepEqual(userResponses.at(-1), {
+    page: 1,
+    page_size: 20,
+    total: 3,
+    usernames: ['admin', 'sales01', 'sales02'],
   });
-  assert.equal(
-    await page.getByRole('button', { exact: true, name: '新增用户' }).count(),
-    0,
-  );
+  const storage = await page.evaluate(async () => {
+    const { getAccessToken, getRefreshToken } =
+      await import('/src/auth/token.ts');
+    const access = getAccessToken();
+    const refresh = getRefreshToken();
+    return {
+      accessInMemory: Boolean(access),
+      accessPersisted: Boolean(
+        access &&
+        JSON.stringify({ ...localStorage, ...sessionStorage }).includes(access),
+      ),
+      refreshInLocal: Boolean(
+        refresh && JSON.stringify({ ...localStorage }).includes(refresh),
+      ),
+      refreshInSession: Boolean(
+        refresh && Object.values(sessionStorage).includes(refresh),
+      ),
+    };
+  });
+  assert.deepEqual(storage, {
+    accessInMemory: true,
+    accessPersisted: false,
+    refreshInLocal: false,
+    refreshInSession: true,
+  });
+  checks.push({
+    name: 'admin-login-menus-users',
+    menus: menus.menus,
+    users: userResponses.at(-1),
+    storage,
+  });
   await capture('users.png');
 
-  const beforeReload = refreshCalls;
-  await page.reload();
-  await waitUsers();
-  assert.equal(refreshCalls - beforeReload, 1);
-  await page.getByText('角色', { exact: true }).first().waitFor();
-  checks.push({
-    assertion: 2,
-    evidence:
-      'Reload restores session with one refresh and refetches the backend-provided system/user/role menu tree.',
-  });
-
-  await page.getByText('角色', { exact: true }).first().click();
-  await page.getByText('功能尚未接入', { exact: true }).waitFor();
-  await capture('placeholder.png');
-  checks.push({
-    assertion: 10,
-    evidence:
-      'Known unfinished system/role/index renders its placeholder and triggers no invented API requests.',
-  });
-  await page.getByText('未知组件测试', { exact: true }).first().click();
-  await page.getByText('哎呀！未找到页面', { exact: true }).waitFor();
-  await page
-    .getByText('功能尚未接入', { exact: true })
-    .waitFor({ state: 'hidden' });
-  await capture('unknown-component.png');
-  checks.push({
-    assertion: 4,
-    evidence:
-      'Unknown component unregistered/index resolves to the rendered 404 page with the application layout intact.',
-  });
-  await page.getByText('用户', { exact: true }).first().click();
-  await waitUsers();
-
-  expired = true;
-  const beforeConcurrent = refreshCalls;
-  assert.deepEqual(await callMe(5), [true, true, true, true, true]);
-  assert.equal(refreshCalls - beforeConcurrent, 1);
-  assert.equal(await page.locator('.ant-message-error').count(), 0);
-  checks.push({
-    assertion: 5,
-    evidence:
-      'Five simultaneous /auth/me calls with expired access produced one /auth/refresh and five successful replays; no error toast.',
-  });
-  expired = true;
-  busyRefresh = 1;
-  const beforeBusy = refreshCalls;
-  assert.deepEqual(await callMe(5), [true, true, true, true, true]);
-  assert.equal(refreshCalls - beforeBusy, 2);
-  assert.equal(await page.locator('.ant-message-error').count(), 0);
-  checks.push({
-    assertion: 5,
-    evidence:
-      'First refresh returned HTTP 409/code 20109; one silent retry succeeded and all five queued requests completed.',
-  });
-
-  await page.getByLabel('关键词', { exact: true }).fill('user02');
-  await page.getByRole('button', { name: /查\s*询/ }).click();
-  await page.getByRole('cell', { exact: true, name: 'user02' }).waitFor();
-  assert.ok(
-    requests.some(
-      (r) =>
-        r.path === '/admin/users' &&
-        r.query.keyword === 'user02' &&
-        r.query.page === '1',
-    ),
-  );
-  await page.getByRole('button', { name: /重\s*置/ }).click();
-  await waitUsers();
-  await page.locator('.ant-pagination-item-2').click();
-  await page.getByRole('cell', { exact: true, name: 'user21' }).waitFor();
-  assert.ok(
-    requests.some((r) => r.path === '/admin/users' && r.query.page === '2'),
-  );
+  await page.getByLabel('关键词', { exact: true }).fill('sales01');
+  await searchUsers();
   await page.getByLabel('状态', { exact: true }).click();
   await page
     .locator('.ant-select-dropdown')
     .getByText('锁定', { exact: true })
     .click();
-  await page.getByRole('button', { name: /查\s*询/ }).click();
-  await page.getByRole('cell', { exact: true, name: 'user03' }).waitFor();
+  await searchUsers();
+  const resetResponse = page.waitForResponse(
+    (response) => new URL(response.url()).pathname === '/api/v1/admin/users',
+  );
+  await page.getByRole('button', { name: /重\s*置/ }).click();
+  await resetResponse;
+  await waitUsers();
   assert.ok(
-    requests.some(
-      (r) =>
-        r.path === '/admin/users' &&
-        r.query.status === 'locked' &&
-        r.query.page === '1',
-    ),
+    requests
+      .filter((request) => request.path === '/api/v1/admin/users')
+      .every(
+        ({ query }) =>
+          !Object.hasOwn(query, 'keyword') && !Object.hasOwn(query, 'status'),
+      ),
   );
-  assert.equal(
-    await page.getByRole('cell', { exact: true, name: 'user01' }).count(),
-    0,
-  );
-  assert.ok(
-    (await page
-      .getByRole('cell', { exact: true, name: '2026-11-10 16:00:00' })
-      .count()) > 0,
-  );
-  const size = await page.evaluate(async () => {
-    const { getUsersApi } = await import('/src/api/core/admin-users.ts');
-    return (await getUsersApi({ page_size: 200 })).page_size;
-  });
-  assert.equal(size, 100);
-  assert.equal(requests.at(-1).query.page_size, '100');
-  checks.push({
-    assertion: 7,
-    evidence:
-      'Keyword search resets page, reset clears keyword, page 2 shows user21; locked status resets to page 1 and shows user03, excluding user01; page_size=200 is sent as 100 and returns 100; RFC3339 08:00Z renders as 16:00 in Asia/Shanghai. Fixture supports filtering; backend filter support still requires integration.',
-  });
+  checks.push({ name: 'unsupported-filters-omitted', visibleUsers: 3 });
 
-  for (const [status, code, text] of [
-    [403, 20107, '没有权限执行此操作'],
-    [409, 10004, '请求处理中，请稍后重试'],
-    [429, 10005, '请求过于频繁，请稍后重试'],
-  ]) {
-    nextError = { code, status };
-    assert.deepEqual(await callMe(), [false]);
-    await page.getByText(text, { exact: true }).waitFor();
-  }
-  assert.ok(
-    !(await page.locator('body').innerText()).includes(
-      'BACKEND_PRIVATE_MESSAGE_MUST_NOT_RENDER',
-    ),
-  );
-  checks.push({
-    assertion: 8,
-    evidence:
-      'HTTP 403/409/429 rendered the expected local Chinese code mapping, with the sentinel backend message absent from the DOM.',
-  });
+  const beforeReload = refreshCount();
+  await page.reload();
+  await waitUsers();
+  assert.equal(refreshCount() - beforeReload, 1);
+  checks.push({ name: 'reload-restores-admin', refreshRequests: 1 });
 
-  includeRoles = false;
-  createPermission = true;
-  await page.evaluate(async () => {
+  const beforeRestore = refreshCount();
+  const restored = await page.evaluate(async () => {
+    const token = await import('/src/auth/token.ts');
     const { useAuthStore } = await import('/src/store/auth.ts');
-    await useAuthStore().logout(false);
+    const { requestClient } = await import('/src/api/request.ts');
+    const refresh = token.getRefreshToken();
+    if (!refresh) throw new Error('Missing live refresh credential');
+    // Reproduce loss of memory credentials while retaining the real refresh credential.
+    token.clearTokens();
+    sessionStorage.setItem(token.REFRESH_TOKEN_KEY, refresh);
+    const sessions = await Promise.all(
+      Array.from({ length: 5 }, () => useAuthStore().restoreSession()),
+    );
+    const users = await Promise.all(
+      Array.from(
+        { length: 5 },
+        async () => (await requestClient.get('/auth/me')).user.username,
+      ),
+    );
+    return { sessions, users };
   });
-  await login();
-  assert.equal(await page.getByText('角色', { exact: true }).count(), 0);
-  const create = page.getByRole('button', { exact: true, name: '新增用户' });
-  await create.waitFor();
-  await create.click();
-  await page.getByText('当前版本仅支持查看用户', { exact: true }).waitFor();
-  assert.ok(
-    !requests.some((r) => r.path === '/admin/users' && r.method !== 'GET'),
-  );
+  assert.deepEqual(restored, {
+    sessions: Array(5).fill(true),
+    users: Array(5).fill(admin),
+  });
+  assert.equal(refreshCount() - beforeRestore, 1);
   checks.push({
-    assertion: 3,
-    evidence:
-      'After removing the role menu fixture and relogging, role disappears. Granting system:user:create exposes the demonstration button; clicking performs no write.',
+    name: 'five-concurrent-session-restorations',
+    refreshRequests: 1,
+    successfulReads: 5,
   });
 
-  revoked = true;
-  const beforeRevocation = refreshCalls;
-  assert.deepEqual(await callMe(), [false]);
+  const beforeConcurrent = refreshCount();
+  const concurrent = await page.evaluate(async () => {
+    const { refreshAccessToken } = await import('/src/auth/refresh.ts');
+    const { requestClient } = await import('/src/api/request.ts');
+    const operations = Array.from({ length: 5 }, () => refreshAccessToken());
+    const sharedPromise = operations.every(
+      (operation) => operation === operations[0],
+    );
+    await Promise.all(operations);
+    const users = await Promise.all(
+      Array.from(
+        { length: 5 },
+        async () => (await requestClient.get('/auth/me')).user.username,
+      ),
+    );
+    return { sharedPromise, users };
+  });
+  assert.deepEqual(concurrent, {
+    sharedPromise: true,
+    users: Array(5).fill(admin),
+  });
+  assert.equal(refreshCount() - beforeConcurrent, 1);
+  checks.push({
+    name: 'five-concurrent-refreshes',
+    refreshRequests: 1,
+    sharedPromise: true,
+    successfulReads: 5,
+  });
+
+  await logout();
   await page.getByRole('button', { name: 'login', exact: true }).waitFor();
-  await page.getByText('登录已失效，请重新登录', { exact: true }).waitFor();
-  assert.equal(refreshCalls, beforeRevocation);
-  assert.equal(
-    await page.evaluate(
-      () =>
-        Object.values(sessionStorage).filter((value) =>
-          value.startsWith('fixture-refresh-'),
-        ).length,
-    ),
-    0,
-  );
-  assert.equal(new URL(page.url()).pathname, '/auth/login');
-  checks.push({
-    assertion: 6,
-    evidence:
-      'A revoked-session HTTP 401/code 20103 response cleared credentials and navigated to login with no refresh.',
+  const beforeSales = userRequestCount();
+  const waitSales = () =>
+    page.getByText('暂无可用菜单', { exact: true }).waitFor();
+  await login(sales, process.env.FE1_SALES_PASSWORD, waitSales);
+  assert.equal(new URL(page.url()).pathname, '/home');
+  assert.deepEqual(menuResponses.at(-1), {
+    username: sales,
+    roles: [],
+    permissionCount: 0,
+    menus: [],
   });
+  for (const label of ['系统', '交易', '客户']) {
+    assert.equal(await page.getByText(label, { exact: true }).count(), 0);
+  }
+  assert.equal(userRequestCount(), beforeSales);
+  const beforeSalesReload = refreshCount();
+  await page.reload();
+  await waitSales();
+  assert.equal(refreshCount() - beforeSalesReload, 1);
+  assert.equal(userRequestCount(), beforeSales);
+  assert.equal(await page.locator('.ant-message-error').count(), 0);
+  await capture('sales01.png');
   checks.push({
-    assertion: 8,
-    evidence:
-      'HTTP 401/code 20103 returns the local session-expired message and clears state.',
+    name: 'sales01-empty-menus-and-reload',
+    userRequests: 0,
+    refreshRequests: 1,
   });
+  await Promise.all([...responseReads]);
   assert.deepEqual(errors, []);
-  checks.push({
-    assertion: 10,
-    evidence:
-      'No uncaught page errors across login, reload, users, placeholders, unknown routes, refresh and revocation.',
-  });
+  assert.ok(responses.every((response) => response.status < 400));
   console.log(
-    JSON.stringify({ checks, errors, refreshCalls, requests }, null, 2),
+    JSON.stringify({ checks, errors, apiRequests: requests.length }, null, 2),
   );
 } catch (failure) {
-  console.error(
+  failureInfo = { message: failure.message, url: page.url() };
+  throw failure;
+} finally {
+  await capture('final-state.png').catch(() => {});
+  await logout().catch(() => {});
+  await Promise.all([...responseReads]);
+  await writeFile(
+    new URL('browser-results.json', output),
     JSON.stringify(
       {
-        url: page.url(),
-        body: await page.locator('body').innerText(),
-        buttons: await page.getByRole('button').allTextContents(),
+        source: 'live backend through the development /api proxy',
+        origin,
+        checks,
+        errors,
+        failure: failureInfo,
+        requests,
+        responses,
+        menuResponses,
+        userResponses,
       },
       null,
       2,
     ),
   );
-  throw failure;
-} finally {
-  await writeFile(
-    new URL('browser-results.json', output),
-    JSON.stringify({ checks, errors, refreshCalls, requests }, null, 2),
-  );
-  await capture('final-state.png').catch(() => {});
   await browser.close();
 }

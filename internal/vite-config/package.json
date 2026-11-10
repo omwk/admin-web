@@ -36,7 +36,6 @@
     "cheerio": "catalog:",
     "get-port": "catalog:",
     "html-minifier-terser": "catalog:",
-    "nitropack": "catalog:",
     "vite-plugin-pwa": "catalog:",
     "vite-plugin-vue-devtools": "catalog:"
   },

@@ -11,20 +11,7 @@ import { getUserInfoApi } from '#/api';
 
 const profileBaseSettingRef = ref();
 
-const MOCK_ROLES_OPTIONS: BasicOption[] = [
-  {
-    label: '管理员',
-    value: 'super',
-  },
-  {
-    label: '用户',
-    value: 'user',
-  },
-  {
-    label: '测试',
-    value: 'test',
-  },
-];
+const roleOptions = ref<BasicOption[]>([]);
 
 const formSchema = computed((): VbenFormSchema[] => {
   return [
@@ -42,8 +29,9 @@ const formSchema = computed((): VbenFormSchema[] => {
       fieldName: 'roles',
       component: 'Select',
       componentProps: {
+        disabled: true,
         mode: 'tags',
-        options: MOCK_ROLES_OPTIONS,
+        options: roleOptions.value,
       },
       label: '角色',
     },
@@ -57,6 +45,10 @@ const formSchema = computed((): VbenFormSchema[] => {
 
 onMounted(async () => {
   const data = await getUserInfoApi();
+  roleOptions.value = (data.roles ?? []).map((role) => ({
+    label: role,
+    value: role,
+  }));
   profileBaseSettingRef.value.getFormApi().setValues(data);
 });
 </script>
