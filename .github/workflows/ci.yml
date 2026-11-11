@@ -22,6 +22,10 @@ jobs:
   check:
     name: lint / typecheck / unit
     runs-on: ubuntu-latest
+    # Upstream's date test expects a Region/City zone; GitHub runners default to
+    # UTC, which makes it fail. Pin a real zone so the suite is reproducible.
+    env:
+      TZ: Asia/Shanghai
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -43,6 +47,8 @@ jobs:
   build:
     name: build (admin)
     runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
