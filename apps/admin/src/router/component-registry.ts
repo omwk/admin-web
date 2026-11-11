@@ -16,8 +16,8 @@ export const componentRegistry: ComponentRecordType = {
   '/catalog/product/detail.vue': () =>
     import('#/views/catalog/product/detail.vue'),
   '/system/user/index.vue': () => import('#/views/system/user/index.vue'),
-  '/system/menu/index.vue': placeholder,
-  '/system/role/index.vue': placeholder,
+  '/system/menu/index.vue': () => import('#/views/system/menu/index.vue'),
+  '/system/role/index.vue': () => import('#/views/system/role/index.vue'),
   '/trade/order/index.vue': placeholder,
   '/crm/customer/index.vue': placeholder,
   '/crm/inquiry/index.vue': placeholder,

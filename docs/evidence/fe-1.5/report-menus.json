@@ -1,0 +1,659 @@
+{
+  "phase": "menus",
+  "passed": true,
+  "checks": [
+    {
+      "item": 3,
+      "assertion": "昵称、部门写入后列表即时刷新",
+      "user_id": 20,
+      "nickname": "FE1.5 用户编辑验收",
+      "dept_id": 1,
+      "screenshot": "03-user-edit.png"
+    },
+    {
+      "item": "step1-disable",
+      "assertion": "禁用、启用均写后刷新",
+      "passed": true
+    },
+    {
+      "item": 4,
+      "assertion": "两个角色保存后重新打开回显",
+      "ids": [2, 3],
+      "screenshot": "04-user-two-roles.png"
+    },
+    {
+      "item": "step1-reset-link",
+      "assertion": "重置链接生成且剪贴板内容一致",
+      "screenshot": "05-reset-link-copy.png"
+    },
+    {
+      "item": 9,
+      "assertion": "界面新增目录/子菜单、编辑隐藏再显示、删除后列表刷新；新会话登录后侧栏出现子菜单；父节点删除 409",
+      "menu_ids": [11, 12],
+      "screenshots": [
+        "09-menu-tree-crud.png",
+        "09-menu-sidebar-after-login.png",
+        "09-menu-delete-409.png"
+      ]
+    }
+  ],
+  "errors": [],
+  "responses": [
+    {
+      "source": "api",
+      "path": "/auth/login",
+      "method": "POST",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CC7KETJAMD5P1E5ZV65H6"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCAZTZCKX0XHZ3H574K0D"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCB65B2K8CYNT22HDJESV"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCB6GJQDB01ZK55GF95JP"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/refresh",
+      "method": "POST",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCBY1G3C8TE14R2DTKZHF"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCBYSCZ5XCG1CSNDP80DC"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCBZ11RD13A7196H90009"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/invites",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCC6FK1HF6AST20S0N71R"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCC6FK1HF6AST24BS9PJ4"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCC6FK1HF6AST25HSZWK8"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCC6FK1HF6AST27JF3CQM"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/3/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCC9PYZ9GT531EGNZE8SM"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/2/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCC9RBXQPK6XJKQVXRBHF"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/1/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCC9RBXQPK6XJKRJAEGT8"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M76CCDCQBS85B94EP4TP15FS"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCDKYF94H0FEYGEXBCQ31"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCDMZJ8S52W3EWQ5XKPEE"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/2/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCDN15NVK7XVMKHYDP73B"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/1/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCDN15NVK7XVMKJEVMHCE"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/3/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCDN15NVK7XVMKF99XAT7"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCDQM8TAFDC0945TC3Z20"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20",
+      "method": "PUT",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCE6XTQ3JCSQRYX9J1C29"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCE8857458W0DHQT89FFA"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCE98TBSEZT8K2Q8AEMAW"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/2/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCE99AETDQM38VSGSN4R2"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/3/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCE99AETDQM38VSGHCWRM"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/1/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCE9AAP4HZCK6DX0XW9TG"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCEVPCXCB5B0EZRGBX7H8"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20",
+      "method": "PUT",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCEWAR6DR6DFERBGC1QAR"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCEXKT1MDV5PHJ0VF8B9E"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCEYMTWHDR3FZYNTYHTA2"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/3/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCEYNV9JXFXJDWFQ76WFQ"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/2/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCEYPFX6VAQTCXKZAKGY0"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/1/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCEYPFX6VAQTCXN5RYPJK"
+    },
+    {
+      "source": "api",
+      "path": "/admin/users/20",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCEZYGC16RSSWA77Y16DR"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCFNFEPJ6W4QP3Y4S41DK"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20",
+      "method": "PUT",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCFNWF53PXX7EQRHDP3X5"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCFQ0CQD9RGK0BTHDR0YZ"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCFQN1HBZER3JDZJR7NB4"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/2/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCFQRPCRRENBRVSQ59EET"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/1/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCFQSX4H6RPG5A7TA26NE"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/3/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCFQRPCRRENBRVS6FEX0D"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCG26YWBGJYFQE2WJC38C"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGK930WHWYZHQ1ZQMD16"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGM5ZNDAX6A823TQF9RQ"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/3/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGM81FG2P3ABZGNF3BAA"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/1/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGM81FG2P3ABZMC0HCC2"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/2/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGM81FG2P3ABZKXXR6TM"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGPC10N17XFTAR6D1YND"
+    },
+    {
+      "source": "api",
+      "path": "/admin/users/20/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGT25ZANKK88BFBA74KP"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/reset-link",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M76CCGX3TX8CR6755MA8G2ZQ"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGYF1PKKD7QC3RG6KXWJ"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/20/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGZG42TVFQFM17VPJ9ET"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/3/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGZJP9K1X4AV5Y7PTW92"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/2/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGZJP9K1X4AV60K8X9JE"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/users/1/roles",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCGZKDTCP6N96Y1MKN2W9"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/refresh",
+      "method": "POST",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCHWMH5ADJSFCV4S6JMWC"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCHXAT0ACSXBEPKXP42G7"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCHXMCS1PSC2MNZ0MD3QY"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCJ6ES3ARRP2V1NW65KZY"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M76CCKJBFY05Q5RQ3E2460AQ"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCKKVKZ3XTDVFH1RDK3M9"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M76CCMBC0XGVCZMSTJD9MND4"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCMD26B595ZXKWXHZMG33"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus/12",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCMGJ4ZZB8W6X4Q1ANWT8"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus/12",
+      "method": "PUT",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCN4Q2BKPR6WBCFP7R5X2"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCN6B2AX1NGTBTE5EV0HT"
+    },
+    {
+      "source": "api",
+      "path": "/admin/menus/12",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCN8NDYR18DFG3YBWJSGP"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus/12",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCNA459BWZ7WJ5YN0AZ1V"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus/12",
+      "method": "PUT",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCNWCPRGRB7VP561XEBAX"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCNY3T60551R1NN3T95TK"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus/11",
+      "method": "DELETE",
+      "status": 409,
+      "code": 10004,
+      "trace_id": "01M76CCPH9PEEYH9A5CX8JJ4PG"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus/12",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCT9724YMRV0QKBK2X2XX"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus/11",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M76CCTQTV8ZA6G8KTWNEPRQV"
+    },
+    {
+      "source": "api",
+      "path": "/admin/users/20",
+      "method": "DELETE",
+      "status": 204
+    }
+  ]
+}

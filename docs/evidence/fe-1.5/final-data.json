@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "users": 3,
+  "roles": 3,
+  "menus": 10,
+  "remaining": {
+    "users": [],
+    "roles": [],
+    "menus": [],
+    "active_invites": []
+  },
+  "checked_at": "2026-11-11T22:51:10.886Z"
+}
