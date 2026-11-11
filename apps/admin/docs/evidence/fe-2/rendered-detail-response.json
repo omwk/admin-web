@@ -1,0 +1,49 @@
+{
+  "reported_stock": 0,
+  "product": {
+    "id": 20,
+    "tenant_id": 1,
+    "code": "DEMO-0020",
+    "title": "演示商品 20",
+    "subtitle": "用于前端联调的示例商品",
+    "brand": "品牌4",
+    "category_id": 5,
+    "main_image": "",
+    "description": "",
+    "status": "draft",
+    "source": "manual",
+    "attributes": {},
+    "price_min_cents": 1700,
+    "price_max_cents": 2200,
+    "sku_count": 2,
+    "version": 0,
+    "created_at": "2026-11-11T04:50:56.360508+08:00",
+    "updated_at": "2026-11-11T04:50:56.360508+08:00"
+  },
+  "skus": [
+    {
+      "id": 201,
+      "spu_id": 20,
+      "code": "DEMO-0020-1",
+      "barcode": "",
+      "title": "规格 标准",
+      "price_cents": 1700,
+      "currency": "CNY",
+      "attributes": {},
+      "status": "active"
+    },
+    {
+      "id": 202,
+      "spu_id": 20,
+      "code": "DEMO-0020-2",
+      "barcode": "",
+      "title": "规格 大号",
+      "price_cents": 2200,
+      "currency": "CNY",
+      "attributes": {},
+      "status": "active"
+    }
+  ],
+  "listings": [],
+  "media": []
+}

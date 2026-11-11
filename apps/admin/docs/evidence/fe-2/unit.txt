@@ -1,0 +1,13 @@
+$ vitest run --config vitest.config.ts
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+
+ Test Files  9 passed (9)
+      Tests  47 passed (47)
+   Start at  07:00:00
+   Duration  7.22s (transform 5.41s, setup 0ms, import 25.03s, tests 278ms, environment 10.07s)
+
+
+Command: pnpm --filter @vben/web-antd test:unit
+Exit code: 0

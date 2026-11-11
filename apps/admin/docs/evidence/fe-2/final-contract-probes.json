@@ -1,0 +1,54 @@
+{
+  "cursor_probes": [
+    {
+      "sort": "-updated_at",
+      "trace_id": "01M73TV6YC3JNCGJXN5ARP15NK",
+      "boundary": {
+        "id": 21,
+        "page": 100
+      },
+      "continuation": {
+        "ids": [20],
+        "page": 101
+      }
+    },
+    {
+      "sort": "updated_at",
+      "trace_id": "01M73TV6ZPNR06REATQA8KH28F",
+      "boundary": {
+        "id": 100,
+        "page": 100
+      },
+      "continuation": {
+        "ids": [1],
+        "page": 101
+      }
+    },
+    {
+      "sort": "price_min_cents",
+      "trace_id": "01M73TV70A18Q7103NSW2XZ6S3",
+      "boundary": {
+        "id": 100,
+        "page": 100
+      },
+      "continuation": {
+        "ids": [1],
+        "page": 101
+      }
+    },
+    {
+      "sort": "-price_min_cents",
+      "trace_id": "01M73TV70Z5XM0XH26DM22M3PB",
+      "boundary": {
+        "id": 21,
+        "page": 100
+      },
+      "continuation": {
+        "ids": [20],
+        "page": 101
+      }
+    }
+  ],
+  "total": 120,
+  "listings_total": 0
+}

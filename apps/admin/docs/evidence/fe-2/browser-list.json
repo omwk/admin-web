@@ -1,0 +1,867 @@
+{
+  "source": "real local backend, no response interception",
+  "phase": "list",
+  "checks": [
+    {
+      "name": "list-render",
+      "page": 1,
+      "total": 120,
+      "page_size": 20,
+      "ids": [
+        120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110, 109, 108, 107,
+        106, 105, 104, 103, 102, 101
+      ],
+      "missingCategory": true
+    },
+    {
+      "name": "page-2",
+      "query": {
+        "page": "2",
+        "page_size": "20",
+        "sort": "-updated_at"
+      },
+      "page": 2,
+      "total": 120,
+      "page_size": 20,
+      "ids": [
+        100, 99, 98, 97, 96, 95, 94, 93, 92, 91, 90, 89, 88, 87, 86, 85, 84, 83,
+        82, 81
+      ]
+    },
+    {
+      "name": "four-sorts",
+      "sorting": [
+        {
+          "sort": "updated_at",
+          "page": 1,
+          "total": 120,
+          "page_size": 20,
+          "ids": [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20
+          ]
+        },
+        {
+          "sort": "-price_min_cents",
+          "page": 1,
+          "total": 120,
+          "page_size": 20,
+          "ids": [
+            120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110, 109, 108,
+            107, 106, 105, 104, 103, 102, 101
+          ]
+        },
+        {
+          "sort": "price_min_cents",
+          "page": 1,
+          "total": 120,
+          "page_size": 20,
+          "ids": [
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
+            20
+          ]
+        },
+        {
+          "sort": "-updated_at",
+          "page": 1,
+          "total": 120,
+          "page_size": 20,
+          "ids": [
+            120, 119, 118, 117, 116, 115, 114, 113, 112, 111, 110, 109, 108,
+            107, 106, 105, 104, 103, 102, 101
+          ]
+        }
+      ]
+    },
+    {
+      "name": "status-draft",
+      "page": 1,
+      "total": 40,
+      "page_size": 20,
+      "ids": [
+        119, 116, 113, 110, 107, 104, 101, 98, 95, 92, 89, 86, 83, 80, 77, 74,
+        71, 68, 65, 62
+      ]
+    },
+    {
+      "name": "unsupported-multiple-status-is-explicit",
+      "apiCalls": 0
+    },
+    {
+      "name": "parent-category-contract-gap",
+      "page": 1,
+      "total": 8,
+      "page_size": 20,
+      "ids": [106, 91, 76, 61, 46, 31, 16, 1]
+    },
+    {
+      "name": "offset-100-cursor-101-through-120",
+      "boundary": {
+        "query": {
+          "page": "100",
+          "page_size": "1",
+          "sort": "-updated_at"
+        },
+        "page": 100,
+        "total": 120,
+        "page_size": 1,
+        "ids": [21]
+      },
+      "deep": [
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwMSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjIxfSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.WAKkYKOPb4JnaSwVfaBpIdEWT8sXPIN3b6IAz3PCQy0",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 101,
+          "total": 120,
+          "page_size": 1,
+          "ids": [20]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwMiwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjIwfSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.9X_zo9Ny8BWiBFaJh1iyv4_C0wmbflSfxGrQssquWEE",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 102,
+          "total": 120,
+          "page_size": 1,
+          "ids": [19]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwMywicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE5fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.kO-G6eCvYIXxFBElLeAU7eZuWN6Fo5UpLPa6HSoN8yc",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 103,
+          "total": 120,
+          "page_size": 1,
+          "ids": [18]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwNCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE4fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.R6leBlD2kRo1MIn07XzswAgctsJRjHVxNXVeTGEYAjc",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 104,
+          "total": 120,
+          "page_size": 1,
+          "ids": [17]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwNSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE3fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.jHEVykwnBqUsoDGEhJrKQCppOIjKdMT5no84r_YfdPY",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 105,
+          "total": 120,
+          "page_size": 1,
+          "ids": [16]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwNiwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE2fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.8LJ3aODyma6tGWTi7f4MIbmD2y_youKmXVcffS-WwLI",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 106,
+          "total": 120,
+          "page_size": 1,
+          "ids": [15]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwNywicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE1fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.raOS37c7oEFR7u09YPQhBKt7KzVFSkaDrLJMy5-VdY4",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 107,
+          "total": 120,
+          "page_size": 1,
+          "ids": [14]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwOCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE0fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.tWfMDlBJL9QrK85CURgiSkVnQhBRLzUoxCJJnwwtZcY",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 108,
+          "total": 120,
+          "page_size": 1,
+          "ids": [13]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwOSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjEzfSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.c8TUYCYvanEwxYbcgz8WOxqSdC9gjCAQ7UdbP2ZabGM",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 109,
+          "total": 120,
+          "page_size": 1,
+          "ids": [12]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExMCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjEyfSwiZXhwaXJlcyI6MTc5NDQzNzE5MH0.RanPYY8SMIaK0olZhKEh2m-oRFJkI9jUvegS34d_9lw",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 110,
+          "total": 120,
+          "page_size": 1,
+          "ids": [11]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExMSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjExfSwiZXhwaXJlcyI6MTc5NDQzNzE5MH0.ZYhNd-0N30ZFLVhpJq2oWnh4-NxWU0YC8krdDVqYxgM",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 111,
+          "total": 120,
+          "page_size": 1,
+          "ids": [10]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExMiwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjEwfSwiZXhwaXJlcyI6MTc5NDQzNzE5MH0.9bwYnHVrKqLwT1o_A94lUW3dZntLP-E-8D0RlnWEIf8",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 112,
+          "total": 120,
+          "page_size": 1,
+          "ids": [9]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExMywicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjl9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.DlKE-Y5nv8QhiY1lsn5QThbyua4jWK9utm3n-GBaB9A",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 113,
+          "total": 120,
+          "page_size": 1,
+          "ids": [8]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExNCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjh9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.9UqNfB6BpnqsZHgg-6Sz_YICMXdN9Jfdd5lpuJFskd8",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 114,
+          "total": 120,
+          "page_size": 1,
+          "ids": [7]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExNSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjd9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.XZgdWdU0txyr8XQlgbR6Z1brVKbVpTLDKDPl3iKL6GY",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 115,
+          "total": 120,
+          "page_size": 1,
+          "ids": [6]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExNiwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjZ9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.bQXJvrlP5XIoUKIHGxOk5OQYdfZyb5I5J-6bZuFls6Q",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 116,
+          "total": 120,
+          "page_size": 1,
+          "ids": [5]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExNywicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjV9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.y55yUfH5nEWTOr89Rss6PhXHa_AQZ4OYfroFmovfqHk",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 117,
+          "total": 120,
+          "page_size": 1,
+          "ids": [4]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExOCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjR9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.UBhxA5VB92Z4E04cxZMBerE6j4XScnIdDeNjXswNmEo",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 118,
+          "total": 120,
+          "page_size": 1,
+          "ids": [3]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExOSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjN9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.rr4XTZOP_Eaizl94MyXoJkgDIc8rm7oaSX1CTKyu9FM",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 119,
+          "total": 120,
+          "page_size": 1,
+          "ids": [2]
+        },
+        {
+          "query": {
+            "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEyMCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjJ9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.YDI5kX2w2ISJ9AILlI3JnyPSUWombBpNkhtF016NjiA",
+            "page_size": "1",
+            "sort": "-updated_at"
+          },
+          "page": 120,
+          "total": 120,
+          "page_size": 1,
+          "ids": [1]
+        }
+      ]
+    },
+    {
+      "name": "cursor-backward-cache",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwMSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjIxfSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.WAKkYKOPb4JnaSwVfaBpIdEWT8sXPIN3b6IAz3PCQy0",
+        "page_size": "1",
+        "sort": "-updated_at"
+      },
+      "page": 101,
+      "total": 120,
+      "page_size": 1,
+      "ids": [20]
+    },
+    {
+      "name": "browser-integer-cents",
+      "amounts": ["123.45", "0.00", "92233720368547758.07"]
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/categories",
+      "query": {}
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "2",
+        "page_size": "20",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "sort": "updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "sort": "-price_min_cents"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "sort": "price_min_cents"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "sort": "-updated_at",
+        "status": "draft"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "category_id": "1",
+        "page": "1",
+        "page_size": "20",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "1",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "page": "100",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwMSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjIxfSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.WAKkYKOPb4JnaSwVfaBpIdEWT8sXPIN3b6IAz3PCQy0",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwMiwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjIwfSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.9X_zo9Ny8BWiBFaJh1iyv4_C0wmbflSfxGrQssquWEE",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwMywicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE5fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.kO-G6eCvYIXxFBElLeAU7eZuWN6Fo5UpLPa6HSoN8yc",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwNCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE4fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.R6leBlD2kRo1MIn07XzswAgctsJRjHVxNXVeTGEYAjc",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwNSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE3fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.jHEVykwnBqUsoDGEhJrKQCppOIjKdMT5no84r_YfdPY",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwNiwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE2fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.8LJ3aODyma6tGWTi7f4MIbmD2y_youKmXVcffS-WwLI",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwNywicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE1fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.raOS37c7oEFR7u09YPQhBKt7KzVFSkaDrLJMy5-VdY4",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwOCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjE0fSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.tWfMDlBJL9QrK85CURgiSkVnQhBRLzUoxCJJnwwtZcY",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwOSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjEzfSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.c8TUYCYvanEwxYbcgz8WOxqSdC9gjCAQ7UdbP2ZabGM",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExMCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjEyfSwiZXhwaXJlcyI6MTc5NDQzNzE5MH0.RanPYY8SMIaK0olZhKEh2m-oRFJkI9jUvegS34d_9lw",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExMSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjExfSwiZXhwaXJlcyI6MTc5NDQzNzE5MH0.ZYhNd-0N30ZFLVhpJq2oWnh4-NxWU0YC8krdDVqYxgM",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExMiwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjEwfSwiZXhwaXJlcyI6MTc5NDQzNzE5MH0.9bwYnHVrKqLwT1o_A94lUW3dZntLP-E-8D0RlnWEIf8",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExMywicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjl9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.DlKE-Y5nv8QhiY1lsn5QThbyua4jWK9utm3n-GBaB9A",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExNCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjh9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.9UqNfB6BpnqsZHgg-6Sz_YICMXdN9Jfdd5lpuJFskd8",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExNSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjd9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.XZgdWdU0txyr8XQlgbR6Z1brVKbVpTLDKDPl3iKL6GY",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExNiwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjZ9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.bQXJvrlP5XIoUKIHGxOk5OQYdfZyb5I5J-6bZuFls6Q",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExNywicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjV9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.y55yUfH5nEWTOr89Rss6PhXHa_AQZ4OYfroFmovfqHk",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExOCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjR9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.UBhxA5VB92Z4E04cxZMBerE6j4XScnIdDeNjXswNmEo",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjExOSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjN9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.rr4XTZOP_Eaizl94MyXoJkgDIc8rm7oaSX1CTKyu9FM",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEyMCwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjJ9LCJleHBpcmVzIjoxNzk0NDM3MTkwfQ.YDI5kX2w2ISJ9AILlI3JnyPSUWombBpNkhtF016NjiA",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/products",
+      "query": {
+        "cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXVwZGF0ZWRfYXQiLCJwYWdlX3NpemUiOjEsInZlcnNpb24iOjEsInBhZ2UiOjEwMSwicG9zaXRpb24iOnsidXBkYXRlZF9hdCI6IjIwMjYtMTEtMTFUMDQ6NTA6NTYuMzYwNTA4KzA4OjAwIiwiaWQiOjIxfSwiZXhwaXJlcyI6MTc5NDQzNzE4OX0.WAKkYKOPb4JnaSwVfaBpIdEWT8sXPIN3b6IAz3PCQy0",
+        "page_size": "1",
+        "sort": "-updated_at"
+      }
+    }
+  ],
+  "responses": [
+    {
+      "path": "/api/v1/auth/login",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/auth/refresh",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/categories",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    },
+    {
+      "path": "/api/v1/admin/products",
+      "status": 200,
+      "code": 0
+    }
+  ],
+  "errors": []
+}

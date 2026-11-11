@@ -1,10 +1,11 @@
 import type { GenerateMenuAndRoutesOptions } from '@vben/types';
 
 import { generateAccessible } from '@vben/access';
-import { useUserStore } from '@vben/stores';
+import { useAccessStore, useUserStore } from '@vben/stores';
 
 import { getAllMenusApi } from '#/api';
 
+import { catalogRoutes } from './catalog';
 import { componentRegistry } from './component-registry';
 import { findHomePath } from './menu-adapter';
 
@@ -13,15 +14,27 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
     ...options,
     fetchMenuListAsync: async () => {
       const routes = await getAllMenusApi();
+      const paths = new Set<string>();
+      const collectPaths = (items: typeof routes) => {
+        for (const item of items) {
+          paths.add(item.path);
+          if (item.children) collectPaths(item.children);
+        }
+      };
+      collectPaths(routes);
+      const catalog = catalogRoutes(useAccessStore().accessCodes).filter(
+        (route) => !paths.has(route.path),
+      );
       const userStore = useUserStore();
       if (userStore.userInfo) {
         userStore.setUserInfo({
           ...userStore.userInfo,
-          homePath: findHomePath(routes),
+          homePath: findHomePath([...routes, ...catalog]),
         });
       }
       return [
         ...routes,
+        ...catalog,
         {
           component: '/_core/fallback/no-menu.vue',
           meta: { hideInMenu: true, title: '首页' },

@@ -1,0 +1,112 @@
+[
+  {
+    "response": {
+      "code": 0,
+      "message": "ok",
+      "data": {
+        "list": [
+          {
+            "id": 100,
+            "title": "演示商品 100",
+            "main_image": "",
+            "price_min_cents": 2500,
+            "price_max_cents": 3000,
+            "sku_count": 2,
+            "shop_names": [],
+            "status": "active",
+            "source": "manual",
+            "updated_at": "2026-11-11T04:50:56.360508+08:00"
+          }
+        ],
+        "total": 120,
+        "page": 100,
+        "page_size": 1,
+        "next_cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoidXBkYXRlZF9hdCIsInBhZ2Vfc2l6ZSI6MSwidmVyc2lvbiI6MSwicGFnZSI6MTAxLCJwb3NpdGlvbiI6eyJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0xMVQwNDo1MDo1Ni4zNjA1MDgrMDg6MDAiLCJpZCI6MTAwfSwiZXhwaXJlcyI6MTc5NDQzNjU4Nn0.qvFBp4pq-kUVd8Oq7xPxwyALrQlm7ahUZpWP5aDDelE"
+      },
+      "trace_id": "01M73SP0801X12E36AX72F43ZJ"
+    },
+    "query": "page=100&page_size=1&sort=updated_at"
+  },
+  {
+    "response": {
+      "code": 0,
+      "message": "ok",
+      "data": {
+        "list": [
+          {
+            "id": 21,
+            "title": "演示商品 21",
+            "main_image": "",
+            "price_min_cents": 1710,
+            "price_max_cents": 2210,
+            "sku_count": 2,
+            "shop_names": [],
+            "status": "active",
+            "source": "manual",
+            "updated_at": "2026-11-11T04:50:56.360508+08:00"
+          }
+        ],
+        "total": 120,
+        "page": 100,
+        "page_size": 1,
+        "next_cursor": "eyJ0ZW5hbnRfaWQiOjEsImZpbHRlciI6IjQ0MTM2ZmEzNTViMzY3OGExMTQ2YWQxNmY3ZTg2NDllOTRmYjRmYzIxZmU3N2U4MzEwYzA2MGY2MWNhYWZmOGEiLCJzb3J0IjoiLXByaWNlX21pbl9jZW50cyIsInBhZ2Vfc2l6ZSI6MSwidmVyc2lvbiI6MSwicGFnZSI6MTAxLCJwb3NpdGlvbiI6eyJ1cGRhdGVkX2F0IjoiMjAyNi0xMS0xMVQwNDo1MDo1Ni4zNjA1MDgrMDg6MDAiLCJpZCI6MjF9LCJleHBpcmVzIjoxNzk0NDM2NTg2fQ.u6_kLbfcn7VmYMRMDAMt_l8bpHkWZ1n_u_ppLkw9njA"
+      },
+      "trace_id": "01M73SP08K5CYCBBCR0B1TFYYA"
+    },
+    "query": "page=100&page_size=1&sort=-price_min_cents"
+  },
+  {
+    "response": {
+      "code": 0,
+      "message": "ok",
+      "data": {
+        "list": [
+          {
+            "id": 111,
+            "title": "演示商品 111",
+            "main_image": "",
+            "price_min_cents": 2610,
+            "price_max_cents": 3110,
+            "sku_count": 2,
+            "shop_names": [],
+            "status": "active",
+            "source": "manual",
+            "updated_at": "2026-11-11T04:50:56.360508+08:00"
+          }
+        ],
+        "total": 8,
+        "page": 1,
+        "page_size": 1
+      },
+      "trace_id": "01M73SP0907PZHGH495PHMK10S"
+    },
+    "query": "page=1&page_size=1&category_id=6"
+  },
+  {
+    "response": {
+      "code": 0,
+      "message": "ok",
+      "data": {
+        "list": [
+          {
+            "id": 112,
+            "title": "演示商品 112",
+            "main_image": "",
+            "price_min_cents": 2620,
+            "price_max_cents": 3120,
+            "sku_count": 2,
+            "shop_names": [],
+            "status": "active",
+            "source": "manual",
+            "updated_at": "2026-11-11T04:50:56.360508+08:00"
+          }
+        ],
+        "total": 8,
+        "page": 1,
+        "page_size": 1
+      },
+      "trace_id": "01M73SP09C24P0N2EXNQ9XC2TR"
+    },
+    "query": "page=1&page_size=1&category_id=7"
+  }
+]
