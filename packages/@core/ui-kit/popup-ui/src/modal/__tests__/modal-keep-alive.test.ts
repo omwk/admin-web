@@ -100,7 +100,6 @@ async function mountCachedPages(
   let api: ReturnType<typeof useVbenModal>[1] | undefined;
   let apiB: ReturnType<typeof useVbenModal>[1] | undefined;
   let deactivated = 0;
-  // eslint-disable-next-line vue/one-component-per-file -- Cached pages and their modal children need separate instances.
   const DraftInput = defineComponent({
     setup() {
       // Keep this state inside the modal's child, so remounting would lose it.
@@ -115,14 +114,12 @@ async function mountCachedPages(
         });
     },
   });
-  // eslint-disable-next-line vue/one-component-per-file -- Exercise the connectedComponent API used by the playground.
   const ConnectedModal = defineComponent({
     setup() {
       const [Modal] = useVbenModal();
       return () => h(Modal, null, { default: () => h(DraftInput) });
     },
   });
-  // eslint-disable-next-line vue/one-component-per-file -- The fixture needs two distinct cached pages.
   const PageA = defineComponent({
     name: 'Issue8403PageA',
     setup() {
@@ -145,7 +142,6 @@ async function mountCachedPages(
         ]);
     },
   });
-  // eslint-disable-next-line vue/one-component-per-file -- The fixture needs two distinct cached pages.
   const PageB = defineComponent({
     name: 'Issue8403PageB',
     setup() {

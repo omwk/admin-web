@@ -24,7 +24,7 @@
 ### 用户
 
 | 接口 | 用途 |
-|---|---|
+| --- | --- |
 | `GET /admin/users` | 列表（keyword/status/sort，已支持） |
 | `GET /admin/users/{id}` | 详情 |
 | `POST /admin/users` | 直接建号（备用路径） |
@@ -37,34 +37,34 @@
 
 ### 邀请（F1）
 
-| 接口 | 用途 |
-|---|---|
-| `POST /admin/invites` | 生成邀请（预置部门/角色/有效期/次数） |
-| `GET /admin/invites` | 列表（状态、已用次数、过期） |
-| `DELETE /admin/invites/{id}` | 撤销 |
+| 接口                         | 用途                                  |
+| ---------------------------- | ------------------------------------- |
+| `POST /admin/invites`        | 生成邀请（预置部门/角色/有效期/次数） |
+| `GET /admin/invites`         | 列表（状态、已用次数、过期）          |
+| `DELETE /admin/invites/{id}` | 撤销                                  |
 
 ### 角色
 
-| 接口 | 用途 |
-|---|---|
-| `GET /admin/roles` | 列表 |
-| `GET /admin/roles/{id}` | 详情 |
-| `POST /admin/roles` | 新建 |
-| `PUT /admin/roles/{id}` | 更新 |
-| `DELETE /admin/roles/{id}` | 删除 |
-| `GET/PUT /admin/roles/{id}/menus` | 菜单授权与回读 |
+| 接口                                    | 用途           |
+| --------------------------------------- | -------------- |
+| `GET /admin/roles`                      | 列表           |
+| `GET /admin/roles/{id}`                 | 详情           |
+| `POST /admin/roles`                     | 新建           |
+| `PUT /admin/roles/{id}`                 | 更新           |
+| `DELETE /admin/roles/{id}`              | 删除           |
+| `GET/PUT /admin/roles/{id}/menus`       | 菜单授权与回读 |
 | `GET/PUT /admin/roles/{id}/permissions` | 权限授权与回读 |
-| `GET/PUT /admin/roles/{id}/depts` | 数据范围部门 |
+| `GET/PUT /admin/roles/{id}/depts`       | 数据范围部门   |
 
 ### 菜单与部门
 
-| 接口 | 用途 |
-|---|---|
-| `GET /admin/menus` | 菜单树 |
-| `GET /admin/menus/{id}` | 详情 |
-| `POST/PUT/DELETE /admin/menus[/{id}]` | 增删改 |
-| `GET /admin/depts` | 部门树（只读） |
-| `GET /admin/permissions` | 权限码字典（按 module 分组） |
+| 接口                                  | 用途                         |
+| ------------------------------------- | ---------------------------- |
+| `GET /admin/menus`                    | 菜单树                       |
+| `GET /admin/menus/{id}`               | 详情                         |
+| `POST/PUT/DELETE /admin/menus[/{id}]` | 增删改                       |
+| `GET /admin/depts`                    | 部门树（只读）               |
+| `GET /admin/permissions`              | 权限码字典（按 module 分组） |
 
 ## 3. 页面
 
@@ -130,7 +130,7 @@ trade     (15)
 ## 5. 验收
 
 | # | 项 | 断言 |
-|---|---|---|
+| --- | --- | --- |
 | 1 | 邀请 | 生成邀请 → 打开链接 → 设密码 → 登录成功，落到预置部门与角色 |
 | 2 | 邀请管理 | 列表显示状态；撤销后链接失效 |
 | 3 | 用户编辑 | 改昵称/部门后列表即时更新 |

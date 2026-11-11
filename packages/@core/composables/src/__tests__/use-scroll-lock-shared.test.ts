@@ -1,5 +1,3 @@
-/* eslint-disable vue/one-component-per-file -- Test fixtures cover parent/child mount ordering. */
-
 import type { App, WritableComputedRef } from 'vue';
 
 import {
