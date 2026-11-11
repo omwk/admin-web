@@ -1,0 +1,50 @@
+$ vsh lint
+Checking formatting...
+
+All matched files use the correct format.
+Finished in 4474ms on 1221 files using 4 threads.
+
+D:\code\admin-web\packages\@core\ui-kit\form-ui\__tests__\config.test.ts
+  27:40  warning  There is more than one component in this file  vue/one-component-per-file
+  28:41  warning  There is more than one component in this file  vue/one-component-per-file
+  50:41  warning  There is more than one component in this file  vue/one-component-per-file
+
+D:\code\admin-web\packages\@core\ui-kit\form-ui\__tests__\form-field-node-name.test.ts
+  24:47  warning  There is more than one component in this file  vue/one-component-per-file
+  35:41  warning  There is more than one component in this file  vue/one-component-per-file
+
+D:\code\admin-web\packages\@core\ui-kit\form-ui\__tests__\use-custom-field-value.test.ts
+  19:35  warning  There is more than one component in this file  vue/one-component-per-file
+  49:39  warning  There is more than one component in this file  vue/one-component-per-file
+  71:40  warning  There is more than one component in this file  vue/one-component-per-file
+
+D:\code\admin-web\packages\effects\common-ui\src\components\api-component\__tests__\api-component.test.ts
+   10:36  warning  There is more than one component in this file  vue/one-component-per-file
+   26:41  warning  There is more than one component in this file  vue/one-component-per-file
+   42:41  warning  There is more than one component in this file  vue/one-component-per-file
+   64:37  warning  There is more than one component in this file  vue/one-component-per-file
+  112:37  warning  There is more than one component in this file  vue/one-component-per-file
+  139:37  warning  There is more than one component in this file  vue/one-component-per-file
+
+D:\code\admin-web\packages\effects\common-ui\src\components\icon-picker\__tests__\icon-picker.test.ts
+   20:25  warning  There is more than one component in this file  vue/one-component-per-file
+   96:44  warning  There is more than one component in this file  vue/one-component-per-file
+  122:42  warning  There is more than one component in this file  vue/one-component-per-file
+  234:23  warning  There is more than one component in this file  vue/one-component-per-file
+  319:23  warning  There is more than one component in this file  vue/one-component-per-file
+
+D:\code\admin-web\packages\effects\plugins\src\vxe-table\__tests__\use-vxe-grid.proxy.test.ts
+  53:30  warning  There is more than one component in this file  vue/one-component-per-file
+  93:36  warning  There is more than one component in this file  vue/one-component-per-file
+
+✖ 21 problems (0 errors, 21 warnings)
+
+Invalid icon name: "var(--vben-tiptap-max-height)"
+Invalid icon name: "var(--vben-tiptap-min-height)"
+Invalid icon name: "10px"
+Invalid icon name: "transform,color,background-color,border-color,box-shadow"
+Invalid icon name: "transform,box-shadow,border-color"
+Invalid icon name: "1.04"
+
+Command: pnpm lint
+Exit code: 0

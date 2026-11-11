@@ -1,0 +1,4 @@
+$ vue-tsc --noEmit
+
+Command: pnpm --filter @vben/web-antd typecheck
+Exit code: 0

@@ -1,0 +1,36 @@
+{
+  "code": 0,
+  "message": "ok",
+  "data": {
+    "list": [
+      {
+        "id": 120,
+        "title": "演示商品 120",
+        "main_image": "",
+        "price_min_cents": 2700,
+        "price_max_cents": 3200,
+        "sku_count": 2,
+        "shop_names": [],
+        "status": "active",
+        "source": "manual",
+        "updated_at": "2026-11-11T04:50:56.360508+08:00"
+      },
+      {
+        "id": 119,
+        "title": "演示商品 119",
+        "main_image": "",
+        "price_min_cents": 2690,
+        "price_max_cents": 3190,
+        "sku_count": 2,
+        "shop_names": [],
+        "status": "draft",
+        "source": "manual",
+        "updated_at": "2026-11-11T04:50:56.360508+08:00"
+      }
+    ],
+    "total": 120,
+    "page": 1,
+    "page_size": 2
+  },
+  "trace_id": "01M73SM6DRJDM1R1HRTMZVJC6C"
+}

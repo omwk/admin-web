@@ -9,6 +9,12 @@ export const componentRegistry: ComponentRecordType = {
   '/_core/fallback/no-menu.vue': () =>
     import('#/views/_core/fallback/no-menu.vue'),
   '/pending/index.vue': placeholder,
+  '/_core/fallback/forbidden.vue': () =>
+    import('#/views/_core/fallback/forbidden.vue'),
+  '/catalog/product/index.vue': () =>
+    import('#/views/catalog/product/index.vue'),
+  '/catalog/product/detail.vue': () =>
+    import('#/views/catalog/product/detail.vue'),
   '/system/user/index.vue': () => import('#/views/system/user/index.vue'),
   '/system/menu/index.vue': placeholder,
   '/system/role/index.vue': placeholder,

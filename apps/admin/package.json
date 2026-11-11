@@ -21,6 +21,7 @@
     "dev": "pnpm vite --mode development",
     "preview": "vite preview",
     "test:e2e": "node e2e/fe1.mjs",
+    "test:e2e:fe2": "node e2e/fe2.mjs --phase=full",
     "typecheck": "vue-tsc --noEmit",
     "test:unit": "vitest run --config vitest.config.ts"
   },
