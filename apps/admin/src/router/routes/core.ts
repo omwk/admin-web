@@ -49,6 +49,33 @@ const coreRoutes: RouteRecordRaw[] = [
     redirect: LOGIN_PATH,
     children: [
       {
+        name: 'AcceptInvite',
+        path: 'invite/accept',
+        component: () =>
+          import('#/views/_core/authentication/account-link.vue'),
+        props: { mode: 'invite' },
+        meta: { title: '接受邀请' },
+      },
+      {
+        name: 'AccountLinkComplete',
+        path: 'account-complete',
+        component: () =>
+          import('#/views/_core/authentication/account-link.vue'),
+        props: (route) => ({
+          complete: true,
+          mode: route.query.mode === 'invite' ? 'invite' : 'reset',
+        }),
+        meta: { title: '账号设置完成' },
+      },
+      {
+        name: 'ResetPasswordLink',
+        path: 'password/reset',
+        component: () =>
+          import('#/views/_core/authentication/account-link.vue'),
+        props: { mode: 'reset' },
+        meta: { title: '设置新密码' },
+      },
+      {
         name: 'Login',
         path: 'login',
         component: () => import('#/views/_core/authentication/login.vue'),

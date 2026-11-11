@@ -20,3 +20,16 @@ export interface UserListQuery {
   page_size?: number;
   status?: '' | UserStatus;
 }
+
+export interface UserInput {
+  avatar: null | string;
+  dept_id: number;
+  email: null | string;
+  nickname: null | string;
+  status: UserStatus;
+}
+
+export interface CreateUserInput extends UserInput {
+  password: string;
+  username: string;
+}

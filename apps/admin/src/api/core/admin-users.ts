@@ -1,5 +1,10 @@
 import type { ApiRequestConfig } from '#/api/client';
-import type { AdminUser, UserListQuery } from '#/api/model/admin-user';
+import type {
+  AdminUser,
+  CreateUserInput,
+  UserInput,
+  UserListQuery,
+} from '#/api/model/admin-user';
 import type { PageResult } from '#/api/model/response';
 
 import { requestClient } from '#/api/request';
@@ -26,3 +31,33 @@ export function getUsersApi(
     params: normalizeUserQuery(query),
   });
 }
+
+const writeConfig: ApiRequestConfig = { silent: true };
+export const getUserApi = (id: number) =>
+  requestClient.get<AdminUser>(`/admin/users/${id}`, writeConfig);
+export const createUserApi = (input: CreateUserInput) =>
+  requestClient.post<AdminUser>('/admin/users', input, writeConfig);
+export const updateUserApi = (id: number, input: UserInput) =>
+  requestClient.put<AdminUser>(`/admin/users/${id}`, input, writeConfig);
+export const deleteUserApi = (id: number) =>
+  requestClient.delete(`/admin/users/${id}`, writeConfig);
+export const getUserRolesApi = (id: number) =>
+  requestClient.get<number[]>(`/admin/users/${id}/roles`, writeConfig);
+export const setUserRolesApi = (id: number, roleIds: number[]) =>
+  requestClient.put(
+    `/admin/users/${id}/roles`,
+    { role_ids: roleIds },
+    writeConfig,
+  );
+export const resetUserPasswordApi = (id: number, password: string) =>
+  requestClient.post(
+    `/admin/users/${id}/reset-password`,
+    { password },
+    writeConfig,
+  );
+export const createResetLinkApi = (id: number) =>
+  requestClient.post<{ link: string }>(
+    `/admin/users/${id}/reset-link`,
+    undefined,
+    writeConfig,
+  );
