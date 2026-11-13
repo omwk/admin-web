@@ -61,7 +61,7 @@ async function submit() {
     confirmation.value = '';
     await router.replace({
       name: 'AccountLinkComplete',
-      query: { mode: props.mode },
+      query: { mode: props.mode, tenant_id: tenant },
     });
   } catch (error_) {
     const failure = toApiError(error_);
@@ -84,7 +84,12 @@ async function submit() {
       sub-title="请使用本人设置的密码登录。"
     >
       <template #extra>
-        <RouterLink to="/auth/login">
+        <RouterLink
+          :to="{
+            path: '/auth/login',
+            query: { tenant_id: route.query.tenant_id },
+          }"
+        >
           <Button type="primary">前往登录</Button>
         </RouterLink>
       </template>

@@ -2,6 +2,7 @@
 import type { VbenFormSchema } from '@vben/common-ui';
 
 import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
 import { AuthenticationLogin, z } from '@vben/common-ui';
 import { $t } from '@vben/locales';
@@ -10,7 +11,24 @@ import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Login' });
 const authStore = useAuthStore();
+const route = useRoute();
+const invitedTenant = Number(route.query.tenant_id);
 const formSchema = computed((): VbenFormSchema[] => [
+  {
+    component: 'VbenInput',
+    componentProps: {
+      type: 'number',
+      min: 1,
+      placeholder: '请输入租户 ID',
+    },
+    defaultValue:
+      Number.isSafeInteger(invitedTenant) && invitedTenant > 0
+        ? invitedTenant
+        : 1,
+    fieldName: 'tenant_id',
+    label: '租户 ID',
+    rules: z.coerce.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
+  },
   {
     component: 'VbenInput',
     componentProps: {

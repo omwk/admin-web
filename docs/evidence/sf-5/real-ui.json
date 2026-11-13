@@ -1,0 +1,234 @@
+{
+  "source": "real-18080-and-msedge",
+  "date": "2026-11-13T23:06:27.353Z",
+  "fixtureCode": "sf5_1794611098090",
+  "retainedTenantId": 4,
+  "retainedTemplateId": 4,
+  "retainedReason": "没有租户删除API；验收租户停用保留，关联模板受删除保护。",
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "default(1) 显示平台标记、启用状态与无来源模板",
+      "tenant": {
+        "id": 1,
+        "code": "default",
+        "name": "default",
+        "status": "active",
+        "provisioned_from": null,
+        "created_at": "2026-11-01T23:36:05.326868+08:00",
+        "updated_at": "2026-11-01T23:36:05.326868+08:00"
+      },
+      "screenshot": "01-default-real.png"
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "default 快照角色/菜单数与来源和模板详情完全一致",
+      "templateId": 4,
+      "roleCount": 3,
+      "menuCount": 21,
+      "permissionCount": 118,
+      "screenshots": ["02-snapshot-real.png", "02-snapshot-detail-real.png"]
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "两步开通真实201；复制内容一致；存储无邀请；关闭、重开、刷新均无链接",
+      "tenantId": 4,
+      "status": 201,
+      "clipboardMatched": true,
+      "storageContainsInvitation": false,
+      "recoveredAfterClose": false,
+      "screenshots": ["03-wizard-real.png", "03-invitation-masked-real.png"]
+    },
+    {
+      "item": 4,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "邀请设密码后由真实登录页传租户ID登录，重复接受400，成功页不再保留token",
+      "acceptedStatus": 201,
+      "loginTenantId": 4,
+      "isSuper": true,
+      "reused": {
+        "status": 400,
+        "code": 10001,
+        "message": "邀请或链接无效",
+        "traceId": "01M7BJH4KDEDCESET0J0QE03HW"
+      },
+      "screenshot": "04-invite-accepted-real.png"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "新租户仅有自身用户、商品0条；default有商品且跨租户详情404",
+      "defaultUsers": 4,
+      "newUsers": 1,
+      "defaultProducts": 123,
+      "newProducts": 0,
+      "foreignTenant": {
+        "status": 404,
+        "code": 10003,
+        "message": "资源不存在",
+        "traceId": "01M7BJH5HFTQB1480EVGP0EMC5"
+      },
+      "screenshot": "05-isolation-real.png"
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "新租户菜单与模板来源一致；按平台入口规则排除租户管理，直连页面403",
+      "matchedMenuCount": 14,
+      "excludedPlatformOnlyEntry": "/system/tenants",
+      "screenshots": ["06-menus-real.png", "06-platform-entry-hidden-real.png"]
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "重复租户code真实409，向导原样显示message并保留输入",
+      "status": 409,
+      "code": 10004,
+      "message": "资源冲突或仍被引用",
+      "traceId": "01M7BJHF78D4SHERP0RXFZ6H8R",
+      "screenshot": "07-code-conflict-real.png"
+    },
+    {
+      "item": 8,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "改名只发name；取消停用无变化；三条后果确认后suspended，登录/刷新403",
+      "rename": {
+        "status": 200,
+        "fields": ["name"]
+      },
+      "status": "suspended",
+      "deniedLogin": {
+        "status": 403,
+        "code": 20111,
+        "message": "租户已停用",
+        "traceId": "01M7BJHJVFFNZ4V8W4YG632GV9"
+      },
+      "deniedRefresh": {
+        "status": 403,
+        "code": 20111,
+        "message": "租户已停用",
+        "traceId": "01M7BJHJVV97H5P9BDVN36EQVG"
+      },
+      "screenshots": [
+        "08-disable-confirmation-real.png",
+        "08-suspended-real.png"
+      ]
+    },
+    {
+      "item": 9,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "界面启用后active，真实登录页可再次登录新租户",
+      "status": "active",
+      "tenantId": 4,
+      "screenshot": "09-enabled-real.png"
+    },
+    {
+      "item": 10,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "平台停用按钮禁用并提示，强行请求409原文，平台状态不变",
+      "status": 409,
+      "code": 10004,
+      "message": "平台租户不可停用",
+      "traceId": "01M7BJHQ734HJPHSEF73PFKWNA",
+      "screenshot": "10-platform-protection-real.png"
+    },
+    {
+      "item": 11,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "使用中模板禁用删除并显示原因，强删409；未使用模板可改名/删除204",
+      "protected": {
+        "status": 409,
+        "code": 10004,
+        "message": "资源仍被引用或受保护",
+        "traceId": "01M7BJHRPEBESTSGAP0GDAKBV6"
+      },
+      "unusedDeleteStatus": 204,
+      "screenshot": "11-template-protection-real.png"
+    },
+    {
+      "item": 12,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "无manage隐藏写入口；真实只读账号直接写403，非超管即使有list也隐藏入口",
+      "uiSource": "real-platform-super-session-with-manage-removed-from-menu-response",
+      "reason": "后端超管始终获得全量权限；只读分支使用响应夹具，403使用真实角色账号",
+      "deniedWrites": [
+        {
+          "path": "/admin/tenants",
+          "method": "POST",
+          "status": 403,
+          "code": 20107,
+          "message": "无权限",
+          "traceId": "01M7BJJK8R1Q5YH457V295N95H"
+        },
+        {
+          "path": "/admin/tenants/4",
+          "method": "PUT",
+          "status": 403,
+          "code": 20107,
+          "message": "无权限",
+          "traceId": "01M7BJJKADARV2ZTXTF3PBB4X7"
+        },
+        {
+          "path": "/admin/tenants/4/disable",
+          "method": "POST",
+          "status": 403,
+          "code": 20107,
+          "message": "无权限",
+          "traceId": "01M7BJJKDTHNXNE9WQDM64FC0H"
+        },
+        {
+          "path": "/admin/tenant-templates/4",
+          "method": "DELETE",
+          "status": 403,
+          "code": 20107,
+          "message": "无权限",
+          "traceId": "01M7BJJKGDVBE8JE1MRKFEDJN0"
+        }
+      ],
+      "screenshots": [
+        "12-no-manage-ui-fixture.png",
+        "12-platform-nonsuper-hidden-real.png"
+      ]
+    }
+  ],
+  "browserErrors": [],
+  "httpErrors": [
+    {
+      "path": "/admin/tenants",
+      "method": "POST",
+      "status": 409,
+      "code": 10004,
+      "message": "资源冲突或仍被引用",
+      "traceId": "01M7BJHF78D4SHERP0RXFZ6H8R"
+    }
+  ],
+  "cleanup": [
+    {
+      "resource": "retained acceptance tenant 4 disabled",
+      "result": "restored-or-removed"
+    },
+    {
+      "resource": "temporary readonly user",
+      "result": "restored-or-removed"
+    },
+    {
+      "resource": "temporary readonly role",
+      "result": "restored-or-removed"
+    }
+  ]
+}

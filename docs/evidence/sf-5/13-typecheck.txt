@@ -1,0 +1,4 @@
+bun run typecheck (apps/admin; vue-tsc --noEmit)
+2026-11-14T07:16:36.0527805+08:00
+$ vue-tsc --noEmit
+[exit_code] 0

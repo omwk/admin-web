@@ -1,0 +1,13 @@
+bun run test:unit
+2026-11-14T07:15:08.6750603+08:00
+$ vitest run --config vitest.config.ts
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+
+ Test Files  38 passed (38)
+      Tests  155 passed (155)
+   Start at  07:15:11
+   Duration  45.48s (transform 39.74s, setup 0ms, import 350.44s, tests 48.68s, environment 109.29s)
+
+[exit_code] 0

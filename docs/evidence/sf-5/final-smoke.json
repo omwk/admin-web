@@ -1,0 +1,32 @@
+{
+  "date": "2026-11-13T23:18:31.240Z",
+  "source": "final-source-real-backend-and-msedge",
+  "checks": [
+    "platform-disable-disabled",
+    "wizard-conflict-keeps-exact-message",
+    "snapshot-from-default-role-menu-counts-match",
+    "unused-template-edit-delete-200-204"
+  ],
+  "retainedTenants": [
+    {
+      "id": 4,
+      "code": "sf5_1794611098090",
+      "status": "suspended",
+      "provisioned_from": 4
+    },
+    {
+      "id": 3,
+      "code": "sf5_1794610967169",
+      "status": "suspended",
+      "provisioned_from": 3
+    },
+    {
+      "id": 2,
+      "code": "sf5_1794610854947",
+      "status": "suspended",
+      "provisioned_from": 2
+    }
+  ],
+  "browserErrors": [],
+  "exitCode": 0
+}
