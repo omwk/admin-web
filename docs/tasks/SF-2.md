@@ -1,0 +1,146 @@
+# SF-2 · 通知中心与通知渠道
+
+- 依赖：后端 S3a（通知补全）、F3（通道管理）
+- 预计：**2.5 人日**
+- 分支：`feat/sf-2-notify`
+- 完成标志：能看通知、能标已读、能配渠道、能改自己的偏好
+
+---
+
+## 1. 接口
+
+### 收件箱（S3a）
+
+| 接口 | 用途 |
+|---|---|
+| `GET /admin/notifications?unread=&template=` | 列表（分页） |
+| `GET /admin/notifications/unread-count` | 未读数 |
+| `PUT /admin/notifications/{id}/read` | 标记单条已读 |
+| `POST /admin/notifications/read-all` | 全部已读 |
+
+### 偏好（S3a）
+
+| 接口 | 用途 |
+|---|---|
+| `GET /admin/notifications/preferences` | 我的偏好（含继承值） |
+| `PUT /admin/notifications/preferences` | 批量保存 |
+
+### 渠道（F3 已有）
+
+| 接口 | 用途 |
+|---|---|
+| `GET/POST/PUT/DELETE /admin/notifications/providers` | 服务商 |
+| `POST /admin/notifications/providers/{id}/test` | 连通性测试 |
+| `GET/PUT /admin/notifications/templates` | 模板 |
+| `GET /admin/notifications/deliveries` | 投递记录 |
+| `POST /admin/notifications/deliveries/{id}/retry` | 重试 |
+
+## 2. 页面
+
+### 2.1 通知中心 `/system/notifications`
+
+- 顶部：未读角标 + 「全部已读」+ 筛选（全部/未读、模板类型）
+- 列表：时间、类型、摘要、状态（未读加粗/圆点）
+- 点击行 → 展开详情（payload 渲染为键值对，不做富文本）
+- 分页：沿用 FE-1 组件
+
+**未读角标**：顶栏头像旁显示数字，来自 `unread-count`；进入列表后刷新。
+
+### 2.2 通知偏好（同页签或抽屉）
+
+表格：模板 × 渠道（邮件/短信/企微/钉钉/Webhook），每格开关。
+
+```
+credential.expiring   [x]邮件  [ ]短信  ...
+sync.failed           [x]邮件  ...
+```
+
+- 未设置时显示「继承租户设置」并置灰
+- 保存时只提交改动项
+
+### 2.3 通知渠道 `/system/notifications/channels`
+
+三个页签：
+
+| 页签 | 内容 |
+|---|---|
+| 服务商 | 列表（类型/名称/启用/优先级）、新增、编辑、删除、**测试发送** |
+| 模板 | 列表 + 编辑（主题/正文），变量提示 |
+| 投递记录 | 列表（时间/模板/渠道/状态/尝试次数）、失败原因、**重试** |
+
+表单要求：
+
+- 密钥类字段（API Key / Secret）用 `password` 输入，**保存后只显示「已配置」**
+- 测试发送要填收件人，成功后提示「已发送，请查收」
+- 删除服务商前二次确认
+
+## 3. 关键要求
+
+### 3.1 权限
+
+| 页面/操作 | 权限码 |
+|---|---|
+| 通知中心 | `system:notify:list` |
+| 标记已读 | 登录即可（`system:notify:read` 可不校验） |
+| 渠道管理 | `system:notify:manage` |
+
+无 `system:notify:manage` 时隐藏「通知渠道」菜单与页签。
+
+### 3.2 空态与错误
+
+- 无通知：「暂无通知」
+- 无服务商：「尚未配置通知渠道，配置后才能发送邮件」
+- 测试发送失败：显示后端 `message` + 失败原因，不显示密钥
+
+### 3.3 安全
+
+- 页面任何位置不得渲染完整密钥
+- 投递记录的收件人已由后端脱敏（hash + 域），前端不要再拼全
+
+## 4. 验收
+
+| # | 项 | 断言 |
+|---|---|---|
+| 1 | 列表 | 真实通知显示，未读加粗，分页正确 |
+| 2 | 未读筛选 | 切「未读」只剩未读；数量与角标一致 |
+| 3 | 单条已读 | 点击后变已读，角标减一 |
+| 4 | 全部已读 | 角标归零，列表全部已读 |
+| 5 | 偏好继承 | 未设置时显示「继承租户设置」 |
+| 6 | 偏好保存 | 关闭某模板邮件后重新打开仍为关闭 |
+| 7 | 服务商 CRUD | 新建 SMTP → 列表显示「已配置」，密钥不回显 |
+| 8 | 测试发送 | 填收件人发送成功，提示明确；失败显示原因 |
+| 9 | 投递记录 | 显示状态与尝试次数；失败可重试并刷新状态 |
+| 10 | 权限 | 无 manage 时看不到渠道菜单，直连接口 403 |
+| 11 | 构建 | lint / typecheck / unit / build 全绿 |
+
+## 5. 不做
+
+- 模板富文本编辑器
+- 通知删除/归档
+- 移动端推送配置
+- 投递统计图表
+
+## 6. Codex prompt
+
+```
+实现 docs/tasks/SF-2.md。仓库 D:\code\admin-web，分支 feat/sf-2-notify。
+
+后端已合并 S3a：http://127.0.0.1:18080，admin / Admin@12345
+权限码：system:notify:list / system:notify:manage
+
+必读：本卡、docs/tasks/FE-1.5.md（页面与权限写法）、
+后端 api/openapi/system.yaml 的 notifications 部分
+
+分三步：
+1. 通知中心：列表 + 未读筛选 + 单条/全部已读 + 顶栏角标
+2. 偏好：模板 × 渠道开关，未设置显示「继承租户设置」
+3. 渠道：服务商 CRUD + 测试发送 + 模板 + 投递记录与重试
+
+关键要求：
+- 密钥字段保存后只显示「已配置」，任何位置不回显
+- 测试发送失败显示后端文案与原因
+- 无 system:notify:manage 时隐藏渠道菜单
+
+验收按卡片 §4 十一条逐条贴证据。
+完成后停下报告。
+```
