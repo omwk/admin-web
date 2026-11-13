@@ -7,6 +7,7 @@ import { preferences } from '@vben/preferences';
 import { useUserStore } from '@vben/stores';
 
 import { useAuthStore } from '#/store';
+import NotificationBadge from '#/views/system/notification/notification-badge.vue';
 
 const router = useRouter();
 const authStore = useAuthStore();
@@ -32,6 +33,7 @@ const handleLogout = () => authStore.logout(false);
     @logout="handleLogout"
   >
     <template #user-dropdown>
+      <NotificationBadge class="mr-4" />
       <UserDropdown
         :avatar
         :menus

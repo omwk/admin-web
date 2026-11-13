@@ -42,6 +42,7 @@ export function getErrorMessage(code?: number, status?: number): string {
 }
 
 export class ApiError extends Error {
+  readonly businessMessage?: string;
   readonly code?: number;
   readonly config?: RequestClientConfig;
   readonly status?: number;
@@ -70,6 +71,7 @@ export class ApiError extends Error {
         : getErrorMessage(options.code, options.status),
     );
     this.name = 'ApiError';
+    this.businessMessage = options.message;
     this.code = options.code;
     this.config = options.config;
     this.status = options.status;

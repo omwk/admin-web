@@ -1,0 +1,82 @@
+{
+  "source": "fixture-ui",
+  "note": "Browser interaction with deterministic API fixtures; not evidence of real S3a delivery or persistence.",
+  "checks": [
+    {
+      "item": 1,
+      "assertion": "25 notifications paginate 20/5; unread rows are bold; payload is escaped text",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": "01-inbox-page2-fixture.png"
+    },
+    {
+      "item": 2,
+      "assertion": "Unread filter has total 23, matching header badge",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": "02-unread-fixture.png"
+    },
+    {
+      "item": 3,
+      "assertion": "Opening an unread row marks it read and decrements badge 23 -> 22",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": "fixture inbox state and header aria-label"
+    },
+    {
+      "item": 4,
+      "assertion": "Read all yields zero badge and no unread rows",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": "04-read-all-fixture.png"
+    },
+    {
+      "item": 5,
+      "assertion": "Unset preferences show disabled effective values and inherit tenant text",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": "05-inheritance-fixture.png"
+    },
+    {
+      "item": 6,
+      "assertion": "Only changed email=false pair submitted, survives reopening, inbox reminder displayed",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": "06-preference-saved-fixture.png"
+    },
+    {
+      "item": 7,
+      "assertion": "SMTP create/edit/delete, delete cancel confirmation, saved secrets absent and configured-only",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": "07-provider-private-fixture.png"
+    },
+    {
+      "item": 8,
+      "assertion": "Current-account test distinguishes pending/sent/failed and preserves backend failure copy/reason",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": [
+        "08-test-sent-fixture.png",
+        "08-test-failed-fixture.png",
+        "08-test-backend-message-fixture.png"
+      ]
+    },
+    {
+      "item": 9,
+      "assertion": "Delivery status/attempts/hash/domain visible; failed retry refreshes status; template edit also verified",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": ["09-delivery-retry-fixture.png", "09-template-fixture.png"]
+    },
+    {
+      "item": 10,
+      "assertion": "No manage: channels absent from toolbar/menu, direct route has no management view, fixture API returns 403",
+      "result": "pass",
+      "source": "fixture-ui",
+      "evidence": "10-read-only-fixture.png"
+    }
+  ],
+  "errors": [],
+  "confirmedDeviation": "Tests send to current authenticated account, per backend contract and user confirmation."
+}

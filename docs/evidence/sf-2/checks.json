@@ -1,0 +1,49 @@
+{
+  "source": "local-final-verification",
+  "verified_at_utc": "2026-11-13T10:59:35.6958364Z",
+  "branch": "feat/sf-2-notify",
+  "checks": [
+    {
+      "command": "pnpm lint",
+      "log": "lint.log",
+      "exit_code": 0
+    },
+    {
+      "command": "pnpm --filter @vben/web-antd typecheck",
+      "log": "typecheck.log",
+      "exit_code": 0
+    },
+    {
+      "tests_passed": 115,
+      "command": "pnpm --filter @vben/web-antd test:unit",
+      "log": "unit.log",
+      "exit_code": 0,
+      "files_passed": 24
+    },
+    {
+      "command": "pnpm --filter @vben/web-antd build",
+      "built_seconds": 10.75,
+      "log": "build.log",
+      "exit_code": 0,
+      "modules": 7649
+    }
+  ],
+  "real_acceptance": {
+    "browser_errors": 0,
+    "result": "real-ui.json",
+    "passed": 10,
+    "runtime": "real-runtime.json"
+  },
+  "fixture_acceptance": {
+    "browser_errors": 0,
+    "result": "fixture-ui.json",
+    "passed": 10,
+    "log": "fixture.log"
+  },
+  "source_review": {
+    "diff_check": "pass",
+    "notification_v_html": "none",
+    "notification_console_logging": "none",
+    "notification_todo_or_empty_implementation": "none"
+  }
+}

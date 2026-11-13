@@ -1,0 +1,270 @@
+{
+  "source": "real-isolated-backend",
+  "backend_revision": "12a50e93f52adda7ed12a042c3c463151ffc40a3",
+  "note": "Actual S3a API/PostgreSQL/Redis with isolated test data and real loopback SMTP; notification APIs are not mocked.",
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "Real API returns 25 persisted notifications; unread bold; pagination 20/5",
+      "evidence": "01-inbox-real.png",
+      "detail": {
+        "inserted": 25,
+        "pages": [20, 5]
+      }
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "Unread filter/API total and badge equal 23",
+      "evidence": "02-unread-real.png"
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "Click persists read_at, badge 23 to 22, payload escaped",
+      "evidence": "03-read-real.png"
+    },
+    {
+      "item": 4,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "Read-all persists zero unread; visible rows all read",
+      "evidence": "04-read-all-real.png"
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "SMTP create/update/delete and cancel; API/markup configured flags only",
+      "evidence": "07-provider-private-real.png"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "Unset personal preference inherits enabled tenant SMTP setting and is gray",
+      "evidence": "05-inheritance-real.png"
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "Only email=false pair submitted; reload/API persist false; inbox reminder",
+      "evidence": "06-preference-saved-real.png"
+    },
+    {
+      "item": 8,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "Current-account real loopback SMTP success; rejection displays backend reason",
+      "evidence": ["08-test-sent-real.png", "08-test-failed-real.png"],
+      "detail": {
+        "smtp_received": 1
+      }
+    },
+    {
+      "item": 9,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "Real retry persists sent and attempts 1 to 2; hash/domain; template override",
+      "evidence": ["09-delivery-retry-real.png", "09-template-real.png"],
+      "detail": {
+        "before_attempts": 1,
+        "after_attempts": 2
+      }
+    },
+    {
+      "item": 10,
+      "result": "pass",
+      "source": "real-isolated-backend",
+      "assertion": "Real read-only role has no channels menu/toolbar/view; real providers HTTP 403",
+      "evidence": "10-read-only-real.png",
+      "detail": {
+        "api_status": 403
+      }
+    }
+  ],
+  "errors": [],
+  "responses": [
+    {
+      "source": "real-api",
+      "path": "/auth/login",
+      "method": "POST",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8D3D2S3H9BEN41YEZQQJQ"
+    },
+    {
+      "source": "real-api",
+      "path": "/auth/me",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8D3KYJ000G58H13K6JAEW"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications?unread=true",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8D8K8NMBDWZ8H7DT7QY6M"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8D8WEXVRDNJFSC5V8N5FJ"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications?unread=true",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8D94VJMMKQ81P6QTRWN5T"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications/providers",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DB6S984G44GYBGN2MCSJ"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications/providers",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DC0VB7BYV9ZKG9H6Z2PP"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications/providers",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DCSTTTF0F8XMYYGJ813B"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications/providers",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DE15E284NSRPBXNJ7QE9"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications/preferences",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DJ4VHZV2P4PMPT0JYA70"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications/deliveries",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DMVT93HSBT0BBQ8MHZMZ"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications/deliveries",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DN089R58EVBKPSBW4K2C"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/roles",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M7A8DN3J9Z63JJW1J75EBNNQ"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/permissions",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DN47CBQN4SEZGARWYMW1"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/roles/4/permissions",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DN5ENFREBEETCR7F636G"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/roles/4/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/users",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M7A8DN6MXSSS44QW5C8TCKDR"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/users/2/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/users/2/reset-link",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M7A8DNE5VS01M7TKTAY1HAHK"
+    },
+    {
+      "source": "real-api",
+      "path": "/auth/password/reset",
+      "method": "POST",
+      "status": 204
+    },
+    {
+      "source": "real-api",
+      "path": "/auth/login",
+      "method": "POST",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M7A8DNWKK8JB25VGF8WG3MNX"
+    },
+    {
+      "source": "real-api",
+      "path": "/admin/notifications/providers",
+      "method": "GET",
+      "status": 403,
+      "code": 20107,
+      "trace_id": "01M7A8DP2TBJ6NBZQHDH6P7FYE"
+    }
+  ]
+}
