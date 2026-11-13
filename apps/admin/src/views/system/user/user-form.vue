@@ -9,6 +9,7 @@ import { Alert, Form, Input, Modal, Select, TreeSelect } from 'ant-design-vue';
 import { createUserApi, updateUserApi } from '#/api/core/admin-users';
 import { toApiError } from '#/api/errors';
 import { passwordError } from '#/auth/account-link';
+import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 
 import { treeOptions } from '../shared/tree';
 
@@ -24,6 +25,7 @@ const form = reactive({
   username: props.user?.username ?? '',
 });
 const busy = ref(false);
+const dictionary = useMetaDictionary('user_status');
 const error = ref('');
 const departments = computed(() => treeOptions(props.departments));
 async function save() {
@@ -130,11 +132,7 @@ async function save() {
         <Select
           v-model:value="form.status"
           aria-label="用户状态"
-          :options="[
-            { value: 'active', label: '启用' },
-            { value: 'disabled', label: '禁用' },
-            { value: 'locked', label: '锁定' },
-          ]"
+          :options="dictionary.options.value"
         />
       </Form.Item>
     </Form>

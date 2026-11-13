@@ -6,11 +6,11 @@ export interface CategoryOption {
   value: CatalogID;
 }
 
-export const productStatusLabels: Record<ProductStatus, string> = {
-  active: '上架',
-  archived: '已归档',
-  draft: '草稿',
-};
+export const productStatusValues: ProductStatus[] = [
+  'active',
+  'archived',
+  'draft',
+];
 
 export const productSortOptions = [
   { label: '更新时间：由新到旧', value: '-updated_at' },
@@ -64,8 +64,4 @@ export function displayText(value: unknown): string {
       return '—';
     }
   }
-}
-
-export function productStatusLabel(value?: null | string): string {
-  return productStatusLabels[value as ProductStatus] || displayText(value);
 }

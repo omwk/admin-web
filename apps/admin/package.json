@@ -26,6 +26,7 @@
     "test:e2e:sf1": "node e2e/sf1.mjs",
     "test:e2e:sf2": "node e2e/sf2.mjs",
     "test:e2e:sf3": "node e2e/sf3.mjs",
+    "test:e2e:sf4": "node e2e/sf4.mjs",
     "typecheck": "vue-tsc --noEmit",
     "test:unit": "vitest run --config vitest.config.ts"
   },

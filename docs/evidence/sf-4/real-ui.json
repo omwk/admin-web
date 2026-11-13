@@ -1,0 +1,233 @@
+{
+  "source": "real-18080",
+  "date": "2026-11-13T16:31:20.249Z",
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "两组按 scope 分别加载，项数使用真实 item page.total",
+      "scopes": {
+        "system": 2,
+        "business": 1
+      },
+      "countByType": {
+        "sync_run_status": 4,
+        "user_status": 3,
+        "order_status": 6
+      },
+      "screenshot": "01-groups-real.png"
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "user_status 无新增/删除，仅标签与排序可编辑；直调后端创建400、删除409",
+      "screenshot": "02-system-restrictions-real.png",
+      "backend": [
+        {
+          "status": 400,
+          "code": 10001
+        },
+        {
+          "status": 409,
+          "message": "系统字典项不可删除"
+        }
+      ]
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "order_status 项新增、编辑、取消删除与确认删除；专用业务字典类型新增/编辑/删除均通过真实接口",
+      "itemRequests": {
+        "create": 201,
+        "update": 200,
+        "delete": 204
+      },
+      "dictionary": {
+        "create": 201,
+        "update": 200,
+        "delete": 204
+      },
+      "screenshots": [
+        "03-business-item-edited-real.png",
+        "03-business-type-edited-real.png"
+      ]
+    },
+    {
+      "item": 4,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "有项时删除真实 order_status 返回409；页面完整显示后端 message",
+      "status": 409,
+      "message": "请先清空字典项",
+      "traceId": "01M7AVYWC9138JVP09QYAHE16Y",
+      "screenshot": "04-nonempty-conflict-real.png"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "重复value返回真实409，表单保留输入并原样显示后端 message",
+      "status": 409,
+      "message": "资源冲突或仍被引用",
+      "traceId": "01M7AVYX1RQQ672N3597QWAAEK",
+      "screenshot": "05-duplicate-conflict-real.png"
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "界面修改label后，真实商品列表通过真实/meta/dicts/product_status显示新文案",
+      "productId": 124,
+      "value": "draft",
+      "label": "SF4 商品状态已更新 sf4_1794587449638",
+      "metadataStatus": 200,
+      "dedicatedDictionaryCreated": true,
+      "screenshot": "06-product-metadata-real.png"
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "按更新口径四组14项，逐项核对真实schema描述、默认值、当前值与表单控件",
+      "counts": {
+        "security": 6,
+        "system": 3,
+        "notification": 2,
+        "sync": 3
+      },
+      "values": {
+        "security": {
+          "password_min_length": 8,
+          "password_require_mixed": true,
+          "password_expire_days": 90,
+          "password_history_size": 5,
+          "login_max_failures": 5,
+          "login_lock_minutes": 15
+        },
+        "system": {
+          "system_name": "CommerceHub",
+          "default_page_size": 20,
+          "timezone": "Asia/Shanghai"
+        },
+        "notification": {
+          "default_channel": "email",
+          "retry_max_attempts": 3
+        },
+        "sync": {
+          "unknown_value_policy": "keep_raw",
+          "drift_alert_threshold": 1,
+          "auto_promote_baseline": false
+        }
+      },
+      "screenshots": [
+        "07-settings-security-real.png",
+        "07-settings-system-real.png",
+        "07-settings-notification-real.png",
+        "07-settings-sync-real.png"
+      ]
+    },
+    {
+      "item": 8,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "密码最小长度填3，schema范围8–64触发前端错误，没有PUT请求",
+      "submitted": 3,
+      "schemaMin": 8,
+      "schemaMax": 64,
+      "writes": 0,
+      "screenshot": "08-range-validation-real.png"
+    },
+    {
+      "item": 9,
+      "result": "pass",
+      "source": "schema-fixture-with-real-save",
+      "assertion": "read_only=true时输入禁用、有不可修改标注，真实保存请求省略该key",
+      "reason": "真实14项schema全部read_only=false；仅GET响应timezone.read_only改为true",
+      "changedKeys": ["system_name"],
+      "screenshot": "09-readonly-schema-fixture.png"
+    },
+    {
+      "item": 10,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "系统名称真实PUT保存，页面刷新与GET均保留新值，成功提示含新会话说明",
+      "status": 200,
+      "changedKeys": ["system_name"],
+      "persistedValue": "SF4 持久化 sf4_1794587449638",
+      "screenshot": "10-saved-after-refresh-real.png"
+    },
+    {
+      "item": 11,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "真实只读账号没有保存/CRUD按钮；直接PUT配置403。移除list权限后菜单隐藏、页面403、两GET接口403",
+      "permissions": ["system:dict:list", "system:setting:list"],
+      "deniedSave": {
+        "status": 403,
+        "code": 20107,
+        "traceId": "01M7AVZEHRDHHT2QBWEC59M45H"
+      },
+      "deniedList": [
+        {
+          "path": "/admin/settings",
+          "status": 403,
+          "code": 20107
+        },
+        {
+          "path": "/admin/dicts",
+          "status": 403,
+          "code": 20107
+        }
+      ],
+      "screenshots": [
+        "11-settings-readonly-real.png",
+        "11-dictionaries-readonly-real.png",
+        "11-no-list-forbidden-real.png"
+      ]
+    }
+  ],
+  "browserErrors": [],
+  "httpErrors": [
+    {
+      "path": "/admin/dicts/1",
+      "method": "DELETE",
+      "status": 409,
+      "code": 10004,
+      "message": "请先清空字典项",
+      "traceId": "01M7AVYWC9138JVP09QYAHE16Y"
+    },
+    {
+      "path": "/admin/dicts/1/items",
+      "method": "POST",
+      "status": 409,
+      "code": 10004,
+      "message": "资源冲突或仍被引用",
+      "traceId": "01M7AVYX1RQQ672N3597QWAAEK"
+    }
+  ],
+  "cleanup": [
+    {
+      "resource": "system_name",
+      "result": "restored-or-removed"
+    },
+    {
+      "resource": "temporary item 33",
+      "result": "restored-or-removed"
+    },
+    {
+      "resource": "temporary dictionary 11",
+      "result": "restored-or-removed"
+    },
+    {
+      "resource": "temporary user",
+      "result": "restored-or-removed"
+    },
+    {
+      "resource": "temporary role",
+      "result": "restored-or-removed"
+    }
+  ]
+}
