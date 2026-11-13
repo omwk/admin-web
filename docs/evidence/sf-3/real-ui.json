@@ -1,0 +1,202 @@
+{
+  "source": "real-18080",
+  "date": "2026-11-13T15:05:54.078Z",
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "真实审计至少五行，created_at/id 倒序，六列齐全",
+      "rows": 20,
+      "total": 667,
+      "ids": [
+        667, 666, 665, 664, 663, 662, 661, 660, 659, 658, 657, 656, 655, 654,
+        653, 652, 651, 650, 649, 648
+      ],
+      "screenshot": "01-audit-real.png"
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "action/result/时间单独及组合筛选，翻页保持提交的筛选条件",
+      "filtering": [
+        {
+          "scenario": "action",
+          "query": {
+            "action": "identity.login",
+            "page": "1",
+            "page_size": "20"
+          },
+          "total": 198
+        },
+        {
+          "scenario": "action+result+page2",
+          "query": {
+            "result": "success",
+            "action": "identity.login",
+            "page": "2",
+            "page_size": "20"
+          },
+          "total": 180
+        },
+        {
+          "scenario": "result",
+          "query": {
+            "result": "failure",
+            "page": "1",
+            "page_size": "20"
+          },
+          "total": 18
+        },
+        {
+          "scenario": "time",
+          "query": {
+            "from": "2026-11-12T16:00:00.000Z",
+            "to": "2026-11-13T15:59:59.000Z",
+            "page": "1",
+            "page_size": "20"
+          },
+          "total": 341
+        },
+        {
+          "scenario": "action+result+resource+time",
+          "query": {
+            "result": "failure",
+            "from": "2026-11-12T16:00:00.000Z",
+            "to": "2026-11-13T15:59:59.000Z",
+            "action": "identity.login",
+            "resource_type": "user",
+            "page": "1",
+            "page_size": "20"
+          },
+          "total": 18
+        }
+      ],
+      "screenshot": "02-audit-filter-real.png"
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "真实嵌套 before/after 为两棵树，修改/新增有标记，敏感值原样 ***",
+      "auditId": 662,
+      "screenshot": "03-json-diff-real.png"
+    },
+    {
+      "item": 4,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "真实 >4KB 快照由后端 bounded summary 返回，列表和详情显示截断标记",
+      "auditId": 663,
+      "truncated": true,
+      "serializedBytes": 4096,
+      "screenshot": "04-truncated-real.png"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "成功与失败均存在，真实 IP/UA 与响应一致，长 UA 省略并有全文 tooltip",
+      "results": ["success", "failure"],
+      "ip": "127.0.0.1",
+      "uaLength": 192,
+      "screenshot": "05-login-history-real.png"
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "真实未知账号显示固定文案，列表网络响应和页面均无尝试输入的账号串",
+      "id": 664,
+      "user_id": null,
+      "username": "未知账号",
+      "resource_id": "unknown",
+      "responseContainsAttempt": false,
+      "pageContainsAttempt": false,
+      "screenshot": "06-unknown-account-real.png"
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "取消不变更；确认后真实 POST=200，状态 active，解锁入口消失，随后可正常登录",
+      "userId": 55,
+      "unlockStatus": 200,
+      "status": "active",
+      "loginStatus": 200,
+      "overviewStatus": 200,
+      "screenshots": [
+        "07-unlock-confirm-real.png",
+        "07-unlocked-active-real.png"
+      ]
+    },
+    {
+      "item": 8,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "disabled 无解锁按钮，直调真实接口 409；确认期间变为 disabled 时页面提示明确",
+      "directStatus": 409,
+      "code": 10004,
+      "concurrentStatus": 409,
+      "screenshot": "08-disabled-conflict-real.png"
+    },
+    {
+      "item": 9,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "两页无新增、编辑、删除、保存、导出按钮；仅查询、清空筛选、刷新及只读展开",
+      "screenshots": [
+        "09-audit-readonly-real.png",
+        "09-login-readonly-real.png"
+      ]
+    },
+    {
+      "item": 10,
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "assertion": "真实仅 system:user:list 角色保留菜单授权仍隐藏两菜单；直连前端403，直接两接口403；无更新权限无解锁入口",
+      "forbidden": [
+        {
+          "path": "/admin/audit-logs",
+          "status": 403,
+          "code": 20107,
+          "traceId": "01M7AQ33KS82VQ85WTS7WB2VXS"
+        },
+        {
+          "path": "/admin/login-logs",
+          "status": 403,
+          "code": 20107,
+          "traceId": "01M7AQ34JN7TWBGYX5F0G2RMGE"
+        }
+      ],
+      "screenshots": [
+        "10-audit-forbidden-real.png",
+        "10-login-forbidden-real.png"
+      ]
+    }
+  ],
+  "browserErrors": [],
+  "cleanup": [
+    {
+      "resource": "temporary menu",
+      "result": "removed"
+    },
+    {
+      "resource": "temporary user 55",
+      "result": "removed"
+    },
+    {
+      "resource": "temporary user 56",
+      "result": "removed"
+    },
+    {
+      "resource": "temporary user 57",
+      "result": "removed"
+    },
+    {
+      "resource": "temporary role",
+      "result": "removed"
+    }
+  ]
+}

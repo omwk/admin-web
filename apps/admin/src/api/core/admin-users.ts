@@ -41,6 +41,12 @@ export const updateUserApi = (id: number, input: UserInput) =>
   requestClient.put<AdminUser>(`/admin/users/${id}`, input, writeConfig);
 export const deleteUserApi = (id: number) =>
   requestClient.delete(`/admin/users/${id}`, writeConfig);
+export const unlockUserApi = (id: number) =>
+  requestClient.post<AdminUser>(
+    `/admin/users/${id}/unlock`,
+    undefined,
+    writeConfig,
+  );
 export const getUserRolesApi = (id: number) =>
   requestClient.get<number[]>(`/admin/users/${id}/roles`, writeConfig);
 export const setUserRolesApi = (id: number, roleIds: number[]) =>
