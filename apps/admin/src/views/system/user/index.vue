@@ -25,6 +25,7 @@ import {
   getUserApi,
   getUserRolesApi,
   resetUserPasswordApi,
+  unlockUserApi,
   updateUserApi,
 } from '#/api/core/admin-users';
 import { getAllRolesApi, getDepartmentsApi } from '#/api/core/system';
@@ -152,24 +153,41 @@ async function saved() {
   await refresh();
   message.success('用户信息已更新');
 }
-function confirmAction(user: AdminUser, action: 'delete' | 'status') {
-  const title =
-    action === 'delete'
-      ? `删除用户 ${user.username}？`
-      : `${user.status === 'disabled' ? '启用' : '禁用'}用户 ${user.username}？`;
+function confirmAction(
+  user: AdminUser,
+  action: 'delete' | 'status' | 'unlock',
+) {
+  if (
+    acting.value ||
+    (action === 'unlock' &&
+      (user.status !== 'locked' || !hasPermission('system:user:update')))
+  )
+    return;
+  let title = `${user.status === 'disabled' ? '启用' : '禁用'}用户 ${user.username}？`;
+  let content = '禁用后该用户将无法登录。';
+  if (action === 'delete') {
+    title = `删除用户 ${user.username}？`;
+    content = '删除后无法恢复，请确认该用户已无需使用。';
+  } else if (action === 'unlock') {
+    title = `解锁用户 ${user.username}？`;
+    content = '解锁后该用户可立即尝试登录';
+  }
   Modal.confirm({
     title,
-    content:
-      action === 'delete'
-        ? '删除后无法恢复，请确认该用户已无需使用。'
-        : '禁用后该用户将无法登录。',
+    content,
     okType: action === 'delete' ? 'danger' : 'primary',
     async onOk() {
+      if (acting.value) return;
       acting.value = true;
       actionError.value = '';
       try {
         if (action === 'delete') await deleteUserApi(user.id);
-        else {
+        else if (action === 'unlock') {
+          const updated = await unlockUserApi(user.id);
+          users.value = users.value.map((row) =>
+            row.id === updated.id ? updated : row,
+          );
+        } else {
           const latest = await getUserApi(user.id);
           await updateUserApi(user.id, {
             avatar: latest.avatar,
@@ -182,9 +200,14 @@ function confirmAction(user: AdminUser, action: 'delete' | 'status') {
         if (action === 'delete' && users.value.length === 1 && page.value > 1)
           page.value--;
         await refresh();
-        message.success('操作成功');
+        message.success(action === 'unlock' ? '用户已解锁' : '操作成功');
       } catch (error_) {
-        actionError.value = toApiError(error_).message;
+        const failure = toApiError(error_);
+        actionError.value =
+          action === 'unlock' && failure.status === 409
+            ? '该用户已禁用，无法解锁，请刷新列表'
+            : failure.message;
+        if (action === 'unlock' && failure.status === 409) await refresh();
       } finally {
         acting.value = false;
       }
@@ -382,6 +405,17 @@ onUnmounted(() => {
               @click="confirmAction(record as AdminUser, 'status')"
             >
               {{ record.status === 'disabled' ? '启用' : '禁用' }}
+            </Button>
+            <Button
+              v-if="
+                record.status === 'locked' &&
+                hasPermission('system:user:update')
+              "
+              size="small"
+              :disabled="acting"
+              @click="confirmAction(record as AdminUser, 'unlock')"
+            >
+              解锁
             </Button>
             <Button
               v-if="hasPermission('system:user:delete')"

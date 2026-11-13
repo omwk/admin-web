@@ -5,6 +5,7 @@ import { useAccessStore, useUserStore } from '@vben/stores';
 
 import { getAllMenusApi } from '#/api';
 
+import { auditFallbackRoutes } from './audit-menus';
 import { catalogRoutes } from './catalog';
 import { componentRegistry } from './component-registry';
 import { findHomePath } from './menu-adapter';
@@ -35,6 +36,7 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
       return [
         ...routes,
         ...catalog,
+        ...auditFallbackRoutes().filter((route) => !paths.has(route.path)),
         {
           component: '/_core/fallback/no-menu.vue',
           meta: { hideInMenu: true, title: '首页' },

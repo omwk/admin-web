@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-13T23:28:35.8135593+08:00",
+  "branch": "feat/sf-3-audit",
+  "checks": [
+    {
+      "name": "lint",
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "output": "11-lint.txt"
+    },
+    {
+      "name": "typecheck",
+      "command": "pnpm --filter @vben/web-antd typecheck",
+      "exitCode": 0,
+      "output": "11-typecheck.txt"
+    },
+    {
+      "name": "app-unit",
+      "command": "pnpm --filter @vben/web-antd test:unit",
+      "exitCode": 0,
+      "output": "11-app-unit.txt"
+    },
+    {
+      "name": "unit",
+      "command": "pnpm test:unit",
+      "exitCode": 0,
+      "output": "11-unit.txt"
+    },
+    {
+      "name": "build",
+      "command": "pnpm --filter @vben/web-antd build",
+      "exitCode": 0,
+      "output": "11-build.txt"
+    }
+  ]
+}
