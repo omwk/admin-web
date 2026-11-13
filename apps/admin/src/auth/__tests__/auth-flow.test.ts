@@ -77,6 +77,36 @@ beforeEach(async () => {
 });
 
 describe('application authentication flow', () => {
+  it('passes an explicit tenant to login and retains the authoritative platform identity', async () => {
+    let payload: unknown;
+    requestClient.instance.defaults.adapter = async (config) => {
+      if (config.url === '/auth/login') {
+        payload = JSON.parse(config.data as string);
+        return respond(config, envelope(pair));
+      }
+      return respond(
+        config,
+        envelope({
+          ...overview,
+          user: { ...overview.user, tenant_id: 8, is_super: true },
+        }),
+      );
+    };
+    await useAuthStore().authLogin({
+      username: 'tenant-admin',
+      password: 'test-password',
+      tenant_id: 8,
+    });
+    expect(payload).toEqual({
+      username: 'tenant-admin',
+      password: 'test-password',
+      tenant_id: 8,
+    });
+    expect(useUserStore().userInfo).toMatchObject({
+      tenantId: 8,
+      isSuper: true,
+    });
+  });
   it('logs in with snake_case tokens, fetches /auth/me and navigates without persisting access', async () => {
     const calls: string[] = [];
     let loginPayload: unknown;

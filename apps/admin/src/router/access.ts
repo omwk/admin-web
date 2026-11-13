@@ -10,6 +10,7 @@ import { catalogRoutes } from './catalog';
 import { componentRegistry } from './component-registry';
 import { configurationRoutes } from './configuration-menus';
 import { findHomePath } from './menu-adapter';
+import { tenantFallbackRoutes } from './tenant-menus';
 
 async function generateAccess(options: GenerateMenuAndRoutesOptions) {
   return generateAccessible('backend', {
@@ -28,19 +29,29 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
         (route) => !paths.has(route.path),
       );
       const userStore = useUserStore();
+      const tenants = tenantFallbackRoutes(
+        useAccessStore().accessCodes,
+        userStore.userInfo,
+      ).filter((route) => !paths.has(route.path));
       const configuration = configurationRoutes(
         useAccessStore().accessCodes,
       ).filter((route) => !paths.has(route.path));
       if (userStore.userInfo) {
         userStore.setUserInfo({
           ...userStore.userInfo,
-          homePath: findHomePath([...routes, ...catalog, ...configuration]),
+          homePath: findHomePath([
+            ...routes,
+            ...catalog,
+            ...configuration,
+            ...tenants,
+          ]),
         });
       }
       return [
         ...routes,
         ...catalog,
         ...configuration,
+        ...tenants,
         ...auditFallbackRoutes().filter((route) => !paths.has(route.path)),
         {
           component: '/_core/fallback/no-menu.vue',

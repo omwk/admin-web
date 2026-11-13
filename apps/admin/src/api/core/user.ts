@@ -10,6 +10,8 @@ export async function getUserInfoApi(): Promise<UserInfo> {
     avatar: user.avatar || '',
     desc: '',
     homePath: '',
+    isSuper: user.is_super,
+    tenantId: user.tenant_id,
     realName: user.nickname || user.username,
     roles: (user.roles ?? []).map((role) => role.code),
     token: '',

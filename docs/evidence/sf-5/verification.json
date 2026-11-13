@@ -1,0 +1,55 @@
+{
+  "date": "2026-11-13T23:20:11.240Z",
+  "branch": "feat/sf-5-tenant",
+  "checks": [
+    {
+      "name": "lint",
+      "cwd": "D:/code/admin-web",
+      "command": "bun run lint",
+      "log": "13-lint.txt",
+      "exitCode": 0
+    },
+    {
+      "name": "typecheck",
+      "cwd": "D:/code/admin-web/apps/admin",
+      "command": "bun run typecheck",
+      "log": "13-typecheck.txt",
+      "exitCode": 0
+    },
+    {
+      "name": "app-unit",
+      "cwd": "D:/code/admin-web/apps/admin",
+      "command": "bun run test:unit",
+      "log": "13-app-unit.txt",
+      "files": 38,
+      "tests": 155,
+      "exitCode": 0
+    },
+    {
+      "name": "workspace-unit",
+      "cwd": "D:/code/admin-web",
+      "command": "bun run test:unit",
+      "log": "13-unit.txt",
+      "files": 133,
+      "tests": 862,
+      "exitCode": 0
+    },
+    {
+      "name": "build",
+      "cwd": "D:/code/admin-web/apps/admin",
+      "command": "../../node_modules/.bin/vite.cmd build --mode production",
+      "log": "13-build.txt",
+      "exitCode": 0
+    }
+  ],
+  "browserAcceptance": {
+    "log": "real-ui.json",
+    "passed": 12,
+    "browserErrors": 0
+  },
+  "finalSmoke": {
+    "log": "final-smoke.json",
+    "passed": 4,
+    "browserErrors": 0
+  }
+}

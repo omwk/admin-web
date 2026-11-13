@@ -1,0 +1,83 @@
+bun run test:unit
+2026-11-14T07:15:12.1902259+08:00
+$ vitest run --dom
+
+ RUN  v4.1.11 D:/code/admin-web
+
+AggregateError: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'EACCES',
+  [errors]: [
+    Error: connect EACCES 104.26.12.204:443
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '104.26.12.204',
+      port: 443
+    },
+    Error: connect EACCES 172.67.71.159:443
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '172.67.71.159',
+      port: 443
+    },
+    Error: connect EACCES 104.26.13.204:443
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '104.26.13.204',
+      port: 443
+    }
+  ]
+}
+AggregateError: 
+    at internalConnectMultiple (node:net:1134:18)
+    at afterConnectMultiple (node:net:1715:7) {
+  code: 'EACCES',
+  [errors]: [
+    Error: connect EACCES 104.26.12.204:443
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '104.26.12.204',
+      port: 443
+    },
+    Error: connect EACCES 172.67.71.159:443
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '172.67.71.159',
+      port: 443
+    },
+    Error: connect EACCES 104.26.13.204:443
+        at createConnectionError (node:net:1678:14)
+        at afterConnectMultiple (node:net:1708:16) {
+      errno: -4092,
+      code: 'EACCES',
+      syscall: 'connect',
+      address: '104.26.13.204',
+      port: 443
+    }
+  ]
+}
+Warning: A vi.mock("sortablejs/modular/sortable.complete.esm.js") call in "D:/code/admin-web/packages/@core/composables/src/__tests__/use-sortable.test.ts" is not at the top level of the module. Although it appears nested, it will be hoisted and executed before any tests run. Move it to the top level to reflect its actual execution order. This will become an error in a future version.
+See: https://vitest.dev/guide/mocking/modules#how-it-works
+
+ Test Files  133 passed (133)
+      Tests  862 passed (862)
+   Start at  07:15:18
+   Duration  87.60s (transform 218.60s, setup 0ms, import 736.72s, tests 76.88s, environment 254.68s)
+
+[exit_code] 0
