@@ -1,0 +1,7 @@
+﻿{
+  "exit_code": 0,
+  "schema": "s3_smoke_c6287348a610467e92c9bf0028e44b01",
+  "source": "real-isolated-backend",
+  "cleanup_ok": true,
+  "backend_revision": "12a50e93f52adda7ed12a042c3c463151ffc40a3"
+}

@@ -24,6 +24,7 @@
     "test:e2e:fe1.5": "node e2e/fe1.5.mjs --phase=full",
     "test:e2e:fe2": "node e2e/fe2.mjs --phase=full",
     "test:e2e:sf1": "node e2e/sf1.mjs",
+    "test:e2e:sf2": "node e2e/sf2.mjs",
     "typecheck": "vue-tsc --noEmit",
     "test:unit": "vitest run --config vitest.config.ts"
   },

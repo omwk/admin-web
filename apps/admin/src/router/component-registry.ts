@@ -19,6 +19,10 @@ export const componentRegistry: ComponentRecordType = {
   '/system/menu/index.vue': () => import('#/views/system/menu/index.vue'),
   '/system/role/index.vue': () => import('#/views/system/role/index.vue'),
   '/system/dept/index.vue': () => import('#/views/system/dept/index.vue'),
+  '/system/notification/index.vue': () =>
+    import('#/views/system/notification/index.vue'),
+  '/system/notification/channels.vue': () =>
+    import('#/views/system/notification/channels.vue'),
   '/trade/order/index.vue': placeholder,
   '/crm/customer/index.vue': placeholder,
   '/crm/inquiry/index.vue': placeholder,

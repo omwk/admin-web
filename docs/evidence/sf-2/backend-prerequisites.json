@@ -1,0 +1,22 @@
+{
+  "source": "real-backend",
+  "probes": [
+    {
+      "path": "/auth/me",
+      "status": 200,
+      "code": 0,
+      "permissions": []
+    },
+    {
+      "path": "/auth/menus",
+      "status": 200,
+      "code": 0,
+      "menus": []
+    },
+    {
+      "path": "/admin/notifications/preferences",
+      "status": 404,
+      "code": 10003
+    }
+  ]
+}
