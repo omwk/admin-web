@@ -1,0 +1,45 @@
+{
+  "passed": true,
+  "readUiPassed": true,
+  "mode": "ui",
+  "missingCodes": [],
+  "checks": [
+    {
+      "item": 1,
+      "result": "passed"
+    },
+    {
+      "item": 2,
+      "result": "passed"
+    },
+    {
+      "item": 3,
+      "result": "passed"
+    },
+    {
+      "item": 4,
+      "result": "passed"
+    },
+    {
+      "item": 5,
+      "result": "passed"
+    },
+    {
+      "item": 6,
+      "result": "passed"
+    },
+    {
+      "item": 7,
+      "result": "passed"
+    },
+    {
+      "item": 8,
+      "result": "passed"
+    },
+    {
+      "item": 9,
+      "result": "passed"
+    }
+  ],
+  "cleanupErrors": []
+}

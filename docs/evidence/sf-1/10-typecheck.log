@@ -1,0 +1,152 @@
+$ turbo run typecheck
+• turbo 2.10.13
+
+   • Packages in scope: @vben-core/composables, @vben-core/design, @vben-core/form-ui, @vben-core/icons, @vben-core/layout-ui, @vben-core/menu-ui, @vben-core/popup-ui, @vben-core/preferences, @vben-core/shadcn-ui, @vben-core/shared, @vben-core/tabs-ui, @vben-core/typings, @vben/access, @vben/commitlint-config, @vben/common-ui, @vben/constants, @vben/eslint-config, @vben/hooks, @vben/icons, @vben/layouts, @vben/locales, @vben/node-utils, @vben/oxfmt-config, @vben/oxlint-config, @vben/plugins, @vben/preferences, @vben/request, @vben/stores, @vben/stylelint-config, @vben/styles, @vben/tailwind-config, @vben/tsconfig, @vben/turbo-run, @vben/types, @vben/utils, @vben/vite-config, @vben/vsh, @vben/web-antd
+   • Running typecheck in 38 packages
+   • Remote caching disabled
+
+@vben/oxfmt-config:typecheck: cache hit, replaying logs 733158b71598ea77
+@vben/oxlint-config:typecheck: cache hit, replaying logs a71867d610b87df1
+@vben/oxfmt-config:typecheck: $ vue-tsc --noEmit
+@vben/oxlint-config:typecheck: $ vue-tsc --noEmit
+@vben/node-utils:typecheck: cache hit, replaying logs aadfeb86b4765314
+@vben/oxlint-config:stub: cache hit, replaying logs d9e182566839db50
+@vben/node-utils:typecheck: $ vue-tsc --noEmit
+@vben-core/typings:typecheck: cache hit, replaying logs c23ef67fe7e1d16b
+@vben/tailwind-config:typecheck: cache hit, replaying logs 41665f71e46deca2
+@vben/oxlint-config:stub: $ pnpm exec tsdown
+@vben/oxlint-config:stub: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben/oxlint-config:stub: ℹ config file: D:\code\admin-web\internal\lint-configs\oxlint-config\tsdown.config.ts 
+@vben/oxlint-config:stub: ℹ entry: src/index.ts
+@vben/oxlint-config:stub: ℹ tsconfig: tsconfig.json
+@vben/oxlint-config:stub: ℹ Build start
+@vben/oxlint-config:stub: ℹ Cleaning 3 files
+@vben/oxlint-config:stub: ℹ dist\index.mjs   18.50 kB │ gzip: 5.23 kB
+@vben/oxlint-config:stub: ℹ dist\index.d.ts   3.89 kB │ gzip: 0.71 kB
+@vben/oxlint-config:stub: ℹ 2 files, total: 22.39 kB
+@vben/oxlint-config:stub: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 5.0s of this 5.1s build (97%).
+@vben/oxlint-config:stub: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben/oxlint-config:stub:   - rolldown-plugin-dts:generate load (83%, 4.2s, 15 calls)
+@vben/oxlint-config:stub: Additional hook time came from the hooks below and from hooks under 1s.
+@vben/oxlint-config:stub: 2 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben/oxlint-config:stub:   - rolldown-plugin-dts:resolver resolveId (84 calls)
+@vben/oxlint-config:stub:   - tsdown:deps resolveId (86 calls)
+@vben/oxlint-config:stub: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/icons:typecheck: cache hit, replaying logs b210836e78d6aa53
+@vben-core/design:typecheck: cache hit, replaying logs 9c9502d5d9556311
+@vben/styles:typecheck: cache hit, replaying logs 1d1a05d6ff34f013
+@vben/tailwind-config:typecheck: $ vue-tsc --noEmit
+@vben-core/typings:typecheck: $ vue-tsc --noEmit
+@vben-core/icons:typecheck: $ vue-tsc --noEmit
+@vben-core/design:typecheck: $ vue-tsc --noEmit
+@vben/styles:typecheck: $ vue-tsc --noEmit
+@vben/node-utils:stub: cache hit, replaying logs 15e65c5881beaaf8
+@vben-core/shared:typecheck: cache hit, replaying logs 12cfcf6aa57293df
+@vben/node-utils:stub: $ node ./scripts/build.mjs
+@vben/node-utils:stub: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben/node-utils:stub: ℹ config file: D:\code\admin-web\internal\node-utils\tsdown.config.ts 
+@vben/node-utils:stub: ℹ entry: src/index.ts
+@vben/node-utils:stub: ℹ tsconfig: tsconfig.json
+@vben/node-utils:stub: 
+@vben/node-utils:stub:  WARN  `deps.skipNodeModulesBundle` is deprecated. Use `deps.neverBundle: true` instead.
+@vben/node-utils:stub: 
+@vben/node-utils:stub: ℹ Build start
+@vben/node-utils:stub: ℹ dist\index.mjs  6.82 kB │ gzip: 2.52 kB
+@vben/node-utils:stub: ℹ 1 files, total: 6.82 kB
+@vben/node-utils:stub: ✔ Build complete in 253ms
+@vben/node-utils:stub: (node:160724) [DEP0190] DeprecationWarning: Passing args to a child process with shell option true can lead to security vulnerabilities, as the arguments are not escaped, only concatenated.
+@vben/node-utils:stub: (Use `node --trace-deprecation ...` to show where the warning was created)
+@vben/oxlint-config:stub: 
+@vben/oxlint-config:stub: ✔ Build complete in 5634ms
+@vben-core/shared:typecheck: $ vue-tsc --noEmit
+@vben/icons:typecheck: cache hit, replaying logs 8c17a60dd0ef4b81
+@vben/icons:typecheck: $ vue-tsc --noEmit
+@vben/types:typecheck: cache hit, replaying logs edef4e952cc6fa09
+@vben/types:typecheck: $ vue-tsc --noEmit
+@vben/turbo-run:typecheck: cache hit, replaying logs 33187d099df06be3
+@vben/turbo-run:typecheck: $ vue-tsc --noEmit
+@vben/vite-config:typecheck: cache hit, replaying logs d264bffa2717144a
+@vben/vite-config:typecheck: $ vue-tsc --noEmit
+@vben-core/shared:stub: cache hit, replaying logs 8bfd9bfdfa6aa874
+@vben-core/shared:stub: $ pnpm run build
+@vben-core/shared:stub: $ pnpm exec tsdown
+@vben-core/shared:stub: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/shared:stub: ℹ config file: D:\code\admin-web\packages\@core\base\shared\tsdown.config.ts 
+@vben-core/shared:stub: ℹ entry: src/cache/index.ts, src/color/index.ts, src/constants/index.ts, src/global-state.ts, src/store.ts, src/utils/index.ts
+@vben-core/shared:stub: ℹ tsconfig: tsconfig.json
+@vben-core/shared:stub: ℹ Build start
+@vben-core/shared:stub: ℹ Cleaning 18 files
+@vben-core/shared:stub: ℹ dist\utils\index.mjs       27.23 kB │ gzip: 9.22 kB
+@vben-core/shared:stub: ℹ dist\cache\index.mjs        8.07 kB │ gzip: 2.40 kB
+@vben-core/shared:stub: ℹ dist\color\index.mjs        2.90 kB │ gzip: 1.23 kB
+@vben-core/shared:stub: ℹ dist\constants\index.mjs    1.49 kB │ gzip: 0.55 kB
+@vben-core/shared:stub: ℹ dist\global-state.mjs       0.49 kB │ gzip: 0.30 kB
+@vben-core/shared:stub: ℹ dist\store.mjs              0.05 kB │ gzip: 0.06 kB
+@vben-core/shared:stub: ℹ dist\globals-C9zDxY6C.mjs   1.15 kB │ gzip: 0.51 kB
+@vben-core/shared:stub: ℹ dist\utils\index.d.ts       7.52 kB │ gzip: 2.15 kB
+@vben-core/shared:stub: ℹ dist\cache\index.d.ts       2.60 kB │ gzip: 0.60 kB
+@vben-core/shared:stub: ℹ dist\constants\index.d.ts   1.69 kB │ gzip: 0.51 kB
+@vben-core/shared:stub: ℹ dist\color\index.d.ts       0.81 kB │ gzip: 0.30 kB
+@vben-core/shared:stub: ℹ dist\global-state.d.ts      0.61 kB │ gzip: 0.28 kB
+@vben-core/shared:stub: ℹ dist\store.d.ts             0.04 kB │ gzip: 0.06 kB
+@vben-core/shared:stub: ℹ 13 files, total: 54.65 kB
+@vben-core/shared:stub: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 6.1s of this 6.2s build (98%).
+@vben-core/shared:stub: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben-core/shared:stub:   - rolldown-plugin-dts:generate load (92%, 5.7s, 35 calls)
+@vben-core/shared:stub: Additional hook time came from the hooks below and from hooks under 1s.
+@vben-core/shared:stub: 3 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/shared:stub:   - rolldown-plugin-dts:resolver resolveId (150 calls)
+@vben-core/shared:stub:   - rolldown-plugin-dts:fake-js transform (35 calls)
+@vben-core/shared:stub:   - tsdown:deps resolveId (69 calls)
+@vben-core/shared:stub: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/shared:stub: 
+@vben-core/shared:stub: ✔ Build complete in 6810ms
+@vben/vsh:typecheck: cache hit, replaying logs 57cf518234ba5997
+@vben/vsh:typecheck: $ vue-tsc --noEmit
+@vben/constants:typecheck: cache hit, replaying logs aeb9a160354517db
+@vben/constants:typecheck: $ vue-tsc --noEmit
+@vben/eslint-config:typecheck: cache hit, replaying logs d0a065c2f7dc2679
+@vben/eslint-config:typecheck: $ vue-tsc --noEmit
+@vben/utils:typecheck: cache hit, replaying logs ad57f0548ac98ad2
+@vben-core/composables:typecheck: cache hit, replaying logs c649307e3806e8ba
+@vben-core/composables:typecheck: $ vue-tsc --noEmit
+@vben/utils:typecheck: $ vue-tsc --noEmit
+@vben/preferences:typecheck: cache hit, replaying logs 3f358b947e372df1
+@vben-core/preferences:typecheck: cache hit, replaying logs c638c0cffe0cea88
+@vben/preferences:typecheck: $ vue-tsc --noEmit
+@vben-core/shadcn-ui:typecheck: cache hit, replaying logs d9bd8e7e258f2bbc
+@vben-core/preferences:typecheck: $ vue-tsc --noEmit
+@vben/stores:typecheck: cache hit, replaying logs 9c4bb9348a629f5d
+@vben-core/shadcn-ui:typecheck: $ vue-tsc --noEmit
+@vben/locales:typecheck: cache hit, replaying logs bae35f58ad270236
+@vben/locales:typecheck: $ vue-tsc --noEmit
+@vben/stores:typecheck: $ vue-tsc --noEmit
+@vben/hooks:typecheck: cache hit, replaying logs f1f18377556b6776
+@vben/hooks:typecheck: $ vue-tsc --noEmit
+@vben/access:typecheck: cache hit, replaying logs 69a8367f42478a35
+@vben-core/menu-ui:typecheck: cache hit, replaying logs 1621227a7345f035
+@vben/access:typecheck: $ vue-tsc --noEmit
+@vben-core/menu-ui:typecheck: $ vue-tsc --noEmit
+@vben-core/form-ui:typecheck: cache hit, replaying logs e6b61222d31ea0f2
+@vben-core/form-ui:typecheck: $ vue-tsc --noEmit
+@vben-core/popup-ui:typecheck: cache hit, replaying logs 8b0b464041a47b04
+@vben-core/popup-ui:typecheck: $ vue-tsc --noEmit
+@vben-core/tabs-ui:typecheck: cache hit, replaying logs ad43be2d036d9afc
+@vben-core/tabs-ui:typecheck: $ vue-tsc --noEmit
+@vben-core/layout-ui:typecheck: cache hit, replaying logs 041ca21d0d73d1ab
+@vben-core/layout-ui:typecheck: $ vue-tsc --noEmit
+@vben/request:typecheck: cache hit, replaying logs a39f19cc410d10ec
+@vben/request:typecheck: $ vue-tsc --noEmit
+@vben/common-ui:typecheck: cache hit, replaying logs 150c38b6c2bb8675
+@vben/plugins:typecheck: cache hit, replaying logs 444b7deaabdd7c21
+@vben/common-ui:typecheck: $ vue-tsc --noEmit
+@vben/web-antd:typecheck: cache miss, executing 93c7eb75b5e0fa13
+@vben/layouts:typecheck: cache hit, replaying logs 82affed89c4e8e54
+@vben/plugins:typecheck: $ vue-tsc --noEmit
+@vben/layouts:typecheck: $ vue-tsc --noEmit
+@vben/web-antd:typecheck: $ vue-tsc --noEmit
+
+ Tasks:    38 successful, 38 total
+Cached:    37 cached, 38 total
+  Time:    53.707s 
+

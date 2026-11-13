@@ -4,6 +4,7 @@ import type {
   AdminMenu,
   AdminRole,
   Department,
+  DepartmentInput,
   MenuInput,
   PermissionGroups,
   RoleInput,
@@ -14,6 +15,18 @@ import { requestClient } from '#/api/request';
 const silent: ApiRequestConfig = { silent: true };
 export const getDepartmentsApi = () =>
   requestClient.get<Department[]>('/admin/depts', silent);
+const departmentWrite: ApiRequestConfig = {
+  silent: true,
+  preserveBusinessMessage: true,
+};
+export const getDepartmentApi = (id: number) =>
+  requestClient.get<Department>(`/admin/depts/${id}`, silent);
+export const createDepartmentApi = (input: DepartmentInput) =>
+  requestClient.post<Department>('/admin/depts', input, departmentWrite);
+export const updateDepartmentApi = (id: number, input: DepartmentInput) =>
+  requestClient.put<Department>(`/admin/depts/${id}`, input, departmentWrite);
+export const deleteDepartmentApi = (id: number) =>
+  requestClient.delete(`/admin/depts/${id}`, departmentWrite);
 export const getRolesApi = (page = 1, pageSize = 20) =>
   requestClient.get<PageResult<AdminRole>>('/admin/roles', {
     ...silent,

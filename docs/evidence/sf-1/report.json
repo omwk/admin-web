@@ -1,0 +1,783 @@
+{
+  "passed": true,
+  "readUiPassed": true,
+  "mode": "ui",
+  "missingCodes": [],
+  "navigation": {
+    "menuId": 13,
+    "path": "/system/depts"
+  },
+  "checks": [
+    {
+      "item": 1,
+      "result": "passed",
+      "assertion": "8 个真实部门层级与直接成员数逐一对照 API",
+      "departments": [
+        {
+          "id": 1,
+          "parent_id": 0,
+          "name": "根部门",
+          "path": "1",
+          "sort": 0,
+          "status": "active",
+          "member_count": 3,
+          "children": [
+            {
+              "id": 2,
+              "parent_id": 1,
+              "name": "电商事业部",
+              "path": "1.2",
+              "sort": 1,
+              "status": "active",
+              "member_count": 0,
+              "children": [
+                {
+                  "id": 5,
+                  "parent_id": 2,
+                  "name": "商品组",
+                  "path": "1.2.5",
+                  "sort": 1,
+                  "status": "active",
+                  "member_count": 0,
+                  "children": []
+                },
+                {
+                  "id": 6,
+                  "parent_id": 2,
+                  "name": "订单组",
+                  "path": "1.2.6",
+                  "sort": 2,
+                  "status": "active",
+                  "member_count": 0,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": 3,
+              "parent_id": 1,
+              "name": "客服中心",
+              "path": "1.3",
+              "sort": 2,
+              "status": "active",
+              "member_count": 0,
+              "children": [
+                {
+                  "id": 7,
+                  "parent_id": 3,
+                  "name": "售后组",
+                  "path": "1.3.7",
+                  "sort": 1,
+                  "status": "active",
+                  "member_count": 0,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "id": 4,
+              "parent_id": 1,
+              "name": "财务部",
+              "path": "1.4",
+              "sort": 3,
+              "status": "active",
+              "member_count": 0,
+              "children": [
+                {
+                  "id": 8,
+                  "parent_id": 4,
+                  "name": "对账组",
+                  "path": "1.4.8",
+                  "sort": 1,
+                  "status": "active",
+                  "member_count": 0,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "screenshot": "01-tree-eight-departments.png"
+    },
+    {
+      "item": 2,
+      "result": "passed",
+      "assertion": "根、一级、二级部门真实创建并按父链核对 path",
+      "departments": [
+        {
+          "id": 17,
+          "parent_id": 0,
+          "name": "SF1 根部门 67890935",
+          "path": "17",
+          "sort": 0,
+          "status": "active",
+          "member_count": 0
+        },
+        {
+          "id": 18,
+          "parent_id": 1,
+          "name": "SF1 一级 67890935",
+          "path": "1.18",
+          "sort": 0,
+          "status": "active",
+          "member_count": 0
+        },
+        {
+          "id": 20,
+          "parent_id": 18,
+          "name": "SF1 二级 67890935",
+          "path": "1.18.20",
+          "sort": 0,
+          "status": "active",
+          "member_count": 0
+        }
+      ],
+      "screenshot": "02-created-levels.png"
+    },
+    {
+      "item": 3,
+      "result": "passed",
+      "assertion": "改名、排序 -5、停用状态经详情 API 和树/详情 UI 回读",
+      "department": {
+        "id": 20,
+        "parent_id": 18,
+        "name": "SF1 已改名 67890935",
+        "path": "1.18.20",
+        "sort": -5,
+        "status": "disabled",
+        "member_count": 0
+      },
+      "screenshot": "03-renamed-detail.png"
+    },
+    {
+      "item": 4,
+      "result": "passed",
+      "assertion": "移动带子部门的节点，整个子树 path 和 UI 缩进正确",
+      "automaticTreeReload": true,
+      "network": [
+        {
+          "source": "browser",
+          "path": "/api/v1/admin/depts/18",
+          "method": "GET",
+          "status": 200,
+          "code": 0,
+          "trace_id": "01M794MEKX3ZH3AB9FWP3QM6V4"
+        },
+        {
+          "source": "browser",
+          "path": "/api/v1/admin/depts/18",
+          "method": "PUT",
+          "status": 200,
+          "code": 0,
+          "trace_id": "01M794MF6RDXXP3AKZVXNZBARS"
+        },
+        {
+          "source": "browser",
+          "path": "/api/v1/admin/depts",
+          "method": "GET",
+          "status": 200,
+          "code": 0,
+          "trace_id": "01M794MFA6H40AJ7BRRGXZYKEF"
+        }
+      ],
+      "subtree": {
+        "id": 18,
+        "parent_id": 19,
+        "name": "SF1 一级 67890935",
+        "path": "1.19.18",
+        "sort": 0,
+        "status": "active",
+        "member_count": 0,
+        "children": [
+          {
+            "id": 20,
+            "parent_id": 18,
+            "name": "SF1 已改名 67890935",
+            "path": "1.19.18.20",
+            "sort": -5,
+            "status": "disabled",
+            "member_count": 0,
+            "children": []
+          }
+        ]
+      },
+      "screenshot": "04-moved-subtree.png"
+    },
+    {
+      "item": 5,
+      "result": "passed",
+      "assertion": "当前节点与后代在真实父级选择器中禁用",
+      "screenshot": "05-blocked-parent-options.png"
+    },
+    {
+      "item": 6,
+      "result": "passed",
+      "assertion": "同父重名真实返回 HTTP 400；文案按原文验证",
+      "status": 400,
+      "message": "同一父部门下名称不可重复",
+      "screenshot": "06-duplicate-400-verbatim.png"
+    },
+    {
+      "item": 7,
+      "result": "passed",
+      "assertion": "有子部门的节点真实删除返回 409；文案按原文验证",
+      "status": 409,
+      "message": "请先删除或移走子部门",
+      "screenshot": "07-protected-delete-409-verbatim.png"
+    },
+    {
+      "item": 8,
+      "result": "passed",
+      "assertion": "空部门删除返回 204，刷新后从树消失",
+      "deletedId": 20,
+      "screenshot": "08-deleted-empty-department.png"
+    },
+    {
+      "item": 9,
+      "result": "passed",
+      "assertion": "真实只读账号看不到四类操作入口，直接请求状态按 forbidden 记录",
+      "forbidden": [
+        {
+          "path": "/admin/depts",
+          "method": "POST",
+          "status": 403,
+          "code": 20107,
+          "message": "无权限"
+        },
+        {
+          "path": "/admin/depts/1",
+          "method": "PUT",
+          "status": 403,
+          "code": 20107,
+          "message": "无权限"
+        },
+        {
+          "path": "/admin/depts/1",
+          "method": "DELETE",
+          "status": 403,
+          "code": 20107,
+          "message": "无权限"
+        }
+      ],
+      "screenshot": "09-readonly-hidden-buttons.png"
+    }
+  ],
+  "errors": [],
+  "cleanupErrors": [],
+  "responses": [
+    {
+      "source": "api",
+      "path": "/auth/login",
+      "method": "POST",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794M5DK388ZG1JEEY212Y9R"
+    },
+    {
+      "source": "api",
+      "path": "/auth/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794M5M7Z9QRHSQ9F4ZTEXZT"
+    },
+    {
+      "source": "api",
+      "path": "/admin/permissions",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794M5MM002TY4Z2K1P5B00C"
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794M5N2G24DZ9RDSDZET35G"
+    },
+    {
+      "source": "api",
+      "path": "/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794M5NET1H5FC9SKZ92F2FV"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794M98JJEX6T1RCGSBK2DQS"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794M9EZG0FHWDE3M9TMNT2E"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794M9FHPDW9SN2JXNWSK0ZE"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/refresh",
+      "method": "POST",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MABW1X07QJK528WN4Z82"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MACW9P6600ENF4S044SC"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MAD7MS56J1086HH9366Z"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MAN8VDRW6XEPRKS4FFMR"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/1",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MARDG76HGE3KF3Q9CR33"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M794MBHXPQ50FMFCR0822VB3"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MBMP3177DWZG1JFZJ96T"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/17",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MBPTJ8C7GENDWZYC5P03"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M794MC105SK4205G4Z7W7X19"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MC2F53QEBR9SF1TJV802"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/18",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MC4RT5VEB8FQ35FETERT"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M794MCJXZSXFR9MQKHDSDRRG"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MCMFFDGY81N43MDAAVQR"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/19",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MCQ822HDV7PFVHERAFPQ"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M794MD35T9JMFM2AFVF1F62G"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MD5XV06MW0Q6TEBE45HZ"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/20",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MD9MQHX7ZJV24BB1YHND"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/20",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MDJ3NDTF1H0E4ACPMGE9"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/20",
+      "method": "PUT",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794ME3FQN3KCNNH2PB9NQ4J"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794ME685WBT1QMH7FJ5NVT5"
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts/20",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794ME9XQ4CPTWS0YSD05KKJ"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/20",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794ME9AGYNPYB6VD894SMZB"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/18",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MEKX3ZH3AB9FWP3QM6V4"
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MEPESYQMYT8G7DTA8151"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/18",
+      "method": "PUT",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MF6RDXXP3AKZVXNZBARS"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MFA6H40AJ7BRRGXZYKEF"
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MFCGPEKJCCNS93X9S2NX"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/18",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MFC3840B3Z7QHKQKF1ZV"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/18",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MFKQ1274DJR7HBZR99VB"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "POST",
+      "status": 400,
+      "code": 10001,
+      "trace_id": "01M794MG5KMBDVC377BT09XG8W",
+      "message": "同一父部门下名称不可重复"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/18",
+      "method": "DELETE",
+      "status": 409,
+      "code": 10004,
+      "trace_id": "01M794MH09JXABJZGHMJ6134QP",
+      "message": "请先删除或移走子部门"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/20",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MJ248DCQG74A0YRMVWJ3"
+    },
+    {
+      "source": "browser",
+      "path": "/api/v1/admin/depts/18",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MJ5E9GQDQ9G7GMV3SF63"
+    },
+    {
+      "source": "api",
+      "path": "/admin/roles",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M794MJNFGXA5NTCK15CHSCEW"
+    },
+    {
+      "source": "api",
+      "path": "/admin/roles/15/permissions",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/roles/15/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/users",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M794MJR8QD5EHWMQEGM9ER6B"
+    },
+    {
+      "source": "api",
+      "path": "/admin/users/25/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/users/25/reset-link",
+      "method": "POST",
+      "status": 201,
+      "code": 0,
+      "trace_id": "01M794MK01YT5N1Z0NQ0NB24XF"
+    },
+    {
+      "source": "api",
+      "path": "/auth/password/reset",
+      "method": "POST",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts",
+      "method": "POST",
+      "status": 403,
+      "code": 20107,
+      "trace_id": "01M794MPGE5HXS675C8E9035V0",
+      "message": "无权限"
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts/1",
+      "method": "PUT",
+      "status": 403,
+      "code": 20107,
+      "trace_id": "01M794MPGNSME9NS9QHDC33WKK",
+      "message": "无权限"
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts/1",
+      "method": "DELETE",
+      "status": 403,
+      "code": 20107,
+      "trace_id": "01M794MPGWYKP733C93WMY33FS",
+      "message": "无权限"
+    },
+    {
+      "source": "api",
+      "path": "/admin/users/25/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/users/25",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/roles/15/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/roles/15/permissions",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/roles/15/depts",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/roles/15",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MPSTRDMENBJ1GJNVN3MG"
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts/17",
+      "method": "PUT",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MPT4GJBN4R1FB76N5E99"
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MPTS7JH58XCM15XP658J"
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts/18",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts/17",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts/19",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "source": "api",
+      "path": "/admin/depts",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MPXDWA1EM7F45Y5X0BR9"
+    },
+    {
+      "source": "api",
+      "path": "/admin/users?page_size=100",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MPXNEKQ3XEFPR6X4FPGD"
+    },
+    {
+      "source": "api",
+      "path": "/admin/roles?page_size=100",
+      "method": "GET",
+      "status": 200,
+      "code": 0,
+      "trace_id": "01M794MPY0HF5GMT0F652P2P2K"
+    }
+  ]
+}

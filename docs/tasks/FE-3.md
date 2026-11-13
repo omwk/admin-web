@@ -15,14 +15,14 @@
 
 ## 2. 接口（已就绪）
 
-| 接口 | 用途 | 备注 |
-|---|---|---|
-| `GET /admin/orders` | 列表 | 分页、状态/时间/店铺筛选 |
-| `GET /admin/orders/{id}` | 详情 | 商品行、金额、状态 |
-| `GET /admin/orders/{id}/address` | 收货信息 | **需 5 分钟内重认证** |
-| `GET /admin/orders/stats` | 统计聚合 | 卡片区 |
-| `POST /admin/orders/export` | 触发导出 | 需 `Idempotency-Key` |
-| `GET /admin/orders/exports/{id}` | 导出状态 | |
+| 接口                             | 用途     | 备注                     |
+| -------------------------------- | -------- | ------------------------ |
+| `GET /admin/orders`              | 列表     | 分页、状态/时间/店铺筛选 |
+| `GET /admin/orders/{id}`         | 详情     | 商品行、金额、状态       |
+| `GET /admin/orders/{id}/address` | 收货信息 | **需 5 分钟内重认证**    |
+| `GET /admin/orders/stats`        | 统计聚合 | 卡片区                   |
+| `POST /admin/orders/export`      | 触发导出 | 需 `Idempotency-Key`     |
+| `GET /admin/orders/exports/{id}` | 导出状态 |                          |
 
 ## 3. 页面
 
@@ -75,7 +75,7 @@
 ## 5. 验收
 
 | # | 项 | 断言 |
-|---|---|---|
+| --- | --- | --- |
 | 1 | 列表渲染 | 真实订单数据 ≥5 行，金额/时间格式正确 |
 | 2 | 筛选 | 状态与店铺筛选后 total 变化正确 |
 | 3 | 详情 | 商品行金额合计等于订单实付 |

@@ -1,0 +1,10 @@
+$ vitest run --config vitest.config.ts
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+
+ Test Files  19 passed (19)
+      Tests  85 passed (85)
+   Start at  08:25:06
+   Duration  18.77s (transform 18.48s, setup 0ms, import 97.14s, tests 10.63s, environment 33.95s)
+

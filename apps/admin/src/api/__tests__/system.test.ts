@@ -1,9 +1,45 @@
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { getAllRolesApi } from '../core/system';
+import {
+  createDepartmentApi,
+  deleteDepartmentApi,
+  getAllRolesApi,
+  getDepartmentApi,
+  getDepartmentsApi,
+  updateDepartmentApi,
+} from '../core/system';
 
 const get = vi.hoisted(() => vi.fn());
-vi.mock('#/api/request', () => ({ requestClient: { get } }));
+const writes = vi.hoisted(() => ({
+  post: vi.fn(),
+  put: vi.fn(),
+  delete: vi.fn(),
+}));
+vi.mock('#/api/request', () => ({ requestClient: { get, ...writes } }));
+
+beforeEach(() => vi.clearAllMocks());
+
+describe('department requests', () => {
+  it('uses the documented endpoints and opts writes into verbatim business messages', async () => {
+    const input = {
+      parent_id: 1,
+      name: '商品组',
+      sort: 0,
+      status: 'active' as const,
+    };
+    const config = { silent: true, preserveBusinessMessage: true };
+    await getDepartmentsApi();
+    await getDepartmentApi(5);
+    await createDepartmentApi(input);
+    await updateDepartmentApi(5, input);
+    await deleteDepartmentApi(5);
+    expect(get).toHaveBeenCalledWith('/admin/depts', { silent: true });
+    expect(get).toHaveBeenCalledWith('/admin/depts/5', { silent: true });
+    expect(writes.post).toHaveBeenCalledWith('/admin/depts', input, config);
+    expect(writes.put).toHaveBeenCalledWith('/admin/depts/5', input, config);
+    expect(writes.delete).toHaveBeenCalledWith('/admin/depts/5', config);
+  });
+});
 
 describe('role selectors', () => {
   it('loads beyond 100 roles so existing assignments are not silently lost', async () => {

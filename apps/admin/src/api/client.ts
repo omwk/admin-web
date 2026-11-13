@@ -8,6 +8,8 @@ import { ApiError, toApiError } from './errors';
 
 export interface ApiRequestConfig extends RequestClientConfig {
   authenticated?: boolean;
+  /** Show verbatim 400/409 business messages for explicitly opted-in requests. */
+  preserveBusinessMessage?: boolean;
   silent?: boolean;
   /** Internal replay markers, kept on the original Axios configuration. */
   _accessToken?: null | string;
@@ -66,6 +68,7 @@ export function createApiClient(
       throw new ApiError({
         code: body?.code,
         config: response.config,
+        message: body?.message,
         status: response.status,
         traceId: body?.trace_id,
       });

@@ -1,0 +1,58 @@
+{
+  "recordedAt": "2026-11-13T00:29:33.833Z",
+  "branch": "feat/sf-1-dept",
+  "frontendChecksPassed": true,
+  "allAcceptancePassed": true,
+  "checks": [
+    {
+      "recordedAt": "2026-11-13T00:27:40.9292636Z",
+      "log": "10-lint.log",
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "name": "lint"
+    },
+    {
+      "recordedAt": "2026-11-13T00:25:59.8564460Z",
+      "name": "typecheck",
+      "command": "pnpm check:type",
+      "log": "10-typecheck.log",
+      "exitCode": 0
+    },
+    {
+      "exitCode": 0,
+      "name": "unit",
+      "recordedAt": "2026-11-13T00:25:55.8690334Z",
+      "command": "pnpm test:unit",
+      "log": "10-unit.log"
+    },
+    {
+      "exitCode": 0,
+      "command": "pnpm -F @vben/web-antd test:unit",
+      "log": "10-app-unit.log",
+      "name": "app-unit",
+      "recordedAt": "2026-11-13T00:25:25.5480568Z"
+    },
+    {
+      "name": "build",
+      "exitCode": 0,
+      "command": "pnpm build:antd",
+      "log": "10-build.log",
+      "recordedAt": "2026-11-13T00:25:45.4440193Z"
+    }
+  ],
+  "integration": {
+    "command": "node apps/admin/e2e/sf1.mjs",
+    "exitCode": 0,
+    "report": "report.json",
+    "log": "e2e-run.log",
+    "backend": "http://127.0.0.1:18080",
+    "mode": "ui",
+    "missingCodes": [],
+    "realAcceptanceItems": [1, 2, 3, 4, 5, 6, 7, 8, 9],
+    "browserErrors": 0,
+    "cleanupErrors": 0,
+    "baselineRestored": true,
+    "temporaryUsers": 0,
+    "temporaryRoles": 0
+  }
+}

@@ -1,0 +1,11 @@
+$ vsh lint
+Checking formatting...
+
+All matched files use the correct format.
+Finished in 2646ms on 1269 files using 4 threads.
+Invalid icon name: "var(--vben-tiptap-max-height)"
+Invalid icon name: "var(--vben-tiptap-min-height)"
+Invalid icon name: "10px"
+Invalid icon name: "transform,color,background-color,border-color,box-shadow"
+Invalid icon name: "transform,box-shadow,border-color"
+Invalid icon name: "1.04"

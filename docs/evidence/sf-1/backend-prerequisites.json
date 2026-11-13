@@ -1,0 +1,26 @@
+{
+  "ready": true,
+  "source": "/auth/menus.permissions[]",
+  "permissions": [
+    "system:dept:create",
+    "system:dept:update",
+    "system:dept:delete"
+  ],
+  "missingCodes": [],
+  "navigation": {
+    "id": 13,
+    "parent_id": 1,
+    "name": "部门",
+    "type": "menu",
+    "path": "/system/depts",
+    "component": "system/dept/index",
+    "icon": "lucide:network",
+    "sort": 4,
+    "keep_alive": false,
+    "is_external": false,
+    "permission_code": "system:user:list",
+    "meta": {},
+    "children": []
+  },
+  "buttonNodes": 0
+}
