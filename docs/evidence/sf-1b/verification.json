@@ -1,0 +1,158 @@
+{
+  "task": "SF-1b",
+  "branch": "fix/sf-1b-root",
+  "recordedAt": "2026-11-13T02:42:24.645Z",
+  "timezone": "Asia/Shanghai",
+  "allRequiredCommandsPassed": true,
+  "scope": "Real Vue and Ant Design Vue components in happy-dom; API test doubles.",
+  "acceptance": [
+    {
+      "item": 1,
+      "assertion": "Removed root button; one first-level entry and existing row child entries.",
+      "evidence": [
+        {
+          "file": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-page.test.ts",
+          "name": "department page reloads a newly created department under parent 1 and selects its server detail",
+          "status": "passed"
+        },
+        {
+          "file": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-page.test.ts",
+          "name": "department page gates each operation independently for [\"system:dept:create\"]",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "item": 2,
+      "assertion": "First-level input uses the current root ID; saved node has depth 1. Root ID 73 also verified while search hides the tree.",
+      "evidence": [
+        {
+          "file": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-page.test.ts",
+          "name": "department page reloads a newly created department under parent 1 and selects its server detail",
+          "status": "passed"
+        },
+        {
+          "file": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-page.test.ts",
+          "name": "department page uses the existing root ID even when search hides the entire tree",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "item": 3,
+      "assertion": "Row ID 2 child creation submits parent_id=2; saved node has depth 2.",
+      "evidence": [
+        {
+          "file": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-page.test.ts",
+          "name": "department page reloads a newly created department under parent 2 and selects its server detail",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "item": 4,
+      "assertion": "First-level creation hides the parent field; deeper creation retains it.",
+      "evidence": [
+        {
+          "file": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-form.test.ts",
+          "name": "department form creates with the chosen parent 1 and default sort/status",
+          "status": "passed"
+        },
+        {
+          "file": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-form.test.ts",
+          "name": "department form creates with the chosen parent 2 and default sort/status",
+          "status": "passed"
+        }
+      ]
+    },
+    {
+      "item": 5,
+      "assertion": "lint / typecheck / unit / build all exit 0.",
+      "evidence": [
+        {
+          "command": "pnpm lint",
+          "exitCode": 0,
+          "log": "05-lint.txt"
+        },
+        {
+          "command": "pnpm check:type",
+          "exitCode": 0,
+          "log": "05-typecheck.txt"
+        },
+        {
+          "command": "pnpm test:unit",
+          "exitCode": 0,
+          "log": "05-unit.txt"
+        },
+        {
+          "command": "pnpm -F @vben/web-antd test:unit -- --reporter=verbose --reporter=json --outputFile=../../docs/evidence/sf-1b/unit-report.json",
+          "exitCode": 0,
+          "log": "05-app-unit.txt"
+        },
+        {
+          "exitCode": 0,
+          "command": "pnpm build:antd",
+          "log": "05-build.txt"
+        }
+      ]
+    }
+  ],
+  "backendMessage": {
+    "expected": "已存在根部门，请选择上级部门",
+    "evidence": [
+      {
+        "file": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-form.test.ts",
+        "name": "department form shows the backend message verbatim and retains the form: 已存在根部门，请选择上级部门",
+        "status": "passed"
+      }
+    ]
+  },
+  "summary": {
+    "repositoryUnit": {
+      "files": 114,
+      "passed": 796
+    },
+    "applicationUnit": {
+      "files": 19,
+      "passed": 89
+    },
+    "departmentUnit": {
+      "files": 3,
+      "passed": 27
+    },
+    "typecheckTasks": 38,
+    "buildTasks": 11
+  },
+  "browserVerification": {
+    "completed": false,
+    "reason": "The existing department tab was suspended under a chrome-extension URL; browser URL security policy rejected inspection.",
+    "backendWritesPerformed": false
+  },
+  "e2eScriptSyntax": {
+    "command": "node --check apps/admin/e2e/sf1.mjs",
+    "exitCode": 0,
+    "liveExecutionCompleted": false
+  },
+  "sourceFiles": [
+    {
+      "path": "apps/admin/src/views/system/dept/index.vue",
+      "sha256": "82f82bc0649ee45d611e2dba6a6219f557af290b7f08b682c65f9b5cce12aa62"
+    },
+    {
+      "path": "apps/admin/src/views/system/dept/department-form.vue",
+      "sha256": "34497dc7909ba1705ae70812c856a69a3a78ddad434ea55b7d67dcce68e5f94d"
+    },
+    {
+      "path": "apps/admin/src/views/system/dept/__tests__/department-page.test.ts",
+      "sha256": "c93d500eb8daa11c1013883f5349d9b336ed110ceaea9a0fd282a8f9fc8b02b0"
+    },
+    {
+      "path": "apps/admin/src/views/system/dept/__tests__/department-form.test.ts",
+      "sha256": "e8a84d8a9562b0908bc4fcff2f648fd9cc492b9f80db64543925bc8860ae68f6"
+    },
+    {
+      "path": "apps/admin/e2e/sf1.mjs",
+      "sha256": "54928bbdd5143f7e32bb57c7114c5af4a010e9e95d91b12ef489d4fa610aad33"
+    }
+  ]
+}

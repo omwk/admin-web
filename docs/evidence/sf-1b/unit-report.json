@@ -1,0 +1,1092 @@
+{
+  "numTotalTestSuites": 40,
+  "numPassedTestSuites": 40,
+  "numFailedTestSuites": 0,
+  "numPendingTestSuites": 0,
+  "numTotalTests": 89,
+  "numPassedTests": 89,
+  "numFailedTests": 0,
+  "numPendingTests": 0,
+  "numTodoTests": 0,
+  "snapshot": {
+    "added": 0,
+    "failure": false,
+    "filesAdded": 0,
+    "filesRemoved": 0,
+    "filesRemovedList": [],
+    "filesUnmatched": 0,
+    "filesUpdated": 0,
+    "matched": 0,
+    "total": 0,
+    "unchecked": 0,
+    "uncheckedKeysByFile": [],
+    "unmatched": 0,
+    "updated": 0,
+    "didUpdate": false
+  },
+  "startTime": 1794537506827,
+  "success": true,
+  "testResults": [
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["read-only users API"],
+          "fullName": "read-only users API sends normalized server filters with page size capped at 100",
+          "status": "passed",
+          "title": "sends normalized server filters with page size capped at 100",
+          "duration": 4.261199999999917,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["read-only users API"],
+          "fullName": "read-only users API omits empty filters and normalizes invalid pagination",
+          "status": "passed",
+          "title": "omits empty filters and normalizes invalid pagination",
+          "duration": 1.7174999999999727,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537509659,
+      "endTime": 1794537509664.7175,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/api/__tests__/admin-users.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client preserves a department HTTP 400 business message only when requested",
+          "status": "passed",
+          "title": "preserves a department HTTP 400 business message only when requested",
+          "duration": 17.206599999999526,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client preserves a department HTTP 409 business message only when requested",
+          "status": "passed",
+          "title": "preserves a department HTTP 409 business message only when requested",
+          "duration": 2.077499999999418,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client retains localized server failure messages even when business messages are requested",
+          "status": "passed",
+          "title": "retains localized server failure messages even when business messages are requested",
+          "duration": 2.2399999999997817,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client unwraps the envelope and sends Bearer and Chinese headers",
+          "status": "passed",
+          "title": "unwraps the envelope and sends Bearer and Chinese headers",
+          "duration": 2.798999999999978,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client rejects nonzero business codes even with HTTP 200, retaining trace ID",
+          "status": "passed",
+          "title": "rejects nonzero business codes even with HTTP 200, retaining trace ID",
+          "duration": 4.101700000000164,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client maps HTTP 401 / code 20101 locally",
+          "status": "passed",
+          "title": "maps HTTP 401 / code 20101 locally",
+          "duration": 1.9979000000002998,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client maps HTTP 403 / code 20107 locally",
+          "status": "passed",
+          "title": "maps HTTP 403 / code 20107 locally",
+          "duration": 1.729099999999562,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client maps HTTP 409 / code 10004 locally",
+          "status": "passed",
+          "title": "maps HTTP 409 / code 10004 locally",
+          "duration": 1.7312999999994645,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client maps HTTP 429 / code 10005 locally",
+          "status": "passed",
+          "title": "maps HTTP 429 / code 10005 locally",
+          "duration": 1.9238000000004831,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client maps HTTP 409 / code 99999 locally",
+          "status": "passed",
+          "title": "maps HTTP 409 / code 99999 locally",
+          "duration": 2.165200000000368,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client refreshes natural expiry and replays the original request once",
+          "status": "passed",
+          "title": "refreshes natural expiry and replays the original request once",
+          "duration": 2.1920000000000073,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client expires revoked sessions (20101) without refreshing",
+          "status": "passed",
+          "title": "expires revoked sessions (20101) without refreshing",
+          "duration": 2.0300999999999476,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client expires revoked sessions (20103) without refreshing",
+          "status": "passed",
+          "title": "expires revoked sessions (20103) without refreshing",
+          "duration": 1.3204999999998108,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client never refreshes a failed login and omits Authorization",
+          "status": "passed",
+          "title": "never refreshes a failed login and omits Authorization",
+          "duration": 1.4754999999995562,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client ends a failed replay without another refresh or duplicate notifications",
+          "status": "passed",
+          "title": "ends a failed replay without another refresh or duplicate notifications",
+          "duration": 2.2686000000003332,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client accepts logout HTTP 204 and suppresses 20109 feedback",
+          "status": "passed",
+          "title": "accepts logout HTTP 204 and suppresses 20109 feedback",
+          "duration": 2.157799999999952,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client does not expire or notify when coordinated refresh remains busy with HTTP 401 / 20109",
+          "status": "passed",
+          "title": "does not expire or notify when coordinated refresh remains busy with HTTP 401 / 20109",
+          "duration": 1.7628999999997177,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["identity request client"],
+          "fullName": "identity request client does not expire or notify when coordinated refresh remains busy with HTTP 409 / 20109",
+          "status": "passed",
+          "title": "does not expire or notify when coordinated refresh remains busy with HTTP 409 / 20109",
+          "duration": 1.2910999999994601,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537512713,
+      "endTime": 1794537512766.291,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/api/__tests__/client.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["department requests"],
+          "fullName": "department requests uses the documented endpoints and opts writes into verbatim business messages",
+          "status": "passed",
+          "title": "uses the documented endpoints and opts writes into verbatim business messages",
+          "duration": 6.478099999999813,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["role selectors"],
+          "fullName": "role selectors loads beyond 100 roles so existing assignments are not silently lost",
+          "status": "passed",
+          "title": "loads beyond 100 roles so existing assignments are not silently lost",
+          "duration": 1.7895999999998367,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537509083,
+      "endTime": 1794537509091.7896,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/api/__tests__/system.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["account links and password rules"],
+          "fullName": "account links and password rules targets the current frontend while retaining the tenant and fragment credential",
+          "status": "passed",
+          "title": "targets the current frontend while retaining the tenant and fragment credential",
+          "duration": 4.160899999999856,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["account links and password rules"],
+          "fullName": "account links and password rules enforces character, letter, digit and UTF-8 byte limits",
+          "status": "passed",
+          "title": "enforces character, letter, digit and UTF-8 byte limits",
+          "duration": 3.6971000000000913,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537509082,
+      "endTime": 1794537509090.697,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/auth/__tests__/account-link.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["application authentication flow"],
+          "fullName": "application authentication flow logs in with snake_case tokens, fetches /auth/me and navigates without persisting access",
+          "status": "passed",
+          "title": "logs in with snake_case tokens, fetches /auth/me and navigates without persisting access",
+          "duration": 20.254300000000512,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["application authentication flow"],
+          "fullName": "application authentication flow restores a reloaded tab by POSTing refresh_token, without cookies or Bearer",
+          "status": "passed",
+          "title": "restores a reloaded tab by POSTing refresh_token, without cookies or Bearer",
+          "duration": 2.706199999999626,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["application authentication flow"],
+          "fullName": "application authentication flow clears legacy framework persistence before protected navigation",
+          "status": "passed",
+          "title": "clears legacy framework persistence before protected navigation",
+          "duration": 2.3487000000004628,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["application authentication flow"],
+          "fullName": "application authentication flow expires revoked sessions without sending a refresh request",
+          "status": "passed",
+          "title": "expires revoked sessions without sending a refresh request",
+          "duration": 13.504699999999502,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["application authentication flow"],
+          "fullName": "application authentication flow logs out using the captured Bearer and handles the empty HTTP 204 response",
+          "status": "passed",
+          "title": "logs out using the captured Bearer and handles the empty HTTP 204 response",
+          "duration": 2.0991000000003623,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537513008,
+      "endTime": 1794537513049.099,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/auth/__tests__/auth-flow.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["catalog access boundaries"],
+          "fullName": "catalog access boundaries recognizes each canonical or verified backend grant independently",
+          "status": "passed",
+          "title": "recognizes each canonical or verified backend grant independently",
+          "duration": 2.6419999999998254,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["catalog access boundaries"],
+          "fullName": "catalog access boundaries hides ungranted menus and provides a forbidden component for direct URLs",
+          "status": "passed",
+          "title": "hides ungranted menus and provides a forbidden component for direct URLs",
+          "duration": 0.544399999999996,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537511752,
+      "endTime": 1794537511754.642,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/auth/__tests__/catalog-permission.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["credential storage and refresh coordination"],
+          "fullName": "credential storage and refresh coordination stores only refresh in sessionStorage and access only in memory",
+          "status": "passed",
+          "title": "stores only refresh in sessionStorage and access only in memory",
+          "duration": 3.6445000000003347,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["credential storage and refresh coordination"],
+          "fullName": "credential storage and refresh coordination restores refresh after module reload while discarding access",
+          "status": "passed",
+          "title": "restores refresh after module reload while discarding access",
+          "duration": 1.4904999999998836,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["credential storage and refresh coordination"],
+          "fullName": "credential storage and refresh coordination refreshes exactly once for five expired requests and replays all five silently",
+          "status": "passed",
+          "title": "refreshes exactly once for five expired requests and replays all five silently",
+          "duration": 12.494100000000799,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["credential storage and refresh coordination"],
+          "fullName": "credential storage and refresh coordination retries 20109 silently with bounded backoff and the latest stored refresh",
+          "status": "passed",
+          "title": "retries 20109 silently with bounded backoff and the latest stored refresh",
+          "duration": 2.158900000000358,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["credential storage and refresh coordination"],
+          "fullName": "credential storage and refresh coordination bounds repeated 20109 below the backend 30-second replay window",
+          "status": "passed",
+          "title": "bounds repeated 20109 below the backend 30-second replay window",
+          "duration": 2.3993000000000393,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["credential storage and refresh coordination"],
+          "fullName": "credential storage and refresh coordination expires the session once and rejects every waiter for 20101",
+          "status": "passed",
+          "title": "expires the session once and rejects every waiter for 20101",
+          "duration": 0.792899999999463,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["credential storage and refresh coordination"],
+          "fullName": "credential storage and refresh coordination expires the session once and rejects every waiter for 20103",
+          "status": "passed",
+          "title": "expires the session once and rejects every waiter for 20103",
+          "duration": 0.5499999999992724,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["credential storage and refresh coordination"],
+          "fullName": "credential storage and refresh coordination does not discard the session on temporary backend failures",
+          "status": "passed",
+          "title": "does not discard the session on temporary backend failures",
+          "duration": 1.0178999999998268,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["credential storage and refresh coordination"],
+          "fullName": "credential storage and refresh coordination never resurrects tokens when logout overtakes an in-flight refresh",
+          "status": "passed",
+          "title": "never resurrects tokens when logout overtakes an in-flight refresh",
+          "duration": 1.8121000000001004,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537512745,
+      "endTime": 1794537512771.812,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/auth/__tests__/session.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["integer cents display"],
+          "fullName": "integer cents display preserves two decimal places without floating point arithmetic",
+          "status": "passed",
+          "title": "preserves two decimal places without floating point arithmetic",
+          "duration": 2.0389000000000124,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["integer cents display"],
+          "fullName": "integer cents display shows a dash for missing, fractional or already imprecise values",
+          "status": "passed",
+          "title": "shows a dash for missing, fractional or already imprecise values",
+          "duration": 0.608600000000024,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537510307,
+      "endTime": 1794537510309.6086,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/utils/__tests__/money.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["backend menus and permissions"],
+          "fullName": "backend menus and permissions uses projected department permissions even when navigation has no button nodes",
+          "status": "passed",
+          "title": "uses projected department permissions even when navigation has no button nodes",
+          "duration": 16.44549999999981,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["backend menus and permissions"],
+          "fullName": "backend menus and permissions converts hierarchy, sort/id order, presentation metadata and keep-alive while dropping buttons",
+          "status": "passed",
+          "title": "converts hierarchy, sort/id order, presentation metadata and keep-alive while dropping buttons",
+          "duration": 2.135200000000168,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["backend menus and permissions"],
+          "fullName": "backend menus and permissions uses an explicit registry and routes all unknown components to the existing 404 loader",
+          "status": "passed",
+          "title": "uses an explicit registry and routes all unknown components to the existing 404 loader",
+          "duration": 1.1071999999999207,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["backend menus and permissions"],
+          "fullName": "backend menus and permissions keeps external URLs in menu metadata and rejects unsafe protocols",
+          "status": "passed",
+          "title": "keeps external URLs in menu metadata and rejects unsafe protocols",
+          "duration": 1.0462000000002263,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["backend menus and permissions"],
+          "fullName": "backend menus and permissions generates real Vben menus/routes, navigates unknown components, and clears removed role menus on relogin",
+          "status": "passed",
+          "title": "generates real Vben menus/routes, navigates unknown components, and clears removed role menus on relogin",
+          "duration": 11.091200000000299,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["backend menus and permissions"],
+          "fullName": "backend menus and permissions provides a hidden home state for users without menus",
+          "status": "passed",
+          "title": "provides a hidden home state for users without menus",
+          "duration": 2.3760999999999513,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537511381,
+      "endTime": 1794537511415.3762,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/router/__tests__/menus.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["catalog response display"],
+          "fullName": "catalog response display parses int64 without rounding, leaving strings and decimals intact",
+          "status": "passed",
+          "title": "parses int64 without rounding, leaving strings and decimals intact",
+          "duration": 3.539700000000039,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["catalog response display"],
+          "fullName": "catalog response display builds the observed flat parent_id categories into a selectable tree",
+          "status": "passed",
+          "title": "builds the observed flat parent_id categories into a selectable tree",
+          "duration": 1.1262000000000398,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537510212,
+      "endTime": 1794537510217.1262,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/catalog/product/__tests__/display.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form renders the edited department and its descendant as disabled parent choices",
+          "status": "passed",
+          "title": "renders the edited department and its descendant as disabled parent choices",
+          "duration": 272.7006000000001,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form rejects invalid names without sending requests: \"\"",
+          "status": "passed",
+          "title": "rejects invalid names without sending requests: \"\"",
+          "duration": 151.60570000000007,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form rejects invalid names without sending requests: \"   \"",
+          "status": "passed",
+          "title": "rejects invalid names without sending requests: \"   \"",
+          "duration": 126.07189999999991,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form rejects invalid names without sending requests: \"甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲\"",
+          "status": "passed",
+          "title": "rejects invalid names without sending requests: \"甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲\"",
+          "duration": 137.6265999999996,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form creates with the chosen parent 1 and default sort/status",
+          "status": "passed",
+          "title": "creates with the chosen parent 1 and default sort/status",
+          "duration": 137.4353999999994,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form creates with the chosen parent 2 and default sort/status",
+          "status": "passed",
+          "title": "creates with the chosen parent 2 and default sort/status",
+          "duration": 131.36229999999978,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form rejects root creation when no parent is provided",
+          "status": "passed",
+          "title": "rejects root creation when no parent is provided",
+          "duration": 111.8089,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form still saves the existing root with its original parent",
+          "status": "passed",
+          "title": "still saves the existing root with its original parent",
+          "duration": 113.84939999999915,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form saves editable fields only, preserving sort and disabled status",
+          "status": "passed",
+          "title": "saves editable fields only, preserving sort and disabled status",
+          "duration": 128.5612000000001,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form shows the backend message verbatim and retains the form: 同一上级部门下名称已存在",
+          "status": "passed",
+          "title": "shows the backend message verbatim and retains the form: 同一上级部门下名称已存在",
+          "duration": 106.78189999999995,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department form"],
+          "fullName": "department form shows the backend message verbatim and retains the form: 已存在根部门，请选择上级部门",
+          "status": "passed",
+          "title": "shows the backend message verbatim and retains the form: 已存在根部门，请选择上级部门",
+          "duration": 124.8076000000001,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537514044,
+      "endTime": 1794537515586.8076,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-form.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page reloads a newly created department under parent 1 and selects its server detail",
+          "status": "passed",
+          "title": "reloads a newly created department under parent 1 and selects its server detail",
+          "duration": 418.2403999999997,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page reloads a newly created department under parent 2 and selects its server detail",
+          "status": "passed",
+          "title": "reloads a newly created department under parent 2 and selects its server detail",
+          "duration": 343.5446000000002,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page uses the existing root ID even when search hides the entire tree",
+          "status": "passed",
+          "title": "uses the existing root ID even when search hides the entire tree",
+          "duration": 244.98010000000068,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page refreshes both the tree label and detail after renaming a department",
+          "status": "passed",
+          "title": "refreshes both the tree label and detail after renaming a department",
+          "duration": 230.21059999999943,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page reloads the complete tree and detail after moving a department with children",
+          "status": "passed",
+          "title": "reloads the complete tree and detail after moving a department with children",
+          "duration": 288.39650000000074,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page ignores an older detail response after a newer selection",
+          "status": "passed",
+          "title": "ignores an older detail response after a newer selection",
+          "duration": 153.7394000000004,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page confirms consequences and displays a protected-delete 409 verbatim",
+          "status": "passed",
+          "title": "confirms consequences and displays a protected-delete 409 verbatim",
+          "duration": 105.67660000000069,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page reloads the tree after deleting an empty department",
+          "status": "passed",
+          "title": "reloads the tree after deleting an empty department",
+          "duration": 136.09490000000005,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page gates each operation independently for []",
+          "status": "passed",
+          "title": "gates each operation independently for []",
+          "duration": 74.96169999999984,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page gates each operation independently for [\"system:dept:create\"]",
+          "status": "passed",
+          "title": "gates each operation independently for [\"system:dept:create\"]",
+          "duration": 76.17489999999998,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page gates each operation independently for [\"system:dept:update\"]",
+          "status": "passed",
+          "title": "gates each operation independently for [\"system:dept:update\"]",
+          "duration": 77.78240000000005,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page gates each operation independently for [\"system:dept:delete\"]",
+          "status": "passed",
+          "title": "gates each operation independently for [\"system:dept:delete\"]",
+          "duration": 78.0547000000006,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page preserves ancestors when searching and shows the exact no-match message",
+          "status": "passed",
+          "title": "preserves ancestors when searching and shows the exact no-match message",
+          "duration": 138.2497999999996,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department page"],
+          "fullName": "department page disables first-level creation when the seeded root is missing",
+          "status": "passed",
+          "title": "disables first-level creation when the seeded root is missing",
+          "duration": 23.40099999999984,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537513640,
+      "endTime": 1794537516030.401,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-page.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["department hierarchy"],
+          "fullName": "department hierarchy disables the edited node and every descendant, retaining other parents",
+          "status": "passed",
+          "title": "disables the edited node and every descendant, retaining other parents",
+          "duration": 2.6358000000000175,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["department hierarchy"],
+          "fullName": "department hierarchy keeps matching ancestry and excludes unrelated branches without changing source data",
+          "status": "passed",
+          "title": "keeps matching ancestry and excludes unrelated branches without changing source data",
+          "duration": 2.501299999999901,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537511197,
+      "endTime": 1794537511202.5012,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/system/dept/__tests__/department-tree.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["menu editing"],
+          "fullName": "menu editing excludes the edited subtree from parent choices and disables non-container nodes",
+          "status": "passed",
+          "title": "excludes the edited subtree from parent choices and disables non-container nodes",
+          "duration": 2.019499999999425,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["menu editing"],
+          "fullName": "menu editing preserves metadata and advanced settings while excluding response identity fields",
+          "status": "passed",
+          "title": "preserves metadata and advanced settings while excluding response identity fields",
+          "duration": 506.41139999999996,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537514051,
+      "endTime": 1794537514559.4114,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/system/menu/__tests__/menu-form.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["permission selection"],
+          "fullName": "permission selection searches code/name/module without shrinking the scope of a module toggle",
+          "status": "passed",
+          "title": "searches code/name/module without shrinking the scope of a module toggle",
+          "duration": 4.525700000000143,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["permission selection"],
+          "fullName": "permission selection does not turn persisted half-checked ancestors into grants for unchecked siblings",
+          "status": "passed",
+          "title": "does not turn persisted half-checked ancestors into grants for unchecked siblings",
+          "duration": 0.8096000000000458,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537509770,
+      "endTime": 1794537509775.8096,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/system/role/__tests__/permission-selection.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["custom department grants"],
+          "fullName": "custom department grants selects two independent departments and persists both in one grant",
+          "status": "passed",
+          "title": "selects two independent departments and persists both in one grant",
+          "duration": 287.2013999999999,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537513468,
+      "endTime": 1794537513755.2014,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/system/role/__tests__/role-grants.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["user list state"],
+          "fullName": "user list state resets pagination on keyword/status changes, retains filters for later pages, and resets both filters",
+          "status": "passed",
+          "title": "resets pagination on keyword/status changes, retains filters for later pages, and resets both filters",
+          "duration": 5.87880000000041,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["user list state"],
+          "fullName": "user list state caps page size and restarts at page one when the size changes",
+          "status": "passed",
+          "title": "caps page size and restarts at page one when the size changes",
+          "duration": 0.7276000000001659,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["user list state"],
+          "fullName": "user list state ignores stale responses when filters race or a view is destroyed",
+          "status": "passed",
+          "title": "ignores stale responses when filters race or a view is destroyed",
+          "duration": 0.6893000000000029,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["user list state"],
+          "fullName": "user list state renders only locally mapped error text and can retry successfully",
+          "status": "passed",
+          "title": "renders only locally mapped error text and can retry successfully",
+          "duration": 0.8515999999999622,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        },
+        {
+          "ancestorTitles": ["rFC3339 UTC rendering"],
+          "fullName": "rFC3339 UTC rendering converts UTC and equivalent offsets to the same local display",
+          "status": "passed",
+          "title": "converts UTC and equivalent offsets to the same local display",
+          "duration": 3.9903000000003885,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537512706,
+      "endTime": 1794537512718.9902,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/system/user/__tests__/list.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["user department editing"],
+          "fullName": "user department editing changes department through the tree selector and emits a list refresh",
+          "status": "passed",
+          "title": "changes department through the tree selector and emits a list refresh",
+          "duration": 352.91350000000057,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537514073,
+      "endTime": 1794537514425.9136,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/system/user/__tests__/user-form.test.ts"
+    },
+    {
+      "assertionResults": [
+        {
+          "ancestorTitles": ["public password reset form"],
+          "fullName": "public password reset form submits the form and retains its success screen after removing the credential URL",
+          "status": "passed",
+          "title": "submits the form and retains its success screen after removing the credential URL",
+          "duration": 182.28179999999975,
+          "failureMessages": [],
+          "meta": {},
+          "tags": []
+        }
+      ],
+      "startTime": 1794537514002,
+      "endTime": 1794537514184.2817,
+      "status": "passed",
+      "message": "",
+      "name": "D:/code/admin-web/apps/admin/src/views/_core/authentication/__tests__/account-link.test.ts"
+    }
+  ]
+}

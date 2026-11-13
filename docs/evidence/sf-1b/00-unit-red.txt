@@ -1,0 +1,173 @@
+$ vitest run --config vitest.config.ts "src/views/system/dept/__tests__"
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+ ❯ src/views/system/dept/__tests__/department-page.test.ts (14 tests | 5 failed) 1900ms
+     × reloads a newly created department under parent 1 and selects its server detail 180ms
+     × reloads a newly created department under parent 2 and selects its server detail 105ms
+     × uses the existing root ID even when search hides the entire tree 140ms
+     × gates each operation independently for ["system:dept:create"] 79ms
+     × disables first-level creation when the seeded root is missing 23ms
+ ❯ src/views/system/dept/__tests__/department-form.test.ts (11 tests | 3 failed) 2369ms
+     × renders the edited department and its descendant as disabled parent choices 233ms
+     × creates with the chosen parent 1 and default sort/status 56ms
+     × rejects root creation when no parent is provided 1092ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 8 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/views/system/dept/__tests__/department-form.test.ts > department form > renders the edited department and its descendant as disabled parent choices
+AssertionError: expected <span …(1)></span> to be undefined
+
+- Expected:
+undefined
+
++ Received:
+<span
+  class="ant-select-tree-title"
+>
+  无（根）
+</span>
+
+ ❯ src/views/system/dept/__tests__/department-form.test.ts:115:7
+    113|     expect(
+    114|       choices.find((item) => item.textContent === '无（根）'),
+    115|     ).toBeUndefined();
+       |       ^
+    116|   });
+    117|
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯
+
+ FAIL  src/views/system/dept/__tests__/department-form.test.ts > department form > creates with the chosen parent 1 and default sort/status
+AssertionError: expected false to be true // Object.is equality
+
+- Expected
++ Received
+
+- true
++ false
+
+ ❯ src/views/system/dept/__tests__/department-form.test.ts:144:9
+    142|       expect(
+    143|         container.querySelector('[aria-label="上级部门"]') === null,
+    144|       ).toBe(parentId === 1);
+       |         ^
+    145|       await submit(' 新部门 ');
+    146|       await vi.waitFor(() =>
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯
+
+ FAIL  src/views/system/dept/__tests__/department-form.test.ts > department form > rejects root creation when no parent is provided
+AssertionError: expected '上级部门无（根）名称5 / 64排序状态启用保 存取 消' to contain '请选择上级部门'
+
+Expected: "请选择上级部门"
+Received: "上级部门无（根）名称5 / 64排序状态启用保 存取 消"
+
+ ❯ src/views/system/dept/__tests__/department-form.test.ts:163:37
+    161|     await submit('无上级部门');
+    162|     await vi.waitFor(() =>
+    163|       expect(container.textContent).toContain('请选择上级部门'),
+       |                                     ^
+    164|     );
+    165|     expect(api.create).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/8]⎯
+
+ FAIL  src/views/system/dept/__tests__/department-page.test.ts > department page > reloads a newly created department under parent 1 and selects its server detail
+AssertionError: expected [ <button …(2)>…(1)</button> ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/views/system/dept/__tests__/department-page.test.ts:132:32
+    130|     async (parentId) => {
+    131|       await mount();
+    132|       expect(buttons('新增根部门')).toHaveLength(0);
+       |                                ^
+    133|       expect(buttons('新增一级部门')).toHaveLength(1);
+    134|       clickButton(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/8]⎯
+
+ FAIL  src/views/system/dept/__tests__/department-page.test.ts > department page > reloads a newly created department under parent 2 and selects its server detail
+AssertionError: expected [ <button …(2)>…(1)</button> ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/views/system/dept/__tests__/department-page.test.ts:132:32
+    130|     async (parentId) => {
+    131|       await mount();
+    132|       expect(buttons('新增根部门')).toHaveLength(0);
+       |                                ^
+    133|       expect(buttons('新增一级部门')).toHaveLength(1);
+    134|       clickButton(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/8]⎯
+
+ FAIL  src/views/system/dept/__tests__/department-page.test.ts > department page > uses the existing root ID even when search hides the entire tree
+Error: Missing department action
+ ❯ clickButton src/views/system/dept/__tests__/department-page.test.ts:109:22
+    107| function clickButton(name: string, parent: null | ParentNode = contain…
+    108|   const button = buttons(name, parent)[0];
+    109|   if (!button) throw new Error('Missing department action');
+       |                      ^
+    110|   button.click();
+    111| }
+ ❯ src/views/system/dept/__tests__/department-page.test.ts:191:5
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/8]⎯
+
+ FAIL  src/views/system/dept/__tests__/department-page.test.ts > department page > gates each operation independently for ["system:dept:create"]
+AssertionError: expected 4 to be 5 // Object.is equality
+
+- Expected
++ Received
+
+- 5
++ 4
+
+ ❯ src/views/system/dept/__tests__/department-page.test.ts:371:66
+    369|       state.codes = [...codes];
+    370|       await mount();
+    371|       expect(buttons('新增一级部门').length + buttons('新增子部门').length).toBe(
+       |                                                                  ^
+    372|         creates,
+    373|       );
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/8]⎯
+
+ FAIL  src/views/system/dept/__tests__/department-page.test.ts > department page > disables first-level creation when the seeded root is missing
+AssertionError: expected [ <button …(3)>…(1)</button> ] to have a length of +0 but got 1
+
+- Expected
++ Received
+
+- 0
++ 1
+
+ ❯ src/views/system/dept/__tests__/department-page.test.ts:406:30
+    404|       expect(container.textContent).toContain('暂无部门'),
+    405|     );
+    406|     expect(buttons('新增根部门')).toHaveLength(0);
+       |                              ^
+    407|     const button = buttons('新增一级部门')[0];
+    408|     expect(button).toBeDefined();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[8/8]⎯
+
+
+ Test Files  2 failed | 1 passed (3)
+      Tests  8 failed | 19 passed (27)
+   Start at  10:30:47
+   Duration  6.05s (transform 467ms, setup 0ms, import 5.67s, tests 4.27s, environment 1.53s)
+
+D:\code\admin-web\apps\admin:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @vben/web-antd@5.8.0 test:unit: `vitest run --config vitest.config.ts "src/views/system/dept/__tests__"`
+Exit status 1

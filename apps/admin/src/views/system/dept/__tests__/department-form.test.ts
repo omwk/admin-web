@@ -38,7 +38,7 @@ const saved = vi.fn();
 const busy = vi.fn();
 
 beforeEach(() => {
-  vi.clearAllMocks();
+  vi.resetAllMocks();
   container = document.createElement('div');
   document.body.append(container);
 });
@@ -47,7 +47,7 @@ afterEach(async () => {
   app.unmount();
   container.remove();
 });
-function mount(department?: Department, parentId = 0) {
+function mount(department?: Department, parentId = 1) {
   app = createApp(DepartmentForm, {
     department,
     parentId,
@@ -112,7 +112,7 @@ describe('department form', () => {
     ).toBe(false);
     expect(
       choices.find((item) => item.textContent === '无（根）'),
-    ).toBeDefined();
+    ).toBeUndefined();
   });
 
   it.each(['', '   ', '甲'.repeat(65)])(
@@ -127,7 +127,7 @@ describe('department form', () => {
     },
   );
 
-  it.each([0, 1])(
+  it.each([1, 2])(
     'creates with the chosen parent %i and default sort/status',
     async (parentId) => {
       const response = {
@@ -139,6 +139,9 @@ describe('department form', () => {
       };
       api.create.mockResolvedValueOnce(response);
       mount(undefined, parentId);
+      expect(container.querySelector('[aria-label="上级部门"]') === null).toBe(
+        parentId === 1,
+      );
       await submit(' 新部门 ');
       await vi.waitFor(() =>
         expect(api.create).toHaveBeenCalledWith({
@@ -152,6 +155,29 @@ describe('department form', () => {
       expect(busy.mock.calls).toEqual([[true], [false]]);
     },
   );
+
+  it('rejects root creation when no parent is provided', async () => {
+    mount(undefined, 0);
+    await submit('无上级部门');
+    await vi.waitFor(() =>
+      expect(container.textContent).toContain('请选择上级部门'),
+    );
+    expect(api.create).not.toHaveBeenCalled();
+  });
+
+  it('still saves the existing root with its original parent', async () => {
+    api.update.mockResolvedValueOnce({ ...root, name: '总部改名' });
+    mount(root);
+    await submit('总部改名');
+    await vi.waitFor(() =>
+      expect(api.update).toHaveBeenCalledWith(root.id, {
+        parent_id: 0,
+        name: '总部改名',
+        sort: 0,
+        status: 'active',
+      }),
+    );
+  });
 
   it('saves editable fields only, preserving sort and disabled status', async () => {
     api.update.mockResolvedValueOnce({ ...child, name: '改名部门' });
@@ -168,26 +194,29 @@ describe('department form', () => {
     expect(saved).toHaveBeenCalledWith({ ...child, name: '改名部门' });
   });
 
-  it('shows the backend duplicate message verbatim and retains the form for correction', async () => {
-    api.create.mockRejectedValueOnce(
-      new ApiError({
-        config: { preserveBusinessMessage: true } as never,
-        status: 400,
-        code: 10_001,
-        message: '同一上级部门下名称已存在',
-      }),
-    );
-    mount(undefined, 1);
-    await submit('电商');
-    await vi.waitFor(() =>
-      expect(container.querySelector('.ant-alert-message')?.textContent).toBe(
-        '同一上级部门下名称已存在',
-      ),
-    );
-    expect(
-      container.querySelector<HTMLInputElement>('[aria-label="部门名称"]')
-        ?.value,
-    ).toBe('电商');
-    expect(saved).not.toHaveBeenCalled();
-  });
+  it.each(['同一上级部门下名称已存在', '已存在根部门，请选择上级部门'])(
+    'shows the backend message verbatim and retains the form: %s',
+    async (message) => {
+      api.create.mockRejectedValueOnce(
+        new ApiError({
+          config: { preserveBusinessMessage: true } as never,
+          status: 400,
+          code: 10_001,
+          message,
+        }),
+      );
+      mount(undefined, 1);
+      await submit('电商');
+      await vi.waitFor(() =>
+        expect(container.querySelector('.ant-alert-message')?.textContent).toBe(
+          message,
+        ),
+      );
+      expect(
+        container.querySelector<HTMLInputElement>('[aria-label="部门名称"]')
+          ?.value,
+      ).toBe('电商');
+      expect(saved).not.toHaveBeenCalled();
+    },
+  );
 });

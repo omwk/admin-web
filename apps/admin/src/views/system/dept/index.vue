@@ -55,6 +55,9 @@ let detailSequence = 0;
 const filtered = computed(() =>
   filterDepartments(departments.value, keyword.value),
 );
+const rootDepartment = computed(() =>
+  departments.value.find((department) => department.parent_id === 0),
+);
 const busy = computed(
   () => loading.value || detailLoading.value || saving.value || acting.value,
 );
@@ -111,7 +114,11 @@ async function load(preferredId = selectedId.value) {
   }
 }
 
-function create(parent = 0) {
+function createFirstLevel() {
+  if (rootDepartment.value) create(rootDepartment.value.id);
+}
+
+function create(parent: number) {
   detailSequence++;
   detailLoading.value = false;
   parentId.value = parent;
@@ -182,10 +189,10 @@ onUnmounted(() => {
             <Button
               v-if="hasPermission('system:dept:create')"
               type="primary"
-              :disabled="busy"
-              @click="create()"
+              :disabled="busy || !rootDepartment"
+              @click="createFirstLevel"
             >
-              新增根部门
+              新增一级部门
             </Button>
           </Space>
         </template>
@@ -269,9 +276,7 @@ onUnmounted(() => {
           </Tree>
           <Empty
             v-else-if="!loading && !error"
-            :description="
-              departments.length ? '没有匹配的部门' : '暂无部门，先创建一个'
-            "
+            :description="departments.length ? '没有匹配的部门' : '暂无部门'"
           />
         </Spin>
       </Card>

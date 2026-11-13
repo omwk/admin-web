@@ -160,10 +160,14 @@ async function create(name, parent) {
   let result;
   if (mode === 'ui') {
     await (
-      parent
-        ? row(parent).getByRole('button', { name: '新增子部门', exact: true })
-        : page.getByRole('button', { name: '新增根部门', exact: true })
+      parent === baseline[0].id
+        ? page.getByRole('button', { name: '新增一级部门', exact: true })
+        : row(parent).getByRole('button', { name: '新增子部门', exact: true })
     ).click();
+    assert.equal(
+      await form().getByLabel('上级部门', { exact: true }).count(),
+      parent === baseline[0].id ? 0 : 1,
+    );
     await form().getByLabel('部门名称', { exact: true }).fill(name);
     result = (
       await watchWrite(
@@ -363,6 +367,10 @@ try {
   await page.goto(origin + departmentMenu.path);
   await page.getByTestId('department-tree').waitFor();
   await detail().waitFor();
+  assert.equal(
+    await page.getByRole('button', { name: '新增根部门', exact: true }).count(),
+    0,
+  );
   assert.equal(await page.locator('[data-dept-id]').count(), 8);
   for (const department of flatten(baseline)) {
     assert.equal(
@@ -403,7 +411,7 @@ try {
   if (missingCodes.length) {
     assert.equal(
       await page
-        .getByRole('button', { name: '新增根部门', exact: true })
+        .getByRole('button', { name: '新增一级部门', exact: true })
         .count(),
       0,
     );
@@ -449,7 +457,7 @@ try {
         missingCodes,
       });
   } else {
-    const root = await create('SF1 根部门 ' + suffix, 0);
+    const root = baseline[0];
     assert.equal(root.path, String(root.id));
     const parent = await create('SF1 一级 ' + suffix, baseline[0].id);
     const sibling = await create('SF1 目标 ' + suffix, baseline[0].id);
@@ -457,7 +465,8 @@ try {
     assert.equal(parent.path, baseline[0].path + '.' + parent.id);
     assert.equal(child.path, parent.path + '.' + child.id);
     await shot('02-created-levels');
-    mutationCheck(2, '根、一级、二级部门真实创建并按父链核对 path', {
+    mutationCheck(2, '在现有根下创建一级、二级部门并按父链核对 path', {
+      existingRootId: root.id,
       departments: [root, parent, child],
       screenshot: '02-created-levels.png',
     });
@@ -665,7 +674,7 @@ try {
   );
   await limitedPage.goto(origin + departmentMenu.path);
   await limitedPage.getByTestId('department-tree').waitFor();
-  for (const name of ['新增根部门', '新增子部门', /^编\s*辑$/, /^删\s*除$/]) {
+  for (const name of ['新增一级部门', '新增子部门', /^编\s*辑$/, /^删\s*除$/]) {
     assert.equal(
       await limitedPage.getByRole('button', { name, exact: true }).count(),
       0,

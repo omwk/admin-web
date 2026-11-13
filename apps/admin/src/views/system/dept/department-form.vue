@@ -35,8 +35,18 @@ const form = reactive<DepartmentInput>({
   sort: props.department?.sort ?? 0,
   status: props.department?.status ?? 'active',
 });
+const creatingFirstLevel = computed(
+  () =>
+    !props.department &&
+    props.departments.some(
+      (department) =>
+        department.parent_id === 0 && department.id === props.parentId,
+    ),
+);
 const parents = computed(() => [
-  { key: 0, value: 0, title: '无（根）' },
+  ...(props.department?.parent_id === 0
+    ? [{ key: 0, value: 0, title: '无（根）' }]
+    : []),
   ...departmentParentOptions(props.departments, props.department?.id),
 ]);
 const busy = ref(false);
@@ -45,13 +55,18 @@ const error = ref('');
 async function save() {
   if (busy.value) return;
   error.value = '';
+  const parentId = creatingFirstLevel.value ? props.parentId : form.parent_id;
   const name = form.name.trim();
   if (!name || [...name].length > 64) {
     error.value = '名称必填，长度为 1–64 字';
     return;
   }
-  if (!Number.isInteger(form.parent_id) || form.parent_id < 0) {
-    error.value = '请选择上级部门或无（根）';
+  if (
+    !Number.isInteger(parentId) ||
+    parentId < 0 ||
+    (parentId === 0 && props.department?.parent_id !== 0)
+  ) {
+    error.value = '请选择上级部门';
     return;
   }
   if (
@@ -63,7 +78,7 @@ async function save() {
     return;
   }
   const parent = flattenOptions(parents.value).find(
-    (option) => option.value === form.parent_id,
+    (option) => option.value === parentId,
   );
   if (!parent || parent.disabled) {
     error.value = '上级部门不能是自身或后代';
@@ -73,7 +88,7 @@ async function save() {
   emit('busy', true);
   try {
     const input: DepartmentInput = {
-      parent_id: form.parent_id,
+      parent_id: parentId,
       name,
       sort: form.sort,
       status: form.status,
@@ -104,7 +119,7 @@ function flattenOptions(
   <div data-testid="department-form">
     <Alert v-if="error" :message="error" type="error" show-icon class="mb-4" />
     <Form :model="form" layout="vertical" :disabled="busy" @finish="save">
-      <Form.Item label="上级部门" required>
+      <Form.Item v-if="!creatingFirstLevel" label="上级部门" required>
         <TreeSelect
           v-model:value="form.parent_id"
           aria-label="上级部门"
