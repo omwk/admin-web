@@ -17,19 +17,17 @@ import {
 
 import { hasCatalogPermission } from '#/auth/catalog-permission';
 import { hasPermission } from '#/auth/permission';
+import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 import { formatDateTime } from '#/utils/datetime';
 import { formatCents, formatPriceRange } from '#/utils/money';
 
-import {
-  categoryLabel,
-  displayText,
-  productStatusLabel,
-} from './catalog-display';
+import { categoryLabel, displayText } from './catalog-display';
 import { useProductDetail } from './use-product-detail';
 
 defineOptions({ name: 'CatalogProductDetail' });
 
 const route = useRoute();
+const dictionary = useMetaDictionary('product_status');
 const router = useRouter();
 const { categories, detail, dispose, error, load, loadCategories, loading } =
   useProductDetail();
@@ -84,8 +82,8 @@ onUnmounted(dispose);
           <h2 class="text-xl font-semibold">
             {{ displayText(product.title) }}
           </h2>
-          <Tag :color="product.status === 'active' ? 'success' : 'default'">
-            {{ productStatusLabel(product.status) }}
+          <Tag :color="dictionary.color(product.status)">
+            {{ dictionary.label(product.status) }}
           </Tag>
         </div>
         <Descriptions bordered :column="{ xs: 1, sm: 2, lg: 3 }">

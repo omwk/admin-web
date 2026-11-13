@@ -1,0 +1,3 @@
+$ vue-tsc --noEmit
+
+[exit_code] 0

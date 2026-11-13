@@ -8,6 +8,7 @@ import { getAllMenusApi } from '#/api';
 import { auditFallbackRoutes } from './audit-menus';
 import { catalogRoutes } from './catalog';
 import { componentRegistry } from './component-registry';
+import { configurationRoutes } from './configuration-menus';
 import { findHomePath } from './menu-adapter';
 
 async function generateAccess(options: GenerateMenuAndRoutesOptions) {
@@ -27,15 +28,19 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
         (route) => !paths.has(route.path),
       );
       const userStore = useUserStore();
+      const configuration = configurationRoutes(
+        useAccessStore().accessCodes,
+      ).filter((route) => !paths.has(route.path));
       if (userStore.userInfo) {
         userStore.setUserInfo({
           ...userStore.userInfo,
-          homePath: findHomePath([...routes, ...catalog]),
+          homePath: findHomePath([...routes, ...catalog, ...configuration]),
         });
       }
       return [
         ...routes,
         ...catalog,
+        ...configuration,
         ...auditFallbackRoutes().filter((route) => !paths.has(route.path)),
         {
           component: '/_core/fallback/no-menu.vue',

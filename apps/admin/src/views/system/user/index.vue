@@ -32,6 +32,7 @@ import { getAllRolesApi, getDepartmentsApi } from '#/api/core/system';
 import { toApiError } from '#/api/errors';
 import { frontendAccountLink, passwordError } from '#/auth/account-link';
 import { hasPermission } from '#/auth/permission';
+import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 import { formatDateTime } from '#/utils/datetime';
 
 import LinkModal from '../shared/link-modal.vue';
@@ -73,20 +74,13 @@ const password = ref('');
 const resetError = ref('');
 const link = ref('');
 let roleSequence = 0;
-const statusLabels: Record<UserStatus, string> = {
-  active: '启用',
-  disabled: '禁用',
-  locked: '锁定',
-};
+const dictionary = useMetaDictionary('user_status');
 const statusColors: Record<UserStatus, string> = {
   active: 'success',
   disabled: 'default',
   locked: 'warning',
 };
-const statusOptions = Object.entries(statusLabels).map(([value, label]) => ({
-  label,
-  value,
-}));
+const statusOptions = dictionary.options;
 const columns = [
   { dataIndex: 'username', title: '用户名', width: 150 },
   { dataIndex: 'nickname', title: '昵称', width: 140 },
@@ -344,9 +338,12 @@ onUnmounted(() => {
         <template #bodyCell="{ column, record, text }">
           <Tag
             v-if="column.dataIndex === 'status'"
-            :color="statusColors[record.status as UserStatus]"
+            :color="
+              dictionary.color(record.status) ||
+              statusColors[record.status as UserStatus]
+            "
           >
-            {{ statusLabels[record.status as UserStatus] || '未知' }}
+            {{ dictionary.label(record.status) }}
           </Tag>
           <template v-else-if="column.dataIndex === 'created_at'">
             {{ formatDateTime(text) }}

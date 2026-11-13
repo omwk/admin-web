@@ -9,6 +9,9 @@ vi.mock('#/api/core/admin-users', () => ({
   createUserApi: vi.fn(),
   updateUserApi: update,
 }));
+vi.mock('#/api/core/dictionaries', () => ({
+  getMetaDictionaryApi: vi.fn(async () => []),
+}));
 
 describe('user department editing', () => {
   it('changes department through the tree selector and emits a list refresh', async () => {

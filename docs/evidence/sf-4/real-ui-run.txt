@@ -1,0 +1,14 @@
+SF4 acceptance 1: passed
+SF4 acceptance 2: passed
+SF4 acceptance 4: passed
+SF4 acceptance 5: passed
+SF4 acceptance 3: passed
+SF4 acceptance 6: passed
+SF4 acceptance 7: passed
+SF4 acceptance 8: passed
+SF4 acceptance 10: passed
+SF4 acceptance 9: passed
+SF4 acceptance 11: passed
+{"passed":11,"browserErrors":0,"cleanup":5}
+
+[exit_code] 0

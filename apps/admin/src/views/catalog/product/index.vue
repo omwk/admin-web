@@ -16,6 +16,7 @@ import {
 } from 'ant-design-vue';
 
 import { hasCatalogPermission } from '#/auth/catalog-permission';
+import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 import { formatDateTime } from '#/utils/datetime';
 import { formatPriceRange } from '#/utils/money';
 
@@ -24,8 +25,7 @@ import {
   categoryOptions,
   displayText,
   productSortOptions,
-  productStatusLabel,
-  productStatusLabels,
+  productStatusValues,
 } from './catalog-display';
 import { useProductExport } from './use-product-export';
 import { useProductList } from './use-product-list';
@@ -57,8 +57,12 @@ const {
 const { exportError, exporting, exportMessage, exportProducts } =
   useProductExport(getAppliedQuery);
 const categoryTree = computed(() => categoryOptions(categories.value));
-const statusOptions = Object.entries(productStatusLabels).map(
-  ([value, label]) => ({ label, value }),
+const dictionary = useMetaDictionary('product_status');
+const statusOptions = computed(() =>
+  productStatusValues.map((value) => ({
+    value,
+    label: dictionary.label(value),
+  })),
 );
 const columns = [
   { dataIndex: 'main_image', title: '主图', width: 90 },
@@ -222,9 +226,9 @@ onUnmounted(dispose);
           </template>
           <Tag
             v-else-if="column.dataIndex === 'status'"
-            :color="record.status === 'active' ? 'success' : 'default'"
+            :color="dictionary.color(record.status)"
           >
-            {{ productStatusLabel(record.status) }}
+            {{ dictionary.label(record.status) }}
           </Tag>
           <template v-else-if="column.dataIndex === 'updated_at'">
             {{ formatDateTime(text) }}
