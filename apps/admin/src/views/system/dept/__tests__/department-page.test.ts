@@ -59,7 +59,7 @@ let container: HTMLDivElement;
 let confirmation: Parameters<typeof Modal.confirm>[0] | undefined;
 
 beforeEach(() => {
-  vi.clearAllMocks();
+  vi.resetAllMocks();
   state.codes = [
     'system:dept:create',
     'system:dept:update',
@@ -90,7 +90,9 @@ afterEach(async () => {
 async function mount() {
   app = createApp(DepartmentPage);
   app.mount(container);
-  await vi.waitFor(() => expect(state.detail).toHaveBeenCalledWith(1));
+  await vi.waitFor(() =>
+    expect(state.detail).toHaveBeenCalledWith(state.data[0]?.id),
+  );
   await nextTick();
 }
 function row(id: number) {
@@ -123,15 +125,20 @@ async function enterName(name: string) {
 }
 
 describe('department page', () => {
-  it.each([0, 2])(
+  it.each([1, 2])(
     'reloads a newly created department under parent %i and selects its server detail',
     async (parentId) => {
       await mount();
+      expect(buttons('新增根部门')).toHaveLength(0);
+      expect(buttons('新增一级部门')).toHaveLength(1);
       clickButton(
-        parentId ? '新增子部门' : '新增根部门',
-        parentId ? row(parentId) : container,
+        parentId === 1 ? '新增一级部门' : '新增子部门',
+        parentId === 1 ? container : row(parentId),
       );
       await nextTick();
+      expect(container.querySelector('[aria-label="上级部门"]') === null).toBe(
+        parentId === 1,
+      );
       state.create.mockImplementationOnce(async (input: DepartmentInput) => {
         expect(input).toEqual({
           parent_id: parentId,
@@ -141,17 +148,11 @@ describe('department page', () => {
         });
         const created = {
           ...node(9, '新部门', parentId),
-          path: parentId ? '1.2.9' : '9',
+          path: parentId === 1 ? '1.9' : '1.2.9',
         };
-        if (parentId) {
-          const parent = flatten(state.data).find(
-            (item) => item.id === parentId,
-          );
-          if (!parent) throw new Error('Missing parent department');
-          parent.children?.push(created);
-        } else {
-          state.data.push(created);
-        }
+        const parent = flatten(state.data).find((item) => item.id === parentId);
+        if (!parent) throw new Error('Missing parent department');
+        parent.children?.push(created);
         return created;
       });
       await enterName('新部门');
@@ -161,7 +162,7 @@ describe('department page', () => {
         expect(
           container.querySelector('[data-testid="department-detail"]')
             ?.textContent,
-        ).toContain(parentId ? '1.2.9' : '9'),
+        ).toContain(parentId === 1 ? '1.9' : '1.2.9'),
       );
       expect(row(9)?.textContent).toContain('新部门');
       expect(state.detail.mock.calls.at(-1)).toEqual([9]);
@@ -169,9 +170,39 @@ describe('department page', () => {
         row(9)
           ?.closest('.ant-tree-treenode')
           ?.querySelectorAll('.ant-tree-indent-unit'),
-      ).toHaveLength(parentId ? 2 : 0);
+      ).toHaveLength(parentId === 1 ? 1 : 2);
     },
   );
+
+  it('uses the existing root ID even when search hides the entire tree', async () => {
+    state.data = [node(73, '唯一根', 0, [node(74, '现有一级', 73)])];
+    await mount();
+    const search = container.querySelector<HTMLInputElement>(
+      '[aria-label="搜索部门"]',
+    );
+    if (!search) throw new Error('Missing department search input');
+    search.value = '没有匹配';
+    search.dispatchEvent(new Event('input', { bubbles: true }));
+    await vi.waitFor(() =>
+      expect(container.textContent).toContain('没有匹配的部门'),
+    );
+    clickButton('新增一级部门');
+    await nextTick();
+    state.create.mockResolvedValueOnce({
+      ...node(75, '新一级', 73),
+      path: '73.75',
+    });
+    await enterName('新一级');
+    submitForm();
+    await vi.waitFor(() =>
+      expect(state.create).toHaveBeenCalledWith({
+        parent_id: 73,
+        name: '新一级',
+        sort: 0,
+        status: 'active',
+      }),
+    );
+  });
 
   it('refreshes both the tree label and detail after renaming a department', async () => {
     await mount();
@@ -335,9 +366,9 @@ describe('department page', () => {
     async (codes, creates, updates, deletes) => {
       state.codes = [...codes];
       await mount();
-      expect(buttons('新增根部门').length + buttons('新增子部门').length).toBe(
-        creates,
-      );
+      expect(
+        buttons('新增一级部门').length + buttons('新增子部门').length,
+      ).toBe(creates);
       expect(buttons('编辑')).toHaveLength(updates);
       expect(buttons('删除')).toHaveLength(deletes);
     },
@@ -363,13 +394,18 @@ describe('department page', () => {
     );
   });
 
-  it('shows the exact empty-tree message and retains the root creation entry', async () => {
+  it('disables first-level creation when the seeded root is missing', async () => {
     state.data = [];
     app = createApp(DepartmentPage);
     app.mount(container);
-    await vi.waitFor(() =>
-      expect(container.textContent).toContain('暂无部门，先创建一个'),
-    );
-    expect(buttons('新增根部门')).toHaveLength(1);
+    await vi.waitFor(() => expect(container.textContent).toContain('暂无部门'));
+    expect(buttons('新增根部门')).toHaveLength(0);
+    const button = buttons('新增一级部门')[0];
+    expect(button).toBeDefined();
+    expect(button?.disabled).toBe(true);
+    button?.click();
+    await nextTick();
+    expect(container.querySelector('form')).toBeNull();
+    expect(state.create).not.toHaveBeenCalled();
   });
 });

@@ -1,0 +1,105 @@
+$ vitest run --config vitest.config.ts "--reporter=verbose" "--reporter=json" "--outputFile=../../docs/evidence/sf-1b/unit-report.json"
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+ ✓ src/auth/__tests__/account-link.test.ts > account links and password rules > targets the current frontend while retaining the tenant and fragment credential 4ms
+ ✓ src/auth/__tests__/account-link.test.ts > account links and password rules > enforces character, letter, digit and UTF-8 byte limits 4ms
+ ✓ src/api/__tests__/system.test.ts > department requests > uses the documented endpoints and opts writes into verbatim business messages 6ms
+ ✓ src/api/__tests__/system.test.ts > role selectors > loads beyond 100 roles so existing assignments are not silently lost 2ms
+ ✓ src/api/__tests__/admin-users.test.ts > read-only users API > sends normalized server filters with page size capped at 100 4ms
+ ✓ src/api/__tests__/admin-users.test.ts > read-only users API > omits empty filters and normalizes invalid pagination 2ms
+ ✓ src/views/system/role/__tests__/permission-selection.test.ts > permission selection > searches code/name/module without shrinking the scope of a module toggle 5ms
+ ✓ src/views/system/role/__tests__/permission-selection.test.ts > permission selection > does not turn persisted half-checked ancestors into grants for unchecked siblings 1ms
+ ✓ src/views/catalog/product/__tests__/display.test.ts > catalog response display > parses int64 without rounding, leaving strings and decimals intact 4ms
+ ✓ src/views/catalog/product/__tests__/display.test.ts > catalog response display > builds the observed flat parent_id categories into a selectable tree 1ms
+ ✓ src/utils/__tests__/money.test.ts > integer cents display > preserves two decimal places without floating point arithmetic 2ms
+ ✓ src/utils/__tests__/money.test.ts > integer cents display > shows a dash for missing, fractional or already imprecise values 1ms
+ ✓ src/views/system/dept/__tests__/department-tree.test.ts > department hierarchy > disables the edited node and every descendant, retaining other parents 3ms
+ ✓ src/views/system/dept/__tests__/department-tree.test.ts > department hierarchy > keeps matching ancestry and excludes unrelated branches without changing source data 3ms
+ ✓ src/router/__tests__/menus.test.ts > backend menus and permissions > uses projected department permissions even when navigation has no button nodes 16ms
+ ✓ src/router/__tests__/menus.test.ts > backend menus and permissions > converts hierarchy, sort/id order, presentation metadata and keep-alive while dropping buttons 2ms
+ ✓ src/router/__tests__/menus.test.ts > backend menus and permissions > uses an explicit registry and routes all unknown components to the existing 404 loader 1ms
+ ✓ src/router/__tests__/menus.test.ts > backend menus and permissions > keeps external URLs in menu metadata and rejects unsafe protocols 1ms
+ ✓ src/router/__tests__/menus.test.ts > backend menus and permissions > generates real Vben menus/routes, navigates unknown components, and clears removed role menus on relogin 11ms
+ ✓ src/router/__tests__/menus.test.ts > backend menus and permissions > provides a hidden home state for users without menus 2ms
+ ✓ src/auth/__tests__/catalog-permission.test.ts > catalog access boundaries > recognizes each canonical or verified backend grant independently 3ms
+ ✓ src/auth/__tests__/catalog-permission.test.ts > catalog access boundaries > hides ungranted menus and provides a forbidden component for direct URLs 1ms
+ ✓ src/views/system/user/__tests__/list.test.ts > user list state > resets pagination on keyword/status changes, retains filters for later pages, and resets both filters 6ms
+ ✓ src/views/system/user/__tests__/list.test.ts > user list state > caps page size and restarts at page one when the size changes 1ms
+ ✓ src/views/system/user/__tests__/list.test.ts > user list state > ignores stale responses when filters race or a view is destroyed 1ms
+ ✓ src/views/system/user/__tests__/list.test.ts > user list state > renders only locally mapped error text and can retry successfully 1ms
+ ✓ src/views/system/user/__tests__/list.test.ts > rFC3339 UTC rendering > converts UTC and equivalent offsets to the same local display 4ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > preserves a department HTTP 400 business message only when requested 17ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > preserves a department HTTP 409 business message only when requested 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > retains localized server failure messages even when business messages are requested 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > unwraps the envelope and sends Bearer and Chinese headers 3ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > rejects nonzero business codes even with HTTP 200, retaining trace ID 4ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > maps HTTP 401 / code 20101 locally 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > maps HTTP 403 / code 20107 locally 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > maps HTTP 409 / code 10004 locally 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > maps HTTP 429 / code 10005 locally 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > maps HTTP 409 / code 99999 locally 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > refreshes natural expiry and replays the original request once 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > expires revoked sessions (20101) without refreshing 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > expires revoked sessions (20103) without refreshing 1ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > never refreshes a failed login and omits Authorization 1ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > ends a failed replay without another refresh or duplicate notifications 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > accepts logout HTTP 204 and suppresses 20109 feedback 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > does not expire or notify when coordinated refresh remains busy with HTTP 401 / 20109 2ms
+ ✓ src/api/__tests__/client.test.ts > identity request client > does not expire or notify when coordinated refresh remains busy with HTTP 409 / 20109 1ms
+ ✓ src/auth/__tests__/session.test.ts > credential storage and refresh coordination > stores only refresh in sessionStorage and access only in memory 4ms
+ ✓ src/auth/__tests__/session.test.ts > credential storage and refresh coordination > restores refresh after module reload while discarding access 1ms
+ ✓ src/auth/__tests__/session.test.ts > credential storage and refresh coordination > refreshes exactly once for five expired requests and replays all five silently 12ms
+ ✓ src/auth/__tests__/session.test.ts > credential storage and refresh coordination > retries 20109 silently with bounded backoff and the latest stored refresh 2ms
+ ✓ src/auth/__tests__/session.test.ts > credential storage and refresh coordination > bounds repeated 20109 below the backend 30-second replay window 2ms
+ ✓ src/auth/__tests__/session.test.ts > credential storage and refresh coordination > expires the session once and rejects every waiter for 20101 1ms
+ ✓ src/auth/__tests__/session.test.ts > credential storage and refresh coordination > expires the session once and rejects every waiter for 20103 1ms
+ ✓ src/auth/__tests__/session.test.ts > credential storage and refresh coordination > does not discard the session on temporary backend failures 1ms
+ ✓ src/auth/__tests__/session.test.ts > credential storage and refresh coordination > never resurrects tokens when logout overtakes an in-flight refresh 2ms
+ ✓ src/auth/__tests__/auth-flow.test.ts > application authentication flow > logs in with snake_case tokens, fetches /auth/me and navigates without persisting access 20ms
+ ✓ src/auth/__tests__/auth-flow.test.ts > application authentication flow > restores a reloaded tab by POSTing refresh_token, without cookies or Bearer 3ms
+ ✓ src/auth/__tests__/auth-flow.test.ts > application authentication flow > clears legacy framework persistence before protected navigation 2ms
+ ✓ src/auth/__tests__/auth-flow.test.ts > application authentication flow > expires revoked sessions without sending a refresh request 14ms
+ ✓ src/auth/__tests__/auth-flow.test.ts > application authentication flow > logs out using the captured Bearer and handles the empty HTTP 204 response 2ms
+ ✓ src/views/system/role/__tests__/role-grants.test.ts > custom department grants > selects two independent departments and persists both in one grant 287ms
+stderr | src/views/_core/authentication/__tests__/account-link.test.ts > public password reset form > submits the form and retains its success screen after removing the credential URL
+[VUE_ROUTER_R0004] No match found for location with path "/auth/login"
+├▶ fix: Add a route matching this path or check for typos in the location.
+╰▶ see: https://router.vuejs.org/guide/essentials/dynamic-matching.html#Catch-all-404-Not-found-Route
+
+ ✓ src/views/_core/authentication/__tests__/account-link.test.ts > public password reset form > submits the form and retains its success screen after removing the credential URL 182ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > reloads a newly created department under parent 1 and selects its server detail 418ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > renders the edited department and its descendant as disabled parent choices 273ms
+ ✓ src/views/system/user/__tests__/user-form.test.ts > user department editing > changes department through the tree selector and emits a list refresh 353ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > reloads a newly created department under parent 2 and selects its server detail 344ms
+ ✓ src/views/system/menu/__tests__/menu-form.test.ts > menu editing > excludes the edited subtree from parent choices and disables non-container nodes 2ms
+ ✓ src/views/system/menu/__tests__/menu-form.test.ts > menu editing > preserves metadata and advanced settings while excluding response identity fields 506ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > rejects invalid names without sending requests: "" 152ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > rejects invalid names without sending requests: "   " 126ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > uses the existing root ID even when search hides the entire tree 245ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > rejects invalid names without sending requests: "甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲甲" 138ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > creates with the chosen parent 1 and default sort/status 137ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > refreshes both the tree label and detail after renaming a department 230ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > creates with the chosen parent 2 and default sort/status 131ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > rejects root creation when no parent is provided 112ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > reloads the complete tree and detail after moving a department with children 288ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > still saves the existing root with its original parent 114ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > ignores an older detail response after a newer selection 154ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > saves editable fields only, preserving sort and disabled status 129ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > confirms consequences and displays a protected-delete 409 verbatim 106ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > shows the backend message verbatim and retains the form: 同一上级部门下名称已存在 107ms
+ ✓ src/views/system/dept/__tests__/department-form.test.ts > department form > shows the backend message verbatim and retains the form: 已存在根部门，请选择上级部门 125ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > reloads the tree after deleting an empty department 136ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > gates each operation independently for [] 75ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > gates each operation independently for ["system:dept:create"] 76ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > gates each operation independently for ["system:dept:update"] 78ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > gates each operation independently for ["system:dept:delete"] 78ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > preserves ancestors when searching and shows the exact no-match message 138ms
+ ✓ src/views/system/dept/__tests__/department-page.test.ts > department page > disables first-level creation when the seeded root is missing 23ms
+
+ Test Files  19 passed (19)
+      Tests  89 passed (89)
+   Start at  10:38:26
+   Duration  9.20s (transform 8.08s, setup 0ms, import 51.57s, tests 5.51s, environment 19.04s)
+
+JSON report written to D:/code/admin-web/docs/evidence/sf-1b/unit-report.json

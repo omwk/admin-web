@@ -1,0 +1,553 @@
+$ pnpm run build --filter=@vben/web-antd
+$ cross-env NODE_OPTIONS=--max-old-space-size=8192 turbo build "--filter=@vben/web-antd"
+• turbo 2.10.13
+
+   • Packages in scope: @vben/web-antd
+   • Running build in 1 package
+   • Remote caching disabled
+
+@vben-core/icons:build: cache hit, replaying logs 279c56ff64358a98
+@vben-core/design:build: cache hit, replaying logs c6044946aff4a076
+@vben-core/icons:build: $ pnpm exec tsdown
+@vben-core/icons:build: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/icons:build: ℹ config file: D:\code\admin-web\packages\@core\base\icons\tsdown.config.ts 
+@vben-core/design:build: $ pnpm vite build
+@vben-core/design:build: vite v8.3.0 building client environment for production...
+@vben-core/design:build: transforming...
+@vben-core/design:build: ✓ 9 modules transformed.
+@vben-core/design:build: rendering chunks...
+@vben-core/design:build: dist/design.css  121.08 kB
+@vben-core/design:build: dist/index.mjs     0.00 kB
+@vben-core/design:build: 
+@vben-core/design:build: ✓ built in 3.91s
+@vben-core/icons:build: ℹ entry: src/index.ts
+@vben-core/icons:build: ℹ tsconfig: tsconfig.json
+@vben-core/design:build: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 3.9s of this 3.9s build (99%).
+@vben-core/design:build: 2 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/icons:build: ℹ Build start
+@vben-core/icons:build: ℹ Cleaning 3 files
+@vben-core/design:build:   - vite:css transform (6 calls)
+@vben-core/design:build:   - @tailwindcss/vite:generate:build transform (6 calls)
+@vben-core/design:build: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/icons:build: ℹ dist\index.mjs   2.60 kB │ gzip: 0.82 kB
+@vben-core/icons:build: ℹ dist\index.d.ts  2.85 kB │ gzip: 0.89 kB
+@vben-core/design:build: 
+@vben-core/icons:build: ℹ 2 files, total: 5.45 kB
+@vben-core/icons:build: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 4.1s of this 4.1s build (100%).
+@vben-core/icons:build: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben-core/icons:build:   - rolldown-plugin-dts:generate load (97%, 4.0s, 3 calls)
+@vben-core/icons:build:   - tsdown:deps resolveId (69%, 2.8s, 49 calls)
+@vben-core/icons:build: These rows add up to more than the total. Callbacks can overlap, so the same time counts for more than one row.
+@vben-core/icons:build: 2 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/icons:build:   - rolldown-plugin-dts:resolver resolveId (34 calls)
+@vben-core/icons:build:   - rolldown-plugin-dts:fake-js transform (3 calls)
+@vben-core/icons:build: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/icons:build: 
+@vben-core/icons:build: ✔ Build complete in 4403ms
+@vben-core/typings:build: cache hit, replaying logs 03f8298408274f19
+@vben-core/typings:build: $ pnpm exec tsdown
+@vben-core/typings:build: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/typings:build: ℹ config file: D:\code\admin-web\packages\@core\base\typings\tsdown.config.ts 
+@vben-core/typings:build: ℹ entry: src/index.ts
+@vben-core/typings:build: ℹ tsconfig: tsconfig.json
+@vben-core/typings:build: ℹ Build start
+@vben-core/typings:build: ℹ Cleaning 3 files
+@vben-core/typings:build: ℹ dist\index.mjs   0.01 kB │ gzip: 0.03 kB
+@vben-core/typings:build: ℹ dist\index.d.ts  9.91 kB │ gzip: 3.61 kB
+@vben-core/typings:build: ℹ 2 files, total: 9.92 kB
+@vben-core/typings:build: ✔ Build complete in 2961ms
+@vben-core/shared:build: cache hit, replaying logs 279fc98a4614f004
+@vben-core/shared:build: $ pnpm exec tsdown
+@vben-core/shared:build: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/shared:build: ℹ config file: D:\code\admin-web\packages\@core\base\shared\tsdown.config.ts 
+@vben-core/shared:build: ℹ entry: src/cache/index.ts, src/color/index.ts, src/constants/index.ts, src/global-state.ts, src/store.ts, src/utils/index.ts
+@vben-core/shared:build: ℹ tsconfig: tsconfig.json
+@vben-core/shared:build: ℹ Build start
+@vben-core/shared:build: ℹ Cleaning 18 files
+@vben-core/shared:build: ℹ dist\utils\index.mjs       27.23 kB │ gzip: 9.22 kB
+@vben-core/shared:build: ℹ dist\cache\index.mjs        8.07 kB │ gzip: 2.40 kB
+@vben-core/shared:build: ℹ dist\color\index.mjs        2.90 kB │ gzip: 1.23 kB
+@vben-core/shared:build: ℹ dist\constants\index.mjs    1.49 kB │ gzip: 0.55 kB
+@vben-core/shared:build: ℹ dist\global-state.mjs       0.49 kB │ gzip: 0.30 kB
+@vben-core/shared:build: ℹ dist\store.mjs              0.05 kB │ gzip: 0.06 kB
+@vben-core/shared:build: ℹ dist\globals-C9zDxY6C.mjs   1.15 kB │ gzip: 0.51 kB
+@vben-core/shared:build: ℹ dist\utils\index.d.ts       7.52 kB │ gzip: 2.15 kB
+@vben-core/shared:build: ℹ dist\cache\index.d.ts       2.60 kB │ gzip: 0.60 kB
+@vben-core/shared:build: ℹ dist\constants\index.d.ts   1.69 kB │ gzip: 0.51 kB
+@vben-core/shared:build: ℹ dist\color\index.d.ts       0.81 kB │ gzip: 0.30 kB
+@vben-core/shared:build: ℹ dist\global-state.d.ts      0.61 kB │ gzip: 0.28 kB
+@vben-core/shared:build: ℹ dist\store.d.ts             0.04 kB │ gzip: 0.06 kB
+@vben-core/shared:build: ℹ 13 files, total: 54.65 kB
+@vben-core/shared:build: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 4.4s of this 4.5s build (99%).
+@vben-core/shared:build: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben-core/shared:build:   - rolldown-plugin-dts:generate load (94%, 4.2s, 35 calls)
+@vben-core/shared:build: Additional hook time came from the hooks below and from hooks under 1s.
+@vben-core/shared:build: 3 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/shared:build:   - rolldown-plugin-dts:resolver resolveId (150 calls)
+@vben-core/shared:build:   - rolldown-plugin-dts:fake-js transform (35 calls)
+@vben-core/shared:build:   - tsdown:deps resolveId (69 calls)
+@vben-core/shared:build: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/shared:build: 
+@vben-core/shared:build: ✔ Build complete in 4759ms
+@vben-core/composables:build: cache hit, replaying logs ba0c3d086be93dbe
+@vben-core/composables:build: $ pnpm exec tsdown
+@vben-core/composables:build: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/composables:build: ℹ config file: D:\code\admin-web\packages\@core\composables\tsdown.config.ts 
+@vben-core/composables:build: ℹ entry: src/index.ts
+@vben-core/composables:build: ℹ tsconfig: tsconfig.json
+@vben-core/composables:build: ℹ Build start
+@vben-core/composables:build: ℹ Cleaning 3 files
+@vben-core/composables:build: ℹ dist\index.mjs   10.97 kB │ gzip: 3.64 kB
+@vben-core/composables:build: ℹ dist\index.d.ts   3.87 kB │ gzip: 1.07 kB
+@vben-core/composables:build: ℹ 2 files, total: 14.84 kB
+@vben-core/composables:build: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 3.7s of this 3.8s build (99%).
+@vben-core/composables:build: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben-core/composables:build:   - rolldown-plugin-dts:generate load (91%, 3.4s, 10 calls)
+@vben-core/composables:build: Additional hook time came from the hooks below and from hooks under 1s.
+@vben-core/composables:build: 3 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/composables:build:   - rolldown-plugin-dts:resolver resolveId (62 calls)
+@vben-core/composables:build:   - tsdown:deps resolveId (78 calls)
+@vben-core/composables:build:   - rolldown-plugin-dts:fake-js transform (10 calls)
+@vben-core/composables:build: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/composables:build: 
+@vben-core/composables:build: ✔ Build complete in 4194ms
+@vben-core/tabs-ui:build: cache hit, replaying logs 0e5681c813225243
+@vben-core/tabs-ui:build: $ pnpm exec tsdown
+@vben-core/tabs-ui:build: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/tabs-ui:build: ℹ config file: D:\code\admin-web\packages\@core\ui-kit\tabs-ui\tsdown.config.ts 
+@vben-core/tabs-ui:build: ℹ entry: src/index.ts
+@vben-core/tabs-ui:build: ℹ tsconfig: tsconfig.json
+@vben-core/tabs-ui:build: 
+@vben-core/tabs-ui:build:  WARN  `deps.skipNodeModulesBundle` is deprecated. Use `deps.neverBundle: true` instead.
+@vben-core/tabs-ui:build: 
+@vben-core/tabs-ui:build: ℹ Build start
+@vben-core/tabs-ui:build: ℹ Cleaning 26 files
+@vben-core/tabs-ui:build: ℹ dist\index.mjs                                                                        0.36 kB │ gzip: 0.17 kB
+@vben-core/tabs-ui:build: ℹ dist\components\tabs-chrome\tabs.mjs                                                  7.33 kB │ gzip: 2.47 kB
+@vben-core/tabs-ui:build: ℹ dist\components\tabs\tabs.mjs                                                         5.96 kB │ gzip: 2.13 kB
+@vben-core/tabs-ui:build: ℹ dist\tabs-view.mjs                                                                    3.84 kB │ gzip: 1.38 kB
+@vben-core/tabs-ui:build: ℹ dist\use-tabs-view-scroll.mjs                                                         3.61 kB │ gzip: 1.22 kB
+@vben-core/tabs-ui:build: ℹ dist\use-tabs-drag.mjs                                                                2.29 kB │ gzip: 0.87 kB
+@vben-core/tabs-ui:build: ℹ dist\components\widgets\tool-screen.mjs                                               1.02 kB │ gzip: 0.54 kB
+@vben-core/tabs-ui:build: ℹ dist\components\widgets\tool-more.mjs                                                 0.91 kB │ gzip: 0.51 kB
+@vben-core/tabs-ui:build: ℹ dist\components\tabs-chrome\tabs.vue_vue_type_style_index_0_scoped_cf74cf71_lang.css  0.86 kB │ gzip: 0.25 kB
+@vben-core/tabs-ui:build: ℹ dist\components\widgets\tool-refresh.mjs                                              0.78 kB │ gzip: 0.45 kB
+@vben-core/tabs-ui:build: ℹ dist\_virtual\_\plugin-vue\export-helper.mjs                                          0.25 kB │ gzip: 0.18 kB
+@vben-core/tabs-ui:build: ℹ dist\index.d.ts                                                                       0.48 kB │ gzip: 0.22 kB
+@vben-core/tabs-ui:build: ℹ dist\tabs-view.vue.d.ts                                                               1.00 kB │ gzip: 0.44 kB
+@vben-core/tabs-ui:build: ℹ dist\components\widgets\tool-screen.vue.d.ts                                          0.65 kB │ gzip: 0.32 kB
+@vben-core/tabs-ui:build: ℹ dist\components\widgets\tool-refresh.vue.d.ts                                         0.54 kB │ gzip: 0.29 kB
+@vben-core/tabs-ui:build: ℹ dist\components\widgets\tool-more.vue.d.ts                                            0.53 kB │ gzip: 0.28 kB
+@vben-core/tabs-ui:build: ℹ dist\types.d.ts                                                                       0.52 kB │ gzip: 0.29 kB
+@vben-core/tabs-ui:build: ℹ dist\components\widgets\index.d.ts                                                    0.23 kB │ gzip: 0.13 kB
+@vben-core/tabs-ui:build: ℹ 18 files, total: 31.15 kB
+@vben-core/tabs-ui:build: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 12.2s of this 13.1s build (93%).
+@vben-core/tabs-ui:build: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben-core/tabs-ui:build:   - rolldown-plugin-dts:generate load (71%, 9.3s, 7 calls)
+@vben-core/tabs-ui:build:   - unplugin-vue transform (8%, 1.1s, 22 calls)
+@vben-core/tabs-ui:build: Additional hook time came from the hooks below and from hooks under 1s.
+@vben-core/tabs-ui:build: 3 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/tabs-ui:build:   - tsdown:deps resolveId (130 calls)
+@vben-core/tabs-ui:build:   - rolldown-plugin-dts:resolver resolveId (78 calls)
+@vben-core/tabs-ui:build:   - rolldown-plugin-dts:fake-js transform (7 calls)
+@vben-core/tabs-ui:build: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/tabs-ui:build: 
+@vben-core/tabs-ui:build: ✔ Build complete in 13817ms
+@vben-core/layout-ui:build: cache hit, replaying logs 89056a19fb3a28b1
+@vben-core/layout-ui:build: $ pnpm exec tsdown
+@vben-core/layout-ui:build: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/layout-ui:build: ℹ config file: D:\code\admin-web\packages\@core\ui-kit\layout-ui\tsdown.config.ts 
+@vben-core/layout-ui:build: ℹ entry: src/index.ts
+@vben-core/layout-ui:build: ℹ tsconfig: tsconfig.json
+@vben-core/layout-ui:build: 
+@vben-core/layout-ui:build:  WARN  `deps.skipNodeModulesBundle` is deprecated. Use `deps.neverBundle: true` instead.
+@vben-core/layout-ui:build: 
+@vben-core/layout-ui:build: ℹ Build start
+@vben-core/layout-ui:build: ℹ Cleaning 25 files
+@vben-core/layout-ui:build: ℹ dist\index.mjs                                                                       0.10 kB │ gzip: 0.09 kB
+@vben-core/layout-ui:build: ℹ dist\vben-layout.mjs                                                                23.35 kB │ gzip: 5.43 kB
+@vben-core/layout-ui:build: ℹ dist\components\layout-sidebar.mjs                                                  14.07 kB │ gzip: 3.64 kB
+@vben-core/layout-ui:build: ℹ dist\hooks\use-sidebar-drag.mjs                                                      3.25 kB │ gzip: 1.02 kB
+@vben-core/layout-ui:build: ℹ dist\components\layout-content.mjs                                                   1.81 kB │ gzip: 0.77 kB
+@vben-core/layout-ui:build: ℹ dist\components\widgets\sidebar-fixed-button.mjs                                     1.74 kB │ gzip: 0.71 kB
+@vben-core/layout-ui:build: ℹ dist\components\layout-header.mjs                                                    1.69 kB │ gzip: 0.78 kB
+@vben-core/layout-ui:build: ℹ dist\components\widgets\sidebar-collapse-button.mjs                                  1.45 kB │ gzip: 0.69 kB
+@vben-core/layout-ui:build: ℹ dist\components\layout-footer.mjs                                                    1.06 kB │ gzip: 0.58 kB
+@vben-core/layout-ui:build: ℹ dist\hooks\use-layout.mjs                                                            0.96 kB │ gzip: 0.44 kB
+@vben-core/layout-ui:build: ℹ dist\components\layout-tabbar.mjs                                                    0.72 kB │ gzip: 0.43 kB
+@vben-core/layout-ui:build: ℹ dist\components\layout-sidebar.vue_vue_type_style_index_0_scoped_eb2dbb72_lang.css   0.49 kB │ gzip: 0.23 kB
+@vben-core/layout-ui:build: ℹ dist\vben-layout.vue_vue_type_style_index_0_scoped_9b689818_lang.css                 0.44 kB │ gzip: 0.19 kB
+@vben-core/layout-ui:build: ℹ dist\header-scroll-state.mjs                                                         0.36 kB │ gzip: 0.20 kB
+@vben-core/layout-ui:build: ℹ dist\_virtual\_\plugin-vue\export-helper.mjs                                         0.25 kB │ gzip: 0.18 kB
+@vben-core/layout-ui:build: ℹ dist\index.d.ts                                                                      0.16 kB │ gzip: 0.11 kB
+@vben-core/layout-ui:build: ℹ dist\vben-layout.vue.d.ts                                                            3.90 kB │ gzip: 0.98 kB
+@vben-core/layout-ui:build: ℹ dist\vben-layout.d.ts                                                                1.26 kB │ gzip: 0.40 kB
+@vben-core/popup-ui:build: cache hit, replaying logs 0135c8a0948ab208
+@vben-core/layout-ui:build: ℹ 18 files, total: 57.07 kB
+@vben-core/layout-ui:build: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 13.7s of this 14.1s build (97%).
+@vben-core/layout-ui:build: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben-core/layout-ui:build:   - rolldown-plugin-dts:generate load (70%, 9.8s, 3 calls)
+@vben-core/layout-ui:build:   - rolldown-plugin-dts:fake-js transform (23%, 3.3s, 3 calls)
+@vben-core/layout-ui:build: Additional hook time came from the hooks below and from hooks under 1s.
+@vben-core/layout-ui:build: 2 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/layout-ui:build:   - tsdown:deps resolveId (81 calls)
+@vben-core/layout-ui:build:   - rolldown-plugin-dts:resolver resolveId (32 calls)
+@vben-core/layout-ui:build: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/layout-ui:build: 
+@vben-core/layout-ui:build: ✔ Build complete in 15002ms
+@vben-core/form-ui:build: cache hit, replaying logs 216f0ef3927f536f
+@vben-core/popup-ui:build: $ pnpm exec tsdown
+@vben-core/popup-ui:build: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/popup-ui:build: ℹ config file: D:\code\admin-web\packages\@core\ui-kit\popup-ui\tsdown.config.ts 
+@vben-core/popup-ui:build: ℹ entry: src/index.ts
+@vben-core/popup-ui:build: ℹ tsconfig: tsconfig.json
+@vben-core/popup-ui:build: 
+@vben-core/popup-ui:build:  WARN  `deps.skipNodeModulesBundle` is deprecated. Use `deps.neverBundle: true` instead.
+@vben-core/popup-ui:build: 
+@vben-core/popup-ui:build: ℹ Build start
+@vben-core/popup-ui:build: ℹ Cleaning 30 files
+@vben-core/popup-ui:build: ℹ dist\index.mjs                       0.77 kB │ gzip: 0.28 kB
+@vben-core/popup-ui:build: ℹ dist\modal\modal.mjs                13.14 kB │ gzip: 3.65 kB
+@vben-core/popup-ui:build: ℹ dist\drawer\drawer.mjs              12.30 kB │ gzip: 3.21 kB
+@vben-core/popup-ui:build: ℹ dist\alert\alert2.mjs                7.76 kB │ gzip: 2.26 kB
+@vben-core/popup-ui:build: ℹ dist\alert\AlertBuilder.mjs          4.01 kB │ gzip: 1.44 kB
+@vben-core/popup-ui:build: ℹ dist\drawer\use-drawer.mjs           3.56 kB │ gzip: 1.34 kB
+@vben-core/popup-ui:build: ℹ dist\modal\use-modal.mjs             3.53 kB │ gzip: 1.34 kB
+@vben-core/popup-ui:build: ℹ dist\modal\use-modal-draggable.mjs   3.21 kB │ gzip: 1.00 kB
+@vben-core/popup-ui:build: ℹ dist\modal\modal-api.mjs             3.07 kB │ gzip: 1.31 kB
+@vben-core/popup-ui:build: ℹ dist\drawer\drawer-api.mjs           2.93 kB │ gzip: 1.26 kB
+@vben-core/popup-ui:build: ℹ dist\alert\alert.mjs                 0.48 kB │ gzip: 0.29 kB
+@vben-core/popup-ui:build: ℹ dist\index.d.ts                      1.49 kB │ gzip: 0.45 kB
+@vben-core/popup-ui:build: ℹ dist\drawer\drawer.d.ts              2.11 kB │ gzip: 0.78 kB
+@vben-core/popup-ui:build: ℹ dist\modal\modal.d.ts                2.08 kB │ gzip: 0.78 kB
+@vben-core/popup-ui:build: ℹ dist\drawer\drawer.vue.d.ts          1.77 kB │ gzip: 0.63 kB
+@vben-core/popup-ui:build: ℹ dist\modal\modal.vue.d.ts            1.58 kB │ gzip: 0.57 kB
+@vben-core/popup-ui:build: ℹ dist\alert\alert.d.ts                1.40 kB │ gzip: 0.59 kB
+@vben-core/popup-ui:build: ℹ dist\drawer\use-drawer.d.ts          1.30 kB │ gzip: 0.45 kB
+@vben-core/popup-ui:build: ℹ dist\modal\use-modal.d.ts            1.26 kB │ gzip: 0.45 kB
+@vben-core/popup-ui:build: ℹ dist\alert\alert.vue.d.ts            0.85 kB │ gzip: 0.39 kB
+@vben-core/popup-ui:build: ℹ dist\alert\AlertBuilder.d.ts         0.82 kB │ gzip: 0.26 kB
+@vben-core/popup-ui:build: ℹ dist\drawer\drawer-api.d.ts          0.72 kB │ gzip: 0.37 kB
+@vben-core/popup-ui:build: ℹ dist\modal\modal-api.d.ts            0.71 kB │ gzip: 0.37 kB
+@vben-core/popup-ui:build: ℹ dist\drawer\index.d.ts               0.52 kB │ gzip: 0.21 kB
+@vben-core/popup-ui:build: ℹ dist\alert\index.d.ts                0.43 kB │ gzip: 0.21 kB
+@vben-core/popup-ui:build: ℹ dist\modal\index.d.ts                0.41 kB │ gzip: 0.19 kB
+@vben-core/popup-ui:build: ℹ 26 files, total: 72.23 kB
+@vben-core/popup-ui:build: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 13.3s of this 13.9s build (96%).
+@vben-core/popup-ui:build: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben-core/popup-ui:build:   - rolldown-plugin-dts:generate load (84%, 11.6s, 15 calls)
+@vben-core/popup-ui:build: Additional hook time came from the hooks below and from hooks under 1s.
+@vben-core/popup-ui:build: 3 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/popup-ui:build:   - tsdown:deps resolveId (175 calls)
+@vben-core/popup-ui:build:   - rolldown-plugin-dts:resolver resolveId (138 calls)
+@vben-core/popup-ui:build:   - rolldown-plugin-dts:fake-js transform (15 calls)
+@vben-core/popup-ui:build: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/popup-ui:build: 
+@vben-core/popup-ui:build: ✔ Build complete in 14544ms
+@vben-core/menu-ui:build: cache hit, replaying logs ced836450afff7b1
+@vben-core/form-ui:build: $ pnpm exec tsdown
+@vben-core/form-ui:build: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/form-ui:build: ℹ config file: D:\code\admin-web\packages\@core\ui-kit\form-ui\tsdown.config.ts 
+@vben-core/form-ui:build: ℹ entry: src/index.ts
+@vben-core/form-ui:build: ℹ tsconfig: tsconfig.json
+@vben-core/form-ui:build: 
+@vben-core/form-ui:build:  WARN  `deps.skipNodeModulesBundle` is deprecated. Use `deps.neverBundle: true` instead.
+@vben-core/form-ui:build: 
+@vben-core/form-ui:build: ℹ Build start
+@vben-core/form-ui:build: ℹ Cleaning 37 files
+@vben-core/form-ui:build: ℹ dist\index.mjs                         0.32 kB │ gzip: 0.17 kB
+@vben-core/form-ui:build: ℹ dist\form-render\form-field.mjs       18.06 kB │ gzip: 4.83 kB
+@vben-core/form-ui:build: ℹ dist\form-api.mjs                     14.42 kB │ gzip: 4.16 kB
+@vben-core/form-ui:build: ℹ dist\form-render\schema.mjs            9.45 kB │ gzip: 2.42 kB
+@vben-core/form-ui:build: ℹ dist\components\form-field-array.mjs   7.00 kB │ gzip: 2.27 kB
+@vben-core/form-ui:build: ℹ dist\form-runtime.mjs                  6.97 kB │ gzip: 1.84 kB
+@vben-core/form-ui:build: ℹ dist\form-render\dependencies.mjs      6.52 kB │ gzip: 1.90 kB
+@vben-core/form-ui:build: ℹ dist\form-render\form.mjs              6.13 kB │ gzip: 2.00 kB
+@vben-core/form-ui:build: ℹ dist\vben-use-form.mjs                 5.90 kB │ gzip: 1.90 kB
+@vben-core/form-ui:build: ℹ dist\components\form-actions.mjs       5.43 kB │ gzip: 1.67 kB
+@vben-core/form-ui:build: ℹ dist\form-value-transform.mjs          4.48 kB │ gzip: 1.36 kB
+@vben-core/form-ui:build: ℹ dist\form-render\form-group.mjs        4.06 kB │ gzip: 1.47 kB
+@vben-core/form-ui:build: ℹ dist\form-render\utils.mjs             3.45 kB │ gzip: 1.13 kB
+@vben-core/form-ui:build: ℹ dist\use-form-context.mjs              3.44 kB │ gzip: 1.17 kB
+@vben-core/form-ui:build: ℹ dist\config.mjs                        2.46 kB │ gzip: 0.91 kB
+@vben-core/form-ui:build: ℹ dist\field-name.mjs                    2.32 kB │ gzip: 0.75 kB
+@vben-core/form-ui:build: ℹ dist\use-custom-field-value.mjs        2.31 kB │ gzip: 1.21 kB
+@vben-core/form-ui:build: ℹ dist\form-render\expandable.mjs        2.09 kB │ gzip: 0.90 kB
+@vben-core/form-ui:build: ℹ dist\form-render\form-label.mjs        1.79 kB │ gzip: 0.77 kB
+@vben-core/form-ui:build: ℹ dist\form-runtime-field.mjs            1.57 kB │ gzip: 0.61 kB
+@vben-core/form-ui:build: ℹ dist\form-render\helper.mjs            1.18 kB │ gzip: 0.56 kB
+@vben-core/form-ui:build: ℹ dist\use-vben-form.mjs                 0.97 kB │ gzip: 0.48 kB
+@vben-core/form-ui:build: ℹ dist\form-render\context.mjs           0.65 kB │ gzip: 0.30 kB
+@vben-core/form-ui:build: ℹ dist\form-codec.mjs                    0.63 kB │ gzip: 0.29 kB
+@vben-core/form-ui:build: ℹ dist\rule-registry.mjs                 0.34 kB │ gzip: 0.22 kB
+@vben-core/form-ui:build: ℹ dist\deprecation.mjs                   0.33 kB │ gzip: 0.22 kB
+@vben-core/form-ui:build: ℹ dist\index.d.ts                        1.43 kB │ gzip: 0.42 kB
+@vben-core/form-ui:build: ℹ dist\types.d.ts                       20.76 kB │ gzip: 4.12 kB
+@vben-core/form-ui:build: ℹ dist\form-api.d.ts                     4.16 kB │ gzip: 1.10 kB
+@vben-core/form-ui:build: ℹ dist\use-vben-form.d.ts                0.98 kB │ gzip: 0.32 kB
+@vben-core/form-ui:build: ℹ dist\use-custom-field-value.d.ts       0.64 kB │ gzip: 0.32 kB
+@vben-core/form-ui:build: ℹ dist\form-codec.d.ts                   0.31 kB │ gzip: 0.19 kB
+@vben-core/form-ui:build: ℹ dist\config.d.ts                       0.30 kB │ gzip: 0.19 kB
+@vben-core/form-ui:build: ℹ dist\form-render\utils.d.ts            0.06 kB │ gzip: 0.08 kB
+@vben-core/form-ui:build: ℹ 34 files, total: 140.89 kB
+@vben-core/form-ui:build: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 13.1s of this 13.8s build (94%).
+@vben-core/form-ui:build: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben-core/form-ui:build:   - rolldown-plugin-dts:generate load (75%, 10.4s, 8 calls)
+@vben-core/form-ui:build:   - rolldown-plugin-dts:fake-js transform (11%, 1.6s, 8 calls)
+@vben-core/form-ui:build: Additional hook time came from the hooks below and from hooks under 1s.
+@vben-core/form-ui:build: 2 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/form-ui:build:   - tsdown:deps resolveId (157 calls)
+@vben-core/form-ui:build:   - rolldown-plugin-dts:resolver resolveId (66 calls)
+@vben-core/form-ui:build: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/form-ui:build: 
+@vben-core/form-ui:build: ✔ Build complete in 14433ms
+@vben-core/menu-ui:build: $ pnpm exec tsdown
+@vben-core/menu-ui:build: ℹ tsdown v0.22.14 powered by rolldown v1.2.9
+@vben-core/menu-ui:build: ℹ config file: D:\code\admin-web\packages\@core\ui-kit\menu-ui\tsdown.config.ts 
+@vben-core/menu-ui:build: ℹ entry: src/index.ts
+@vben-core/menu-ui:build: ℹ tsconfig: tsconfig.json
+@vben-core/menu-ui:build: 
+@vben-core/menu-ui:build:  WARN  `deps.skipNodeModulesBundle` is deprecated. Use `deps.neverBundle: true` instead.
+@vben-core/menu-ui:build: 
+@vben-core/menu-ui:build: ℹ Build start
+@vben-core/menu-ui:build: ℹ Cleaning 33 files
+@vben-core/menu-ui:build: ℹ dist\index.mjs                                                                                0.26 kB │ gzip: 0.15 kB
+@vben-core/menu-ui:build: ℹ dist\components\menu.vue_vue_type_style_index_0_lang.css                                     13.55 kB │ gzip: 1.88 kB
+@vben-core/menu-ui:build: ℹ dist\components\menu.mjs                                                                      8.54 kB │ gzip: 2.64 kB
+@vben-core/menu-ui:build: ℹ dist\components\sub-menu.mjs                                                                  7.66 kB │ gzip: 2.28 kB
+@vben-core/menu-ui:build: ℹ dist\components\menu-item.mjs                                                                 4.98 kB │ gzip: 1.70 kB
+@vben-core/menu-ui:build: ℹ dist\components\sub-menu-content.mjs                                                          3.22 kB │ gzip: 1.13 kB
+@vben-core/menu-ui:build: ℹ dist\components\collapse-transition.mjs                                                       2.74 kB │ gzip: 0.72 kB
+@vben-core/menu-ui:build: ℹ dist\components\normal-menu\normal-menu.vue_vue_type_style_index_0_scoped_424fbe3f_lang.css   2.54 kB │ gzip: 0.69 kB
+@vben-core/menu-ui:build: ℹ dist\sub-menu.mjs                                                                             2.40 kB │ gzip: 0.88 kB
+@vben-core/menu-ui:build: ℹ dist\components\normal-menu\normal-menu.mjs                                                   2.21 kB │ gzip: 0.94 kB
+@vben-core/menu-ui:build: ℹ dist\components\menu-badge.mjs                                                                1.84 kB │ gzip: 0.80 kB
+@vben-core/menu-ui:build: ℹ dist\menu.mjs                                                                                 1.23 kB │ gzip: 0.58 kB
+@vben-core/menu-ui:build: ℹ dist\hooks\use-menu-context.mjs                                                               1.07 kB │ gzip: 0.41 kB
+@vben-core/menu-ui:build: ℹ dist\components\menu-badge-dot.mjs                                                            0.94 kB │ gzip: 0.45 kB
+@vben-core/menu-ui:build: ℹ dist\utils\index.mjs                                                                          0.90 kB │ gzip: 0.41 kB
+@vben-core/menu-ui:build: ℹ dist\hooks\use-menu.mjs                                                                       0.88 kB │ gzip: 0.50 kB
+@vben-core/menu-ui:build: ℹ dist\hooks\use-menu-scroll.mjs                                                                0.79 kB │ gzip: 0.41 kB
+@vben-core/menu-ui:build: ℹ dist\_virtual\_\plugin-vue\export-helper.mjs                                                  0.25 kB │ gzip: 0.18 kB
+@vben-core/menu-ui:build: ℹ dist\index.d.ts                                                                               0.67 kB │ gzip: 0.24 kB
+@vben-core/menu-ui:build: ℹ dist\types.d.ts                                                                               1.96 kB │ gzip: 0.60 kB
+@vben-core/menu-ui:build: ℹ dist\components\normal-menu\normal-menu.vue.d.ts                                              0.90 kB │ gzip: 0.42 kB
+@vben-core/menu-ui:build: ℹ dist\menu.vue.d.ts                                                                            0.60 kB │ gzip: 0.32 kB
+@vben-core/menu-ui:build: ℹ dist\components\menu-badge.vue.d.ts                                                           0.57 kB │ gzip: 0.31 kB
+@vben-core/menu-ui:build: ℹ dist\components\normal-menu\normal-menu.d.ts                                                  0.30 kB │ gzip: 0.22 kB
+@vben-core/menu-ui:build: ℹ dist\components\normal-menu\index.d.ts                                                        0.15 kB │ gzip: 0.11 kB
+@vben-core/menu-ui:build: ℹ 25 files, total: 61.16 kB
+@vben-core/menu-ui:build: [33m[PLUGIN_TIMINGS] [0mPlugin hooks ran for 13.7s of this 13.9s build (98%).
+@vben-core/menu-ui:build: The slowest hooks, timed inside each callback (the wait before a callback starts is excluded, the time it awaits is included):
+@vben-core/menu-ui:build:   - rolldown-plugin-dts:generate load (69%, 9.6s, 7 calls)
+@vben-core/menu-ui:build:   - @tsdown/css transform (17%, 2.3s, 2 calls)
+@vben-core/menu-ui:build:   - unplugin-vue transform (10%, 1.4s, 31 calls)
+@vben-core/menu-ui:build: Additional hook time came from the hooks below and from hooks under 1s.
+@vben-core/menu-ui:build: 3 hooks are listed without a time. Their calls overlapped, so the time inside one call includes work from other calls. To find their cost, profile the build with `node --cpu-prof`:
+@vben-core/menu-ui:build:   - tsdown:deps resolveId (131 calls)
+@vben-core/menu-ui:build:   - rolldown-plugin-dts:resolver resolveId (70 calls)
+@vben-core/menu-ui:build:   - rolldown-plugin-dts:fake-js transform (7 calls)
+@vben-core/menu-ui:build: See https://rolldown.rs/reference/InputOptions.checks#plugintimings for more details.
+@vben-core/menu-ui:build: 
+@vben-core/menu-ui:build: ✔ Build complete in 14772ms
+@vben/web-antd:build: cache miss, executing 5e2cf5c3dc847e51
+@vben/web-antd:build: $ pnpm vite build --mode production
+@vben/web-antd:build: vite v8.3.0 building client environment for production...
+@vben/web-antd:build: transforming...
+@vben/web-antd:build: ✓ 7621 modules transformed.
+@vben/web-antd:build: rendering chunks...
+@vben/web-antd:build: ✨configuration file is build successfully!
+@vben/web-antd:build: dist/_app-config-5.8.0-7362080d.js              0.20 kB
+@vben/web-antd:build: dist/index.html                                 3.10 kB
+@vben/web-antd:build: dist/css/login-Cj5PKODp.css                     0.06 kB
+@vben/web-antd:build: dist/css/auth-zsf-kax4.css                      0.38 kB
+@vben/web-antd:build: dist/css/theme-toggle-CJLHZmGO.css              1.63 kB
+@vben/web-antd:build: dist/css/tippy-DkTQMyWH.css                     6.65 kB
+@vben/web-antd:build: dist/css/basic-h3MtPWJ_.css                    23.49 kB
+@vben/web-antd:build: dist/css/bootstrap-C2urMVwN.css               152.88 kB
+@vben/web-antd:build: dist/js/isNumeric-lO5tpDZ5.js                   0.05 kB
+@vben/web-antd:build: dist/js/permission-Bh9iVUwO.js                  0.10 kB
+@vben/web-antd:build: dist/js/devWarning-DlchpATv.js                  0.10 kB
+@vben/web-antd:build: dist/js/motionUtil-BeNb4tZl.js                  0.11 kB
+@vben/web-antd:build: dist/js/omit-C0ksMpVM.js                        0.14 kB
+@vben/web-antd:build: dist/js/profile-4DIHvR8y.js                     0.15 kB
+@vben/web-antd:build: dist/js/profile-B411QZNQ.js                     0.15 kB
+@vben/web-antd:build: dist/js/profile-tkuLhW9J.js                     0.15 kB
+@vben/web-antd:build: dist/js/useState-BASScLWo.js                    0.16 kB
+@vben/web-antd:build: dist/js/warning-BLl3S_cO.js                     0.17 kB
+@vben/web-antd:build: dist/js/useMemo-DDPXkxW2.js                     0.17 kB
+@vben/web-antd:build: dist/js/useRefs-CDkJ-3dS.js                     0.17 kB
+@vben/web-antd:build: dist/js/useFlexGapSupport-5kF02_gV.js           0.18 kB
+@vben/web-antd:build: dist/js/Keyframes-K60KFfv3.js                   0.20 kB
+@vben/web-antd:build: dist/js/rotate-cw-DHZVLnnT.js                   0.20 kB
+@vben/web-antd:build: dist/js/menu-outlet-B6-0wyhK.js                 0.21 kB
+@vben/web-antd:build: dist/js/isVisible-B1N4qR6W.js                   0.23 kB
+@vben/web-antd:build: dist/js/zh_CN-kZl6yT-1.js                       0.23 kB
+@vben/web-antd:build: dist/js/initDefaultProps-D8Mki4gM.js            0.25 kB
+@vben/web-antd:build: dist/js/page-DM9HIydN.js                        0.27 kB
+@vben/web-antd:build: dist/js/createContext-gXgMVDp4.js               0.28 kB
+@vben/web-antd:build: dist/js/page-YH8FPpYF.js                        0.28 kB
+@vben/web-antd:build: dist/js/statusUtils-ZbTeciaT.js                 0.29 kB
+@vben/web-antd:build: dist/js/forbidden-DKiTb6h5.js                   0.31 kB
+@vben/web-antd:build: dist/js/not-found-C1xlBZvH.js                   0.31 kB
+@vben/web-antd:build: dist/js/datetime-DBWmgJt5.js                    0.31 kB
+@vben/web-antd:build: dist/js/demos-Bb7WGJxd.js                       0.32 kB
+@vben/web-antd:build: dist/js/tree--t6nFYDO.js                        0.32 kB
+@vben/web-antd:build: dist/js/demos-BSnMPpZY.js                       0.32 kB
+@vben/web-antd:build: dist/js/invites-CPkbH57Y.js                     0.40 kB
+@vben/web-antd:build: dist/js/no-menu-BWaOyOP4.js                     0.41 kB
+@vben/web-antd:build: dist/js/_arrayIncludesWith-D3sQWlhs.js          0.43 kB
+@vben/web-antd:build: dist/js/pending-CvbAf4Yt.js                     0.43 kB
+@vben/web-antd:build: dist/js/raf-CR9Bw2Uc.js                         0.45 kB
+@vben/web-antd:build: dist/js/useMergedState-B3g1K4VT.js              0.49 kB
+@vben/web-antd:build: dist/js/css-BflejRyY.js                         0.50 kB
+@vben/web-antd:build: dist/js/date-picker-znM57XBn.js                 0.50 kB
+@vben/web-antd:build: dist/js/account-link-MBbjGDhx.js                0.51 kB
+@vben/web-antd:build: dist/js/shallowequal-BS93PXf8.js                0.52 kB
+@vben/web-antd:build: dist/js/en-DA5aUWwj.js                          0.58 kB
+@vben/web-antd:build: dist/js/inference-BN4NsRgp.js                   0.62 kB
+@vben/web-antd:build: dist/js/isObjectLike-DNah0Hql.js                0.66 kB
+@vben/web-antd:build: dist/js/objectWithoutProperties-BjoYlK0I.js     0.69 kB
+@vben/web-antd:build: dist/js/defu-1oANYd5X.js                        0.70 kB
+@vben/web-antd:build: dist/js/rolldown-runtime-hePW80VL.js            0.71 kB
+@vben/web-antd:build: dist/js/styleChecker-B34DDf4B.js                0.79 kB
+@vben/web-antd:build: dist/js/useApi-CROJJdhE-XaUiqqso.js             0.83 kB
+@vben/web-antd:build: dist/js/vnode-B-272ktb.js                       0.84 kB
+@vben/web-antd:build: dist/js/common-AfxesE33.js                      0.88 kB
+@vben/web-antd:build: dist/js/common-U3f2fAnH.js                      0.90 kB
+@vben/web-antd:build: dist/js/admin-users-BGTkgUgQ.js                 0.91 kB
+@vben/web-antd:build: dist/js/common-BdmafBf4.js                      0.91 kB
+@vben/web-antd:build: dist/js/compact-item-BbW5OmKl.js                0.94 kB
+@vben/web-antd:build: dist/js/CheckOutlined-gxWXeQRf.js               1.01 kB
+@vben/web-antd:build: dist/js/ExclamationCircleFilled-y_yJX4uj.js     1.07 kB
+@vben/web-antd:build: dist/js/FormItemContext-D7S-r1V4.js             1.11 kB
+@vben/web-antd:build: dist/js/CheckCircleFilled-YcwDunGG.js           1.11 kB
+@vben/web-antd:build: dist/js/LoadingOutlined-DqDsWqWY.js             1.15 kB
+@vben/web-antd:build: dist/js/objectSpread2-BmonrgTA.js               1.29 kB
+@vben/web-antd:build: dist/js/_baseIteratee-CAKIO6Hy.js               1.29 kB
+@vben/web-antd:build: dist/js/catalog-display-WHHYlTit.js             1.30 kB
+@vben/web-antd:build: dist/js/EyeOutlined-BxgGi4uo.js                 1.30 kB
+@vben/web-antd:build: dist/js/system-DwA_9V1O.js                      1.34 kB
+@vben/web-antd:build: dist/js/SearchOutlined-OD1W86Dy.js              1.34 kB
+@vben/web-antd:build: dist/js/catalog-CnNEKu0C.js                     1.36 kB
+@vben/web-antd:build: dist/js/collapseMotion-DJw3KtGb.js              1.47 kB
+@vben/web-antd:build: dist/js/colors-h0EqLGzW.js                      1.48 kB
+@vben/web-antd:build: dist/js/CloseOutlined-D8xNRR_S.js               1.48 kB
+@vben/web-antd:build: dist/js/zh-cn-DTVg5rYV.js                       1.52 kB
+@vben/web-antd:build: dist/js/CloseCircleFilled-DKW54gTa.js           1.56 kB
+@vben/web-antd:build: dist/js/page-0Q5nV7z_.js                        1.72 kB
+@vben/web-antd:build: dist/js/LeftOutlined-DtVV-K4o.js                1.91 kB
+@vben/web-antd:build: dist/js/slide-BQIKUK2Y.js                       1.92 kB
+@vben/web-antd:build: dist/js/move-BjyMO7mC.js                        1.96 kB
+@vben/web-antd:build: dist/js/KeyCode-DNtAKsAc.js                     2.00 kB
+@vben/web-antd:build: dist/js/hasIn-CSrhOKCX.js                       2.06 kB
+@vben/web-antd:build: dist/js/pickAttrs-SF6-8m9R.js                   2.18 kB
+@vben/web-antd:build: dist/js/Portal-CccAlW7a.js                      2.26 kB
+@vben/web-antd:build: dist/js/utc-DKa8GzeA.js                         2.28 kB
+@vben/web-antd:build: dist/js/space-SiNokBWR.js                       2.30 kB
+@vben/web-antd:build: dist/js/zoom-OdaHcPrJ.js                        2.37 kB
+@vben/web-antd:build: dist/js/Checkbox-Banemmh5.js                    2.41 kB
+@vben/web-antd:build: dist/js/time-picker-CU3ecjqb.js                 2.60 kB
+@vben/web-antd:build: dist/js/dist-zStm9ma4.js                        2.70 kB
+@vben/web-antd:build: dist/js/auto-complete-DD8gDuFm.js               2.95 kB
+@vben/web-antd:build: dist/js/Compact-DdXZ8wuT.js                     3.04 kB
+@vben/web-antd:build: dist/js/DownOutlined-CbozVO9v.js                3.09 kB
+@vben/web-antd:build: dist/js/authentication-nB_1w7ei.js              3.40 kB
+@vben/web-antd:build: dist/js/authentication-DaSE31EI.js              3.41 kB
+@vben/web-antd:build: dist/js/authentication-CgivL9aI.js              3.53 kB
+@vben/web-antd:build: dist/js/divider-BemxmhDa.js                     3.58 kB
+@vben/web-antd:build: dist/js/_getTag-2z2WZcIh.js                     3.72 kB
+@vben/web-antd:build: dist/js/wave-C-x_Im3w.js                        3.82 kB
+@vben/web-antd:build: dist/js/style-B5esCrIX.js                       3.88 kB
+@vben/web-antd:build: dist/js/account-link-C94fZ73j.js                3.93 kB
+@vben/web-antd:build: dist/js/en_US-Cv9hrLhb.js                       4.17 kB
+@vben/web-antd:build: dist/js/nprogress-CcparBbP.js                   4.18 kB
+@vben/web-antd:build: dist/js/motion-DmkmsHM0.js                      4.38 kB
+@vben/web-antd:build: dist/js/ui-NNY_r1AM.js                          4.39 kB
+@vben/web-antd:build: dist/js/ui-9JFOdkA_.js                          4.43 kB
+@vben/web-antd:build: dist/js/ui-CCmUukCu.js                          4.64 kB
+@vben/web-antd:build: dist/js/BaseInput-C2yRG8iM.js                   4.67 kB
+@vben/web-antd:build: dist/js/checkbox-_yln-2fV.js                    4.83 kB
+@vben/web-antd:build: dist/js/tag-DhzYiwXd.js                         4.83 kB
+@vben/web-antd:build: dist/js/detail-CKlhn6lu.js                      5.47 kB
+@vben/web-antd:build: dist/js/fallback-DzDX11Ek.js                    5.86 kB
+@vben/web-antd:build: dist/js/core-D0lCIzXh.js                        6.10 kB
+@vben/web-antd:build: dist/jse/index-index-BZ5ZSNgE.js                6.47 kB
+@vben/web-antd:build: dist/js/vc-overflow-D8N6CdWL.js                 6.58 kB
+@vben/web-antd:build: dist/js/access-ChAoCB0u.js                      6.99 kB
+@vben/web-antd:build: dist/js/icon-500-B3b1SltD.js                    7.08 kB
+@vben/web-antd:build: dist/js/dayjs.min-DCUUuXM3.js                   7.18 kB
+@vben/web-antd:build: dist/js/rate-NvoJf1rN.js                        7.42 kB
+@vben/web-antd:build: dist/js/ResizeObserver.es-CWGnbEXw.js           7.60 kB
+@vben/web-antd:build: dist/js/preferences-C8rVqNJ_.js                 7.71 kB
+@vben/web-antd:build: dist/js/preferences-Dy8TIlZp.js                 7.73 kB
+@vben/web-antd:build: dist/js/descriptions-DLcsmlqH.js                7.73 kB
+@vben/web-antd:build: dist/js/preferences-D4_rDnaP.js                 7.74 kB
+@vben/web-antd:build: dist/js/icon-offline-FAxa2HQX.js                8.09 kB
+@vben/web-antd:build: dist/js/dist-B9u6pFYC.js                        8.13 kB
+@vben/web-antd:build: dist/js/useMaxLevel-DMcbIqLM.js                 8.16 kB
+@vben/web-antd:build: dist/js/switch-IhDS2MCv.js                      8.85 kB
+@vben/web-antd:build: dist/js/product-BcK-KDqi.js                     9.03 kB
+@vben/web-antd:build: dist/js/vue-types-CEi2nPn2.js                   9.28 kB
+@vben/web-antd:build: dist/js/icon-403-rGaWRd3v.js                    9.39 kB
+@vben/web-antd:build: dist/js/responsiveObserve-DNbZnMtA.js           9.47 kB
+@vben/web-antd:build: dist/js/AntdIcon-cdGrSXmn.js                    9.67 kB
+@vben/web-antd:build: dist/js/radio-D0vnME1F.js                      10.84 kB
+@vben/web-antd:build: dist/js/menu-DmUnWALj.js                       11.16 kB
+@vben/web-antd:build: dist/js/vc-virtual-list-kMliBIog.js            12.30 kB
+@vben/web-antd:build: dist/js/button-T5fOA7nR.js                     12.54 kB
+@vben/web-antd:build: dist/js/icon-coming-soon-DzYaqBqg.js           12.90 kB
+@vben/web-antd:build: dist/js/style-Bhe5rNAB.js                      12.90 kB
+@vben/web-antd:build: dist/js/module-B8Zs1IGZ.js                     13.28 kB
+@vben/web-antd:build: dist/js/style-DWtFQlnw.js                      14.17 kB
+@vben/web-antd:build: dist/js/mentions-DluPSQPd.js                   14.39 kB
+@vben/web-antd:build: dist/js/tooltip-CB9o9Ks3.js                    14.45 kB
+@vben/web-antd:build: dist/js/select-CAa1zIVn.js                     17.29 kB
+@vben/web-antd:build: dist/js/login-jQ8_l1Kw.js                      19.00 kB
+@vben/web-antd:build: dist/js/cascader-BgSW8xdW.js                   20.50 kB
+@vben/web-antd:build: dist/js/input-number-fr_QTblb.js               20.58 kB
+@vben/web-antd:build: dist/js/tree-select-CZ1C-9ji.js                20.76 kB
+@vben/web-antd:build: dist/js/vue-router-CzdtVzFQ.js                 22.45 kB
+@vben/web-antd:build: dist/js/image-hDgaHqmp.js                      23.26 kB
+@vben/web-antd:build: dist/js/runtime-dom.esm-bundler-Bnb-V1jf.js    24.24 kB
+@vben/web-antd:build: dist/js/icon-404-qn2_bDkr.js                   24.34 kB
+@vben/web-antd:build: dist/js/dept-B1zOzINi.js                       24.50 kB
+@vben/web-antd:build: dist/js/user-D7EmMCyi.js                       25.25 kB
+@vben/web-antd:build: dist/js/input-Doj_g4iC.js                      26.73 kB
+@vben/web-antd:build: dist/js/cn-BpFrWzX2.js                         27.30 kB
+@vben/web-antd:build: dist/js/motion-DdhtysEY.js                     34.65 kB
+@vben/web-antd:build: dist/js/preferences-jdmo4K7K.js                35.68 kB
+@vben/web-antd:build: dist/js/theme-toggle-C53XI6xc.js               37.64 kB
+@vben/web-antd:build: dist/js/style-DgRLEeT-.js                      38.35 kB
+@vben/web-antd:build: dist/js/role-aTYXll3i.js                       38.74 kB
+@vben/web-antd:build: dist/js/style-By0Pox4I.js                      39.14 kB
+@vben/web-antd:build: dist/js/spin-BGlhA6Dq.js                       41.63 kB
+@vben/web-antd:build: dist/js/vc-trigger-yDSjQ700.js                 41.80 kB
+@vben/web-antd:build: dist/js/sortable.complete.esm-CNCefCy_.js      45.68 kB
+@vben/web-antd:build: dist/js/result-B1Uz5FCF.js                     46.88 kB
+@vben/web-antd:build: dist/js/useConfigInject-CeXgYrEY.js            48.01 kB
+@vben/web-antd:build: dist/js/tippy-B_zqhpBu.js                      51.01 kB
+@vben/web-antd:build: dist/js/upload-D8wFCIbA.js                     51.67 kB
+@vben/web-antd:build: dist/js/src-BLV5EMKq.js                        53.72 kB
+@vben/web-antd:build: dist/js/use-modal-BBqIYY0W.js                  56.35 kB
+@vben/web-antd:build: dist/js/form-WSPgW-cl.js                       62.71 kB
+@vben/web-antd:build: dist/js/tree-Cudyq09J.js                       64.10 kB
+@vben/web-antd:build: dist/js/router-BK5-LkY4.js                     81.64 kB
+@vben/web-antd:build: dist/js/runtime-core.esm-bundler-BqIb1SNH.js   85.21 kB
+@vben/web-antd:build: dist/js/icon-button-CaiuZcA-.js                91.06 kB
+@vben/web-antd:build: dist/js/generatePicker-estUoUpN.js            101.38 kB
+@vben/web-antd:build: dist/js/auth-DdBknHPP.js                      119.85 kB
+@vben/web-antd:build: dist/js/table-B4dunCb3.js                     127.82 kB
+@vben/web-antd:build: dist/js/request-CJp9QUHJ.js                   143.53 kB
+@vben/web-antd:build: dist/js/src-Bk-49C2C.js                       154.02 kB
+@vben/web-antd:build: dist/js/bootstrap-DagCYVew.js                 324.32 kB
+@vben/web-antd:build: dist/js/basic-SAuRblAF.js                     377.83 kB
+@vben/web-antd:build: 
+@vben/web-antd:build: ✓ built in 16.77s
+@vben/web-antd:build: ZIP file created: D:\code\admin-web\apps\admin\dist.zip (1082436 total bytes)
+@vben/web-antd:build: Folder has been zipped to: D:\code\admin-web\apps\admin\dist.zip
+
+ Tasks:    11 successful, 11 total
+Cached:    10 cached, 11 total
+  Time:    32.826s 
+
