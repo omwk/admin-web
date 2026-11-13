@@ -11,29 +11,29 @@
 
 ### 收件箱（S3a）
 
-| 接口 | 用途 |
-|---|---|
+| 接口                                         | 用途         |
+| -------------------------------------------- | ------------ |
 | `GET /admin/notifications?unread=&template=` | 列表（分页） |
-| `GET /admin/notifications/unread-count` | 未读数 |
-| `PUT /admin/notifications/{id}/read` | 标记单条已读 |
-| `POST /admin/notifications/read-all` | 全部已读 |
+| `GET /admin/notifications/unread-count`      | 未读数       |
+| `PUT /admin/notifications/{id}/read`         | 标记单条已读 |
+| `POST /admin/notifications/read-all`         | 全部已读     |
 
 ### 偏好（S3a）
 
-| 接口 | 用途 |
-|---|---|
+| 接口                                   | 用途                 |
+| -------------------------------------- | -------------------- |
 | `GET /admin/notifications/preferences` | 我的偏好（含继承值） |
-| `PUT /admin/notifications/preferences` | 批量保存 |
+| `PUT /admin/notifications/preferences` | 批量保存             |
 
 ### 渠道（F3 已有）
 
-| 接口 | 用途 |
-|---|---|
-| `GET/POST/PUT/DELETE /admin/notifications/providers` | 服务商 |
-| `POST /admin/notifications/providers/{id}/test` | 连通性测试 |
-| `GET/PUT /admin/notifications/templates` | 模板 |
-| `GET /admin/notifications/deliveries` | 投递记录 |
-| `POST /admin/notifications/deliveries/{id}/retry` | 重试 |
+| 接口                                                 | 用途       |
+| ---------------------------------------------------- | ---------- |
+| `GET/POST/PUT/DELETE /admin/notifications/providers` | 服务商     |
+| `POST /admin/notifications/providers/{id}/test`      | 连通性测试 |
+| `GET/PUT /admin/notifications/templates`             | 模板       |
+| `GET /admin/notifications/deliveries`                | 投递记录   |
+| `POST /admin/notifications/deliveries/{id}/retry`    | 重试       |
 
 ## 2. 页面
 
@@ -62,11 +62,11 @@ sync.failed           [x]邮件  ...
 
 三个页签：
 
-| 页签 | 内容 |
-|---|---|
-| 服务商 | 列表（类型/名称/启用/优先级）、新增、编辑、删除、**测试发送** |
-| 模板 | 列表 + 编辑（主题/正文），变量提示 |
-| 投递记录 | 列表（时间/模板/渠道/状态/尝试次数）、失败原因、**重试** |
+| 页签     | 内容                                                          |
+| -------- | ------------------------------------------------------------- |
+| 服务商   | 列表（类型/名称/启用/优先级）、新增、编辑、删除、**测试发送** |
+| 模板     | 列表 + 编辑（主题/正文），变量提示                            |
+| 投递记录 | 列表（时间/模板/渠道/状态/尝试次数）、失败原因、**重试**      |
 
 表单要求：
 
@@ -78,11 +78,11 @@ sync.failed           [x]邮件  ...
 
 ### 3.1 权限
 
-| 页面/操作 | 权限码 |
-|---|---|
-| 通知中心 | `system:notify:list` |
-| 标记已读 | 登录即可（`system:notify:read` 可不校验） |
-| 渠道管理 | `system:notify:manage` |
+| 页面/操作 | 权限码                                    |
+| --------- | ----------------------------------------- |
+| 通知中心  | `system:notify:list`                      |
+| 标记已读  | 登录即可（`system:notify:read` 可不校验） |
+| 渠道管理  | `system:notify:manage`                    |
 
 无 `system:notify:manage` 时隐藏「通知渠道」菜单与页签。
 
@@ -99,19 +99,19 @@ sync.failed           [x]邮件  ...
 
 ## 4. 验收
 
-| # | 项 | 断言 |
-|---|---|---|
-| 1 | 列表 | 真实通知显示，未读加粗，分页正确 |
-| 2 | 未读筛选 | 切「未读」只剩未读；数量与角标一致 |
-| 3 | 单条已读 | 点击后变已读，角标减一 |
-| 4 | 全部已读 | 角标归零，列表全部已读 |
-| 5 | 偏好继承 | 未设置时显示「继承租户设置」 |
-| 6 | 偏好保存 | 关闭某模板邮件后重新打开仍为关闭 |
-| 7 | 服务商 CRUD | 新建 SMTP → 列表显示「已配置」，密钥不回显 |
-| 8 | 测试发送 | 填收件人发送成功，提示明确；失败显示原因 |
-| 9 | 投递记录 | 显示状态与尝试次数；失败可重试并刷新状态 |
-| 10 | 权限 | 无 manage 时看不到渠道菜单，直连接口 403 |
-| 11 | 构建 | lint / typecheck / unit / build 全绿 |
+| #   | 项          | 断言                                       |
+| --- | ----------- | ------------------------------------------ |
+| 1   | 列表        | 真实通知显示，未读加粗，分页正确           |
+| 2   | 未读筛选    | 切「未读」只剩未读；数量与角标一致         |
+| 3   | 单条已读    | 点击后变已读，角标减一                     |
+| 4   | 全部已读    | 角标归零，列表全部已读                     |
+| 5   | 偏好继承    | 未设置时显示「继承租户设置」               |
+| 6   | 偏好保存    | 关闭某模板邮件后重新打开仍为关闭           |
+| 7   | 服务商 CRUD | 新建 SMTP → 列表显示「已配置」，密钥不回显 |
+| 8   | 测试发送    | 填收件人发送成功，提示明确；失败显示原因   |
+| 9   | 投递记录    | 显示状态与尝试次数；失败可重试并刷新状态   |
+| 10  | 权限        | 无 manage 时看不到渠道菜单，直连接口 403   |
+| 11  | 构建        | lint / typecheck / unit / build 全绿       |
 
 ## 5. 不做
 
