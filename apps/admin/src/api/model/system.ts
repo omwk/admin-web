@@ -1,12 +1,17 @@
 import type { IdentityMenu } from './menu';
 
 export type DataScope = 'all' | 'custom' | 'dept' | 'dept_and_child' | 'self';
-export interface Department {
-  children?: Department[];
-  id: number;
+export interface DepartmentInput {
   name: string;
   parent_id: number;
+  sort: number;
   status: 'active' | 'disabled';
+}
+export interface Department extends DepartmentInput {
+  children?: Department[];
+  id: number;
+  member_count: number;
+  path: string;
 }
 export interface RoleInput {
   code: string;

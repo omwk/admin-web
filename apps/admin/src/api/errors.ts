@@ -51,11 +51,24 @@ export class ApiError extends Error {
     options: {
       code?: number;
       config?: RequestClientConfig;
+      message?: string;
       status?: number;
       traceId?: string;
     } = {},
   ) {
-    super(getErrorMessage(options.code, options.status));
+    const preserve = (
+      options.config as
+        | (RequestClientConfig & { preserveBusinessMessage?: boolean })
+        | undefined
+    )?.preserveBusinessMessage;
+    super(
+      preserve &&
+        [400, 409].includes(options.status ?? 0) &&
+        typeof options.message === 'string' &&
+        options.message.length > 0
+        ? options.message
+        : getErrorMessage(options.code, options.status),
+    );
     this.name = 'ApiError';
     this.code = options.code;
     this.config = options.config;
@@ -68,11 +81,15 @@ export function toApiError(error: unknown): ApiError {
   if (error instanceof ApiError) return error;
   const failure = error as null | {
     config?: RequestClientConfig;
-    response?: { data?: { code?: number; trace_id?: string }; status?: number };
+    response?: {
+      data?: { code?: number; message?: string; trace_id?: string };
+      status?: number;
+    };
   };
   return new ApiError({
     code: failure?.response?.data?.code,
     config: failure?.config,
+    message: failure?.response?.data?.message,
     status: failure?.response?.status,
     traceId: failure?.response?.data?.trace_id,
   });

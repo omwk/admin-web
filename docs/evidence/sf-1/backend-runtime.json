@@ -1,0 +1,26 @@
+{
+  "recordedAt": "2026-11-13T00:29:33.941Z",
+  "backend": "http://127.0.0.1:18080",
+  "oldProcess": {
+    "pid": 188380,
+    "startedAt": "2026-11-12T18:47:48+08:00",
+    "departmentCreateStatus": 405
+  },
+  "currentSource": {
+    "root": "D:/code/go-admin-api",
+    "commit": "d914b588b4e66fbaee78f09d5cc36512e4d38e57",
+    "clean": false
+  },
+  "standbyProbe": {
+    "port": 18081,
+    "loginStatus": 200,
+    "invalidCreateStatus": 400,
+    "departments": 8,
+    "stopped": true
+  },
+  "activeProcess": {
+    "pid": 199852,
+    "port": 18080
+  },
+  "sourceOrSchemaChanges": false
+}

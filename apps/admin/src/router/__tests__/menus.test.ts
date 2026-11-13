@@ -7,6 +7,7 @@ import { initStores, useAccessStore, useUserStore } from '@vben/stores';
 
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
+import { getAllMenusApi } from '#/api/core/menu';
 import { hasPermission } from '#/auth/permission';
 
 import { generateAccess } from '../access';
@@ -56,6 +57,39 @@ beforeEach(async () => {
 });
 
 describe('backend menus and permissions', () => {
+  it('uses projected department permissions even when navigation has no button nodes', async () => {
+    state.menus = [
+      menu(13, {
+        component: 'system/dept/index',
+        name: '部门',
+        path: '/system/depts',
+      }),
+    ];
+    state.permissions = [
+      'system:user:list',
+      'system:dept:create',
+      'system:dept:update',
+      'system:dept:delete',
+    ];
+
+    const routes = await getAllMenusApi();
+    expect(routes).toHaveLength(1);
+    expect(routes[0]).toMatchObject({
+      component: '/system/dept/index.vue',
+      path: '/system/depts',
+    });
+    for (const action of ['create', 'update', 'delete']) {
+      expect(hasPermission(`system:dept:${action}`)).toBe(true);
+    }
+
+    state.permissions = ['system:user:list'];
+    await getAllMenusApi();
+    for (const action of ['create', 'update', 'delete']) {
+      expect(hasPermission(`system:dept:${action}`)).toBe(false);
+    }
+    expect(hasPermission('system:user:list')).toBe(true);
+  });
+
   it('converts hierarchy, sort/id order, presentation metadata and keep-alive while dropping buttons', () => {
     const routes = menusToRoutes([
       menu(8, { sort: 1 }),
@@ -96,6 +130,9 @@ describe('backend menus and permissions', () => {
   it('uses an explicit registry and routes all unknown components to the existing 404 loader', () => {
     expect(resolveMenuComponent('system/user/index')).toBe(
       '/system/user/index.vue',
+    );
+    expect(resolveMenuComponent('system/dept/index')).toBe(
+      '/system/dept/index.vue',
     );
     expect(resolveMenuComponent('/views/system/user/index.vue')).toBe(
       '/system/user/index.vue',

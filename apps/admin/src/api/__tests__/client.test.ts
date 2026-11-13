@@ -1,3 +1,5 @@
+import type { ApiRequestConfig } from '../client';
+
 import { describe, expect, it, vi } from 'vitest';
 
 import { createApiClient } from '../client';
@@ -20,6 +22,38 @@ function setup() {
 }
 
 describe('identity request client', () => {
+  it.each([400, 409])(
+    'preserves a department HTTP %i business message only when requested',
+    async (status) => {
+      const { client, notify } = setup();
+      const text =
+        status === 400 ? '同级部门名称已存在' : '部门下仍有子部门，不能删除';
+      client.instance.defaults.adapter = (config) =>
+        respond(config, { ...envelope(null, 10_001), message: text }, status);
+      const config: ApiRequestConfig = {
+        silent: true,
+        preserveBusinessMessage: true,
+      };
+      await expect(client.post('/admin/depts', {}, config)).rejects.toThrow(
+        text,
+      );
+      expect(notify).not.toHaveBeenCalled();
+    },
+  );
+
+  it('retains localized server failure messages even when business messages are requested', async () => {
+    const { client } = setup();
+    client.instance.defaults.adapter = (config) =>
+      respond(config, envelope(null, 10_002), 500);
+    const config: ApiRequestConfig = {
+      silent: true,
+      preserveBusinessMessage: true,
+    };
+    await expect(client.post('/admin/depts', {}, config)).rejects.toThrow(
+      '服务暂不可用，请稍后重试',
+    );
+  });
+
   it('unwraps the envelope and sends Bearer and Chinese headers', async () => {
     const { client } = setup();
     client.instance.defaults.adapter = async (config) => {
