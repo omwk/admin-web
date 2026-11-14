@@ -1,0 +1,23 @@
+$ vitest run --dom "--maxWorkers=2"
+
+ RUN  v4.1.11 D:/code/admin-web
+
+DOMException [AbortError]: The operation was aborted.
+    at Fetch.onAsyncTaskManagerAbort (file:///D:/code/admin-web/node_modules/.pnpm/happy-dom@20.14.5/node_modules/happy-dom/lib/fetch/Fetch.js:546:23)
+    at Object.<anonymous> (file:///D:/code/admin-web/node_modules/.pnpm/happy-dom@20.14.5/node_modules/happy-dom/lib/fetch/Fetch.js:416:101)
+    at AsyncTaskManager.abortAll (file:///D:/code/admin-web/node_modules/.pnpm/happy-dom@20.14.5/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:292:30)
+    at AsyncTaskManager.abort (file:///D:/code/admin-web/node_modules/.pnpm/happy-dom@20.14.5/node_modules/happy-dom/lib/async-task-manager/AsyncTaskManager.js:52:21)
+    at DetachedBrowserFrame.abort (file:///D:/code/admin-web/node_modules/.pnpm/happy-dom@20.14.5/node_modules/happy-dom/lib/browser/detached-browser/DetachedBrowserFrame.js:112:58)
+    at DetachedWindowAPI.abort (file:///D:/code/admin-web/node_modules/.pnpm/happy-dom@20.14.5/node_modules/happy-dom/lib/window/DetachedWindowAPI.js:51:35)
+    at teardownWindow (file:///D:/code/admin-web/node_modules/.pnpm/vitest@4.1.11_@types+node@2_c7462df0e0d22e9d968aabaecf238d30/node_modules/vitest/dist/chunks/index.DC7d2Pf8.js:331:22)
+    at Object.teardown (file:///D:/code/admin-web/node_modules/.pnpm/vitest@4.1.11_@types+node@2_c7462df0e0d22e9d968aabaecf238d30/node_modules/vitest/dist/chunks/index.DC7d2Pf8.js:392:10)
+    at file:///D:/code/admin-web/node_modules/.pnpm/vitest@4.1.11_@types+node@2_c7462df0e0d22e9d968aabaecf238d30/node_modules/vitest/dist/chunks/base.B6Opl8PE.js:168:65
+    at Traces.$ (file:///D:/code/admin-web/node_modules/.pnpm/vitest@4.1.11_@types+node@2_c7462df0e0d22e9d968aabaecf238d30/node_modules/vitest/dist/chunks/traces.DT5aQ62U.js:142:27)
+Warning: A vi.mock("sortablejs/modular/sortable.complete.esm.js") call in "D:/code/admin-web/packages/@core/composables/src/__tests__/use-sortable.test.ts" is not at the top level of the module. Although it appears nested, it will be hoisted and executed before any tests run. Move it to the top level to reflect its actual execution order. This will become an error in a future version.
+See: https://vitest.dev/guide/mocking/modules#how-it-works
+
+ Test Files  141 passed (141)
+      Tests  904 passed (904)
+   Start at  11:00:55
+   Duration  181.49s (transform 18.60s, setup 0ms, import 193.61s, tests 34.81s, environment 85.76s)
+

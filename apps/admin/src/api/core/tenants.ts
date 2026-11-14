@@ -2,6 +2,8 @@ import type { ApiRequestConfig } from '#/api/client';
 import type { PageResult } from '#/api/model/response';
 import type {
   Tenant,
+  TenantAdminInviteResult,
+  TenantMember,
   TenantProvision,
   TenantProvisionResult,
   TenantTemplate,
@@ -22,6 +24,17 @@ export const getTenantsApi = (page = 1, pageSize = 100) =>
   });
 export const getTenantApi = (id: number) =>
   requestClient.get<Tenant>(`/admin/tenants/${id}`, options);
+export const getTenantMembersApi = (id: number, page = 1, pageSize = 20) =>
+  requestClient.get<PageResult<TenantMember>>(`/admin/tenants/${id}/members`, {
+    ...options,
+    params: { page, page_size: pageSize },
+  });
+export const reissueTenantAdminInviteApi = (id: number, force = false) =>
+  requestClient.post<TenantAdminInviteResult>(
+    `/admin/tenants/${id}/admin-invite`,
+    undefined,
+    { ...options, ...(force ? { params: { force: true } } : {}) },
+  );
 export const renameTenantApi = (id: number, input: { name: string }) =>
   requestClient.put<Tenant>(`/admin/tenants/${id}`, input, options);
 export const disableTenantApi = (id: number) =>

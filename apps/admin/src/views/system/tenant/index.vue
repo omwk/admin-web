@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Tenant, TenantTemplate } from '#/api/model/tenant';
 
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import { computed, onDeactivated, onMounted, onUnmounted, ref } from 'vue';
 
 import { Page } from '@vben/common-ui';
 
@@ -17,6 +17,7 @@ import {
 import { formatDateTime } from '#/utils/datetime';
 import Forbidden from '#/views/_core/fallback/forbidden.vue';
 
+import MemberDrawer from './member-drawer.vue';
 import ProvisionWizard from './provision-wizard.vue';
 import Templates from './templates.vue';
 import TenantActions from './tenant-actions.vue';
@@ -32,16 +33,21 @@ const tab = ref('tenants');
 const wizard = ref(false);
 const usageKnown = ref(false);
 const page = ref(1);
+const selectedTenant = ref<Tenant>();
 let sequence = 0;
 const columns = computed(() => [
+  { dataIndex: 'id', title: 'ID', width: 80 },
   { dataIndex: 'code', title: 'Code', width: 180 },
   { dataIndex: 'name', title: '名称', width: 200 },
   { dataIndex: 'status', title: '状态', width: 110 },
+  { dataIndex: 'admin_active_count', title: '管理员', width: 110 },
   { dataIndex: 'provisioned_from', title: '来源模板', width: 180 },
   { dataIndex: 'created_at', title: '创建时间', width: 180 },
-  ...(canManageTenants()
-    ? [{ dataIndex: 'actions', title: '操作', width: 210 }]
-    : []),
+  {
+    dataIndex: 'actions',
+    title: '操作',
+    width: canManageTenants() ? 450 : 120,
+  },
 ]);
 async function load() {
   if (!canViewTenants()) return;
@@ -79,6 +85,9 @@ function manageTemplates() {
   tab.value = 'templates';
 }
 onMounted(load);
+onDeactivated(() => {
+  selectedTenant.value = undefined;
+});
 onUnmounted(() => {
   sequence++;
 });
@@ -126,11 +135,14 @@ onUnmounted(() => {
               showTotal: (count: number) => `共 ${count} 个租户`,
               onChange: (value: number) => (page = value),
             }"
-            :scroll="{ x: 1100 }"
+            :scroll="{ x: 1510 }"
             row-key="id"
           >
             <template #bodyCell="{ column, record, text }">
-              <template v-if="column.dataIndex === 'code'">
+              <span v-if="column.dataIndex === 'id'" class="font-mono">{{
+                text
+              }}</span>
+              <template v-else-if="column.dataIndex === 'code'">
                 {{ text }}
                 <Tag v-if="record.id === platformTenantId" color="blue">
                   平台
@@ -142,6 +154,10 @@ onUnmounted(() => {
               >
                 {{ record.status === 'active' ? '启用' : '停用' }}
               </Tag>
+              <template v-else-if="column.dataIndex === 'admin_active_count'">
+                <Tag v-if="text === 0" color="red">未激活</Tag>
+                <span v-else>{{ text }} 人</span>
+              </template>
               <template v-else-if="column.dataIndex === 'provisioned_from'">
                 {{ templateName(record.provisioned_from) }}
               </template>
@@ -154,6 +170,7 @@ onUnmounted(() => {
                 :disabled="loading || acting"
                 @busy="acting = $event"
                 @changed="load"
+                @members="selectedTenant = record as Tenant"
               />
             </template>
           </Table>
@@ -169,6 +186,12 @@ onUnmounted(() => {
         />
       </Tabs.TabPane>
     </Tabs>
+    <MemberDrawer
+      v-if="selectedTenant"
+      :key="selectedTenant.id"
+      :tenant="selectedTenant"
+      @close="selectedTenant = undefined"
+    />
     <ProvisionWizard
       v-if="wizard && canManageTenants()"
       :templates="templates"

@@ -1,11 +1,29 @@
+import type { UserStatus } from './admin-user';
+
 export interface Tenant {
   id: number;
   code: string;
   name: string;
   status: 'active' | 'suspended';
+  admin_active_count: number;
+  member_count: number;
   provisioned_from: null | number;
   created_at: string;
   updated_at: string;
+}
+
+export interface TenantMember {
+  id: number;
+  account: string;
+  nickname: null | string;
+  status: UserStatus;
+  is_super: boolean;
+  created_at: string;
+}
+
+export interface TenantAdminInviteResult {
+  invite_url: string;
+  expires_at: string;
 }
 
 export interface TenantProvision {
