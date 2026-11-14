@@ -1,10 +1,13 @@
-# SF-6 · 登录企业代码、个人资料、登出与首页
+# FE-UI-001 · 登录企业代码、个人资料、登出与首页
 
-- 类型：前端补齐（合并 T1 前端 + T4 + T5）
-- 预计：**4.5 人日**
-- 分支：`feat/sf-6-shell`
-- 依赖：后端 T1（登录按租户 code）、T4 依赖的接口已存在
-- 来源：`docs/design/system-layer-gaps-v2.md` §2.B / §2.D / §2.E
+- ID: FE-UI-001
+- 类型: 新增
+- 仓库: 前端
+- 状态: 待实现
+- 预计: 4.5 人日
+- 分支: `feat/fe-ui-001-shell`
+- 依赖: BE-IDN-001（登录字段 tenant）
+- 来源: `docs/design/system-layer-gaps-v2.md` §2.B / §2.D / §2.E
 
 ---
 
@@ -19,7 +22,7 @@
 
 ## 2. A · 登录企业代码
 
-### 接口（后端 T1 交付）
+### 接口（后端 BE-IDN-001 交付）
 
 ```jsonc
 POST /auth/login
@@ -159,7 +162,7 @@ POST /auth/logout-all      全部下线
 实现 docs/tasks/SF-6.md。仓库 D:\code\admin-web，分支 feat/sf-6-shell。
 
 后端已就绪：http://127.0.0.1:18080
-T1 完成后登录字段为 { tenant, account, password }
+BE-IDN-001 完成后登录字段为 { tenant, account, password }
 现有接口：GET /auth/me、PUT /auth/profile、PUT /auth/password、
          GET /auth/sessions、POST /auth/logout-all
 
