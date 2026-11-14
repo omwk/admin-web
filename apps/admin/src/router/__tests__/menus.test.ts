@@ -201,7 +201,7 @@ describe('backend menus and permissions', () => {
     ]);
     expect(hasPermission('system:user:list')).toBe(true);
     expect(hasPermission('system:user:create')).toBe(false);
-    expect(useUserStore().userInfo?.homePath).toBe('/system/users');
+    expect(useUserStore().userInfo?.homePath).toBe('/home');
     expect(
       router.resolve('/system/users').matched.at(-1)?.components?.default,
     ).toBe(componentRegistry[NOT_FOUND_COMPONENT]);
@@ -229,8 +229,31 @@ describe('backend menus and permissions', () => {
     });
     const result = await generateAccess({ router, routes: [] });
     expect(result.accessibleMenus).toEqual([]);
-    expect(router.resolve('/home').matched.at(-1)?.name).toBe(
-      'NoAccessibleMenus',
+    expect(router.resolve('/home').matched.at(-1)?.name).toBe('Home');
+    expect(router.resolve('/profile').matched.at(-1)?.name).toBe('Profile');
+    expect(router.resolve('/profile/sessions').matched.at(-1)?.name).toBe(
+      'MySessions',
     );
+    expect(
+      router.resolve('/system/users').matched.at(-1)?.components?.default,
+    ).toBe(componentRegistry['/_core/fallback/forbidden.vue']);
+  });
+
+  it('keeps granted fallback routes instead of overwriting them with 403', async () => {
+    state.permissions = [
+      'catalog:product:list',
+      'system:config:list',
+      'system:tenant:list',
+    ];
+    const router = createRouter({
+      history: createMemoryHistory(),
+      routes: [
+        { children: [], meta: { title: 'Root' }, name: 'Root', path: '/' },
+      ],
+    });
+    await generateAccess({ router, routes: [] });
+    expect(
+      router.resolve('/catalog/products').matched.at(-1)?.components?.default,
+    ).toBe(componentRegistry['/catalog/product/index.vue']);
   });
 });

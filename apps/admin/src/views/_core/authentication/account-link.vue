@@ -81,13 +81,13 @@ async function submit() {
       v-if="done"
       status="success"
       :title="mode === 'invite' ? '账号已创建' : '密码已更新'"
-      sub-title="请使用本人设置的密码登录。"
+      sub-title="请使用本人设置的密码和管理员提供的企业代码登录。"
     >
       <template #extra>
         <RouterLink
           :to="{
             path: '/auth/login',
-            query: { tenant_id: route.query.tenant_id },
+            query: { tenant: route.query.tenant },
           }"
         >
           <Button type="primary">前往登录</Button>

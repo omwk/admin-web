@@ -1,0 +1,31 @@
+{
+  "phase": "d",
+  "source": "real-18080-and-msedge",
+  "checks": [
+    {
+      "item": 11,
+      "status": "pass",
+      "noGrants": "specified empty state at /home; no notifications card",
+      "grantedShortcuts": 6,
+      "fixedHome": true
+    },
+    {
+      "item": 12,
+      "status": "pass",
+      "unknown": "404",
+      "knownUnauthorized": "403",
+      "homeButton": true,
+      "backButton": true
+    },
+    {
+      "item": 10,
+      "status": "pass",
+      "storageCleared": true,
+      "backDoesNotExposeProfile": true,
+      "remoteFailure": "503 response fixture with real authenticated user",
+      "replacementNavigation": true
+    }
+  ],
+  "cleanup": true,
+  "browserErrors": []
+}

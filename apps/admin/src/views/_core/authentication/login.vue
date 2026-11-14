@@ -7,48 +7,50 @@ import { useRoute } from 'vue-router';
 import { AuthenticationLogin, z } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
+import { getLastTenantCode } from '#/auth/login-tenant';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Login' });
 const authStore = useAuthStore();
 const route = useRoute();
-const invitedTenant = Number(route.query.tenant_id);
+const invitedTenant =
+  typeof route.query.tenant === 'string' ? route.query.tenant.trim() : '';
 const formSchema = computed((): VbenFormSchema[] => [
   {
     component: 'VbenInput',
     componentProps: {
-      type: 'number',
-      min: 1,
-      placeholder: '请输入租户 ID',
+      autocomplete: 'organization',
+      'aria-label': '企业代码',
+      maxlength: 64,
+      placeholder: '请输入企业代码',
     },
-    defaultValue:
-      Number.isSafeInteger(invitedTenant) && invitedTenant > 0
-        ? invitedTenant
-        : 1,
-    fieldName: 'tenant_id',
-    label: '租户 ID',
-    rules: z.coerce.number().int().min(1).max(Number.MAX_SAFE_INTEGER),
+    defaultValue: invitedTenant || getLastTenantCode(),
+    fieldName: 'tenant',
+    hideLabel: false,
+    label: '企业代码',
+    rules: z.string().trim().min(1, { message: '请输入企业代码' }).max(64),
   },
   {
     component: 'VbenInput',
     componentProps: {
       autocomplete: 'username',
-      placeholder: $t('authentication.usernameTip'),
+      'aria-label': '账号',
+      placeholder: '请输入用户名、邮箱或手机',
     },
-    fieldName: 'username',
-    label: $t('authentication.username'),
-    rules: z
-      .string()
-      .min(1, { message: $t('authentication.usernameTip') })
-      .max(256),
+    fieldName: 'account',
+    hideLabel: false,
+    label: '账号',
+    rules: z.string().trim().min(1, { message: '请输入账号' }).max(256),
   },
   {
     component: 'VbenInputPassword',
     componentProps: {
       autocomplete: 'current-password',
+      'aria-label': '密码',
       placeholder: $t('authentication.password'),
     },
     fieldName: 'password',
+    hideLabel: false,
     label: $t('authentication.password'),
     rules: z
       .string()

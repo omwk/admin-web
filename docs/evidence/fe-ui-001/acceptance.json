@@ -1,0 +1,80 @@
+{
+  "checkedAt": "2026-11-14T09:31:53.5700161+08:00",
+  "branch": "feat/fe-ui-001-shell",
+  "frontendBase": "4d888a317e9dadb47532d09ab77c778e6f02ac01",
+  "passed": 11,
+  "partial": [5, 9],
+  "checks": [
+    {
+      "item": 1,
+      "status": "pass",
+      "evidence": "phase-a-real.json"
+    },
+    {
+      "item": 2,
+      "status": "pass",
+      "evidence": "phase-a-real.json"
+    },
+    {
+      "item": 3,
+      "status": "pass",
+      "evidence": "phase-a-real.json"
+    },
+    {
+      "item": 4,
+      "status": "pass",
+      "evidence": "phase-a-real.json"
+    },
+    {
+      "item": 5,
+      "status": "partial",
+      "evidence": "phase-b.json"
+    },
+    {
+      "item": 6,
+      "status": "pass",
+      "evidence": "phase-b.json"
+    },
+    {
+      "item": 7,
+      "status": "pass",
+      "evidence": "phase-b.json"
+    },
+    {
+      "item": 8,
+      "status": "pass",
+      "evidence": "phase-b.json"
+    },
+    {
+      "item": 9,
+      "status": "partial",
+      "evidence": "phase-c.json"
+    },
+    {
+      "item": 10,
+      "status": "pass",
+      "evidence": "phase-d.json"
+    },
+    {
+      "item": 11,
+      "status": "pass",
+      "evidence": "phase-d.json"
+    },
+    {
+      "item": 12,
+      "status": "pass",
+      "evidence": "phase-d.json"
+    },
+    {
+      "item": 13,
+      "status": "pass",
+      "evidence": [
+        "lint.log",
+        "typecheck.log",
+        "unit-workspace.log",
+        "build.log"
+      ],
+      "exitCodes": [0, 0, 0, 0]
+    }
+  ]
+}

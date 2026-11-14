@@ -5,6 +5,10 @@ export const NOT_FOUND_COMPONENT = '/_core/fallback/not-found.vue';
 
 /** Explicitly match the backend seed catalogue; never import arbitrary paths. */
 export const componentRegistry: ComponentRecordType = {
+  '/home/index.vue': () => import('#/views/home/index.vue'),
+  '/_core/profile/index.vue': () => import('#/views/_core/profile/index.vue'),
+  '/_core/profile/sessions.vue': () =>
+    import('#/views/_core/profile/sessions.vue'),
   [NOT_FOUND_COMPONENT]: () => import('#/views/_core/fallback/not-found.vue'),
   '/_core/fallback/no-menu.vue': () =>
     import('#/views/_core/fallback/no-menu.vue'),

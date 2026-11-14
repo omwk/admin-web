@@ -3,7 +3,7 @@
 - ID: FE-UI-001
 - 类型: 新增
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 前端已实现，验收与后端缺项见 [证据报告](../evidence/fe-ui-001/README.md)
 - 预计: 4.5 人日
 - 分支: `feat/fe-ui-001-shell`
 - 依赖: BE-IDN-001（登录字段 tenant）

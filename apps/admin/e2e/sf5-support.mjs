@@ -119,16 +119,20 @@ export async function response(page, path, method, action) {
     body: result.request().postDataJSON(),
   };
 }
-export async function login(page, username, password, tenantId = 1) {
-  await page.goto(origin + '/auth/login?tenant_id=' + tenantId);
-  await page.getByPlaceholder('请输入租户 ID').fill(String(tenantId));
-  await page.getByPlaceholder('请输入用户名').fill(username);
+export async function login(page, username, password, tenantCode = 'default') {
+  await page.goto(
+    origin + '/auth/login?tenant=' + encodeURIComponent(tenantCode),
+  );
+  await page.getByLabel('企业代码', { exact: true }).fill(tenantCode);
+  await page.getByLabel('账号', { exact: true }).fill(username);
   await page.getByPlaceholder('密码', { exact: true }).fill(password);
   const result = await response(page, '/auth/login', 'POST', () =>
     page.getByRole('button', { name: 'login', exact: true }).click(),
   );
   assert.equal(result.status, 200, 'UI login succeeded');
-  assert.equal(result.body.tenant_id, tenantId);
+  assert.equal(result.body.tenant, tenantCode);
+  assert.equal(result.body.account, username);
+  assert.equal(Object.hasOwn(result.body, 'tenant_id'), false);
   secrets.add(result.data.access_token);
   secrets.add(result.data.refresh_token);
   await page.waitForURL((url) => !url.pathname.startsWith('/auth/'));

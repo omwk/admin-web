@@ -9,14 +9,29 @@ import { auditFallbackRoutes } from './audit-menus';
 import { catalogRoutes } from './catalog';
 import { componentRegistry } from './component-registry';
 import { configurationRoutes } from './configuration-menus';
-import { findHomePath } from './menu-adapter';
+import { forbiddenShellRoutes, personalRoutes } from './shell';
 import { tenantFallbackRoutes } from './tenant-menus';
 
 async function generateAccess(options: GenerateMenuAndRoutesOptions) {
   return generateAccessible('backend', {
     ...options,
     fetchMenuListAsync: async () => {
-      const routes = await getAllMenusApi();
+      const reserved = new Set([
+        '/403',
+        '/home',
+        '/profile',
+        '/profile/sessions',
+      ]);
+      const prune = (
+        items: Awaited<ReturnType<typeof getAllMenusApi>>,
+      ): typeof items =>
+        items
+          .filter((item) => !reserved.has(item.path))
+          .map((item) => ({
+            ...item,
+            ...(item.children ? { children: prune(item.children) } : {}),
+          }));
+      const routes = prune(await getAllMenusApi());
       const paths = new Set<string>();
       const collectPaths = (items: typeof routes) => {
         for (const item of items) {
@@ -36,35 +51,24 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
       const configuration = configurationRoutes(
         useAccessStore().accessCodes,
       ).filter((route) => !paths.has(route.path));
-      if (userStore.userInfo) {
-        userStore.setUserInfo({
-          ...userStore.userInfo,
-          homePath: findHomePath([
-            ...routes,
-            ...catalog,
-            ...configuration,
-            ...tenants,
-          ]),
-        });
-      }
-      return [
-        ...routes,
+      const extraRoutes = [
         ...catalog,
         ...configuration,
         ...tenants,
         ...auditFallbackRoutes().filter((route) => !paths.has(route.path)),
-        {
-          component: '/_core/fallback/no-menu.vue',
-          meta: { hideInMenu: true, title: '首页' },
-          name: 'NoAccessibleMenus',
-          path: '/home',
-        },
-        {
-          component: '/pending/index.vue',
-          meta: { hideInMenu: true, title: '个人资料' },
-          name: 'Profile',
-          path: '/profile',
-        },
+      ];
+      collectPaths(extraRoutes);
+      if (userStore.userInfo) {
+        userStore.setUserInfo({
+          ...userStore.userInfo,
+          homePath: '/home',
+        });
+      }
+      return [
+        ...routes,
+        ...extraRoutes,
+        ...forbiddenShellRoutes().filter((route) => !paths.has(route.path)),
+        ...personalRoutes(),
       ];
     },
     forbiddenComponent: () => import('#/views/_core/fallback/forbidden.vue'),

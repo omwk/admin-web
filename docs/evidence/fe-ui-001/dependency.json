@@ -1,0 +1,26 @@
+{
+  "checkedAt": "2026-11-14T01:13:12.376Z",
+  "backendMain": "43becf92aba99690937cd71ddce68b90e8b9291e",
+  "mergedPR": "https://github.com/omwk/go-admin-api/pull/44",
+  "exactLoginFields": ["tenant", "account", "password"],
+  "login": {
+    "status": 200,
+    "code": 0,
+    "message": "ok",
+    "traceId": "01M7BSV6772HBF61VYAX45K562"
+  },
+  "meFields": [
+    "dept_id",
+    "id",
+    "is_super",
+    "roles",
+    "tenant_code",
+    "tenant_id",
+    "username"
+  ],
+  "tenantCode": "default",
+  "newContractDeployed": true,
+  "logout": {
+    "status": 204
+  }
+}
