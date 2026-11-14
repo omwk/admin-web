@@ -1,0 +1,10 @@
+$ vitest run --config vitest.config.ts "src/api/__tests__/self-service.test.ts" "src/views/_core/profile/__tests__/sessions.test.ts" "--maxWorkers=2"
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+
+ Test Files  2 passed (2)
+      Tests  21 passed (21)
+   Start at  07:41:27
+   Duration  12.28s (transform 2.60s, setup 0ms, import 13.38s, tests 2.60s, environment 2.85s)
+

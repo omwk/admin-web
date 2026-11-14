@@ -3,7 +3,7 @@
 - ID: FE-IDN-003
 - 类型: 新增
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 已实现，七条验收与证据见 [验收报告](../evidence/fe-idn-003/README.md)
 - 预计: 0.2 人日
 - 分支: `feat/fe-idn-003-session-modes`
 - 依赖: BE-IDN-005（/auth/logout-others）

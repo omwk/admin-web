@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-15",
+  "timezone": "Asia/Shanghai",
+  "branch": "feat/fe-idn-003-session-modes",
+  "baseline": "77f7f777a6d1f382dbbdb47aad13812817949c21",
+  "checks": [
+    { "command": "pnpm lint", "exitCode": 0, "log": "lint.txt" },
+    {
+      "command": "pnpm check:type",
+      "exitCode": 0,
+      "tasks": 38,
+      "cached": 37,
+      "log": "typecheck.txt"
+    },
+    {
+      "command": "pnpm test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "files": 145,
+      "tests": 942,
+      "log": "unit.txt"
+    },
+    {
+      "command": "pnpm -F @vben/web-antd test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "files": 50,
+      "tests": 235,
+      "log": "unit-admin.txt"
+    },
+    {
+      "command": "pnpm -F @vben/web-antd test:unit src/api/__tests__/self-service.test.ts src/views/_core/profile/__tests__/sessions.test.ts --maxWorkers=2",
+      "exitCode": 0,
+      "files": 2,
+      "tests": 21,
+      "log": "unit-focused.txt"
+    },
+    {
+      "command": "pnpm build:antd",
+      "exitCode": 0,
+      "tasks": 11,
+      "cached": 10,
+      "log": "build.txt"
+    },
+    { "command": "git diff --check", "exitCode": 0 }
+  ]
+}

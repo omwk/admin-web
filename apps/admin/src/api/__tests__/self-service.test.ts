@@ -8,11 +8,18 @@ import {
   getMyProfileApi,
   getMySessionsApi,
   logoutAllApi,
+  logoutOthersApi,
+  revokeMySessionApi,
   updateMyProfileApi,
 } from '../core/self-service';
 import { envelope, respond } from './transport';
 
-const calls = vi.hoisted(() => ({ get: vi.fn(), post: vi.fn(), put: vi.fn() }));
+const calls = vi.hoisted(() => ({
+  delete: vi.fn(),
+  get: vi.fn(),
+  post: vi.fn(),
+  put: vi.fn(),
+}));
 vi.mock('#/api/request', () => ({ requestClient: calls }));
 
 describe('personal account contracts', () => {
@@ -35,6 +42,24 @@ describe('personal account contracts', () => {
       tenant_code: 'acme',
     });
     expect(calls.get).toHaveBeenCalledWith('/auth/me', { silent: true });
+  });
+
+  it('returns the server revocation count without sending a logout-others body', async () => {
+    calls.post.mockResolvedValueOnce({ revoked: 7 });
+    await expect(logoutOthersApi()).resolves.toEqual({ revoked: 7 });
+    expect(calls.post).toHaveBeenCalledWith('/auth/logout-others', undefined, {
+      silent: true,
+    });
+    calls.post.mockResolvedValueOnce({ revoked: 0 });
+    await expect(logoutOthersApi()).resolves.toEqual({ revoked: 0 });
+  });
+
+  it('deletes an encoded own-session ID without using the management endpoint', async () => {
+    calls.delete.mockResolvedValueOnce(undefined);
+    await expect(revokeMySessionApi('other/sid')).resolves.toBeUndefined();
+    expect(calls.delete).toHaveBeenCalledWith('/auth/sessions/other%2Fsid', {
+      silent: true,
+    });
   });
 
   it('updates editable fields without submitting authority fields', async () => {
