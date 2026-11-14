@@ -14,8 +14,9 @@ import { hasPermission } from '#/auth/permission';
 import GroupForm from './group-form.vue';
 
 defineOptions({ name: 'SystemSettings' });
-const order = ['security', 'system', 'notification', 'sync'];
+const order = ['security', 'system', 'notification', 'sync', 'tenant'];
 const labels: Record<string, string> = {
+  tenant: '注册',
   security: '安全配置',
   system: '系统配置',
   notification: '通知配置',
@@ -72,7 +73,10 @@ onUnmounted(() => {
       class="mb-4"
     />
     <Alert
-      v-if="!hasPermission('system:setting:update')"
+      v-if="
+        !hasPermission('system:setting:update') &&
+        (active !== 'tenant' || !hasPermission('system:tenant:manage'))
+      "
       message="当前仅有查看权限"
       type="info"
       show-icon

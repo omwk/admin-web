@@ -3,7 +3,7 @@
 - ID: FE-IDN-002
 - 类型: 新增
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 已实现，十二条验收与证据见 [验收报告](../evidence/fe-idn-002/README.md)
 - 预计: 1.5 人日
 - 分支: `feat/fe-idn-002-registration`
 - 依赖: BE-IDN-004（已合并）

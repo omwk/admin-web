@@ -24,6 +24,12 @@ export function rememberTenantCode(code: string) {
 export function loginFailureMessage(failure: unknown): string {
   const error = toApiError(failure);
   if (
+    error.status === 403 &&
+    error.code === 20_111 &&
+    error.businessMessage === '请先完成邮箱验证'
+  )
+    return '请先完成邮箱验证';
+  if (
     error.code === 20_101 ||
     (error.status &&
       error.status >= 400 &&

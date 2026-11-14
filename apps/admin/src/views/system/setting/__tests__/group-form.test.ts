@@ -15,6 +15,7 @@ vi.mock('#/auth/permission', () => ({
   hasPermission: (code: string) => state.codes.includes(code),
 }));
 vi.mock('#/api/core/settings', () => ({ updateSettingGroupApi: state.update }));
+vi.mock('#/api/core/system', () => ({ getAllRolesApi: vi.fn() }));
 const group: SettingGroup = {
   group: 'system',
   items: [

@@ -1,0 +1,57 @@
+{
+  "task": "FE-IDN-002",
+  "date": "2026-11-14",
+  "branch": "feat/fe-idn-002-registration",
+  "base": "6d89085",
+  "checks": [
+    { "command": "pnpm lint", "exitCode": 0, "log": "lint.log" },
+    {
+      "command": "pnpm check:type",
+      "exitCode": 0,
+      "tasksPassed": 38,
+      "log": "typecheck.log"
+    },
+    {
+      "command": "pnpm test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "filesPassed": 145,
+      "testsPassed": 929,
+      "log": "unit.log"
+    },
+    {
+      "command": "pnpm -F @vben/web-antd test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "filesPassed": 50,
+      "testsPassed": 222,
+      "log": "unit-admin.log"
+    },
+    {
+      "command": "pnpm build:antd",
+      "exitCode": 0,
+      "tasksPassed": 11,
+      "log": "build.log"
+    },
+    {
+      "command": "node e2e/fe-idn-002.mjs",
+      "cwd": "apps/admin",
+      "assertionsPassed": 11,
+      "browserErrors": 0,
+      "report": "acceptance.json"
+    },
+    {
+      "command": "real backend screenshot refresh",
+      "exitCode": 0,
+      "browserErrors": 0,
+      "report": "screenshots-refresh.json",
+      "log": "screenshots-refresh.log"
+    }
+  ],
+  "testData": {
+    "originalDefaultTenantSettingsRestored": true,
+    "temporaryDefaultTenantUserAndRoleRemoved": true,
+    "retainedTenantId": 13,
+    "retainedTemplateId": 1,
+    "tenantStatus": "suspended",
+    "reason": "No tenant deletion API; referenced template retained."
+  }
+}
