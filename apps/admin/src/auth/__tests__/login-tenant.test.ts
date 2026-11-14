@@ -64,4 +64,30 @@ describe('tenant code login', () => {
       '服务暂不可用，请稍后重试',
     );
   });
+
+  it('shows verification guidance only for the password-verified pending-account response', () => {
+    expect(
+      loginFailureMessage(
+        new ApiError({
+          status: 403,
+          code: 20_111,
+          message: '请先完成邮箱验证',
+        }),
+      ),
+    ).toBe('请先完成邮箱验证');
+    expect(
+      loginFailureMessage(
+        new ApiError({ status: 403, code: 20_111, message: '租户已停用' }),
+      ),
+    ).toBe(LOGIN_CREDENTIAL_ERROR);
+    expect(
+      loginFailureMessage(
+        new ApiError({
+          status: 401,
+          code: 20_101,
+          message: '请先完成邮箱验证',
+        }),
+      ),
+    ).toBe(LOGIN_CREDENTIAL_ERROR);
+  });
 });

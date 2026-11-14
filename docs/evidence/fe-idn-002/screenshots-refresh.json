@@ -1,0 +1,105 @@
+{
+  "source": "real-18080-and-msedge",
+  "date": "2026-11-14T14:57:28.552Z",
+  "records": [
+    {
+      "step": "first",
+      "status": 201,
+      "code": 0,
+      "message": "ok",
+      "traceId": "01M7D8ZW99H4VMRDG2C954480M"
+    },
+    {
+      "step": "duplicate",
+      "status": 202,
+      "code": 0,
+      "message": "ok",
+      "traceId": "01M7D8ZY107PNVG81W7BAY7D0Z"
+    },
+    {
+      "step": "pending",
+      "status": 403,
+      "code": 20111,
+      "message": "请先完成邮箱验证",
+      "traceId": "01M7D8ZZP0C2DT9SZB1JEV5PPV"
+    },
+    {
+      "step": "closed",
+      "status": 403,
+      "code": 20111,
+      "message": "该企业未开放自助注册",
+      "traceId": "01M7D901HZHYT9F835BNFN58Y4"
+    },
+    {
+      "step": "limited",
+      "status": 429,
+      "code": 10005,
+      "message": "请求过多，请稍后重试",
+      "traceId": "01M7D904PMKHDPZKEFTJB8GBRP"
+    },
+    {
+      "step": "unknown",
+      "status": 401,
+      "code": 20101,
+      "message": "企业代码、账号或密码错误",
+      "traceId": "01M7D907XAZNT59NRF3PRV9T8X"
+    },
+    {
+      "step": "verify",
+      "status": 204
+    },
+    {
+      "step": "reused",
+      "status": 400,
+      "code": 10001,
+      "message": "邀请或链接无效",
+      "traceId": "01M7D90C4K1Q3SW7GS23328N3X"
+    },
+    {
+      "step": "verified-login",
+      "status": 200
+    }
+  ],
+  "network": {
+    "publicRequests": [
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register/verify",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register/verify",
+        "method": "POST",
+        "authorization": false
+      }
+    ],
+    "discoveryRequests": []
+  },
+  "browserErrors": [],
+  "cleanup": ["original settings restored", "temporary user removed"]
+}

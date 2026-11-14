@@ -110,10 +110,17 @@ const coreRoutes: RouteRecordRaw[] = [
       {
         name: 'Register',
         path: 'register',
-        component: () => import('#/views/pending/index.vue'),
+        component: () => import('#/views/_core/authentication/register.vue'),
         meta: {
           title: $t('page.auth.register'),
         },
+      },
+      {
+        name: 'RegisterVerify',
+        path: 'register/verify',
+        component: () =>
+          import('#/views/_core/authentication/register-verify.vue'),
+        meta: { title: '验证邮箱' },
       },
     ],
   },

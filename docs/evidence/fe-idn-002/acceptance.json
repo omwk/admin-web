@@ -1,0 +1,255 @@
+{
+  "task": "FE-IDN-002",
+  "source": "real-18080-and-msedge",
+  "date": "2026-11-14T14:33:28.231Z",
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "assertion": "三项表单值、默认值和热生效说明与真实租户设置一致",
+      "values": {
+        "allow_self_registration": false,
+        "default_role_code": "",
+        "registration_hourly_limit": 10
+      },
+      "defaults": {
+        "allow_self_registration": false,
+        "default_role_code": "",
+        "registration_hourly_limit": 10
+      },
+      "screenshot": "01-settings-values-real.png"
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "assertion": "注册开关关闭时角色与上限均禁用",
+      "roleDisabled": true,
+      "limitDisabled": true,
+      "screenshot": "02-settings-closed-real.png"
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "assertion": "真实 PUT 保存、已生效提示、刷新和 GET 均确认三项持久化",
+      "status": 200,
+      "input": {
+        "allow_self_registration": true,
+        "default_role_code": "reg_1794666773604",
+        "registration_hourly_limit": 10000
+      },
+      "persisted": {
+        "allow_self_registration": true,
+        "default_role_code": "reg_1794666773604",
+        "registration_hourly_limit": 10000
+      },
+      "screenshot": "03-settings-persisted-real.png"
+    },
+    {
+      "item": 4,
+      "result": "pass",
+      "assertion": "开关下方显示完整三条风险提示",
+      "risks": [
+        "开启后，任何知道本企业代码的人都可以注册账号。",
+        "新用户需要完成邮箱验证才能登录。",
+        "非首位用户将获得「默认角色」的权限——请确认它不是高权限角色。"
+      ],
+      "screenshot": "03-settings-persisted-real.png"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "assertion": "首次真实 201 仅显示统一邮件提示",
+      "status": 201,
+      "code": 0,
+      "message": "ok",
+      "traceId": "01M7D7KYPN0AB7ZKHBJVJJEXH6",
+      "displayed": "如果信息有效，我们已向你的邮箱发送验证邮件，请查收。",
+      "screenshot": "05-register-first-real.png"
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "assertion": "同账号再次提交返回 202，结果区与首次逐字一致",
+      "status": 202,
+      "code": 0,
+      "message": "ok",
+      "traceId": "01M7D7M02WY2GA9TAJ8CYNECY4",
+      "identicalResult": true,
+      "screenshot": "06-register-duplicate-real.png"
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "assertion": "关闭后注册显示该企业未开放自助注册",
+      "status": 403,
+      "code": 20111,
+      "message": "该企业未开放自助注册",
+      "traceId": "01M7D7M2SZ8X0M8G34Y55RCN50",
+      "screenshot": "07-registration-closed-real.png"
+    },
+    {
+      "item": 8,
+      "result": "pass",
+      "assertion": "有效 token 返回 204；重发撤销及已用 token 均为统一失败页",
+      "valid": {
+        "status": 204
+      },
+      "revoked": {
+        "status": 400,
+        "code": 10001,
+        "message": "邀请或链接无效",
+        "traceId": "01M7D7M65D10Q0912NN8ZQ9V1H"
+      },
+      "reused": {
+        "status": 400,
+        "code": 10001,
+        "message": "邀请或链接无效",
+        "traceId": "01M7D7M7QPW84J1VHR0MADKG66"
+      },
+      "queryTokenSupported": true,
+      "screenshots": [
+        "08-verify-success-real.png",
+        "08-verify-invalid-real.png"
+      ]
+    },
+    {
+      "item": 9,
+      "result": "pass",
+      "assertion": "未验证登录被拒并提示，验证后登录进入首页并获得配置的最小权限角色",
+      "pending": {
+        "status": 403,
+        "code": 20111,
+        "message": "请先完成邮箱验证",
+        "traceId": "01M7D7M1DC1P9KEFNKKJ53HMZ2"
+      },
+      "verifiedStatus": 200,
+      "isSuper": false,
+      "roles": ["reg_1794666773604"],
+      "screenshots": ["09-pending-login-real.png", "09-verified-login-real.png"]
+    },
+    {
+      "item": 10,
+      "result": "pass",
+      "assertion": "无活跃用户的新租户，首个注册者验证前无超管权限，验证后登录为超管",
+      "tenantId": 13,
+      "activeUsersBefore": 0,
+      "reservedInactiveAdmin": 1,
+      "beforeVerify": {
+        "status": "disabled",
+        "isSuper": false
+      },
+      "verifyStatus": 204,
+      "afterVerify": {
+        "isSuper": true
+      },
+      "backendFragmentSupported": true,
+      "screenshot": "10-first-user-super-real.png"
+    },
+    {
+      "item": 11,
+      "result": "pass",
+      "assertion": "少于八位及纯字母密码均由前端拦截，没有注册请求",
+      "invalid": ["7 characters", "letters only"],
+      "requests": 0,
+      "screenshot": "11-password-validation-real.png"
+    },
+    {
+      "item": "extra",
+      "result": "pass",
+      "unknown": {
+        "status": 401,
+        "code": 20101,
+        "message": "企业代码、账号或密码错误",
+        "traceId": "01M7D7M5AK0P53ETAY6459NFS9"
+      },
+      "limited": {
+        "status": 429,
+        "code": 10005,
+        "message": "请求过多，请稍后重试",
+        "traceId": "01M7D7M41JE3402114WX1F8SC2"
+      },
+      "entryCarriesCurrentTenant": true,
+      "discoveryRequests": []
+    }
+  ],
+  "browserErrors": [],
+  "network": {
+    "publicRequests": [
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register/verify",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register/verify",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register/verify",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register",
+        "method": "POST",
+        "authorization": false
+      },
+      {
+        "path": "/api/v1/auth/register/verify",
+        "method": "POST",
+        "authorization": false
+      }
+    ],
+    "discoveryRequests": []
+  },
+  "cleanup": [
+    {
+      "name": "restore original tenant settings",
+      "result": "pass"
+    },
+    {
+      "name": "remove temporary registered user",
+      "result": "pass"
+    },
+    {
+      "name": "remove temporary default role",
+      "result": "pass"
+    },
+    {
+      "name": "suspend isolated first-user tenant",
+      "result": "pass"
+    }
+  ],
+  "retained": {
+    "tenantId": 13,
+    "templateId": 1,
+    "status": "suspended",
+    "reason": "Backend has no tenant deletion API; referenced template retained."
+  }
+}
