@@ -3,10 +3,11 @@
 - ID: FE-IDN-001
 - 类型: 新增
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 已完成
 - 预计: 1 人日
 - 分支: `feat/fe-idn-001-tenant-enhance`
 - 依赖: BE-IDN-002（已合并）
+- 验收记录: [§4 十项证据](../evidence/fe-idn-001/README.md)
 
 ---
 

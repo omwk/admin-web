@@ -9,10 +9,15 @@ import { disableTenantApi, enableTenantApi } from '#/api/core/tenants';
 import { toApiError } from '#/api/errors';
 import { canManageTenants, platformTenantId } from '#/auth/tenant';
 
+import AdminInvite from './admin-invite.vue';
 import RenameForm from './rename-form.vue';
 
 const props = defineProps<{ tenant: Tenant; disabled: boolean }>();
-const emit = defineEmits<{ changed: []; busy: [value: boolean] }>();
+const emit = defineEmits<{
+  changed: [];
+  busy: [value: boolean];
+  members: [];
+}>();
 const confirming = ref(false);
 const renaming = ref(false);
 const busy = ref(false);
@@ -50,8 +55,17 @@ function renamed() {
 </script>
 
 <template>
-  <template v-if="canManageTenants()">
-    <Space>
+  <Space wrap>
+    <Button size="small" :disabled="disabled || busy" @click="emit('members')">
+      查看成员
+    </Button>
+    <template v-if="canManageTenants()">
+      <AdminInvite
+        :tenant="tenant"
+        :disabled="disabled || busy"
+        @busy="emit('busy', $event)"
+        @changed="emit('changed')"
+      />
       <Button
         v-if="tenant.id !== platformTenantId"
         size="small"
@@ -84,7 +98,9 @@ function renamed() {
       >
         启用
       </Button>
-    </Space>
+    </template>
+  </Space>
+  <template v-if="canManageTenants()">
     <Alert
       v-if="error && !confirming"
       :message="error"

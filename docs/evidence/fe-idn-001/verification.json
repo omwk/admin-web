@@ -1,0 +1,51 @@
+{
+  "task": "FE-IDN-001",
+  "date": "2026-11-14",
+  "branch": "feat/fe-idn-001-tenant-enhance",
+  "base": "2641cd1b24bea1ef3f80c8ba3d029a82fe58c2c9",
+  "checks": [
+    {
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "log": "lint.txt"
+    },
+    {
+      "command": "pnpm check:type",
+      "exitCode": 0,
+      "tasksPassed": 38,
+      "log": "typecheck.txt"
+    },
+    {
+      "command": "pnpm test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "filesPassed": 141,
+      "testsPassed": 904,
+      "log": "unit-workspace.txt"
+    },
+    {
+      "command": "pnpm -F @vben/web-antd test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "filesPassed": 46,
+      "testsPassed": 197,
+      "log": "unit-admin.txt"
+    },
+    {
+      "command": "pnpm -F @vben/web-antd build",
+      "exitCode": 0,
+      "log": "build.txt"
+    },
+    {
+      "command": "node e2e/fe-idn-001.mjs",
+      "cwd": "apps/admin",
+      "exitCode": 0,
+      "assertionsPassed": 9,
+      "browserErrors": 0,
+      "report": "acceptance.json"
+    }
+  ],
+  "testData": {
+    "tenantIds": [9, 10, 11, 12],
+    "status": "suspended",
+    "reason": "No tenant deletion API; all task-specific tenants verified suspended."
+  }
+}

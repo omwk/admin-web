@@ -18,6 +18,9 @@ const state = vi.hoisted(() => ({
 vi.mock('@vben/common-ui', () => ({
   Page: { template: '<main><slot /></main>' },
 }));
+vi.mock('#/api/core/dictionaries', () => ({
+  getMetaDictionaryApi: vi.fn().mockResolvedValue([]),
+}));
 vi.mock('#/auth/tenant', () => ({
   canViewTenants: () => true,
   canManageTenants: () => state.allowed,
@@ -34,12 +37,16 @@ vi.mock('#/api/core/tenants', () => ({
   updateTenantTemplateApi: vi.fn(),
   getTenantTemplateApi: vi.fn(),
   provisionTenantApi: vi.fn(),
+  reissueTenantAdminInviteApi: vi.fn(),
+  getTenantMembersApi: vi.fn(),
 }));
 const tenant: Tenant = {
   id: 1,
   code: 'default',
   name: '平台',
   status: 'active',
+  admin_active_count: 1,
+  member_count: 1,
   provisioned_from: null,
   created_at: '2026-11-14T00:00:00Z',
   updated_at: '2026-11-14T00:00:00Z',
@@ -76,6 +83,20 @@ afterEach(() => {
   root.remove();
 });
 describe('tenant protections', () => {
+  it('shows numeric monospace IDs, administrator counts and a red inactive badge', async () => {
+    state.list.mockResolvedValue([
+      tenant,
+      { ...tenant, id: 8, code: 'acme', admin_active_count: 0 },
+    ]);
+    app = createApp(TenantPage);
+    app.mount(root);
+    await vi.waitFor(() => expect(root.textContent).toContain('acme'));
+    const rows = root.querySelectorAll('tbody tr[data-row-key]');
+    expect(rows[0]?.querySelector('td .font-mono')?.textContent).toBe('1');
+    expect(rows[0]?.textContent).toContain('1 人');
+    expect(rows[1]?.querySelector('.ant-tag-red')?.textContent).toBe('未激活');
+    expect(buttons('查看成员')).toHaveLength(2);
+  });
   it('disables platform suspension and hides its rename action', async () => {
     app = createApp(TenantActions, { tenant, disabled: false });
     app.mount(root);
@@ -142,9 +163,12 @@ describe('tenant protections', () => {
       '启用',
       '生成模板',
       '删除模板',
+      '重发管理员邀请',
+      '重置管理员',
     ])
       expect(buttons(label)).toHaveLength(0);
     expect(root.textContent).not.toContain('租户模板');
     expect(state.templates).not.toHaveBeenCalled();
+    expect(buttons('查看成员')).toHaveLength(1);
   });
 });
