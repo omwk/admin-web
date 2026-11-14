@@ -29,5 +29,5 @@ export const useNotificationStore = defineStore('notification', () => {
     count.value = 0;
     error.value = '';
   }
-  return { clear, count, error, refresh };
+  return { $reset: clear, clear, count, error, refresh };
 });

@@ -11,6 +11,20 @@ export function getAccessToken() {
   return accessToken;
 }
 
+/** The JWT sid is used only to label this device, never for authorization. */
+export function getCurrentSessionId(): null | string {
+  try {
+    const payload = accessToken?.split('.')[1];
+    if (!payload) return null;
+    const claims = JSON.parse(
+      atob(payload.replaceAll('-', '+').replaceAll('_', '/')),
+    );
+    return typeof claims.sid === 'string' && claims.sid ? claims.sid : null;
+  } catch {
+    return null;
+  }
+}
+
 export function getRefreshToken(): null | string {
   try {
     return sessionStorage.getItem(REFRESH_TOKEN_KEY);

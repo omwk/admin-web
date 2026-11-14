@@ -1,0 +1,93 @@
+{
+  "phase": "a",
+  "checkedAt": "2026-11-14T01:21:02.096Z",
+  "source": "real-18080-and-msedge",
+  "checks": [
+    {
+      "item": 3,
+      "status": "pass",
+      "tenantFailure": {
+        "status": 401,
+        "code": 20101,
+        "message": "企业代码、账号或密码错误",
+        "traceId": "01M7BTA6TAPG0PS409YVX3NN86"
+      },
+      "passwordFailure": {
+        "status": 401,
+        "code": 20101,
+        "message": "企业代码、账号或密码错误",
+        "traceId": "01M7BTA7BXNV8HJ5DRD76MXA51"
+      },
+      "displayed": "企业代码、账号或密码错误"
+    },
+    {
+      "item": 2,
+      "status": "pass",
+      "browserProcessRestarted": true,
+      "rememberedTenant": "feui001_b988d799",
+      "passwordEmpty": true,
+      "accountEmpty": true,
+      "noCredentialsInLocalStorage": true
+    },
+    {
+      "item": 1,
+      "status": "pass",
+      "defaultLogin": 200,
+      "otherLogin": 200,
+      "otherTenant": {
+        "id": 7,
+        "code": "feui001_b988d799"
+      },
+      "enteredMenu": "/system/users",
+      "shortcutPaths": [
+        "/system/users",
+        "/system/menus",
+        "/system/roles",
+        "/system/depts",
+        "/system/notifications",
+        "/system/notifications/channels"
+      ],
+      "exactPayloads": [
+        {
+          "tenant": "default",
+          "fields": ["account", "password", "tenant"]
+        },
+        {
+          "tenant": "missing_feui001_b988d799",
+          "fields": ["account", "password", "tenant"]
+        },
+        {
+          "tenant": "feui001_b988d799",
+          "fields": ["account", "password", "tenant"]
+        },
+        {
+          "tenant": "feui001_b988d799",
+          "fields": ["account", "password", "tenant"]
+        }
+      ]
+    },
+    {
+      "item": 4,
+      "status": "pass",
+      "defaultCode": "default",
+      "otherCode": "feui001_b988d799",
+      "source": "/auth/me.user.tenant_code"
+    }
+  ],
+  "browserErrors": [],
+  "rateLimitWaits": 0,
+  "cleanup": {
+    "tenant": {
+      "id": 7,
+      "code": "feui001_b988d799",
+      "status": "suspended",
+      "retainedReason": "No tenant deletion API; disabled after acceptance."
+    },
+    "template": {
+      "id": 7,
+      "code": "feui001_shell",
+      "created": true,
+      "retainedReason": "Referenced immutable snapshot."
+    }
+  }
+}

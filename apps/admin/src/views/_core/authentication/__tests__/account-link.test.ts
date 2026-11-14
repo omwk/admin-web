@@ -77,6 +77,10 @@ describe('public password reset form', () => {
       );
       expect(router.currentRoute.value.hash).toBe('');
       expect(container.textContent).toContain('前往登录');
+      expect(container.textContent).toContain('企业代码');
+      expect(container.querySelector('a')?.getAttribute('href')).not.toContain(
+        'tenant_id',
+      );
     } finally {
       app.unmount();
       container.remove();

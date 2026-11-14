@@ -16,7 +16,10 @@ export namespace AuthApi {
 const publicRequest: ApiRequestConfig = { authenticated: false };
 
 export function loginApi(data: IdentityLoginParams) {
-  return requestClient.post<LoginData>('/auth/login', data, publicRequest);
+  return requestClient.post<LoginData>('/auth/login', data, {
+    ...publicRequest,
+    silent: true,
+  } as ApiRequestConfig);
 }
 
 export function refreshTokenApi(refreshToken: string) {
@@ -29,5 +32,6 @@ export function refreshTokenApi(refreshToken: string) {
 export function logoutApi(accessToken: string) {
   return baseRequestClient.post<unknown>('/auth/logout', undefined, {
     headers: { Authorization: `Bearer ${accessToken}` },
+    timeout: 3000,
   });
 }

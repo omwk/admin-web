@@ -1,0 +1,46 @@
+{
+  "source": "frontend-response-fixtures-not-live-backend",
+  "checks": [
+    {
+      "item": 3,
+      "status": "pass-ui-fixture",
+      "message": "企业代码、账号或密码错误",
+      "distinctServerMessagesHidden": true,
+      "onlyThreeLoginFields": true
+    },
+    {
+      "item": 2,
+      "status": "pass",
+      "browserProcessRestarted": true,
+      "rememberedTenant": "acme",
+      "passwordEmpty": true,
+      "noAccountOrCredentialsInLocalStorage": true
+    },
+    {
+      "item": 4,
+      "status": "pass-ui-fixture",
+      "submittedCode": "acme",
+      "displayedCodeFromMe": "server-authoritative"
+    },
+    {
+      "item": 5,
+      "status": "pass-ui-fixture",
+      "fieldsRenderedFromMe": [
+        "nickname",
+        "email",
+        "phone",
+        "dept_name",
+        "roles",
+        "tenant_code"
+      ]
+    },
+    {
+      "item": 9,
+      "status": "pass-ui-fixture",
+      "currentAndOther": true,
+      "ipAndUserAgent": true,
+      "fullUserAgentTooltip": true
+    }
+  ],
+  "browserErrors": []
+}

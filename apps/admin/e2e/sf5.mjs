@@ -195,13 +195,13 @@ try {
   const destination = await tenantPage
     .getByRole('link', { name: '前往登录' })
     .getAttribute('href');
-  assert.ok(destination.includes('tenant_id=' + tenantId));
+  assert.ok(!destination.includes('tenant_id='));
   await tenantPage.getByRole('link', { name: '前往登录' }).click();
   assert.equal(
-    await tenantPage.getByPlaceholder('请输入租户 ID').inputValue(),
-    String(tenantId),
+    await tenantPage.getByLabel('企业代码', { exact: true }).inputValue(),
+    'default',
   );
-  const tenantAuth = await login(tenantPage, adminName, password, tenantId);
+  const tenantAuth = await login(tenantPage, adminName, password, prefix);
   const me = await api('/auth/me', 'GET', undefined, tenantAuth.access_token);
   assert.equal(me.user.tenant_id, tenantId);
   assert.equal(me.user.is_super, true);
@@ -219,7 +219,7 @@ try {
   assert.equal(reused.status, 400);
   check(
     4,
-    '邀请设密码后由真实登录页传租户ID登录，重复接受400，成功页不再保留token',
+    '邀请设密码后由真实登录页传企业代码登录，重复接受400，成功页不再保留token',
     {
       acceptedStatus: accepted.status,
       loginTenantId: me.user.tenant_id,
@@ -366,7 +366,7 @@ try {
   const deniedLogin = await request(
     '/auth/login',
     'POST',
-    { tenant_id: tenantId, username: adminName, password },
+    { tenant: prefix, account: adminName, password },
     null,
   );
   const deniedRefresh = await request(
@@ -401,7 +401,7 @@ try {
     () => button('启用', row(page, tenantId)).click(),
   );
   assert.equal(enabled.data.status, 'active');
-  const enabledAuth = await login(tenantPage, adminName, password, tenantId);
+  const enabledAuth = await login(tenantPage, adminName, password, prefix);
   assert.equal(
     (await api('/auth/me', 'GET', undefined, enabledAuth.access_token)).user
       .tenant_id,

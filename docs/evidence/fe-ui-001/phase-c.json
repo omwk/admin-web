@@ -1,0 +1,46 @@
+{
+  "phase": "c",
+  "source": "real-18080-and-msedge",
+  "checks": [
+    {
+      "item": 9,
+      "status": "partial",
+      "rows": 3,
+      "cancelRetainsSession": true,
+      "logoutAll": 204,
+      "otherSession": {
+        "status": 401,
+        "code": 20103,
+        "message": "token 已失效",
+        "traceId": "01M7BTGYGF5E3NHJFH2FR039SM"
+      },
+      "destination": "/auth/login",
+      "sessionStorageEntries": 0
+    }
+  ],
+  "cleanup": true,
+  "metadata": [
+    {
+      "sidPresent": false,
+      "ipPresent": false,
+      "uaPresent": false,
+      "currentPresent": false
+    },
+    {
+      "sidPresent": false,
+      "ipPresent": false,
+      "uaPresent": false,
+      "currentPresent": false
+    },
+    {
+      "sidPresent": false,
+      "ipPresent": false,
+      "uaPresent": false,
+      "currentPresent": false
+    }
+  ],
+  "limitations": [
+    "Backend omits IP/User-Agent/current and returns empty sid; live device metadata cannot be verified."
+  ],
+  "browserErrors": []
+}

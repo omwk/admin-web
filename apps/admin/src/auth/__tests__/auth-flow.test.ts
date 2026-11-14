@@ -7,6 +7,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { envelope, respond } from '#/api/__tests__/transport';
 import { baseRequestClient, requestClient } from '#/api/request';
 import { useAuthStore } from '#/store/auth';
+import { useNotificationStore } from '#/store/notification';
 
 import { initializeAuthState } from '../persistence';
 import {
@@ -44,6 +45,7 @@ vi.mock('#/router', () => ({
       value: { fullPath: '/auth/login', path: '/auth/login', query: {} },
     },
     replace: mocks.replace,
+    resolve: () => ({ href: '/auth/login' }),
   },
 }));
 
@@ -77,7 +79,49 @@ beforeEach(async () => {
 });
 
 describe('application authentication flow', () => {
-  it('passes an explicit tenant to login and retains the authoritative platform identity', async () => {
+  it.each(['企业不存在', '密码错误'])(
+    'shows one credential error without leaking %s from the server',
+    async (serverMessage) => {
+      requestClient.instance.defaults.adapter = (config) =>
+        respond(
+          config,
+          { ...envelope(null, 20_101), message: serverMessage },
+          401,
+        );
+      await useAuthStore().authLogin({
+        tenant: 'acme',
+        account: 'operator',
+        password: 'wrong',
+      });
+      expect(mocks.error).toHaveBeenCalledExactlyOnceWith(
+        '企业代码、账号或密码错误',
+      );
+      expect(getAccessToken()).toBeNull();
+      expect(getRefreshToken()).toBeNull();
+      expect(mocks.success).not.toHaveBeenCalled();
+    },
+  );
+  it('clears every installed store and sessionStorage after logout-all, then replaces the document', async () => {
+    const replace = vi
+      .spyOn(window.location, 'replace')
+      .mockImplementation(() => {});
+    useNotificationStore().count = 7;
+    sessionStorage.setItem(REFRESH_TOKEN_KEY, 'stored-refresh');
+    baseRequestClient.instance.defaults.adapter = (config) =>
+      respond(config, envelope(pair));
+    await useAuthStore().restoreSession();
+    requestClient.instance.defaults.adapter = (config) => {
+      expect(config.url).toBe('/auth/logout-all');
+      return respond(config, '', 204);
+    };
+    sessionStorage.setItem('private-page-state', 'secret');
+    await useAuthStore().logoutAll();
+    expect(getAccessToken()).toBeNull();
+    expect(sessionStorage.length).toBe(0);
+    expect(useNotificationStore().count).toBe(0);
+    expect(replace).toHaveBeenCalledWith('/auth/login');
+  });
+  it('sends only tenant/account/password and retains the authoritative /auth/me tenant code', async () => {
     let payload: unknown;
     requestClient.instance.defaults.adapter = async (config) => {
       if (config.url === '/auth/login') {
@@ -88,22 +132,30 @@ describe('application authentication flow', () => {
         config,
         envelope({
           ...overview,
-          user: { ...overview.user, tenant_id: 8, is_super: true },
+          user: {
+            ...overview.user,
+            tenant_id: 8,
+            tenant_code: 'canonical',
+            is_super: true,
+          },
         }),
       );
     };
     await useAuthStore().authLogin({
-      username: 'tenant-admin',
+      account: 'tenant-admin',
       password: 'test-password',
+      tenant: 'acme',
+      username: 'discarded-legacy-field',
       tenant_id: 8,
     });
     expect(payload).toEqual({
-      username: 'tenant-admin',
+      account: 'tenant-admin',
       password: 'test-password',
-      tenant_id: 8,
+      tenant: 'acme',
     });
     expect(useUserStore().userInfo).toMatchObject({
       tenantId: 8,
+      tenantCode: 'canonical',
       isSuper: true,
     });
   });
@@ -123,13 +175,15 @@ describe('application authentication flow', () => {
       return respond(config, envelope(overview));
     };
     await useAuthStore().authLogin({
-      username: 'operator',
+      account: 'operator',
       password: 'test-password',
+      tenant: 'default',
     });
     await nextTick();
     expect(loginPayload).toEqual({
-      username: 'operator',
+      account: 'operator',
       password: 'test-password',
+      tenant: 'default',
     });
     expect(loginAuthHeader).toBeUndefined();
     expect(meAuthHeader).toBe('Bearer real-access-fixture');
@@ -208,6 +262,9 @@ describe('application authentication flow', () => {
   });
 
   it('logs out using the captured Bearer and handles the empty HTTP 204 response', async () => {
+    const replace = vi
+      .spyOn(window.location, 'replace')
+      .mockImplementation(() => {});
     sessionStorage.setItem(REFRESH_TOKEN_KEY, 'stored-refresh');
     baseRequestClient.instance.defaults.adapter = (config) =>
       respond(config, envelope(pair));
@@ -221,5 +278,34 @@ describe('application authentication flow', () => {
     await useAuthStore().logout(false);
     expect(getRefreshToken()).toBeNull();
     expect(mocks.resetRoutes).toHaveBeenCalled();
+    expect(replace).toHaveBeenCalledWith('/auth/login');
+  });
+
+  it('cleans auth, user data and sessionStorage and replaces the page even when the server logout fails', async () => {
+    const replace = vi
+      .spyOn(window.location, 'replace')
+      .mockImplementation(() => {});
+    sessionStorage.setItem(REFRESH_TOKEN_KEY, 'stored-refresh');
+    baseRequestClient.instance.defaults.adapter = (config) =>
+      respond(config, envelope(pair));
+    await useAuthStore().restoreSession();
+    useUserStore().setUserInfo({
+      avatar: '',
+      realName: 'Private',
+      username: 'private',
+      userId: '7',
+    });
+    useNotificationStore().count = 4;
+    sessionStorage.setItem('private-state', 'secret');
+    baseRequestClient.instance.defaults.adapter = (config) =>
+      respond(config, envelope(null, 10_002), 503);
+    await useAuthStore().logout(false);
+    expect(getAccessToken()).toBeNull();
+    expect(getRefreshToken()).toBeNull();
+    expect(sessionStorage.length).toBe(0);
+    expect(useUserStore().userInfo).toBeNull();
+    expect(useAccessStore().accessCodes).toEqual([]);
+    expect(useNotificationStore().count).toBe(0);
+    expect(replace).toHaveBeenCalledWith('/auth/login');
   });
 });

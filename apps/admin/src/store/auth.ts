@@ -7,10 +7,16 @@ import { preferences } from '@vben/preferences';
 import { CanceledError, isCancel } from '@vben/request';
 import { resetAllStores, useAccessStore, useUserStore } from '@vben/stores';
 
-import { notification } from 'ant-design-vue';
+import { message, notification } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
 import { getUserInfoApi, loginApi, logoutApi } from '#/api';
+import { logoutAllApi } from '#/api/core/self-service';
+import {
+  getLastTenantCode,
+  loginFailureMessage,
+  rememberTenantCode,
+} from '#/auth/login-tenant';
 import { refreshAccessToken } from '#/auth/refresh';
 import {
   clearTokens,
@@ -35,6 +41,24 @@ export const useAuthStore = defineStore('auth', () => {
     accessStore.$persist?.();
   }
 
+  function clearSessionAndRedirect() {
+    try {
+      clearSession();
+    } finally {
+      try {
+        sessionStorage.clear();
+      } catch {
+        // In-memory credentials have already been discarded.
+      }
+      window.location.replace(router.resolve(LOGIN_PATH).href);
+    }
+  }
+
+  async function logoutAll() {
+    await logoutAllApi();
+    clearSessionAndRedirect();
+  }
+
   async function authLogin(
     params: Recordable<unknown>,
     onSuccess?: () => Promise<void> | void,
@@ -44,22 +68,24 @@ export const useAuthStore = defineStore('auth', () => {
     const version = getSessionVersion();
     loginLoading.value = true;
     let userInfo: null | UserInfo = null;
+    let hasSession = false;
     try {
       const credentials = params as {
+        account?: string;
         password?: string;
-        username?: string;
-        tenant_id?: number;
+        tenant?: string;
       };
+      const tenant = credentials.tenant?.trim() || getLastTenantCode();
+      rememberTenantCode(tenant);
       const pair = await loginApi({
+        account: credentials.account?.trim() ?? '',
         password: credentials.password ?? '',
-        username: credentials.username ?? '',
-        ...(credentials.tenant_id === undefined
-          ? {}
-          : { tenant_id: credentials.tenant_id }),
+        tenant,
       });
       if (version !== getSessionVersion())
         throw new CanceledError('登录状态已变更');
       setTokens(pair);
+      hasSession = true;
       userInfo = await fetchUserInfo();
       if (onSuccess) {
         await onSuccess();
@@ -88,8 +114,10 @@ export const useAuthStore = defineStore('auth', () => {
         message: $t('authentication.loginSuccess'),
       });
     } catch (error) {
-      if (!isCancel(error) && version === getSessionVersion()) clearSession();
-      // Request interceptors already render a local, code-mapped error.
+      if (!isCancel(error) && version === getSessionVersion()) {
+        clearSession();
+        if (!hasSession) message.error(loginFailureMessage(error));
+      }
     } finally {
       loginLoading.value = false;
     }
@@ -115,17 +143,18 @@ export const useAuthStore = defineStore('auth', () => {
     return expiration;
   }
 
-  async function logout(redirect = true) {
+  async function logout(_redirect = true) {
     const accessToken = getAccessToken();
-    const navigation = expireSession(redirect);
-    if (accessToken) {
-      try {
+    try {
+      clearSession();
+      if (accessToken) {
         await logoutApi(accessToken);
-      } catch {
-        // Local credentials have already been cleared; remote revocation may fail.
       }
+    } catch {
+      // A remote or local cleanup failure must still leave the authenticated page.
+    } finally {
+      clearSessionAndRedirect();
     }
-    await navigation;
   }
 
   async function restoreSession() {
@@ -152,10 +181,12 @@ export const useAuthStore = defineStore('auth', () => {
   return {
     $reset,
     authLogin,
+    clearSessionAndRedirect,
     expireSession,
     fetchUserInfo,
     loginLoading,
     logout,
+    logoutAll,
     restoreSession,
   };
 });

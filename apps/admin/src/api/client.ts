@@ -8,6 +8,8 @@ import { ApiError, toApiError } from './errors';
 
 export interface ApiRequestConfig extends RequestClientConfig {
   authenticated?: boolean;
+  /** Invalid submitted credentials must not revoke a valid calling session. */
+  credentialCheck?: boolean;
   /** Show verbatim 400/409 business messages for explicitly opted-in requests. */
   preserveBusinessMessage?: boolean;
   silent?: boolean;
@@ -87,6 +89,7 @@ export function createApiClient(
         throw new CanceledError('登录状态已变更');
       }
       if (!config?.authenticated || error.code === 20_109) throw error;
+      if (config.credentialCheck && error.code === 20_101) throw error;
 
       // 20101 and 20103 revoke a session; 20102 is natural access expiry.
       if (error.code === 20_101 || error.code === 20_103) {
