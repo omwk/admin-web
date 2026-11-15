@@ -1,0 +1,208 @@
+{
+  "source": "real-backend-and-msedge",
+  "origin": "http://127.0.0.1:5670",
+  "backend": "http://127.0.0.1:18080",
+  "timezone": "Asia/Shanghai",
+  "checks": [
+    {
+      "item": 1,
+      "status": "pass",
+      "assertion": "顶部下线其他设备按钮在三条本人会话时可用",
+      "serverTotal": 3,
+      "visibleRows": 3,
+      "buttonEnabled": true,
+      "screenshot": "01-multiple-sessions-real.png"
+    },
+    {
+      "item": 2,
+      "status": "pass",
+      "assertion": "current=true 行显示当前设备且无下线按钮，其他两行可下线",
+      "currentRows": 1,
+      "currentRowLogoutButtons": 0,
+      "otherRowLogoutButtons": 2,
+      "serverCurrentFlagsPresent": true,
+      "screenshot": "01-multiple-sessions-real.png"
+    },
+    {
+      "item": 3,
+      "status": "pass",
+      "assertion": "单条撤销后目标行消失、目标令牌失效，当前及另一个会话仍可用",
+      "cancelSentNoWrite": true,
+      "delete": {
+        "status": 204
+      },
+      "remainingRows": 2,
+      "currentMe": {
+        "status": 200,
+        "code": 0,
+        "traceId": "01M7E6Q5VC9SXMTB5DYKDAYSNF"
+      },
+      "revokedMe": {
+        "status": 401,
+        "code": 20103,
+        "traceId": "01M7E6Q5VQDGXM3FGN1AJGGF8E"
+      },
+      "screenshot": "03-single-complete-real.png"
+    },
+    {
+      "item": 4,
+      "status": "pass",
+      "assertion": "确认下线其他后仅剩当前一条，实际撤销2条，当前访问及刷新仍有效",
+      "cancelSentNoWrite": true,
+      "confirmationCount": 2,
+      "logoutOthers": {
+        "status": 200,
+        "code": 0,
+        "traceId": "01M7E6Q71ENVZN3EHDXCG00BAX"
+      },
+      "revoked": 2,
+      "toast": "已下线 2 个会话",
+      "remainingRows": 1,
+      "currentMe": {
+        "status": 200,
+        "code": 0,
+        "traceId": "01M7E6Q74HS9Q6FGXFYXDZ9H1V"
+      },
+      "otherMe": [
+        {
+          "status": 401,
+          "code": 20103,
+          "traceId": "01M7E6Q74YS9EED77MQ4GTMAY5"
+        },
+        {
+          "status": 401,
+          "code": 20103,
+          "traceId": "01M7E6Q74YS9EED77MQ80WQYF5"
+        }
+      ],
+      "reloadWithRefreshTokenSucceeded": true,
+      "screenshots": [
+        "04-others-confirm-real.png",
+        "04-others-complete-real.png"
+      ]
+    },
+    {
+      "item": 5,
+      "status": "pass",
+      "assertion": "仅剩当前会话时按钮禁用且不发请求，重复API调用返回revoked=0",
+      "buttonDisabled": true,
+      "disabledClickSentNoWrite": true,
+      "repeated": {
+        "status": 200,
+        "code": 0,
+        "traceId": "01M7E6Q891MQ3CDNF8W98T9H3M"
+      },
+      "revoked": 0,
+      "screenshot": "05-single-disabled-real.png"
+    },
+    {
+      "item": 6,
+      "status": "pass",
+      "assertion": "全部下线保留原确认与重定向语义，清空本地会话并返回登录页",
+      "cancelRetainsCurrentSession": true,
+      "logoutAll": {
+        "status": 204
+      },
+      "destination": "/auth/login",
+      "sessionStorageEntries": 0,
+      "currentMe": {
+        "status": 401,
+        "code": 20103,
+        "traceId": "01M7E6QA6ZXDSMS9PVBMCJVMG9"
+      },
+      "screenshot": "06-all-login-real.png"
+    }
+  ],
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/sessions",
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/auth/sessions/[sid]",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/sessions",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/sessions",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/logout-others",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/sessions",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/sessions",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/logout-all",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "cleanup": [
+    {
+      "action": "delete-temporary-user",
+      "status": 204,
+      "subsequentGet": {
+        "status": 404,
+        "code": 10003,
+        "traceId": "01M7E6QAXAE5CPZ0SATR5AZG4E"
+      }
+    },
+    {
+      "action": "logout-test-admin-session",
+      "status": 204
+    }
+  ],
+  "testUser": {
+    "id": 90,
+    "username": "ses_5fa46e0f"
+  }
+}

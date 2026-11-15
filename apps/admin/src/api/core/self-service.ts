@@ -24,6 +24,19 @@ export const getMySessionsApi = (page = 1, pageSize = 20) =>
 export const logoutAllApi = () =>
   requestClient.post<undefined>('/auth/logout-all', undefined, silent);
 
+export const logoutOthersApi = () =>
+  requestClient.post<{ revoked: number }>(
+    '/auth/logout-others',
+    undefined,
+    silent,
+  );
+
+export const revokeMySessionApi = (sid: string) =>
+  requestClient.delete<undefined>(
+    `/auth/sessions/${encodeURIComponent(sid)}`,
+    silent,
+  );
+
 export async function getMyProfileApi() {
   const data = await requestClient.get<Overview>('/auth/me', silent);
   return {
