@@ -12,10 +12,11 @@ import {
   Select,
   Space,
   Table,
-  Tag,
 } from 'ant-design-vue';
 
 import { hasCatalogPermission } from '#/auth/catalog-permission';
+import DictTag from '#/components/dict-tag/index.vue';
+import { productStatusOptions } from '#/composables/dictionary-options';
 import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 import { formatDateTime } from '#/utils/datetime';
 import { formatPriceRange } from '#/utils/money';
@@ -25,7 +26,6 @@ import {
   categoryOptions,
   displayText,
   productSortOptions,
-  productStatusValues,
 } from './catalog-display';
 import { useProductExport } from './use-product-export';
 import { useProductList } from './use-product-list';
@@ -57,13 +57,8 @@ const {
 const { exportError, exporting, exportMessage, exportProducts } =
   useProductExport(getAppliedQuery);
 const categoryTree = computed(() => categoryOptions(categories.value));
-const dictionary = useMetaDictionary('product_status');
-const statusOptions = computed(() =>
-  productStatusValues.map((value) => ({
-    value,
-    label: dictionary.label(value),
-  })),
-);
+const dictionary = useMetaDictionary('product_status', productStatusOptions);
+const statusOptions = dictionary.options;
 const columns = [
   { dataIndex: 'main_image', title: '主图', width: 90 },
   { dataIndex: 'title', title: '标题', width: 240 },
@@ -224,12 +219,11 @@ onUnmounted(dispose);
               formatPriceRange(record.price_min_cents, record.price_max_cents)
             }}
           </template>
-          <Tag
+          <DictTag
             v-else-if="column.dataIndex === 'status'"
-            :color="dictionary.color(record.status)"
-          >
-            {{ dictionary.label(record.status) }}
-          </Tag>
+            type="product_status"
+            :value="record.status"
+          />
           <template v-else-if="column.dataIndex === 'updated_at'">
             {{ formatDateTime(text) }}
           </template>

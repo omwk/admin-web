@@ -16,6 +16,8 @@ import {
 
 import { createAdminMenuApi, updateAdminMenuApi } from '#/api/core/system';
 import { toApiError } from '#/api/errors';
+import { enableStatusOptions } from '#/composables/dictionary-options';
+import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 
 import { menuParentOptions, menuTypes } from './menu-options';
 
@@ -46,6 +48,7 @@ const parents = computed(() => [
 ]);
 const busy = ref(false);
 const error = ref('');
+const dictionary = useMetaDictionary('enable_status', enableStatusOptions);
 async function save() {
   error.value = '';
   if (!form.name.trim() || form.parent_id === undefined) {
@@ -175,10 +178,7 @@ async function save() {
           <Select
             v-model:value="form.status"
             aria-label="菜单状态"
-            :options="[
-              { label: '启用', value: 'active' },
-              { label: '禁用', value: 'disabled' },
-            ]"
+            :options="dictionary.options.value"
           />
         </Form.Item>
       </div>

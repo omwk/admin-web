@@ -14,7 +14,7 @@ vi.mock('#/api/core/dictionaries', () => ({
   createDictionaryItemApi: vi.fn(),
 }));
 describe('system dictionary display edits', () => {
-  it('saves label and sort while preserving machine identity, status, color and extra', async () => {
+  it('saves display fields while preserving machine identity and extra', async () => {
     const root = document.createElement('div');
     document.body.append(root);
     const item: DictionaryItem = {
@@ -51,6 +51,21 @@ describe('system dictionary display edits', () => {
       );
       if (!input || !value) throw new Error('Missing dictionary fields');
       expect(value.disabled).toBe(true);
+      const color = document.querySelector<HTMLInputElement>(
+        '[aria-label="字典项颜色"]',
+      );
+      const status = document.querySelector<HTMLInputElement>(
+        '[aria-label="字典项状态"]',
+      );
+      if (!color || !status) throw new Error('Missing display fields');
+      expect(color.disabled).toBe(false);
+      expect(
+        status
+          .closest('.ant-select')
+          ?.classList.contains('ant-select-disabled'),
+      ).toBe(false);
+      color.value = '#1677ff';
+      color.dispatchEvent(new Event('input', { bubbles: true }));
       input.value = '服务端显示标签';
       input.dispatchEvent(new Event('input', { bubbles: true }));
       const form = document.querySelector('form');
@@ -64,7 +79,7 @@ describe('system dictionary display edits', () => {
           value: 'active',
           sort: 5,
           status: 'active',
-          color: 'green',
+          color: '#1677ff',
           extra: { source: 'preserved' },
         }),
       );

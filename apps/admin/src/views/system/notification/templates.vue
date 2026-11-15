@@ -3,9 +3,10 @@ import type { NotificationTemplate } from '#/api/model/notification';
 
 import { onMounted, ref } from 'vue';
 
-import { Alert, Button, Empty, message, Table, Tag } from 'ant-design-vue';
+import { Alert, Button, Empty, message, Table } from 'ant-design-vue';
 
 import { getNotificationTemplatesApi } from '#/api/core/notifications';
+import DictTag from '#/components/dict-tag/index.vue';
 
 import TemplateForm from './template-form.vue';
 import { useNotificationPage } from './use-notification-page';
@@ -48,9 +49,10 @@ onMounted(() => load());
           {{ record.tenant_id === null ? '全局' : '租户覆盖' }}
         </template>
         <template v-else-if="column.dataIndex === 'enabled'">
-          <Tag :color="record.enabled ? 'success' : 'default'">
-            {{ record.enabled ? '启用' : '停用' }}
-          </Tag>
+          <DictTag
+            type="enable_status"
+            :value="record.enabled ? 'active' : 'disabled'"
+          />
         </template>
         <template v-else-if="column.dataIndex === 'actions'">
           <Button type="link" @click="editing = record as NotificationTemplate">

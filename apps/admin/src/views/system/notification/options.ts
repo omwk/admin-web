@@ -1,7 +1,4 @@
-import type {
-  NotificationChannel,
-  NotificationDelivery,
-} from '#/api/model/notification';
+import type { NotificationChannel } from '#/api/model/notification';
 
 export const notificationChannels: {
   label: string;
@@ -13,15 +10,6 @@ export const notificationChannels: {
   { label: '钉钉', value: 'dingtalk' },
   { label: 'Webhook', value: 'webhook' },
 ];
-export const deliveryStatuses: Record<
-  NotificationDelivery['status'],
-  { color: string; label: string }
-> = {
-  pending: { color: 'processing', label: '待发送' },
-  sent: { color: 'success', label: '已发送' },
-  failed: { color: 'error', label: '失败' },
-  skipped: { color: 'warning', label: '已跳过' },
-};
 export function channelLabel(value: string) {
   return (
     notificationChannels.find((channel) => channel.value === value)?.label ??

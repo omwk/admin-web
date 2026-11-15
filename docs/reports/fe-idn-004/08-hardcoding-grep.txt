@@ -1,0 +1,4 @@
+Command: rg -n -F -e "=== 'active' ? '启用'" -e "=== 'success' ? '成功'" -e "record.enabled ? '启用'" apps/admin/src
+Exit code: 1
+Output:
+(no matches)

@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-15",
+  "status": "passed",
+  "groups": 133,
+  "schema_domains": 114,
+  "code_value_entries": 469,
+  "reference_associations": 615,
+  "unique_source_locations": 557,
+  "source_anchors": 147,
+  "local_links": 427,
+  "csv_rows": {
+    "inventory.csv": 133,
+    "code-values.csv": 469,
+    "references.csv": 615
+  },
+  "checks": [
+    "all source reference texts and line numbers",
+    "no duplicate references within each group",
+    "all source anchors",
+    "all value labels",
+    "all group counts and schema classifications",
+    "all CSV record and column counts",
+    "all CSV reference rows",
+    "all Markdown file links and line numbers"
+  ],
+  "source_snapshots": {
+    "front": {
+      "root": "D:/code/admin-web",
+      "head": "f6d696da855d3525fe1aa3bbbe66c3cd98d3d4c2",
+      "files": 955,
+      "lines": 81041,
+      "sha256": "eea73db09e34c438848c4cbf22a330ef20828b7072b4083c49e348a8c07f4f69"
+    },
+    "back": {
+      "root": "D:/code/go-admin-api",
+      "head": "e36fc8d50832b32a0c75632448b687be0ada6f04",
+      "files": 536,
+      "lines": 51705,
+      "sha256": "57a3c319881343dd671780bcd3082ce53406b95d21c0be0f18683e6815295916"
+    }
+  },
+  "artifact_sha256": {
+    "audit.cjs": "0c8e8312fb2cb158610f287f3cb17d2b812c45c8d7e4aebfb6c4eea1e3086038",
+    "build-report.cjs": "5ebdd292361b997595da8ee7a6cbea12093d7831e226a06c09e7a7fa4777e7ce",
+    "code-values.csv": "3ceb5ee9ab9f736ed71c0cbea18fb0e8642cdc4b5f6c329595c0b5ab7c1409cc",
+    "curation.cjs": "d055f60bfccaa68d9a2d183ca62a18112ad4cf621e2e6aab6969d2c984890df9",
+    "evidence.json": "cf90496492a0e8b724bb358cb8eeddf04c9458fb40834edd9463c7d4f33b8f2e",
+    "inventory.csv": "85756cb40d5df6f2e6cee217b1e5e3d2c4bd1c1e57e2b4740706dfe5c8025077",
+    "inventory.md": "0909901802619b5449806b803c2404731d8d9d21d5eea0b67d1afac0dbd0e541",
+    "references.csv": "fbb3be8219915370a2eca24711ae2d594567a575558037a1c81750a3e8dab054",
+    "report.md": "40299c5fbd3d441121f09c108510c224fdfb873766f095224d5f96c513e0ef31",
+    "schema-domains.json": "e015d90850a3fc9ccc4ab4f44ebf969b633dcf5818e76297f9b280aaa9188f2d"
+  }
+}

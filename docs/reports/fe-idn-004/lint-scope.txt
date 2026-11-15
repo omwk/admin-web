@@ -1,0 +1,14 @@
+FE-IDN-004 lint verification; excludes only the pre-existing untracked report directory.
+
+pnpm exec oxlint --threads=4 --ignore-pattern 'docs/reports/system-dictionary-2026-11-15/**'
+Exit code: 0
+
+pnpm exec oxfmt --check . '!docs/reports/system-dictionary-2026-11-15/**'
+All matched files use the correct format.
+Exit code: 0
+
+pnpm exec eslint . --cache --ignore-pattern 'docs/reports/system-dictionary-2026-11-15/**'
+Exit code: 0
+
+pnpm exec stylelint '**/*.{vue,css,less,scss}' --cache
+Exit code: 0

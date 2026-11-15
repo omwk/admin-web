@@ -1,0 +1,42 @@
+{
+  "branch": "feat/fe-idn-004-dict-consume",
+  "base": "906ec70",
+  "backend": "07abd4f",
+  "typecheck": { "command": "pnpm -F @vben/web-antd typecheck", "exitCode": 0 },
+  "unit": {
+    "command": "pnpm -F @vben/web-antd test:unit",
+    "exitCode": 0,
+    "files": 52,
+    "tests": 243
+  },
+  "build": { "command": "pnpm -F @vben/web-antd build", "exitCode": 0 },
+  "ui": {
+    "command": "node apps/admin/e2e/fe-idn-004.mjs",
+    "exitCode": 0,
+    "checks": 9,
+    "browserErrors": 0,
+    "restoredResources": 4
+  },
+  "network": {
+    "command": "node apps/admin/e2e/fe-idn-004-network.mjs",
+    "exitCode": 0,
+    "rows": 20,
+    "requestCount": 1,
+    "crossPageReuse": true
+  },
+  "lintScope": {
+    "oxlint": 0,
+    "oxfmt": 0,
+    "eslint": 0,
+    "stylelint": 0,
+    "excludedPreexistingDirectory": "docs/reports/system-dictionary-2026-11-15"
+  },
+  "fullLint": {
+    "command": "pnpm lint",
+    "exitCode": 1,
+    "blockers": [
+      "preexisting audit.cjs formatting",
+      "preexisting curation.cjs:173 duplicate unknown key"
+    ]
+  }
+}

@@ -3,7 +3,7 @@
 - ID: FE-IDN-004
 - 类型: 重构
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 已实现（验收证据见 `docs/reports/fe-idn-004/acceptance.md`）
 - 预计: 1.5 人日
 - 分支: `feat/fe-idn-004-dict-consume`
 - 依赖: BE-IDN-008（字典种子）
@@ -59,7 +59,8 @@
 状态选择器改为字典驱动：
 
 ```ts
-const options = await dictionary.options(); // [{label,value,color}]
+const dictionary = useMetaDictionary('enable_status', enableStatusOptions);
+const options = dictionary.options; // computed: [{label,value,color}]
 ```
 
 字典为空时回退到内置的最小选项集合，避免页面不可用。
@@ -100,23 +101,25 @@ const options = await dictionary.options(); // [{label,value,color}]
 
 ## 3. 验收
 
-| #   | 项       | 断言                                           |
-| --- | -------- | ---------------------------------------------- |
-| 1   | 组件     | `DictTag` 正确渲染 label 与颜色                |
-| 2   | 缺项回退 | 未配置的 value 显示原值，不空白                |
-| 3   | 接口失败 | 字典接口 500 时页面仍渲染原值                  |
-| 4   | 商品状态 | 改 `product_status` label 后刷新即变           |
-| 5   | 租户状态 | 显示「已停用」而非 `suspended`                 |
-| 6   | 审计结果 | 显示「成功/失败」来自字典                      |
-| 7   | 表单     | 状态下拉选项来自字典                           |
-| 8   | 无硬编码 | `grep` 不再命中 `=== 'active' ? '启用'` 等模式 |
-| 9   | 构建     | lint / typecheck / unit / build 全绿           |
+| # | 项 | 断言 |
+| --- | --- | --- |
+| 1 | 组件 | `DictTag` 正确渲染 label 与颜色 |
+| 2 | 缺项回退 | 未配置的 value 显示原值，不空白 |
+| 3 | 接口失败 | 字典接口 500 时页面仍渲染原值 |
+| 4 | 商品状态 | 改 `product_status` label 后刷新即变 |
+| 5 | 租户状态 | 显示「已停用」而非 `suspended` |
+| 6 | 审计结果 | 显示「成功/失败」来自字典 |
+| 7 | 表单 | 状态下拉选项来自字典 |
+| 8 | 无硬编码 | `grep` 不再命中 `=== 'active' ? '启用'` 等模式 |
+| 9 | 系统字典编辑与自举 | 系统字典 name/status、项 label/color/sort/status 可改；type/value 与增删保持保护。停用 user_status 后维护页仍用本地状态选项；贴改中文名后列表更新截图 |
+| 10 | 请求复用 | 同页同 type 只请求一次，跨页面共用 5 分钟内存缓存；贴网络面板与请求数 |
+| 11 | 构建 | lint / typecheck / unit / build 全绿 |
 
 ## 4. 不做
 
 - 业务状态机文案（如订单展示态 `pending_shipment`）——它由后端 SQL 计算，值域不稳定，暂不字典化
 - 权限码/错误码展示
-- 字典管理页改造（SF-4 已做）
+- 字典管理页布局重做（本卡只调整 §2.4 可编辑范围和 §2.6 自举）
 
 ## 5. Codex prompt
 
@@ -125,8 +128,8 @@ const options = await dictionary.options(); // [{label,value,color}]
 分支：feat/fe-idn-004-dict-consume（从最新 main 开）
 
 后端已就绪（BE-IDN-008 合并并重跑 seed 后）：
-  enable_status / tenant_status / audit_result / delivery_status /
-  sync_job_status（system）；product_status（business）
+  9 个 system 类型、33 项，均包含 label/value/sort/color；
+  product_status 为 draft/active/archived，sync_run_status 为 running/success/partial/failed/cancelled。
 
 必读：本卡、docs/design/dictionary-usage.md、
 apps/admin/src/composables/use-meta-dictionary.ts（已有实现）、

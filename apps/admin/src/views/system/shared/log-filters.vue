@@ -7,6 +7,8 @@ import { computed } from 'vue';
 
 import { Button, DatePicker, Input, InputNumber, Select } from 'ant-design-vue';
 
+import { useMetaDictionary } from '#/composables/use-meta-dictionary';
+
 import { logResults } from './log-filters';
 
 const props = defineProps<{
@@ -14,12 +16,16 @@ const props = defineProps<{
   kind: 'audit' | 'login';
   loading: boolean;
 }>();
+
 const emit = defineEmits<{
   search: [];
   reset: [];
   refresh: [];
   update: [value: Partial<LogFilters>];
 }>();
+
+const dictionary = useMetaDictionary('audit_result', logResults);
+
 const action = computed({
   get: () => props.filters.action,
   set: (value: string) => emit('update', { action: value }),
@@ -85,7 +91,7 @@ const range = computed({
       placeholder="全部结果"
       allow-clear
       class="!w-32"
-      :options="logResults"
+      :options="dictionary.options.value"
     />
     <DatePicker.RangePicker
       v-model:value="range"

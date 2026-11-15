@@ -1,0 +1,16 @@
+{
+  "page": "/catalog/products",
+  "rows": 20,
+  "requests": [
+    {
+      "path": "/api/v1/meta/dicts/product_status",
+      "status": 200
+    }
+  ],
+  "crossPageReuse": [
+    "/catalog/products",
+    "/catalog/products/:id",
+    "/catalog/products"
+  ],
+  "requestCount": 1
+}

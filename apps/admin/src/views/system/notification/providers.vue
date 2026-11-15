@@ -19,6 +19,7 @@ import {
   getNotificationProvidersApi,
 } from '#/api/core/notifications';
 import { notificationError } from '#/api/notification-safety';
+import DictTag from '#/components/dict-tag/index.vue';
 
 import { channelLabel } from './options';
 import { providerKinds } from './provider-fields';
@@ -122,9 +123,10 @@ onMounted(() => load());
           </Tag>
         </template>
         <template v-else-if="column.dataIndex === 'enabled'">
-          <Tag :color="record.enabled ? 'success' : 'default'">
-            {{ record.enabled ? '启用' : '停用' }}
-          </Tag>
+          <DictTag
+            type="enable_status"
+            :value="record.enabled ? 'active' : 'disabled'"
+          />
         </template>
         <template v-else-if="column.dataIndex === 'actions'">
           <Space>

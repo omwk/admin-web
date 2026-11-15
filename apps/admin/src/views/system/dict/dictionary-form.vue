@@ -19,7 +19,7 @@ import {
 } from '#/api/core/dictionaries';
 import { toApiError } from '#/api/errors';
 import { hasPermission } from '#/auth/permission';
-import { useMetaDictionary } from '#/composables/use-meta-dictionary';
+import { enableStatusOptions } from '#/composables/dictionary-options';
 
 const props = defineProps<{ dictionary?: Dictionary }>();
 const emit = defineEmits<{
@@ -34,18 +34,12 @@ const form = reactive<DictionaryInput>({
 });
 const busy = ref(false);
 const error = ref('');
-const statuses = useMetaDictionary('user_status');
-const options = computed(() =>
-  statuses.options.value.filter(({ value }) =>
-    ['active', 'disabled'].includes(value),
-  ),
-);
+const system = computed(() => props.dictionary?.scope === 'system');
 const allowed = computed(() =>
   hasPermission(props.dictionary ? 'system:dict:update' : 'system:dict:create'),
 );
 async function save() {
-  if (busy.value || !allowed.value || props.dictionary?.scope === 'system')
-    return;
+  if (busy.value || !allowed.value) return;
   error.value = '';
   if (
     !/^[a-z][a-z0-9_]{0,63}$/.test(form.type) ||
@@ -61,7 +55,10 @@ async function save() {
   try {
     const input = {
       ...form,
-      type: props.dictionary?.builtin ? props.dictionary.type : form.type,
+      type:
+        props.dictionary && (system.value || props.dictionary.builtin)
+          ? props.dictionary.type
+          : form.type,
     };
     const result = props.dictionary
       ? await updateDictionaryApi(props.dictionary.id, input)
@@ -79,19 +76,27 @@ async function save() {
 <template>
   <Modal
     :open="true"
-    :title="dictionary ? '编辑业务字典' : '新增业务字典'"
+    :title="dictionary ? '编辑字典' : '新增业务字典'"
     :footer="null"
     :mask-closable="false"
     :closable="!busy"
     :keyboard="!busy"
     @cancel="emit('close')"
   >
+    <Alert
+      v-if="system"
+      message="系统字典的码值由代码定义，只能调整名称、排序与显示颜色。"
+      description="本表可修改字典名称与状态；类型不可修改，也不可删除系统字典。"
+      type="info"
+      show-icon
+      class="mb-4"
+    />
     <Alert v-if="error" :message="error" type="error" show-icon class="mb-4" />
     <Form :model="form" layout="vertical" :disabled="busy" @finish="save">
       <Form.Item
         label="字典类型"
         :help="
-          dictionary?.builtin
+          system || dictionary?.builtin
             ? '内置类型不可修改'
             : '小写字母开头，可含数字和下划线，最多 64 字符'
         "
@@ -101,7 +106,7 @@ async function save() {
           v-model:value="form.type"
           aria-label="字典类型"
           :maxlength="64"
-          :disabled="dictionary?.builtin"
+          :disabled="system || dictionary?.builtin"
         />
       </Form.Item>
       <Form.Item label="字典名称" required>
@@ -115,7 +120,7 @@ async function save() {
         <Select
           v-model:value="form.status"
           aria-label="字典状态"
-          :options="options"
+          :options="enableStatusOptions"
         />
       </Form.Item>
       <Space>

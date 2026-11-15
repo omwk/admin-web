@@ -18,6 +18,9 @@ const state = vi.hoisted(() => ({
   update: vi.fn(),
   remove: vi.fn(),
 }));
+vi.mock('#/api/core/dictionaries', () => ({
+  getMetaDictionaryApi: async () => [],
+}));
 vi.mock('@vben/common-ui', () => ({
   Page: { template: '<main><slot /></main>' },
 }));

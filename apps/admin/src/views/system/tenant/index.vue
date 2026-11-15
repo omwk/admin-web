@@ -14,6 +14,7 @@ import {
   canViewTenants,
   platformTenantId,
 } from '#/auth/tenant';
+import DictTag from '#/components/dict-tag/index.vue';
 import { formatDateTime } from '#/utils/datetime';
 import Forbidden from '#/views/_core/fallback/forbidden.vue';
 
@@ -148,12 +149,11 @@ onUnmounted(() => {
                   平台
                 </Tag>
               </template>
-              <Tag
+              <DictTag
                 v-else-if="column.dataIndex === 'status'"
-                :color="record.status === 'active' ? 'success' : 'default'"
-              >
-                {{ record.status === 'active' ? '启用' : '停用' }}
-              </Tag>
+                type="tenant_status"
+                :value="record.status"
+              />
               <template v-else-if="column.dataIndex === 'admin_active_count'">
                 <Tag v-if="text === 0" color="red">未激活</Tag>
                 <span v-else>{{ text }} 人</span>

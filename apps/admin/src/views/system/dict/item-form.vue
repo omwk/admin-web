@@ -24,7 +24,7 @@ import {
 } from '#/api/core/dictionaries';
 import { toApiError } from '#/api/errors';
 import { hasPermission } from '#/auth/permission';
-import { useMetaDictionary } from '#/composables/use-meta-dictionary';
+import { enableStatusOptions } from '#/composables/dictionary-options';
 
 const props = defineProps<{ dictionary: Dictionary; item?: DictionaryItem }>();
 const emit = defineEmits<{ busy: [value: boolean]; close: []; saved: [] }>();
@@ -41,12 +41,6 @@ const error = ref('');
 const system = computed(() => props.dictionary.scope === 'system');
 const allowed = computed(() =>
   hasPermission(props.item ? 'system:dict:update' : 'system:dict:create'),
-);
-const statuses = useMetaDictionary('user_status');
-const options = computed(() =>
-  statuses.options.value.filter(({ value }) =>
-    ['active', 'disabled'].includes(value),
-  ),
 );
 async function save() {
   if (busy.value || !allowed.value || (system.value && !props.item)) return;
@@ -74,8 +68,6 @@ async function save() {
       props.item && (system.value || props.item.builtin)
         ? props.item.value
         : form.value,
-    status: system.value && props.item ? props.item.status : form.status,
-    color: system.value && props.item ? props.item.color : form.color,
     extra: props.item?.extra ?? {},
   };
   busy.value = true;
@@ -106,7 +98,8 @@ async function save() {
   >
     <Alert
       v-if="system"
-      message="系统字典仅允许修改标签和排序"
+      message="系统字典的码值由代码定义，只能调整名称、排序与显示颜色。"
+      description="可修改标签、排序、颜色与状态；值不可修改，也不可新增或删除项。"
       type="info"
       show-icon
       class="mb-4"
@@ -149,15 +142,13 @@ async function save() {
         <Select
           v-model:value="form.status"
           aria-label="字典项状态"
-          :disabled="system"
-          :options="options"
+          :options="enableStatusOptions"
         />
       </Form.Item>
       <Form.Item label="颜色" help="可选，例如 green、blue 或 #1677ff">
         <Input
           v-model:value="form.color"
           aria-label="字典项颜色"
-          :disabled="system"
           :maxlength="64"
         />
       </Form.Item>

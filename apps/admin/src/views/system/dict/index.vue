@@ -33,10 +33,8 @@ import {
 } from '#/api/core/dictionaries';
 import { toApiError } from '#/api/errors';
 import { hasPermission } from '#/auth/permission';
-import {
-  invalidateMetaDictionary,
-  useMetaDictionary,
-} from '#/composables/use-meta-dictionary';
+import { enableStatusOptions } from '#/composables/dictionary-options';
+import { invalidateMetaDictionary } from '#/composables/use-meta-dictionary';
 
 import DictionaryForm from './dictionary-form.vue';
 import ItemForm from './item-form.vue';
@@ -66,7 +64,6 @@ const dictionaryForm = ref(false);
 const editingDictionary = ref<Dictionary>();
 const itemForm = ref(false);
 const editingItem = ref<DictionaryItem>();
-const statuses = useMetaDictionary('user_status');
 let listSequence = 0;
 let itemSequence = 0;
 const busy = computed(
@@ -168,7 +165,7 @@ async function load(preferredId = selected.value?.id) {
   }
 }
 function editDictionary(dictionary?: Dictionary) {
-  if (dictionary?.scope === 'system' || busy.value) return;
+  if (busy.value) return;
   editingDictionary.value = dictionary;
   dictionaryForm.value = true;
 }
@@ -184,9 +181,9 @@ function editItem(item?: DictionaryItem) {
 }
 async function dictionarySaved(dictionary: Dictionary) {
   dictionaryForm.value = false;
-  if (editingDictionary.value)
-    invalidateMetaDictionary(editingDictionary.value.type);
-  invalidateMetaDictionary(dictionary.type);
+  new Set([dictionary.type, editingDictionary.value?.type]).forEach((type) => {
+    if (type) invalidateMetaDictionary(type);
+  });
   await load(dictionary.id);
   message.success('字典已保存');
 }
@@ -248,7 +245,7 @@ onUnmounted(() => {
 <template>
   <Page
     title="数据字典"
-    description="维护业务字典；系统字典仅允许调整项标签与排序。"
+    description="维护字典名称、状态与显示属性；系统字典的码值由代码定义。"
   >
     <Alert v-if="error" :message="error" type="error" show-icon class="mb-4">
       <template #action>
@@ -309,7 +306,7 @@ onUnmounted(() => {
                 <div class="mt-2 flex flex-wrap items-center gap-2">
                   <Tag>{{ counts[dictionary.id] ?? '…' }} 项</Tag>
                   <Tag v-if="dictionary.scope === 'system'">系统</Tag>
-                  <Space v-else>
+                  <Space>
                     <Button
                       v-if="hasPermission('system:dict:update')"
                       type="link"
@@ -320,7 +317,10 @@ onUnmounted(() => {
                       编辑字典
                     </Button>
                     <Button
-                      v-if="hasPermission('system:dict:delete')"
+                      v-if="
+                        dictionary.scope === 'business' &&
+                        hasPermission('system:dict:delete')
+                      "
                       type="link"
                       size="small"
                       danger
@@ -356,7 +356,8 @@ onUnmounted(() => {
         </template>
         <Alert
           v-if="selected?.scope === 'system'"
-          message="系统字典：仅可修改标签和排序，不可新增或删除项"
+          message="系统字典的码值由代码定义，只能调整名称、排序与显示颜色。"
+          description="可编辑字典名称、状态，以及项的标签、排序、颜色与状态；类型和值不可修改，不可新增或删除项。"
           type="info"
           show-icon
           class="mb-4"
@@ -375,9 +376,13 @@ onUnmounted(() => {
           <template #bodyCell="{ column, record }">
             <Tag
               v-if="column.dataIndex === 'status'"
-              :color="statuses.color(record.status)"
+              :color="record.status === 'active' ? 'success' : 'default'"
             >
-              {{ statuses.label(record.status) }}
+              {{
+                enableStatusOptions.find(
+                  (option) => option.value === record.status,
+                )?.label ?? record.status
+              }}
             </Tag>
             <Tag
               v-else-if="column.dataIndex === 'color' && record.color"

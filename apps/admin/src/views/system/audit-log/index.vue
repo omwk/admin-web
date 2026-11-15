@@ -7,6 +7,7 @@ import { Alert, Card, Empty, Table, Tag } from 'ant-design-vue';
 
 import { getAuditLogsApi } from '#/api/core/audit';
 import { hasPermission } from '#/auth/permission';
+import DictTag from '#/components/dict-tag/index.vue';
 import { formatDateTime } from '#/utils/datetime';
 import Forbidden from '#/views/_core/fallback/forbidden.vue';
 
@@ -100,9 +101,7 @@ onMounted(() => {
             </span>
           </template>
           <template v-else-if="column.dataIndex === 'result'">
-            <Tag :color="record.result === 'success' ? 'success' : 'error'">
-              {{ record.result === 'success' ? '成功' : '失败' }}
-            </Tag>
+            <DictTag type="audit_result" :value="record.result" />
           </template>
           <template v-else-if="column.dataIndex === 'truncated'">
             <Tag v-if="record.truncated" color="warning"> 内容已截断 </Tag>

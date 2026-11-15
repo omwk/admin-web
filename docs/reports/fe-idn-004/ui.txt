@@ -1,0 +1,10 @@
+FE-IDN-004 check 1 passed
+FE-IDN-004 check 10 passed
+FE-IDN-004 check 2 passed
+FE-IDN-004 check 3 passed
+FE-IDN-004 check 4 passed
+FE-IDN-004 check 5 passed
+FE-IDN-004 check 6 passed
+FE-IDN-004 check 7 passed
+FE-IDN-004 check 9 passed
+{"uiChecks":9,"browserErrors":0,"restored":4}
