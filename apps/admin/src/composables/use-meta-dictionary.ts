@@ -1,64 +1,149 @@
+import type { MaybeRefOrGetter, Ref } from 'vue';
+
+import type { DictionaryOption } from './dictionary-options';
+
 import type { MetaDictionaryItem } from '#/api/model/configuration';
 
-import { computed, onActivated, onMounted, onUnmounted, ref } from 'vue';
+import {
+  computed,
+  onActivated,
+  onMounted,
+  onUnmounted,
+  ref,
+  toValue,
+  watch,
+} from 'vue';
 
 import { getMetaDictionaryApi } from '#/api/core/dictionaries';
 import { toApiError } from '#/api/errors';
 
-const consumers = new Map<string, Set<() => void>>();
+export type DictionaryValue = null | number | string | undefined;
 
-/** Writes refresh mounted consumers, including views retained by KeepAlive. */
-export function invalidateMetaDictionary(type: string) {
-  consumers.get(type)?.forEach((refresh) => refresh());
+interface CacheEntry {
+  consumers: number;
+  error: Ref<string>;
+  expiresAt: number;
+  items: Ref<MetaDictionaryItem[]>;
+  pending?: Promise<void>;
+  sequence: number;
 }
 
-export function useMetaDictionary(type: string) {
-  const items = ref<MetaDictionaryItem[]>([]);
-  const error = ref('');
-  let sequence = 0;
-  let firstActivation = true;
-  async function refresh() {
-    const current = ++sequence;
-    error.value = '';
+const cache = new Map<string, CacheEntry>();
+const cacheLifetime = 5 * 60 * 1000;
+
+function entryFor(type: string) {
+  let entry = cache.get(type);
+  if (!entry) {
+    entry = {
+      consumers: 0,
+      error: ref(''),
+      expiresAt: 0,
+      items: ref([]),
+      sequence: 0,
+    };
+    cache.set(type, entry);
+  }
+  return entry;
+}
+
+function load(type: string, entry: CacheEntry): Promise<void> {
+  if (entry.pending) return entry.pending;
+  if (entry.expiresAt > Date.now()) return Promise.resolve();
+  const current = ++entry.sequence;
+  entry.error.value = '';
+  entry.pending = (async () => {
     try {
       const result = await getMetaDictionaryApi(type);
-      if (current === sequence) items.value = result;
-    } catch (error_) {
-      if (current === sequence) {
-        items.value = [];
-        error.value = toApiError(error_).message;
+      if (current === entry.sequence) entry.items.value = result;
+    } catch (error) {
+      if (current === entry.sequence) {
+        entry.items.value = [];
+        entry.error.value = toApiError(error).message;
+      }
+    } finally {
+      if (current === entry.sequence) {
+        // Cache failures too: mounting more rows must not cause a request storm.
+        entry.expiresAt = Date.now() + cacheLifetime;
+        entry.pending = undefined;
       }
     }
-  }
-  const reload = () => {
-    void refresh();
-  };
+  })();
+  return entry.pending;
+}
+
+function reset(entry: CacheEntry) {
+  entry.sequence++;
+  entry.pending = undefined;
+  entry.expiresAt = 0;
+}
+
+/** Writes refresh all mounted consumers once, including KeepAlive views. */
+export function invalidateMetaDictionary(type: string) {
+  const entry = cache.get(type);
+  if (!entry) return;
+  reset(entry);
+  if (entry.consumers) void load(type, entry);
+}
+
+/** Tenant-specific labels must never survive login, logout or session expiry. */
+export function clearMetaDictionaries() {
+  cache.forEach((entry) => {
+    reset(entry);
+    entry.items.value = [];
+    entry.error.value = '';
+  });
+}
+
+export function useMetaDictionary(
+  type: MaybeRefOrGetter<string>,
+  fallback: DictionaryOption[] = [],
+) {
+  const entry = computed(() => entryFor(toValue(type)));
+  const items = computed(() => entry.value.items.value);
+  let mounted = false;
+  const read = () => load(toValue(type), entry.value);
+
   onMounted(() => {
-    const listeners = consumers.get(type) ?? new Set();
-    listeners.add(reload);
-    consumers.set(type, listeners);
-    reload();
+    mounted = true;
+    entry.value.consumers++;
+    void read();
   });
   onActivated(() => {
-    if (firstActivation) firstActivation = false;
-    else reload();
+    void read();
   });
+  watch(
+    () => toValue(type),
+    (_type, previous) => {
+      if (!mounted) return;
+      entryFor(previous).consumers--;
+      entry.value.consumers++;
+      void read();
+    },
+    { flush: 'sync' },
+  );
   onUnmounted(() => {
-    sequence++;
-    const listeners = consumers.get(type);
-    listeners?.delete(reload);
-    if (!listeners?.size) consumers.delete(type);
+    mounted = false;
+    entry.value.consumers--;
   });
-  type DictionaryValue = null | number | string | undefined;
+
   function item(value: DictionaryValue) {
-    return items.value.find((entry) => entry.value === String(value));
+    return items.value.find((candidate) => candidate.value === String(value));
   }
   return {
     items,
-    error,
-    refresh,
+    error: computed(() => entry.value.error.value),
+    refresh: () => {
+      entry.value.expiresAt = 0;
+      return read();
+    },
     options: computed(() =>
-      items.value.map(({ value, label }) => ({ value, label })),
+      items.value.length > 0
+        ? items.value.map(({ value, label, color }) => ({
+            value,
+            label,
+            color,
+          }))
+        : fallback,
     ),
     label: (value: DictionaryValue) =>
       item(value)?.label ??

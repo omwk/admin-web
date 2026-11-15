@@ -23,6 +23,7 @@ import {
 } from '#/api/core/system';
 import { toApiError } from '#/api/errors';
 import { hasPermission } from '#/auth/permission';
+import DictTag from '#/components/dict-tag/index.vue';
 
 import MenuForm from './menu-form.vue';
 import { menuBranchIds, menuTypeLabels } from './menu-options';
@@ -163,12 +164,11 @@ onUnmounted(() => {
           >
             {{ text ? '显示' : '隐藏' }}
           </Tag>
-          <Tag
+          <DictTag
             v-else-if="column.dataIndex === 'status'"
-            :color="text === 'active' ? 'success' : 'default'"
-          >
-            {{ text === 'active' ? '启用' : '禁用' }}
-          </Tag>
+            type="enable_status"
+            :value="text"
+          />
           <Space v-else-if="column.dataIndex === 'actions'" wrap>
             <Button
               v-if="

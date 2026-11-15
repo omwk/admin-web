@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { AdminUser, UserStatus } from '#/api/model/admin-user';
+import type { AdminUser } from '#/api/model/admin-user';
 import type { AdminRole, Department } from '#/api/model/system';
 
 import { computed, onMounted, onUnmounted, ref } from 'vue';
@@ -32,6 +32,8 @@ import { getAllRolesApi, getDepartmentsApi } from '#/api/core/system';
 import { toApiError } from '#/api/errors';
 import { frontendAccountLink, passwordError } from '#/auth/account-link';
 import { hasPermission } from '#/auth/permission';
+import DictTag from '#/components/dict-tag/index.vue';
+import { userStatusOptions } from '#/composables/dictionary-options';
 import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 import { formatDateTime } from '#/utils/datetime';
 
@@ -74,12 +76,7 @@ const password = ref('');
 const resetError = ref('');
 const link = ref('');
 let roleSequence = 0;
-const dictionary = useMetaDictionary('user_status');
-const statusColors: Record<UserStatus, string> = {
-  active: 'success',
-  disabled: 'default',
-  locked: 'warning',
-};
+const dictionary = useMetaDictionary('user_status', userStatusOptions);
 const statusOptions = dictionary.options;
 const columns = [
   { dataIndex: 'username', title: '用户名', width: 150 },
@@ -336,15 +333,11 @@ onUnmounted(() => {
         @change="handleTableChange"
       >
         <template #bodyCell="{ column, record, text }">
-          <Tag
+          <DictTag
             v-if="column.dataIndex === 'status'"
-            :color="
-              dictionary.color(record.status) ||
-              statusColors[record.status as UserStatus]
-            "
-          >
-            {{ dictionary.label(record.status) }}
-          </Tag>
+            type="user_status"
+            :value="record.status"
+          />
           <template v-else-if="column.dataIndex === 'created_at'">
             {{ formatDateTime(text) }}
           </template>

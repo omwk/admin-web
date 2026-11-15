@@ -6,6 +6,9 @@ import MenuForm from '../menu-form.vue';
 import { menuParentOptions } from '../menu-options';
 
 const update = vi.hoisted(() => vi.fn(async () => undefined));
+vi.mock('#/api/core/dictionaries', () => ({
+  getMetaDictionaryApi: async () => [],
+}));
 vi.mock('#/api/core/system', () => ({
   createAdminMenuApi: vi.fn(),
   updateAdminMenuApi: update,

@@ -7,6 +7,8 @@ import { Alert, Form, Input, Modal, Select } from 'ant-design-vue';
 
 import { createRoleApi, updateRoleApi } from '#/api/core/system';
 import { toApiError } from '#/api/errors';
+import { enableStatusOptions } from '#/composables/dictionary-options';
+import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 
 import { dataScopeOptions } from './role-options';
 
@@ -21,6 +23,7 @@ const form = reactive<Omit<RoleInput, 'remark'> & { remark: string }>({
 });
 const busy = ref(false);
 const error = ref('');
+const dictionary = useMetaDictionary('enable_status', enableStatusOptions);
 async function save() {
   error.value = '';
   if (!form.code.trim() || !form.name.trim()) {
@@ -85,10 +88,7 @@ async function save() {
         <Select
           v-model:value="form.status"
           aria-label="角色状态"
-          :options="[
-            { label: '启用', value: 'active' },
-            { label: '禁用', value: 'disabled' },
-          ]"
+          :options="dictionary.options.value"
         />
       </Form.Item>
       <Form.Item label="备注">

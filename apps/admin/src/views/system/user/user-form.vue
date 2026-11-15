@@ -9,6 +9,7 @@ import { Alert, Form, Input, Modal, Select, TreeSelect } from 'ant-design-vue';
 import { createUserApi, updateUserApi } from '#/api/core/admin-users';
 import { toApiError } from '#/api/errors';
 import { passwordError } from '#/auth/account-link';
+import { userStatusOptions } from '#/composables/dictionary-options';
 import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 
 import { treeOptions } from '../shared/tree';
@@ -25,7 +26,7 @@ const form = reactive({
   username: props.user?.username ?? '',
 });
 const busy = ref(false);
-const dictionary = useMetaDictionary('user_status');
+const dictionary = useMetaDictionary('user_status', userStatusOptions);
 const error = ref('');
 const departments = computed(() => treeOptions(props.departments));
 async function save() {

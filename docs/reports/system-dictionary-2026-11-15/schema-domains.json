@@ -1,0 +1,1931 @@
+[
+  {
+    "key": "tenant.status",
+    "table": "tenant",
+    "field": "status",
+    "values": ["active", "suspended"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000001_kernel_init.up.sql",
+        "line": 7,
+        "text": "CHECK (status IN ('active', 'suspended')",
+        "values": ["active", "suspended"]
+      }
+    ]
+  },
+  {
+    "key": "audit_log.actor_type",
+    "table": "audit_log",
+    "field": "actor_type",
+    "values": ["user", "system", "api_client"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000001_kernel_init.up.sql",
+        "line": 31,
+        "text": "CHECK (actor_type IN ('user', 'system', 'api_client')",
+        "values": ["user", "system", "api_client"]
+      }
+    ]
+  },
+  {
+    "key": "audit_log.result",
+    "table": "audit_log",
+    "field": "result",
+    "values": ["success", "failure"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000001_kernel_init.up.sql",
+        "line": 41,
+        "text": "CHECK (result IN ('success', 'failure')",
+        "values": ["success", "failure"]
+      }
+    ]
+  },
+  {
+    "key": "outbox_event.status",
+    "table": "outbox_event",
+    "field": "status",
+    "values": ["pending", "processing", "sent", "failed"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000001_kernel_init.up.sql",
+        "line": 63,
+        "text": "CHECK (status IN ('pending', 'processing', 'sent', 'failed')",
+        "values": ["pending", "processing", "sent", "failed"]
+      }
+    ]
+  },
+  {
+    "key": "idempotency_key.status",
+    "table": "idempotency_key",
+    "field": "status",
+    "values": ["processing", "completed"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000001_kernel_init.up.sql",
+        "line": 79,
+        "text": "CHECK (status IN ('processing', 'completed')",
+        "values": ["processing", "completed"]
+      }
+    ]
+  },
+  {
+    "key": "notification.channel",
+    "table": "notification",
+    "field": "channel",
+    "values": ["inbox", "email", "webhook"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000001_kernel_init.up.sql",
+        "line": 88,
+        "text": "CHECK (channel IN ('inbox', 'email', 'webhook')",
+        "values": ["inbox", "email", "webhook"]
+      }
+    ]
+  },
+  {
+    "key": "notification.status",
+    "table": "notification",
+    "field": "status",
+    "values": ["pending", "sent", "failed"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000001_kernel_init.up.sql",
+        "line": 92,
+        "text": "CHECK (status IN ('pending', 'sent', 'failed')",
+        "values": ["pending", "sent", "failed"]
+      }
+    ]
+  },
+  {
+    "key": "file_object.purpose",
+    "table": "file_object",
+    "field": "purpose",
+    "values": ["product_image", "export", "snapshot"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000001_kernel_init.up.sql",
+        "line": 110,
+        "text": "CHECK (purpose IN ('product_image', 'export', 'snapshot')",
+        "values": ["product_image", "export", "snapshot"]
+      }
+    ]
+  },
+  {
+    "key": "sys_user.status",
+    "table": "sys_user",
+    "field": "status",
+    "values": ["active", "disabled", "locked"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000002_identity_init.up.sql",
+        "line": 25,
+        "text": "CHECK (status IN ('active', 'disabled', 'locked')",
+        "values": ["active", "disabled", "locked"]
+      }
+    ]
+  },
+  {
+    "key": "sys_role.data_scope",
+    "table": "sys_role",
+    "field": "data_scope",
+    "values": ["all", "dept", "dept_and_child", "self", "custom"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000002_identity_init.up.sql",
+        "line": 46,
+        "text": "CHECK (data_scope IN ('all', 'dept', 'dept_and_child', 'self', 'custom')",
+        "values": ["all", "dept", "dept_and_child", "self", "custom"]
+      }
+    ]
+  },
+  {
+    "key": "sys_permission.module",
+    "table": "sys_permission",
+    "field": "module",
+    "values": [
+      "system",
+      "shop",
+      "product",
+      "trade",
+      "crm",
+      "share",
+      "sync",
+      "gateway",
+      "billing"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000002_identity_init.up.sql",
+        "line": 58,
+        "text": "CHECK (module IN ('system', 'shop', 'product', 'trade', 'crm', 'share', 'sync', 'gateway', 'billing')",
+        "values": [
+          "system",
+          "shop",
+          "product",
+          "trade",
+          "crm",
+          "share",
+          "sync",
+          "gateway",
+          "billing"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "sys_permission.type",
+    "table": "sys_permission",
+    "field": "type",
+    "values": ["api", "button", "data"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000002_identity_init.up.sql",
+        "line": 59,
+        "text": "CHECK (type IN ('api', 'button', 'data')",
+        "values": ["api", "button", "data"]
+      }
+    ]
+  },
+  {
+    "key": "sys_menu.type",
+    "table": "sys_menu",
+    "field": "type",
+    "values": ["dir", "menu", "button", "link"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000002_identity_init.up.sql",
+        "line": 69,
+        "text": "CHECK (type IN ('dir', 'menu', 'button', 'link')",
+        "values": ["dir", "menu", "button", "link"]
+      }
+    ]
+  },
+  {
+    "key": "sys_menu.status",
+    "table": "sys_menu",
+    "field": "status",
+    "values": ["active", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000002_identity_init.up.sql",
+        "line": 80,
+        "text": "CHECK (status IN ('active', 'disabled')",
+        "values": ["active", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "sys_refresh_token.revoked_reason",
+    "table": "sys_refresh_token",
+    "field": "revoked_reason",
+    "values": ["rotated", "logout", "kick", "replay", "expired"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000002_identity_init.up.sql",
+        "line": 142,
+        "text": "CHECK (revoked_reason IN ('rotated', 'logout', 'kick', 'replay', 'expired')",
+        "values": ["rotated", "logout", "kick", "replay", "expired"]
+      }
+    ]
+  },
+  {
+    "key": "platform.auth_type",
+    "table": "platform",
+    "field": "auth_type",
+    "values": ["oauth2", "api_key", "cookie", "session"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 7,
+        "text": "CHECK (auth_type IN ('oauth2', 'api_key', 'cookie', 'session')",
+        "values": ["oauth2", "api_key", "cookie", "session"]
+      }
+    ]
+  },
+  {
+    "key": "platform.status",
+    "table": "platform",
+    "field": "status",
+    "values": ["active", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 10,
+        "text": "CHECK (status IN ('active', 'disabled')",
+        "values": ["active", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "shop.status",
+    "table": "shop",
+    "field": "status",
+    "values": ["active", "paused", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 25,
+        "text": "CHECK (status IN ('active', 'paused', 'disabled')",
+        "values": ["active", "paused", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "shop_credential.kind",
+    "table": "shop_credential",
+    "field": "kind",
+    "values": ["oauth2", "api_key", "cookie", "session"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 47,
+        "text": "CHECK (kind IN ('oauth2', 'api_key', 'cookie', 'session')",
+        "values": ["oauth2", "api_key", "cookie", "session"]
+      }
+    ]
+  },
+  {
+    "key": "shop_credential.status",
+    "table": "shop_credential",
+    "field": "status",
+    "values": ["active", "expiring", "refreshing", "needs_reauth", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 49,
+        "text": "CHECK (status IN ('active', 'expiring', 'expired', 'needs_reauth', 'disabled')",
+        "values": ["active", "expiring", "expired", "needs_reauth", "disabled"]
+      },
+      {
+        "side": "back",
+        "path": "migrations/000015_credential_refresh.up.sql",
+        "line": 6,
+        "text": "CHECK (status IN ('active','expiring','refreshing','needs_reauth','disabled')",
+        "values": [
+          "active",
+          "expiring",
+          "refreshing",
+          "needs_reauth",
+          "disabled"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "shop_credential.refresh_strategy",
+    "table": "shop_credential",
+    "field": "refresh_strategy",
+    "values": ["auto", "manual", "none"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 55,
+        "text": "CHECK (refresh_strategy IN ('auto', 'manual', 'none')",
+        "values": ["auto", "manual", "none"]
+      }
+    ]
+  },
+  {
+    "key": "credential_version.created_reason",
+    "table": "credential_version",
+    "field": "created_reason",
+    "values": ["initial", "refresh", "manual", "migration"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 79,
+        "text": "CHECK (created_reason IN ('initial', 'refresh', 'manual', 'migration')",
+        "values": ["initial", "refresh", "manual", "migration"]
+      }
+    ]
+  },
+  {
+    "key": "credential_audit.action",
+    "table": "credential_audit",
+    "field": "action",
+    "values": [
+      "create",
+      "read",
+      "check",
+      "refresh",
+      "rotate",
+      "disable",
+      "purge"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 98,
+        "text": "CHECK (action IN ('create', 'read', 'check', 'refresh', 'rotate', 'disable', 'purge')",
+        "values": [
+          "create",
+          "read",
+          "check",
+          "refresh",
+          "rotate",
+          "disable",
+          "purge"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "credential_audit.actor_type",
+    "table": "credential_audit",
+    "field": "actor_type",
+    "values": ["user", "system", "api_client"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 99,
+        "text": "CHECK (actor_type IN ('user', 'system', 'api_client')",
+        "values": ["user", "system", "api_client"]
+      }
+    ]
+  },
+  {
+    "key": "credential_audit.result",
+    "table": "credential_audit",
+    "field": "result",
+    "values": ["success", "failure"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000004_shop_init.up.sql",
+        "line": 101,
+        "text": "CHECK (result IN ('success', 'failure')",
+        "values": ["success", "failure"]
+      }
+    ]
+  },
+  {
+    "key": "raw_payload.resource_type",
+    "table": "raw_payload",
+    "field": "resource_type",
+    "values": ["product", "order", "inventory", "category"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 8,
+        "text": "CHECK (resource_type IN ('product', 'order', 'inventory', 'category')",
+        "values": ["product", "order", "inventory", "category"]
+      }
+    ]
+  },
+  {
+    "key": "schema_baseline.status",
+    "table": "schema_baseline",
+    "field": "status",
+    "values": ["active", "superseded"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 96,
+        "text": "CHECK (status IN ('active', 'superseded')",
+        "values": ["active", "superseded"]
+      }
+    ]
+  },
+  {
+    "key": "schema_drift_event.kind",
+    "table": "schema_drift_event",
+    "field": "kind",
+    "values": ["field_added", "field_removed", "type_changed"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 108,
+        "text": "CHECK (kind IN ('field_added', 'field_removed', 'type_changed')",
+        "values": ["field_added", "field_removed", "type_changed"]
+      }
+    ]
+  },
+  {
+    "key": "schema_drift_event.severity",
+    "table": "schema_drift_event",
+    "field": "severity",
+    "values": ["info", "warning", "critical"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 112,
+        "text": "CHECK (severity IN ('info', 'warning', 'critical')",
+        "values": ["info", "warning", "critical"]
+      }
+    ]
+  },
+  {
+    "key": "schema_drift_event.status",
+    "table": "schema_drift_event",
+    "field": "status",
+    "values": ["open", "acked", "resolved", "ignored"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 114,
+        "text": "CHECK (status IN ('open', 'acked', 'resolved', 'ignored')",
+        "values": ["open", "acked", "resolved", "ignored"]
+      }
+    ]
+  },
+  {
+    "key": "mapping_profile.status",
+    "table": "mapping_profile",
+    "field": "status",
+    "values": ["active", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 129,
+        "text": "CHECK (status IN ('active', 'disabled')",
+        "values": ["active", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "mapping_version.status",
+    "table": "mapping_version",
+    "field": "status",
+    "values": ["draft", "published", "archived"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 141,
+        "text": "CHECK (status IN ('draft', 'published', 'archived')",
+        "values": ["draft", "published", "archived"]
+      }
+    ]
+  },
+  {
+    "key": "quarantine_record.reason_code",
+    "table": "quarantine_record",
+    "field": "reason_code",
+    "values": [
+      "missing_required",
+      "type_mismatch",
+      "invalid_value",
+      "mapping_error",
+      "source_metadata_unknown",
+      "source_identity_ambiguous"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 162,
+        "text": "CHECK (reason_code IN ('missing_required', 'type_mismatch', 'invalid_value', 'mapping_error')",
+        "values": [
+          "missing_required",
+          "type_mismatch",
+          "invalid_value",
+          "mapping_error"
+        ]
+      },
+      {
+        "side": "back",
+        "path": "migrations/000008_replay_members.up.sql",
+        "line": 7,
+        "text": "CHECK\r\n    (reason_code IN ('missing_required','type_mismatch','invalid_value','mapping_error','source_metadata_unknown','source_identity_ambiguous')",
+        "values": [
+          "missing_required",
+          "type_mismatch",
+          "invalid_value",
+          "mapping_error",
+          "source_metadata_unknown",
+          "source_identity_ambiguous"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "quarantine_record.status",
+    "table": "quarantine_record",
+    "field": "status",
+    "values": ["pending", "replayed", "discarded"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 164,
+        "text": "CHECK (status IN ('pending', 'replayed', 'discarded')",
+        "values": ["pending", "replayed", "discarded"]
+      }
+    ]
+  },
+  {
+    "key": "listing.status",
+    "table": "listing",
+    "field": "status",
+    "values": ["online", "offline", "deleted"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000005_ingestion_init.up.sql",
+        "line": 182,
+        "text": "CHECK (status IN ('online', 'offline', 'deleted')",
+        "values": ["online", "offline", "deleted"]
+      }
+    ]
+  },
+  {
+    "key": "sync_cursor.cursor_type",
+    "table": "sync_cursor",
+    "field": "cursor_type",
+    "values": ["timestamp", "page_token", "id_watermark"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000006_sync_init.up.sql",
+        "line": 20,
+        "text": "CHECK (cursor_type IN ('timestamp', 'page_token', 'id_watermark')",
+        "values": ["timestamp", "page_token", "id_watermark"]
+      }
+    ]
+  },
+  {
+    "key": "sync_run.trigger",
+    "table": "sync_run",
+    "field": "trigger",
+    "values": ["cron", "manual", "webhook", "retry"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000006_sync_init.up.sql",
+        "line": 32,
+        "text": "CHECK (trigger IN ('cron', 'manual', 'webhook', 'retry')",
+        "values": ["cron", "manual", "webhook", "retry"]
+      }
+    ]
+  },
+  {
+    "key": "sync_run.status",
+    "table": "sync_run",
+    "field": "status",
+    "values": ["running", "success", "partial", "failed", "cancelled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000006_sync_init.up.sql",
+        "line": 33,
+        "text": "CHECK (status IN ('running', 'success', 'partial', 'failed', 'cancelled')",
+        "values": ["running", "success", "partial", "failed", "cancelled"]
+      }
+    ]
+  },
+  {
+    "key": "sync_error.stage",
+    "table": "sync_error",
+    "field": "stage",
+    "values": ["fetch", "map", "validate", "persist"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000006_sync_init.up.sql",
+        "line": 48,
+        "text": "CHECK (stage IN ('fetch', 'map', 'validate', 'persist')",
+        "values": ["fetch", "map", "validate", "persist"]
+      }
+    ]
+  },
+  {
+    "key": "dead_letter.status",
+    "table": "dead_letter",
+    "field": "status",
+    "values": ["pending", "replayed", "discarded"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000006_sync_init.up.sql",
+        "line": 66,
+        "text": "CHECK (status IN ('pending', 'replayed', 'discarded')",
+        "values": ["pending", "replayed", "discarded"]
+      }
+    ]
+  },
+  {
+    "key": "replay_run.status",
+    "table": "replay_run",
+    "field": "status",
+    "values": ["running", "success", "partial", "failed", "cancelled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000006_sync_init.up.sql",
+        "line": 82,
+        "text": "CHECK (status IN ('running', 'success', 'partial', 'failed')",
+        "values": ["running", "success", "partial", "failed"]
+      },
+      {
+        "side": "back",
+        "path": "migrations/000008_replay_members.up.sql",
+        "line": 39,
+        "text": "CHECK (status IN ('running','success','partial','failed','cancelled')",
+        "values": ["running", "success", "partial", "failed", "cancelled"]
+      }
+    ]
+  },
+  {
+    "key": "category.status",
+    "table": "category",
+    "field": "status",
+    "values": ["active", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000007_catalog_init.up.sql",
+        "line": 15,
+        "text": "CHECK (status IN ('active', 'disabled')",
+        "values": ["active", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "category_mapping.source",
+    "table": "category_mapping",
+    "field": "source",
+    "values": ["manual", "rule", "default"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000007_catalog_init.up.sql",
+        "line": 41,
+        "text": "CHECK (source IN ('manual', 'rule', 'default')",
+        "values": ["manual", "rule", "default"]
+      }
+    ]
+  },
+  {
+    "key": "product_spu.status",
+    "table": "product_spu",
+    "field": "status",
+    "values": ["draft", "active", "archived"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000007_catalog_init.up.sql",
+        "line": 57,
+        "text": "CHECK (status IN ('draft', 'active', 'archived')",
+        "values": ["draft", "active", "archived"]
+      }
+    ]
+  },
+  {
+    "key": "product_spu.source",
+    "table": "product_spu",
+    "field": "source",
+    "values": ["platform", "manual"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000007_catalog_init.up.sql",
+        "line": 58,
+        "text": "CHECK (source IN ('platform', 'manual')",
+        "values": ["platform", "manual"]
+      }
+    ]
+  },
+  {
+    "key": "product_media.type",
+    "table": "product_media",
+    "field": "type",
+    "values": ["image", "video", "detail"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000007_catalog_init.up.sql",
+        "line": 98,
+        "text": "CHECK (type IN ('image', 'video', 'detail')",
+        "values": ["image", "video", "detail"]
+      }
+    ]
+  },
+  {
+    "key": "export_job.kind",
+    "table": "export_job",
+    "field": "kind",
+    "values": ["products", "orders"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000007_catalog_init.up.sql",
+        "line": 119,
+        "text": "CHECK (kind IN ('products', 'orders')",
+        "values": ["products", "orders"]
+      }
+    ]
+  },
+  {
+    "key": "export_job.status",
+    "table": "export_job",
+    "field": "status",
+    "values": ["pending", "running", "succeeded", "failed", "expired"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000007_catalog_init.up.sql",
+        "line": 120,
+        "text": "CHECK (status IN ('pending', 'running', 'succeeded', 'failed', 'expired')",
+        "values": ["pending", "running", "succeeded", "failed", "expired"]
+      }
+    ]
+  },
+  {
+    "key": "replay_run_item.outcome",
+    "table": "replay_run_item",
+    "field": "outcome",
+    "values": [
+      "inserted",
+      "updated",
+      "skipped_stale",
+      "skipped_same",
+      "quarantined",
+      "failed"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000008_replay_members.up.sql",
+        "line": 27,
+        "text": "CHECK (outcome IN ('inserted','updated','skipped_stale','skipped_same','quarantined','failed')",
+        "values": [
+          "inserted",
+          "updated",
+          "skipped_stale",
+          "skipped_same",
+          "quarantined",
+          "failed"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "sales_order.lifecycle_status",
+    "table": "sales_order",
+    "field": "lifecycle_status",
+    "values": [
+      "unknown",
+      "pending_payment",
+      "paid",
+      "shipped",
+      "completed",
+      "cancelled"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 11,
+        "text": "CHECK (lifecycle_status IN ('unknown','pending_payment','paid','shipped','completed','cancelled')",
+        "values": [
+          "unknown",
+          "pending_payment",
+          "paid",
+          "shipped",
+          "completed",
+          "cancelled"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "sales_order.fulfillment_status",
+    "table": "sales_order",
+    "field": "fulfillment_status",
+    "values": ["unknown", "unshipped", "shipped", "delivered"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 12,
+        "text": "CHECK (fulfillment_status IN ('unknown','unshipped','shipped','delivered')",
+        "values": ["unknown", "unshipped", "shipped", "delivered"]
+      }
+    ]
+  },
+  {
+    "key": "sales_order.payment_status",
+    "table": "sales_order",
+    "field": "payment_status",
+    "values": ["unknown", "unpaid", "paid", "partial_refund", "refunded"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 13,
+        "text": "CHECK (payment_status IN ('unknown','unpaid','paid','partial_refund','refunded')",
+        "values": ["unknown", "unpaid", "paid", "partial_refund", "refunded"]
+      }
+    ]
+  },
+  {
+    "key": "sales_order.after_sales_status",
+    "table": "sales_order",
+    "field": "after_sales_status",
+    "values": ["unknown", "none", "refunding", "partial_refunded", "refunded"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 14,
+        "text": "CHECK (after_sales_status IN ('unknown','none','refunding','partial_refunded','refunded')",
+        "values": [
+          "unknown",
+          "none",
+          "refunding",
+          "partial_refunded",
+          "refunded"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "sales_order.cancel_status",
+    "table": "sales_order",
+    "field": "cancel_status",
+    "values": ["unknown", "none", "requested", "rejected", "cancelled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 15,
+        "text": "CHECK (cancel_status IN ('unknown','none','requested','rejected','cancelled')",
+        "values": ["unknown", "none", "requested", "rejected", "cancelled"]
+      }
+    ]
+  },
+  {
+    "key": "order_item.allocation_source",
+    "table": "order_item",
+    "field": "allocation_source",
+    "values": ["platform", "largest_remainder_v1", "unknown"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 63,
+        "text": "CHECK (allocation_source IN ('platform','largest_remainder_v1','unknown')",
+        "values": ["platform", "largest_remainder_v1", "unknown"]
+      }
+    ]
+  },
+  {
+    "key": "order_item.refund_status",
+    "table": "order_item",
+    "field": "refund_status",
+    "values": ["unknown", "none", "refunding", "partial_refunded", "refunded"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 65,
+        "text": "CHECK (refund_status IN ('unknown','none','refunding','partial_refunded','refunded')",
+        "values": [
+          "unknown",
+          "none",
+          "refunding",
+          "partial_refunded",
+          "refunded"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "order_status_history.dimension",
+    "table": "order_status_history",
+    "field": "dimension",
+    "values": [
+      "lifecycle",
+      "fulfillment",
+      "payment",
+      "after_sales",
+      "cancel",
+      "aggregate",
+      "visibility"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 98,
+        "text": "CHECK (dimension IN ('lifecycle','fulfillment','payment','after_sales','cancel','aggregate')",
+        "values": [
+          "lifecycle",
+          "fulfillment",
+          "payment",
+          "after_sales",
+          "cancel",
+          "aggregate"
+        ]
+      },
+      {
+        "side": "back",
+        "path": "migrations/000011_order_vanished.up.sql",
+        "line": 7,
+        "text": "CHECK (dimension IN ('lifecycle','fulfillment','payment','after_sales','cancel','aggregate','visibility')",
+        "values": [
+          "lifecycle",
+          "fulfillment",
+          "payment",
+          "after_sales",
+          "cancel",
+          "aggregate",
+          "visibility"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "order_status_history.event_kind",
+    "table": "order_status_history",
+    "field": "event_kind",
+    "values": ["snapshot", "command", "correction", "conflict"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 101,
+        "text": "CHECK (event_kind IN ('snapshot','command','correction','conflict')",
+        "values": ["snapshot", "command", "correction", "conflict"]
+      }
+    ]
+  },
+  {
+    "key": "order_sync_pending.status",
+    "table": "order_sync_pending",
+    "field": "status",
+    "values": ["pending", "processing", "done", "failed"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000010_order_init.up.sql",
+        "line": 129,
+        "text": "CHECK (status IN ('pending','processing','done','failed')",
+        "values": ["pending", "processing", "done", "failed"]
+      }
+    ]
+  },
+  {
+    "key": "customer.status",
+    "table": "customer",
+    "field": "status",
+    "values": ["active", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000013_share_init.up.sql",
+        "line": 16,
+        "text": "CHECK (status IN ('active','disabled')",
+        "values": ["active", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "customer.level",
+    "table": "customer",
+    "field": "level",
+    "values": ["", "A", "B", "C"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000013_share_init.up.sql",
+        "line": 19,
+        "text": "CHECK (level IN ('','A','B','C')",
+        "values": ["", "A", "B", "C"]
+      }
+    ]
+  },
+  {
+    "key": "price_list.type",
+    "table": "price_list",
+    "field": "type",
+    "values": ["customer", "default"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000013_share_init.up.sql",
+        "line": 35,
+        "text": "CHECK (type IN ('customer','default')",
+        "values": ["customer", "default"]
+      }
+    ]
+  },
+  {
+    "key": "price_list.status",
+    "table": "price_list",
+    "field": "status",
+    "values": ["draft", "active", "expired", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000013_share_init.up.sql",
+        "line": 39,
+        "text": "CHECK (status IN ('draft','active','expired','disabled')",
+        "values": ["draft", "active", "expired", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "share_link.type",
+    "table": "share_link",
+    "field": "type",
+    "values": ["products", "price_list"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000013_share_init.up.sql",
+        "line": 81,
+        "text": "CHECK (type IN ('products','price_list')",
+        "values": ["products", "price_list"]
+      }
+    ]
+  },
+  {
+    "key": "share_link.mode",
+    "table": "share_link",
+    "field": "mode",
+    "values": ["snapshot", "live"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000013_share_init.up.sql",
+        "line": 82,
+        "text": "CHECK (mode IN ('snapshot','live')",
+        "values": ["snapshot", "live"]
+      }
+    ]
+  },
+  {
+    "key": "share_link.status",
+    "table": "share_link",
+    "field": "status",
+    "values": ["active", "revoked", "expired"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000013_share_init.up.sql",
+        "line": 91,
+        "text": "CHECK (status IN ('active','revoked','expired')",
+        "values": ["active", "revoked", "expired"]
+      }
+    ]
+  },
+  {
+    "key": "inquiry.status",
+    "table": "inquiry",
+    "field": "status",
+    "values": ["new", "contacted", "quoted", "won", "lost"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000013_share_init.up.sql",
+        "line": 136,
+        "text": "CHECK (status IN ('new','contacted','quoted','won','lost')",
+        "values": ["new", "contacted", "quoted", "won", "lost"]
+      }
+    ]
+  },
+  {
+    "key": "credential_refresh_run.phase",
+    "table": "credential_refresh_run",
+    "field": "phase",
+    "values": ["intent", "sending", "consumed", "published", "unknown"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000015_credential_refresh.up.sql",
+        "line": 19,
+        "text": "CHECK (phase IN ('intent','sending','consumed','published','unknown')",
+        "values": ["intent", "sending", "consumed", "published", "unknown"]
+      }
+    ]
+  },
+  {
+    "key": "credential_refresh_run.status",
+    "table": "credential_refresh_run",
+    "field": "status",
+    "values": ["running", "success", "failed", "skipped"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000015_credential_refresh.up.sql",
+        "line": 20,
+        "text": "CHECK (status IN ('running','success','failed','skipped')",
+        "values": ["running", "success", "failed", "skipped"]
+      }
+    ]
+  },
+  {
+    "key": "credential_refresh_run.failure_class",
+    "table": "credential_refresh_run",
+    "field": "failure_class",
+    "values": ["", "temporary", "invalid", "unknown"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000015_credential_refresh.up.sql",
+        "line": 21,
+        "text": "CHECK (failure_class IN ('','temporary','invalid','unknown')",
+        "values": ["", "temporary", "invalid", "unknown"]
+      }
+    ]
+  },
+  {
+    "key": "credential_refresh_run.reason",
+    "table": "credential_refresh_run",
+    "field": "reason",
+    "values": [
+      "",
+      "temporary",
+      "invalid",
+      "ambiguous",
+      "sending_lost",
+      "stage_failed",
+      "stage_expired",
+      "superseded"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000015_credential_refresh.up.sql",
+        "line": 22,
+        "text": "CHECK (reason IN ('','temporary','invalid','ambiguous','sending_lost','stage_failed','stage_expired','superseded')",
+        "values": [
+          "",
+          "temporary",
+          "invalid",
+          "ambiguous",
+          "sending_lost",
+          "stage_failed",
+          "stage_expired",
+          "superseded"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "credential_refresh_run.trigger",
+    "table": "credential_refresh_run",
+    "field": "trigger",
+    "values": ["manual", "schedule", "on_demand"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000015_credential_refresh.up.sql",
+        "line": 24,
+        "text": "CHECK (trigger IN ('manual','schedule','on_demand')",
+        "values": ["manual", "schedule", "on_demand"]
+      }
+    ]
+  },
+  {
+    "key": "credential_refresh_reconciliation.reason",
+    "table": "credential_refresh_reconciliation",
+    "field": "reason",
+    "values": [
+      "ambiguous",
+      "sending_lost",
+      "stage_failed",
+      "stage_expired",
+      "superseded"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000015_credential_refresh.up.sql",
+        "line": 81,
+        "text": "CHECK (reason IN ('ambiguous','sending_lost','stage_failed','stage_expired','superseded')",
+        "values": [
+          "ambiguous",
+          "sending_lost",
+          "stage_failed",
+          "stage_expired",
+          "superseded"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "sync_job.block_reason",
+    "table": "sync_job",
+    "field": "block_reason",
+    "values": ["", "credential_blocked", "admin_disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000016_credential_refresh_wiring.up.sql",
+        "line": 30,
+        "text": "CHECK (block_reason IN ('','credential_blocked','admin_disabled')",
+        "values": ["", "credential_blocked", "admin_disabled"]
+      }
+    ]
+  },
+  {
+    "key": "api_client.status",
+    "table": "api_client",
+    "field": "status",
+    "values": ["active", "suspended"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000017_gateway_init.up.sql",
+        "line": 9,
+        "text": "CHECK (status IN ('active','suspended')",
+        "values": ["active", "suspended"]
+      }
+    ]
+  },
+  {
+    "key": "api_client_secret.status",
+    "table": "api_client_secret",
+    "field": "status",
+    "values": ["active", "expired", "revoked"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000017_gateway_init.up.sql",
+        "line": 29,
+        "text": "CHECK (status IN ('active','expired','revoked')",
+        "values": ["active", "expired", "revoked"]
+      }
+    ]
+  },
+  {
+    "key": "api_route.method",
+    "table": "api_route",
+    "field": "method",
+    "values": ["GET", "HEAD"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000017_gateway_init.up.sql",
+        "line": 43,
+        "text": "CHECK (method IN ('GET','HEAD')",
+        "values": ["GET", "HEAD"]
+      }
+    ]
+  },
+  {
+    "key": "api_route.visibility",
+    "table": "api_route",
+    "field": "visibility",
+    "values": ["private", "public"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000017_gateway_init.up.sql",
+        "line": 46,
+        "text": "CHECK (visibility IN ('private','public')",
+        "values": ["private", "public"]
+      }
+    ]
+  },
+  {
+    "key": "api_route.status",
+    "table": "api_route",
+    "field": "status",
+    "values": ["enabled", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000017_gateway_init.up.sql",
+        "line": 47,
+        "text": "CHECK (status IN ('enabled','disabled')",
+        "values": ["enabled", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "api_route.billing_mode",
+    "table": "api_route",
+    "field": "billing_mode",
+    "values": ["free", "per_call", "package"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000017_gateway_init.up.sql",
+        "line": 48,
+        "text": "CHECK (billing_mode IN ('free','per_call','package')",
+        "values": ["free", "per_call", "package"]
+      }
+    ]
+  },
+  {
+    "key": "api_client_route.status",
+    "table": "api_client_route",
+    "field": "status",
+    "values": ["active", "suspended"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000017_gateway_init.up.sql",
+        "line": 63,
+        "text": "CHECK (status IN ('active','suspended')",
+        "values": ["active", "suspended"]
+      }
+    ]
+  },
+  {
+    "key": "api_client_resource_grant.status",
+    "table": "api_client_resource_grant",
+    "field": "status",
+    "values": ["active", "suspended"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000017_gateway_init.up.sql",
+        "line": 83,
+        "text": "CHECK (status IN ('active','suspended')",
+        "values": ["active", "suspended"]
+      }
+    ]
+  },
+  {
+    "key": "api_call.state",
+    "table": "api_call",
+    "field": "state",
+    "values": ["processing", "succeeded", "failed"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000018_gateway_metering.up.sql",
+        "line": 16,
+        "text": "CHECK (state IN ('processing','succeeded','failed')",
+        "values": ["processing", "succeeded", "failed"]
+      }
+    ]
+  },
+  {
+    "key": "api_call_log.state",
+    "table": "api_call_log",
+    "field": "state",
+    "values": ["processing", "succeeded", "failed"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000018_gateway_metering.up.sql",
+        "line": 54,
+        "text": "CHECK (state IN ('processing','succeeded','failed')",
+        "values": ["processing", "succeeded", "failed"]
+      }
+    ]
+  },
+  {
+    "key": "wallet.status",
+    "table": "wallet",
+    "field": "status",
+    "values": ["active", "frozen"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000019_billing_wallet.up.sql",
+        "line": 11,
+        "text": "CHECK (status IN ('active','frozen')",
+        "values": ["active", "frozen"]
+      }
+    ]
+  },
+  {
+    "key": "wallet_txn.type",
+    "table": "wallet_txn",
+    "field": "type",
+    "values": ["topup", "freeze", "settle", "release", "adjust", "refund"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000019_billing_wallet.up.sql",
+        "line": 22,
+        "text": "CHECK (type IN ('topup','freeze','settle','release','adjust','refund')",
+        "values": ["topup", "freeze", "settle", "release", "adjust", "refund"]
+      }
+    ]
+  },
+  {
+    "key": "call_charge.state",
+    "table": "call_charge",
+    "field": "state",
+    "values": ["reserved", "settled", "released", "expired"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000019_billing_wallet.up.sql",
+        "line": 63,
+        "text": "CHECK (state IN ('reserved','settled','released','expired')",
+        "values": ["reserved", "settled", "released", "expired"]
+      }
+    ]
+  },
+  {
+    "key": "recharge_code.status",
+    "table": "recharge_code",
+    "field": "status",
+    "values": ["unused", "used", "void"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000019_billing_wallet.up.sql",
+        "line": 80,
+        "text": "CHECK (status IN ('unused','used','void')",
+        "values": ["unused", "used", "void"]
+      }
+    ]
+  },
+  {
+    "key": "pricing_plan.quota_type",
+    "table": "pricing_plan",
+    "field": "quota_type",
+    "values": ["calls", "units"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 10,
+        "text": "CHECK (quota_type IN ('calls','units')",
+        "values": ["calls", "units"]
+      }
+    ]
+  },
+  {
+    "key": "pricing_plan.status",
+    "table": "pricing_plan",
+    "field": "status",
+    "values": ["active", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 14,
+        "text": "CHECK (status IN ('active','disabled')",
+        "values": ["active", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "entitlement.kind",
+    "table": "entitlement",
+    "field": "kind",
+    "values": ["free", "paid"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 23,
+        "text": "CHECK (kind IN ('free','paid')",
+        "values": ["free", "paid"]
+      }
+    ]
+  },
+  {
+    "key": "entitlement.quota_type",
+    "table": "entitlement",
+    "field": "quota_type",
+    "values": ["calls", "units"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 24,
+        "text": "CHECK (quota_type IN ('calls','units')",
+        "values": ["calls", "units"]
+      }
+    ]
+  },
+  {
+    "key": "entitlement.source",
+    "table": "entitlement",
+    "field": "source",
+    "values": ["purchase", "gift"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 31,
+        "text": "CHECK (source IN ('purchase','gift')",
+        "values": ["purchase", "gift"]
+      }
+    ]
+  },
+  {
+    "key": "entitlement.status",
+    "table": "entitlement",
+    "field": "status",
+    "values": ["active", "expired", "exhausted"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 36,
+        "text": "CHECK (status IN ('active','expired','exhausted')",
+        "values": ["active", "expired", "exhausted"]
+      }
+    ]
+  },
+  {
+    "key": "unit_txn.type",
+    "table": "unit_txn",
+    "field": "type",
+    "values": ["grant", "reserve", "release", "consume", "expire", "refund"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 55,
+        "text": "CHECK (type IN ('grant','reserve','release','consume','expire','refund')",
+        "values": ["grant", "reserve", "release", "consume", "expire", "refund"]
+      }
+    ]
+  },
+  {
+    "key": "call_charge.source",
+    "table": "call_charge",
+    "field": "source",
+    "values": ["pending", "wallet", "free", "paid"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 75,
+        "text": "CHECK (source IN ('pending','wallet','free','paid')",
+        "values": ["pending", "wallet", "free", "paid"]
+      },
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 81,
+        "text": "CHECK (source IN ('pending','wallet')",
+        "values": ["pending", "wallet"]
+      }
+    ]
+  },
+  {
+    "key": "wallet_txn.biz_type",
+    "table": "wallet_txn",
+    "field": "biz_type",
+    "values": ["api_call", "funding", "subscription", "compensation"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 82,
+        "text": "CHECK (biz_type IN ('api_call','funding','subscription','compensation')",
+        "values": ["api_call", "funding", "subscription", "compensation"]
+      }
+    ]
+  },
+  {
+    "key": "billing_reconcile_run.trigger",
+    "table": "billing_reconcile_run",
+    "field": "trigger",
+    "values": ["daily", "manual", "compensation"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 105,
+        "text": "CHECK (trigger IN ('daily','manual','compensation')",
+        "values": ["daily", "manual", "compensation"]
+      }
+    ]
+  },
+  {
+    "key": "billing_reconcile_run.status",
+    "table": "billing_reconcile_run",
+    "field": "status",
+    "values": ["running", "completed"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 107,
+        "text": "CHECK (status IN ('running','completed')",
+        "values": ["running", "completed"]
+      }
+    ]
+  },
+  {
+    "key": "billing_reconcile_diff.status",
+    "table": "billing_reconcile_diff",
+    "field": "status",
+    "values": ["open", "resolved"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000020_billing_entitlement.up.sql",
+        "line": 145,
+        "text": "CHECK (status IN ('open','resolved')",
+        "values": ["open", "resolved"]
+      }
+    ]
+  },
+  {
+    "key": "billing_statement.status",
+    "table": "billing_statement",
+    "field": "status",
+    "values": ["draft", "issued"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000022_billing_statement.up.sql",
+        "line": 7,
+        "text": "CHECK(status IN ('draft','issued')",
+        "values": ["draft", "issued"]
+      }
+    ]
+  },
+  {
+    "key": "billing_statement_line.kind",
+    "table": "billing_statement_line",
+    "field": "kind",
+    "values": [
+      "call_cash",
+      "call_units",
+      "late_call_cash",
+      "late_call_units",
+      "subscription",
+      "late_subscription",
+      "refund",
+      "supplement"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000022_billing_statement.up.sql",
+        "line": 18,
+        "text": "CHECK(kind IN ('call_cash','call_units','late_call_cash','late_call_units','subscription','late_subscription','refund','supplement')",
+        "values": [
+          "call_cash",
+          "call_units",
+          "late_call_cash",
+          "late_call_units",
+          "subscription",
+          "late_subscription",
+          "refund",
+          "supplement"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "billing_adjustment.kind",
+    "table": "billing_adjustment",
+    "field": "kind",
+    "values": ["refund", "supplement"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000022_billing_statement.up.sql",
+        "line": 30,
+        "text": "CHECK(kind IN ('refund','supplement')",
+        "values": ["refund", "supplement"]
+      }
+    ]
+  },
+  {
+    "key": "billing_adjustment.status",
+    "table": "billing_adjustment",
+    "field": "status",
+    "values": ["open", "applied"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000022_billing_statement.up.sql",
+        "line": 34,
+        "text": "CHECK(status IN ('open','applied')",
+        "values": ["open", "applied"]
+      }
+    ]
+  },
+  {
+    "key": "channel_provider.channel",
+    "table": "channel_provider",
+    "field": "channel",
+    "values": ["email", "sms", "wecom", "dingtalk", "webhook"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000023_notification_channels.up.sql",
+        "line": 5,
+        "text": "CHECK(channel IN ('email','sms','wecom','dingtalk','webhook')",
+        "values": ["email", "sms", "wecom", "dingtalk", "webhook"]
+      }
+    ]
+  },
+  {
+    "key": "notify_template.format",
+    "table": "notify_template",
+    "field": "format",
+    "values": ["text", "html"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000023_notification_channels.up.sql",
+        "line": 18,
+        "text": "CHECK(format IN ('text','html')",
+        "values": ["text", "html"]
+      }
+    ]
+  },
+  {
+    "key": "notify_delivery.channel",
+    "table": "notify_delivery",
+    "field": "channel",
+    "values": ["email", "sms", "wecom", "dingtalk", "webhook"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000023_notification_channels.up.sql",
+        "line": 24,
+        "text": "CHECK(channel IN ('email','sms','wecom','dingtalk','webhook')",
+        "values": ["email", "sms", "wecom", "dingtalk", "webhook"]
+      }
+    ]
+  },
+  {
+    "key": "notify_delivery.status",
+    "table": "notify_delivery",
+    "field": "status",
+    "values": ["pending", "sent", "failed", "skipped"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000023_notification_channels.up.sql",
+        "line": 26,
+        "text": "CHECK(status IN ('pending','sent','failed','skipped')",
+        "values": ["pending", "sent", "failed", "skipped"]
+      }
+    ]
+  },
+  {
+    "key": "notify_outbox.status",
+    "table": "notify_outbox",
+    "field": "status",
+    "values": [
+      "pending",
+      "processing",
+      "channel_unavailable",
+      "sent",
+      "failed"
+    ],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000023_notification_channels.up.sql",
+        "line": 34,
+        "text": "CHECK(status IN ('pending','processing','channel_unavailable','sent','failed')",
+        "values": [
+          "pending",
+          "processing",
+          "channel_unavailable",
+          "sent",
+          "failed"
+        ]
+      }
+    ]
+  },
+  {
+    "key": "auth_token.purpose",
+    "table": "auth_token",
+    "field": "purpose",
+    "values": ["invite", "reset", "verify"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000024_account_lifecycle.up.sql",
+        "line": 24,
+        "text": "CHECK(purpose IN ('invite','reset','verify')",
+        "values": ["invite", "reset", "verify"]
+      }
+    ]
+  },
+  {
+    "key": "sys_dict.status",
+    "table": "sys_dict",
+    "field": "status",
+    "values": ["active", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000025_system_dict.up.sql",
+        "line": 7,
+        "text": "CHECK (status IN ('active','disabled')",
+        "values": ["active", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "sys_dict_item.status",
+    "table": "sys_dict_item",
+    "field": "status",
+    "values": ["active", "disabled"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000025_system_dict.up.sql",
+        "line": 21,
+        "text": "CHECK (status IN ('active','disabled')",
+        "values": ["active", "disabled"]
+      }
+    ]
+  },
+  {
+    "key": "notification_preference.channel",
+    "table": "notification_preference",
+    "field": "channel",
+    "values": ["email", "sms", "wecom", "dingtalk", "webhook"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000027_notification_preference.up.sql",
+        "line": 7,
+        "text": "CHECK(channel IN ('email','sms','wecom','dingtalk','webhook')",
+        "values": ["email", "sms", "wecom", "dingtalk", "webhook"]
+      }
+    ]
+  },
+  {
+    "key": "sys_dict.scope",
+    "table": "sys_dict",
+    "field": "scope",
+    "values": ["system", "business"],
+    "definitions": [
+      {
+        "side": "back",
+        "path": "migrations/000028_system_dict_scope.up.sql",
+        "line": 3,
+        "text": "CHECK (scope IN ('system','business')",
+        "values": ["system", "business"]
+      }
+    ]
+  }
+]

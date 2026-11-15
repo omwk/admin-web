@@ -5,6 +5,9 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import LoginLogPage from '../index.vue';
 
 const api = vi.hoisted(() => ({ list: vi.fn(), allowed: true }));
+vi.mock('#/api/core/dictionaries', () => ({
+  getMetaDictionaryApi: async () => [],
+}));
 vi.mock('#/api/core/audit', () => ({ getLoginLogsApi: api.list }));
 vi.mock('#/auth/permission', () => ({ hasPermission: () => api.allowed }));
 vi.mock('@vben/common-ui', () => ({

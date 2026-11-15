@@ -3,16 +3,17 @@ import type { NotificationDelivery } from '#/api/model/notification';
 
 import { onMounted, ref } from 'vue';
 
-import { Alert, Button, Empty, message, Table, Tag } from 'ant-design-vue';
+import { Alert, Button, Empty, message, Table } from 'ant-design-vue';
 
 import {
   getNotificationDeliveriesApi,
   retryNotificationDeliveryApi,
 } from '#/api/core/notifications';
 import { notificationError } from '#/api/notification-safety';
+import DictTag from '#/components/dict-tag/index.vue';
 import { formatDateTime } from '#/utils/datetime';
 
-import { channelLabel, deliveryStatuses } from './options';
+import { channelLabel } from './options';
 import { useNotificationPage } from './use-notification-page';
 
 const { rows, loading, error, pagination, load, changePage } =
@@ -94,17 +95,7 @@ onMounted(() => load());
           </div>
         </template>
         <template v-else-if="column.dataIndex === 'status'">
-          <Tag
-            :color="
-              deliveryStatuses[record.status as NotificationDelivery['status']]
-                ?.color
-            "
-          >
-            {{
-              deliveryStatuses[record.status as NotificationDelivery['status']]
-                ?.label ?? record.status
-            }}
-          </Tag>
+          <DictTag type="delivery_status" :value="record.status" />
         </template>
         <template v-else-if="column.dataIndex === 'last_error'">
           <span class="break-all">{{ record.last_error || '—' }}</span>

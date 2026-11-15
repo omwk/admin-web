@@ -1,0 +1,389 @@
+﻿"ID","业务模块","字段或枚举","建议字典类型","码值及含义","使用位置","前端引用行数","后端引用行数","总引用行数","适用性","理由","保留代码枚举或校验","字典接口","兼容要求","优先级","证据文件"
+"D001","身份与组织","tenant.status","tenant_status","active=启用；suspended=暂停/停用","前端 / 后端","10","2","12","仅展示适合","租户列表仍把非active统一显示为停用；可统一标签，但停用会影响登录与授权。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/tenant_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/api/model/tenant.ts:7
+D:/code/admin-web/apps/admin/src/api/model/tenant.ts:19
+D:/code/admin-web/apps/admin/src/api/model/tenant.ts:51
+D:/code/go-admin-api/internal/modules/identity/tenant.go:131
+D:/code/go-admin-api/internal/modules/identity/tenant.go:133
+D:/code/go-admin-api/migrations/000001_kernel_init.up.sql:7"
+"D002","审计与日志","audit_log.actor_type","audit_actor_type","user=用户；system=系统；api_client=API应用","后端 / 前端","7","1","8","仅展示适合","审计操作者可统一显示为用户/系统/API应用；写审计的机器身份定义仍固定。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/audit_actor_type（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/admin-web/apps/admin/src/views/system/audit-log/index.vue:19
+D:/code/admin-web/apps/admin/src/views/system/audit-log/index.vue:42
+D:/code/admin-web/apps/admin/src/views/system/audit-log/index.vue:43
+D:/code/go-admin-api/internal/kernel/audit/audit.go:77
+D:/code/go-admin-api/migrations/000001_kernel_init.up.sql:31"
+"D003","审计与日志","audit_log.result","audit_result","success=成功；failure=失败","前端 / 后端","10","1","11","仅展示适合","前端筛选和两种日志标签重复，适合统一成功/失败文案。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/audit_result（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/views/system/shared/log-filters.ts:13
+D:/code/admin-web/apps/admin/src/views/system/shared/log-filters.vue:10
+D:/code/admin-web/apps/admin/src/views/system/shared/log-filters.vue:88
+D:/code/go-admin-api/internal/kernel/audit/audit.go:80
+D:/code/go-admin-api/migrations/000001_kernel_init.up.sql:41"
+"D004","基础设施（排除）","outbox_event.status","","pending=等待中；processing=处理中；sent=已发送；failed=失败","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000001_kernel_init.up.sql:63"
+"D005","基础设施（排除）","idempotency_key.status","","processing=处理中；completed=已完成","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000001_kernel_init.up.sql:79"
+"D006","通知","notification.channel","notification_inbox_channel","inbox=站内信；email=邮件；webhook=Webhook","前端 / 后端","1","2","3","仅展示适合","旧站内通知表有独立channel约束，不能简单与外发渠道全集合并。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/notification_inbox_channel（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/views/system/notification/index.vue:44
+D:/code/go-admin-api/internal/kernel/notifier/http.go:128
+D:/code/go-admin-api/internal/kernel/notifier/http.go:129
+D:/code/go-admin-api/migrations/000001_kernel_init.up.sql:88"
+"D007","通知","notification.status","notification_inbox_status","pending=等待中；sent=已发送；failed=失败","前端 / 后端","1","0","1","仅展示适合","旧通知表结果与新外发delivery状态不同，保留独立类型。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/notification_inbox_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/admin-web/apps/admin/src/api/model/notification.ts:21
+D:/code/go-admin-api/migrations/000001_kernel_init.up.sql:92"
+"D008","基础设施（排除）","file_object.purpose","","product_image=商品图片；export=导出文件；snapshot=快照文件","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000001_kernel_init.up.sql:110"
+"D009","身份与组织","sys_user.status","user_status","active=正常；disabled=停用；locked=锁定","前端 / 后端","28","4","32","仅展示适合","已有系统字典及前端接入；仍有颜色兜底与操作文案。账户锁定语义必须留在身份服务。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/user_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/api/model/admin-user.ts:1
+D:/code/admin-web/apps/admin/src/api/model/admin-user.ts:11
+D:/code/admin-web/apps/admin/src/api/model/admin-user.ts:21
+D:/code/go-admin-api/internal/modules/identity/admin_unlock.go:19
+D:/code/go-admin-api/internal/modules/identity/admin_unlock.go:22
+D:/code/go-admin-api/internal/modules/identity/admin_unlock.go:27
+D:/code/go-admin-api/migrations/000002_identity_init.up.sql:25"
+"D010","身份与组织","sys_role.data_scope","","all=全部；dept=本部门；dept_and_child=本部门及下级；self=仅本人；custom=自定义","前端 / 后端","14","1","15","排除","数据范围决定授权SQL，新增值必须实现scope策略；显示标签可由代码目录统一，不能由运营扩展。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/admin-web/apps/admin/src/api/model/system.ts:3
+D:/code/admin-web/apps/admin/src/api/model/system.ts:18
+D:/code/admin-web/apps/admin/src/views/system/role/index.vue:25
+D:/code/go-admin-api/internal/modules/identity/admin_roles.go:70
+D:/code/go-admin-api/migrations/000002_identity_init.up.sql:46"
+"D011","身份与组织","sys_permission.module","","system=系统；shop=店铺；product=商品；trade=交易；crm=客户管理；share=分享；sync=同步；gateway=开放网关；billing=计费","后端","0","13","13","排除","权限码module:resource:action首段契约，受数据库CHECK与权限注册器约束；不是可新增业务分类。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/internal/modules/identity/permission/registry.go:77
+D:/code/go-admin-api/internal/modules/identity/permission/registry.go:79
+D:/code/go-admin-api/internal/modules/identity/permission/registry.go:80
+D:/code/go-admin-api/migrations/000002_identity_init.up.sql:58"
+"D012","身份与组织","sys_permission.type","","api=API权限；button=按钮；data=数据权限","前端 / 后端","1","0","1","排除","API/按钮/数据权限是鉴权模型分类，不能由字典增删。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/admin-web/apps/admin/src/api/model/system.ts:32
+D:/code/go-admin-api/migrations/000002_identity_init.up.sql:59"
+"D013","身份与组织","sys_menu.type","","dir=目录；menu=菜单；button=按钮；link=外链","前端 / 后端","7","4","11","排除","目录/菜单/按钮/外链决定路由、安全校验和父子限制，属于框架契约；保留menuTypes与类型联合，标签可代码内归一。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/admin-web/apps/admin/src/views/system/menu/index.vue:28
+D:/code/admin-web/apps/admin/src/views/system/menu/index.vue:158
+D:/code/admin-web/apps/admin/src/views/system/menu/menu-form.vue:20
+D:/code/go-admin-api/internal/modules/identity/admin_menus.go:89
+D:/code/go-admin-api/internal/modules/identity/admin_menus.go:121
+D:/code/go-admin-api/internal/modules/identity/admin_menus.go:130
+D:/code/go-admin-api/migrations/000002_identity_init.up.sql:69"
+"D014","身份与组织","sys_menu.status","enable_status","active=启用；disabled=停用","前端 / 后端","5","0","5","仅展示适合","启停文案在菜单、角色、部门重复，建议共享两值展示字典；不可复用含locked的user_status。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/enable_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/views/system/menu/index.vue:168
+D:/code/admin-web/apps/admin/src/views/system/menu/index.vue:170
+D:/code/admin-web/apps/admin/src/views/system/menu/menu-form.vue:38
+D:/code/go-admin-api/migrations/000002_identity_init.up.sql:80"
+"D015","身份与组织","sys_refresh_token.revoked_reason","","rotated=轮换；logout=退出；kick=强制下线；replay=重放撤销；expired=已过期","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000002_identity_init.up.sql:142"
+"D016","店铺与凭据","platform.auth_type","","oauth2=OAuth2授权；api_key=API Key；cookie=Cookie；session=Session","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000004_shop_init.up.sql:7"
+"D017","店铺与凭据","platform.status","enable_status","active=启用；disabled=停用","后端","0","0","0","仅展示适合","平台是否可用可共用展示字典，连接器注册与可用性检查仍由代码执行。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/enable_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/migrations/000004_shop_init.up.sql:10"
+"D018","店铺与凭据","shop.status","shop_status","active=启用；paused=暂停；disabled=停用","后端","0","1","1","仅展示适合","店铺启用/暂停/停用是业务状态，有独立暂停语义，不能并入两值状态。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/shop_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/shop/service.go:298
+D:/code/go-admin-api/migrations/000004_shop_init.up.sql:25"
+"D019","店铺与凭据","shop_credential.kind","","oauth2=OAuth2授权；api_key=API Key；cookie=Cookie；session=Session","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000004_shop_init.up.sql:47"
+"D020","店铺与凭据","shop_credential.status","credential_status","active=启用；expiring=即将到期/已到期待刷新；refreshing=刷新中；needs_reauth=需重新授权；disabled=停用","后端","0","5","5","仅展示适合","运维状态适合统一标签；000015已删除expired并增加refreshing，必须使用现行集合。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/credential_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/shop/refresh/policy.go:86
+D:/code/go-admin-api/internal/modules/shop/refresh/policy.go:88
+D:/code/go-admin-api/internal/modules/shop/credential_writes.go:29
+D:/code/go-admin-api/migrations/000015_credential_refresh.up.sql:6"
+"D021","店铺与凭据","shop_credential.refresh_strategy","","auto=自动；manual=手工；none=无","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000004_shop_init.up.sql:55"
+"D022","店铺与凭据","credential_version.created_reason","credential_version_reason","initial=首次创建；refresh=刷新；manual=手工；migration=迁移","后端","0","1","1","仅展示适合","凭据版本来源是审计维度，可只统一显示。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/credential_version_reason（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/shop/refresh/result.go:100
+D:/code/go-admin-api/migrations/000004_shop_init.up.sql:79"
+"D023","审计与日志","credential_audit.action","credential_audit_action","create=创建；read=读取；check=检查；refresh=刷新；rotate=轮换；disable=停用；purge=清除","后端","0","2","2","仅展示适合","业务运维审计动作可翻译；新增动作仍必须由代码发出。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/credential_audit_action（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/shop/credential_use.go:54
+D:/code/go-admin-api/internal/modules/shop/service.go:101
+D:/code/go-admin-api/migrations/000004_shop_init.up.sql:98"
+"D024","审计与日志","credential_audit.actor_type","audit_actor_type","user=用户；system=系统；api_client=API应用","后端","0","0","0","仅展示适合","与通用审计共用显示，但不能因字典停用影响审计写入。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/audit_actor_type（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/migrations/000004_shop_init.up.sql:99"
+"D025","审计与日志","credential_audit.result","audit_result","success=成功；failure=失败","后端","0","2","2","仅展示适合","凭据审计与通用审计采用相同结果语义，可共用展示字典。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/audit_result（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/shop/credential_use.go:54
+D:/code/go-admin-api/internal/modules/shop/service.go:101
+D:/code/go-admin-api/migrations/000004_shop_init.up.sql:101"
+"D026","同步、映射与重放","raw_payload.resource_type","","product=商品；order=订单；inventory=库存；category=类目","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000005_ingestion_init.up.sql:8"
+"D027","同步、映射与重放","schema_baseline.status","schema_baseline_status","active=启用；superseded=已被替代","后端","0","8","8","仅展示适合","基线当前/被替代状态可统一显示，提升基线流程保留。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/schema_baseline_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/bootstrap/sync_drift.go:31
+D:/code/go-admin-api/internal/bootstrap/sync_drift.go:47
+D:/code/go-admin-api/internal/bootstrap/sync_drift.go:93
+D:/code/go-admin-api/migrations/000005_ingestion_init.up.sql:96"
+"D028","同步、映射与重放","schema_drift_event.kind","schema_drift_kind","field_added=新增字段；field_removed=删除字段；type_changed=类型变化","后端","0","3","3","仅展示适合","漂移种类面向运维，可统一文案；差异检测仍由算法生成。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/schema_drift_kind（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/ingestion/drift.go:11
+D:/code/go-admin-api/internal/modules/ingestion/drift.go:13
+D:/code/go-admin-api/internal/modules/ingestion/drift.go:20
+D:/code/go-admin-api/migrations/000005_ingestion_init.up.sql:108"
+"D029","同步、映射与重放","schema_drift_event.severity","business_alert_severity","info=提示；warning=警告；critical=严重","后端","0","3","3","仅展示适合","此处为业务漂移告警严重程度，区别于日志级别；标签可配置。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/business_alert_severity（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/ingestion/drift.go:11
+D:/code/go-admin-api/internal/modules/ingestion/drift.go:28
+D:/code/go-admin-api/internal/modules/ingestion/drift.go:31
+D:/code/go-admin-api/migrations/000005_ingestion_init.up.sql:112"
+"D030","同步、映射与重放","schema_drift_event.status","schema_drift_status","open=待处理；acked=已确认；resolved=已解决；ignored=已忽略","后端","0","3","3","仅展示适合","漂移确认/解决/忽略是固定工作流，统一显示与筛选。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/schema_drift_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/bootstrap/sync_drift_admin.go:35
+D:/code/go-admin-api/internal/bootstrap/sync_drift_admin.go:58
+D:/code/go-admin-api/internal/bootstrap/sync_drift_admin.go:65
+D:/code/go-admin-api/migrations/000005_ingestion_init.up.sql:114"
+"D031","同步、映射与重放","mapping_profile.status","enable_status","active=启用；disabled=停用","后端","0","2","2","仅展示适合","映射配置启停可共用两值展示字典，执行器校验保留。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/enable_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/bootstrap/mapping_publish.go:88
+D:/code/go-admin-api/internal/bootstrap/mapping_publish.go:126
+D:/code/go-admin-api/migrations/000005_ingestion_init.up.sql:129"
+"D032","同步、映射与重放","mapping_version.status","mapping_version_status","draft=草稿；published=已发布；archived=已归档","后端","0","2","2","仅展示适合","映射版本发布/归档影响可重放性，只迁移文案。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/mapping_version_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/bootstrap/mapping_publish.go:118
+D:/code/go-admin-api/internal/bootstrap/mapping_publish.go:119
+D:/code/go-admin-api/migrations/000005_ingestion_init.up.sql:141"
+"D033","同步、映射与重放","quarantine_record.reason_code","","missing_required=缺少必填字段；type_mismatch=类型不匹配；invalid_value=非法值；mapping_error=映射失败；source_metadata_unknown=来源元数据未知；source_identity_ambiguous=来源身份不明确","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000008_replay_members.up.sql:7"
+"D034","同步、映射与重放","quarantine_record.status","record_disposal_status","pending=等待中；replayed=已重放；discarded=已丢弃","后端","0","1","1","仅展示适合","隔离记录处理结果与死信可共享展示，不能任意扩展处理动作。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/record_disposal_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/bootstrap/sync_page.go:224
+D:/code/go-admin-api/migrations/000005_ingestion_init.up.sql:164"
+"D035","商品与类目","listing.status","listing_status","online=在售；offline=下架；deleted=已删除","前端 / 后端","1","4","5","仅展示适合","商品详情当前原样显示平台刊登状态，适合与SPU状态分开翻译。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/listing_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/views/catalog/product/detail.vue:46
+D:/code/go-admin-api/internal/modules/catalog/listing.go:119
+D:/code/go-admin-api/internal/modules/catalog/listing.go:121
+D:/code/go-admin-api/internal/modules/catalog/listing.go:176
+D:/code/go-admin-api/migrations/000005_ingestion_init.up.sql:182"
+"D036","同步、映射与重放","sync_cursor.cursor_type","","timestamp=时间戳；page_token=分页令牌；id_watermark=ID水位","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000006_sync_init.up.sql:20"
+"D037","同步、映射与重放","sync_run.trigger","sync_run_trigger","cron=定时调度；manual=手工；webhook=Webhook；retry=重试","后端","0","2","2","仅展示适合","同步触发来源面向运维，可统一文案；保留调度路径。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/sync_run_trigger（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/sync/management.go:25
+D:/code/go-admin-api/internal/worker/scheduler.go:91
+D:/code/go-admin-api/migrations/000006_sync_init.up.sql:32"
+"D038","同步、映射与重放","sync_run.status","sync_run_status_v2","running=运行中；success=成功；partial=部分成功；failed=失败；cancelled=已取消","后端","0","10","10","仅展示适合","现种子pending/running/succeeded/failed与真实running/success/partial/failed/cancelled不一致，先发布准确集合，再逐步替换旧类型。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/sync_run_status_v2（只用于文案/排序；选项与代码支持集合取交集）","不重命名业务数据success；新建只读v2展示字典，旧字典保留；不能把pending当作真实sync_run状态。","P0","D:/code/go-admin-api/internal/bootstrap/sync_engine.go:213
+D:/code/go-admin-api/internal/bootstrap/sync_page.go:107
+D:/code/go-admin-api/internal/bootstrap/sync_page.go:119
+D:/code/go-admin-api/migrations/000006_sync_init.up.sql:33"
+"D039","同步、映射与重放","sync_error.stage","sync_error_stage","fetch=抓取；map=映射；validate=校验；persist=入库","后端","0","0","0","仅展示适合","运行错误阶段便于检索和展示，实际阶段由执行管线决定。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/sync_error_stage（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/migrations/000006_sync_init.up.sql:48"
+"D040","同步、映射与重放","dead_letter.status","record_disposal_status","pending=等待中；replayed=已重放；discarded=已丢弃","后端","0","0","0","仅展示适合","与隔离记录具有相同处理结果显示语义。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/record_disposal_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/migrations/000006_sync_init.up.sql:66"
+"D041","同步、映射与重放","replay_run.status","replay_run_status","running=运行中；success=成功；partial=部分成功；failed=失败；cancelled=已取消","后端","0","5","5","仅展示适合","与同步运行码值相同但独立工作流，建议先分类型防止语义耦合。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/replay_run_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/bootstrap/replay_admin.go:144
+D:/code/go-admin-api/internal/bootstrap/replay_batch.go:98
+D:/code/go-admin-api/internal/bootstrap/replay_batch.go:100
+D:/code/go-admin-api/migrations/000008_replay_members.up.sql:39"
+"D042","商品与类目","category.status","enable_status","active=启用；disabled=停用","后端","0","2","2","仅展示适合","类目启停可共用显示；类目树本身仍是主数据。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/enable_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/bootstrap/catalog_category.go:107
+D:/code/go-admin-api/internal/bootstrap/catalog_category.go:128
+D:/code/go-admin-api/migrations/000007_catalog_init.up.sql:15"
+"D043","商品与类目","category_mapping.source","category_mapping_source","manual=手工；rule=规则；default=默认","后端","0","1","1","仅展示适合","手工/规则/默认属于可读业务来源，但自动映射与置信度算法不能由字典实现。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/category_mapping_source（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/catalog/category_sync.go:77
+D:/code/go-admin-api/migrations/000007_catalog_init.up.sql:41"
+"D044","商品与类目","product_spu.status","product_status","draft=草稿；active=启用；archived=已归档","前端 / 后端","13","2","15","仅展示适合","前端已经调用字典但后端未见种子；先补内置三项并保留productStatusValues校验。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/product_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P0","D:/code/admin-web/apps/admin/src/api/model/catalog.ts:5
+D:/code/admin-web/apps/admin/src/api/model/catalog.ts:65
+D:/code/admin-web/apps/admin/src/views/catalog/product/catalog-display.ts:1
+D:/code/go-admin-api/internal/modules/catalog/product.go:252
+D:/code/go-admin-api/internal/modules/catalog/product.go:257
+D:/code/go-admin-api/migrations/000007_catalog_init.up.sql:57"
+"D045","商品与类目","product_spu.source","product_source","platform=平台来源；manual=手工","后端","0","4","4","仅展示适合","手工/平台来源影响允许编辑与合并路径，只统一展示。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/product_source（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/catalog/product.go:120
+D:/code/go-admin-api/internal/bootstrap/catalog_product_write.go:35
+D:/code/go-admin-api/internal/bootstrap/catalog_product_write.go:50
+D:/code/go-admin-api/migrations/000007_catalog_init.up.sql:58"
+"D046","商品与类目","product_media.type","product_media_type","image=图片；video=视频；detail=详情图","后端","0","0","0","仅展示适合","图片/视频/详情图可统一显示，渲染和媒体校验必须保留。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/product_media_type（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/migrations/000007_catalog_init.up.sql:98"
+"D047","商品与类目","export_job.kind","export_kind","products=商品；orders=订单","后端","0","1","1","仅展示适合","导出任务资源种类可翻译；orders仅为表约束支持，不代表已实现订单导出器。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/export_kind（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/bootstrap/catalog_export.go:55
+D:/code/go-admin-api/migrations/000007_catalog_init.up.sql:119"
+"D048","商品与类目","export_job.status","export_job_status","pending=等待中；running=运行中；succeeded=成功；failed=失败；expired=已过期","后端 / 前端","2","9","11","仅展示适合","导出生命周期可统一显示；下载只在succeeded、未过期时可用的逻辑保留。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/export_job_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/views/catalog/product/use-product-export.ts:32
+D:/code/admin-web/apps/admin/src/api/model/catalog.ts:81
+D:/code/go-admin-api/internal/bootstrap/catalog_export.go:81
+D:/code/go-admin-api/internal/bootstrap/catalog_export.go:162
+D:/code/go-admin-api/internal/bootstrap/catalog_export.go:163
+D:/code/go-admin-api/migrations/000007_catalog_init.up.sql:120"
+"D049","同步、映射与重放","replay_run_item.outcome","replay_item_outcome","inserted=新增；updated=更新；skipped_stale=跳过旧数据；skipped_same=跳过相同数据；quarantined=已隔离；failed=失败","后端","0","6","6","仅展示适合","逐条重放处理结果适合翻译；计数守恒与幂等处置保留。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/replay_item_outcome（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/bootstrap/replay_batch.go:235
+D:/code/go-admin-api/internal/bootstrap/replay_batch.go:238
+D:/code/go-admin-api/internal/bootstrap/replay_batch.go:241
+D:/code/go-admin-api/migrations/000008_replay_members.up.sql:27"
+"D050","订单","sales_order.lifecycle_status","order_lifecycle_status","unknown=未知；pending_payment=待付款；paid=已付款；shipped=已发货；completed=已完成；cancelled=已取消","后端","0","9","9","仅展示适合","订单正交事实维度，只统一显示；必须保留stateGraphs、资金一致性和状态投影，不合并为一个可配状态机。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/order_lifecycle_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/order/status.go:15
+D:/code/go-admin-api/internal/modules/order/status.go:27
+D:/code/go-admin-api/internal/modules/order/status.go:30
+D:/code/go-admin-api/migrations/000010_order_init.up.sql:11"
+"D051","订单","sales_order.fulfillment_status","order_fulfillment_status","unknown=未知；unshipped=未发货；shipped=已发货；delivered=已送达","后端","0","4","4","仅展示适合","订单正交事实维度，只统一显示；必须保留stateGraphs、资金一致性和状态投影，不合并为一个可配状态机。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/order_fulfillment_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/order/status.go:20
+D:/code/go-admin-api/internal/modules/order/status.go:27
+D:/code/go-admin-api/internal/modules/order/status.go:30
+D:/code/go-admin-api/migrations/000010_order_init.up.sql:12"
+"D052","订单","sales_order.payment_status","order_payment_status","unknown=未知；unpaid=未付款；paid=已付款；partial_refund=部分退款；refunded=已退款","后端","0","12","12","仅展示适合","订单正交事实维度，只统一显示；必须保留stateGraphs、资金一致性和状态投影，不合并为一个可配状态机。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/order_payment_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/order/status.go:21
+D:/code/go-admin-api/internal/modules/order/status.go:27
+D:/code/go-admin-api/internal/modules/order/status.go:30
+D:/code/go-admin-api/migrations/000010_order_init.up.sql:13"
+"D053","订单","sales_order.after_sales_status","order_after_sales_status","unknown=未知；none=无；refunding=退款中；partial_refunded=部分已退款；refunded=已退款","后端","0","6","6","仅展示适合","订单正交事实维度，只统一显示；必须保留stateGraphs、资金一致性和状态投影，不合并为一个可配状态机。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/order_after_sales_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/order/status.go:22
+D:/code/go-admin-api/internal/modules/order/status.go:27
+D:/code/go-admin-api/internal/modules/order/status.go:91
+D:/code/go-admin-api/migrations/000010_order_init.up.sql:14"
+"D054","订单","sales_order.cancel_status","order_cancel_status","unknown=未知；none=无；requested=已申请；rejected=已拒绝；cancelled=已取消","后端","0","5","5","仅展示适合","订单正交事实维度，只统一显示；必须保留stateGraphs、资金一致性和状态投影，不合并为一个可配状态机。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/order_cancel_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/order/status.go:23
+D:/code/go-admin-api/internal/modules/order/status.go:27
+D:/code/go-admin-api/internal/modules/order/status.go:30
+D:/code/go-admin-api/migrations/000010_order_init.up.sql:15"
+"D055","订单","order_item.allocation_source","","platform=平台来源；largest_remainder_v1=最大余数法v1；unknown=未知","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000010_order_init.up.sql:63"
+"D056","订单","order_item.refund_status","order_item_refund_status","unknown=未知；none=无；refunding=退款中；partial_refunded=部分已退款；refunded=已退款","后端","0","3","3","仅展示适合","订单项售后状态可翻译，不能和支付维度partial_refund混用。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/order_item_refund_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/order/persist.go:112
+D:/code/go-admin-api/internal/modules/order/validation.go:77
+D:/code/go-admin-api/internal/modules/order/validation.go:104
+D:/code/go-admin-api/migrations/000010_order_init.up.sql:65"
+"D057","订单","order_status_history.dimension","order_status_dimension","lifecycle=生命周期；fulfillment=履约；payment=支付；after_sales=售后；cancel=取消；aggregate=聚合；visibility=可见性","后端","0","2","2","仅展示适合","状态历史维度适合面向审计的显示字典，后续visibility迁移已纳入。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/order_status_dimension（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/order/status.go:30
+D:/code/go-admin-api/internal/modules/order/visibility.go:55
+D:/code/go-admin-api/migrations/000011_order_vanished.up.sql:7"
+"D058","订单","order_status_history.event_kind","order_event_kind","snapshot=快照观察；command=命令；correction=纠正；conflict=冲突","后端","0","6","6","仅展示适合","状态变更历史事件可统一标签；snapshot/command/correction的执行语义固定。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/order_event_kind（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/order/contract.go:10
+D:/code/go-admin-api/internal/modules/order/contract.go:11
+D:/code/go-admin-api/internal/modules/order/contract.go:12
+D:/code/go-admin-api/migrations/000010_order_init.up.sql:101"
+"D059","订单","order_sync_pending.status","","pending=等待中；processing=处理中；done=已完成；failed=失败","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000010_order_init.up.sql:129"
+"D060","客户、报价与分享","customer.status","customer_status","active=启用；disabled=停用","后端","0","6","6","仅展示适合","客户启停与报价/分享权限有关，只迁移文案。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/customer_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/share/validation.go:33
+D:/code/go-admin-api/internal/modules/share/validation.go:40
+D:/code/go-admin-api/internal/bootstrap/share_customer.go:47
+D:/code/go-admin-api/migrations/000013_share_init.up.sql:16"
+"D061","客户、报价与分享","customer.level","customer_level","(空串)=未设置；A=A级（等级定义待业务确认）；B=B级（等级定义待业务确认）；C=C级（等级定义待业务确认）","后端","0","0","0","条件适合业务字典","A/B/C是最接近运营分类的闭合集合，但当前仅表中有列，Customer模型和API未接入；先确认业务需要及等级定义。","移除枚举式CHECK需新增迁移；保留长度、租户和字典存在性校验","业务决定启用后接入GET /api/v1/meta/dicts/customer_level","保留空串表示未分级；历史A/B/C不改码、不猜测等级价值；新增DTO并先兼容缺省。","P3","D:/code/go-admin-api/migrations/000013_share_init.up.sql:19"
+"D062","客户、报价与分享","price_list.type","price_list_type","customer=客户专属；default=默认","后端","0","5","5","仅展示适合","客户/默认价目表可统一显示，CustomerID约束与价格层级算法必须保留。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/price_list_type（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/share/validation.go:51
+D:/code/go-admin-api/internal/modules/share/validation.go:55
+D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:58
+D:/code/go-admin-api/migrations/000013_share_init.up.sql:35"
+"D063","客户、报价与分享","price_list.status","price_list_status","draft=草稿；active=启用；expired=已过期；disabled=停用","后端","0","2","2","仅展示适合","报价生效/过期会影响价格命中，只迁移显示与筛选。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/price_list_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/share/validation.go:49
+D:/code/go-admin-api/internal/modules/share/validation.go:59
+D:/code/go-admin-api/migrations/000013_share_init.up.sql:39"
+"D064","客户、报价与分享","share_link.type","share_link_type","products=商品；price_list=价目表","后端","0","2","2","仅展示适合","分享商品/价目表可翻译，快照成员与权限仍由代码构建。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/share_link_type（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/share/link.go:90
+D:/code/go-admin-api/internal/modules/share/link.go:96
+D:/code/go-admin-api/migrations/000013_share_init.up.sql:81"
+"D065","客户、报价与分享","share_link.mode","","snapshot=快照；live=实时","后端","0","3","3","排除","表约束有snapshot/live，但当前normalizeLink只接受snapshot。live不是已支持下拉项，禁止字典启用后绕过实现。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/internal/modules/share/link.go:90
+D:/code/go-admin-api/internal/modules/share/link.go:172
+D:/code/go-admin-api/internal/modules/share/link.go:177
+D:/code/go-admin-api/migrations/000013_share_init.up.sql:82"
+"D066","客户、报价与分享","share_link.status","share_link_status","active=启用；revoked=已撤销；expired=已过期","后端","0","3","3","仅展示适合","分享有效/撤销/过期可翻译；访问门禁必须按事实校验，不能取字典是否启用代替。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/share_link_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/share/access.go:150
+D:/code/go-admin-api/internal/modules/share/link.go:91
+D:/code/go-admin-api/internal/modules/share/link.go:150
+D:/code/go-admin-api/migrations/000013_share_init.up.sql:91"
+"D067","客户、报价与分享","inquiry.status","inquiry_status","new=新询价；contacted=已联系；quoted=已报价；won=已成交；lost=已流失","后端","0","3","3","仅展示适合","询价业务状态有固定rank和终态，适合统一显示但不能由排序改变流转。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/inquiry_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/share/inquiry_service.go:108
+D:/code/go-admin-api/internal/modules/share/inquiry_service.go:159
+D:/code/go-admin-api/internal/modules/share/inquiry_submit.go:78
+D:/code/go-admin-api/migrations/000013_share_init.up.sql:136"
+"D068","店铺与凭据","credential_refresh_run.phase","","intent=已建立刷新意图；sending=发送中；consumed=上游已消费；published=已发布；unknown=未知","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000015_credential_refresh.up.sql:19"
+"D069","店铺与凭据","credential_refresh_run.status","credential_refresh_status","running=运行中；success=成功；failed=失败；skipped=已跳过","后端","0","13","13","仅展示适合","刷新任务结果可统一显示；任务恢复、重试和CAS继续使用固定码。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/credential_refresh_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/shop/refresh/executor.go:54
+D:/code/go-admin-api/internal/modules/shop/refresh/executor.go:70
+D:/code/go-admin-api/internal/modules/shop/refresh/executor.go:116
+D:/code/go-admin-api/migrations/000015_credential_refresh.up.sql:20"
+"D070","店铺与凭据","credential_refresh_run.failure_class","","(空串)=未设置；temporary=临时故障；invalid=凭据失效；unknown=未知","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000015_credential_refresh.up.sql:21"
+"D071","店铺与凭据","credential_refresh_run.reason","","(空串)=未设置；temporary=临时故障；invalid=凭据失效；ambiguous=结果不明确；sending_lost=发送结果丢失；stage_failed=暂存失败；stage_expired=暂存过期；superseded=已被替代","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000015_credential_refresh.up.sql:22"
+"D072","店铺与凭据","credential_refresh_run.trigger","credential_refresh_trigger","manual=手工；schedule=定时调度；on_demand=按需触发","后端","0","1","1","仅展示适合","手动/定时/按需是可读业务来源，适合展示字典。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/credential_refresh_trigger（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/internal/modules/shop/refresh/executor.go:71
+D:/code/go-admin-api/migrations/000015_credential_refresh.up.sql:24"
+"D073","店铺与凭据","credential_refresh_reconciliation.reason","","ambiguous=结果不明确；sending_lost=发送结果丢失；stage_failed=暂存失败；stage_expired=暂存过期；superseded=已被替代","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000015_credential_refresh.up.sql:81"
+"D074","同步、映射与重放","sync_job.block_reason","sync_block_reason","(空串)=未设置；credential_blocked=凭据阻塞；admin_disabled=管理员禁用","后端","0","0","0","仅展示适合","面向运维的阻塞原因可统一标签；不能通过配置清除阻塞。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/sync_block_reason（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P2","D:/code/go-admin-api/migrations/000016_credential_refresh_wiring.up.sql:30"
+"D075","开放网关","api_client.status","gateway_access_status","active=启用；suspended=暂停/停用","后端","0","7","7","仅展示适合","网关启停可统一显示，但直接影响应用访问上限，授权校验不能依赖字典。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/gateway_access_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/gateway/auth.go:55
+D:/code/go-admin-api/internal/modules/gateway/auth.go:101
+D:/code/go-admin-api/internal/modules/gateway/resource.go:52
+D:/code/go-admin-api/migrations/000017_gateway_init.up.sql:9"
+"D076","开放网关","api_client_secret.status","gateway_secret_status","active=启用；expired=已过期；revoked=已撤销","后端","0","6","6","仅展示适合","密钥有效/过期/撤销可翻译，鉴权和轮换语义固定。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/gateway_secret_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/gateway/auth.go:55
+D:/code/go-admin-api/internal/modules/gateway/auth.go:101
+D:/code/go-admin-api/internal/modules/gateway/secret.go:45
+D:/code/go-admin-api/migrations/000017_gateway_init.up.sql:29"
+"D077","开放网关","api_route.method","","GET=HTTP GET；HEAD=HTTP HEAD","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000017_gateway_init.up.sql:43"
+"D078","开放网关","api_route.visibility","","private=私有；public=公开","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000017_gateway_init.up.sql:46"
+"D079","开放网关","api_route.status","gateway_route_status","enabled=启用；disabled=停用","后端","0","1","1","仅展示适合","enabled/disabled与通用active不同，保留独立码值，不能强行统一为active。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/gateway_route_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/gateway/registry.go:62
+D:/code/go-admin-api/migrations/000017_gateway_init.up.sql:47"
+"D080","开放网关","api_route.billing_mode","gateway_billing_mode","free=免费；per_call=按次计费；package=套餐（保留码值，当前配置校验未开放）","后端","0","6","6","仅展示适合","可统一收费模式名称；数据库保留package但实际validPricing仅接受free/per_call，不能因字典新增而开放。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/gateway_billing_mode（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/gateway/billing.go:17
+D:/code/go-admin-api/internal/modules/gateway/billing.go:20
+D:/code/go-admin-api/internal/modules/gateway/billing.go:24
+D:/code/go-admin-api/migrations/000017_gateway_init.up.sql:48"
+"D081","开放网关","api_client_route.status","gateway_access_status","active=启用；suspended=暂停/停用","后端","0","7","7","仅展示适合","网关启停可统一显示，但直接影响应用访问上限，授权校验不能依赖字典。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/gateway_access_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/gateway/auth.go:55
+D:/code/go-admin-api/internal/modules/gateway/auth.go:101
+D:/code/go-admin-api/internal/modules/gateway/resource.go:52
+D:/code/go-admin-api/migrations/000017_gateway_init.up.sql:63"
+"D082","开放网关","api_client_resource_grant.status","gateway_access_status","active=启用；suspended=暂停/停用","后端","0","7","7","仅展示适合","网关启停可统一显示，但直接影响应用访问上限，授权校验不能依赖字典。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/gateway_access_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/gateway/auth.go:55
+D:/code/go-admin-api/internal/modules/gateway/auth.go:101
+D:/code/go-admin-api/internal/modules/gateway/resource.go:52
+D:/code/go-admin-api/migrations/000017_gateway_init.up.sql:83"
+"D083","开放网关","api_call.state","","processing=处理中；succeeded=成功；failed=失败","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000018_gateway_metering.up.sql:16"
+"D084","开放网关","api_call_log.state","","processing=处理中；succeeded=成功；failed=失败","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000018_gateway_metering.up.sql:54"
+"D085","计费与账务","wallet.status","wallet_status","active=启用；frozen=冻结","后端","0","0","0","仅展示适合","钱包启停会影响资金操作；只迁移显示，不让字典决定记账或流转。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/wallet_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/migrations/000019_billing_wallet.up.sql:11"
+"D086","计费与账务","wallet_txn.type","","topup=充值；freeze=冻结；settle=结算；release=解冻/释放；adjust=调账；refund=退款","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000019_billing_wallet.up.sql:22"
+"D087","计费与账务","call_charge.state","","reserved=已预占；settled=已结算；released=已释放；expired=已过期","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000019_billing_wallet.up.sql:63"
+"D088","计费与账务","recharge_code.status","recharge_code_status","unused=未使用；used=已使用/用完；void=已作废","后端","0","1","1","仅展示适合","充值码核销必须保持单次消费；只迁移显示，不让字典决定记账或流转。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/recharge_code_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/billing/credit.go:83
+D:/code/go-admin-api/migrations/000019_billing_wallet.up.sql:80"
+"D089","计费与账务","pricing_plan.quota_type","","calls=调用次数；units=计量单位","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:10"
+"D090","计费与账务","pricing_plan.status","enable_status","active=启用；disabled=停用","后端","0","1","1","仅展示适合","套餐启停影响购买；只迁移显示，不让字典决定记账或流转。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/enable_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/billing/entitlement.go:12
+D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:14"
+"D091","计费与账务","entitlement.kind","","free=免费；paid=付费","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:23"
+"D092","计费与账务","entitlement.quota_type","","calls=调用次数；units=计量单位","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:24"
+"D093","计费与账务","entitlement.source","entitlement_source","purchase=购买；gift=赠送","后端","0","0","0","仅展示适合","购买/赠送是业务来源标签；资金约束及流水归属保留。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/entitlement_source（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:31"
+"D094","计费与账务","entitlement.status","entitlement_status","active=启用；expired=已过期；exhausted=已用尽","后端","0","1","1","仅展示适合","额度过期/用尽是计费事实；只迁移显示，不让字典决定记账或流转。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/entitlement_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/billing/entitlement.go:12
+D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:36"
+"D095","计费与账务","unit_txn.type","","grant=发放；reserve=预占；release=解冻/释放；consume=消耗；expire=过期；refund=退款","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:55"
+"D096","计费与账务","call_charge.source","","pending=等待中；wallet=钱包；free=免费；paid=已付款","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:81"
+"D097","计费与账务","wallet_txn.biz_type","","api_call=API调用；funding=入金；subscription=订阅；compensation=补偿","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:82"
+"D098","计费与账务","billing_reconcile_run.trigger","reconcile_trigger","daily=每日自动；manual=手工；compensation=补偿","后端","0","2","2","仅展示适合","每日/人工/补偿属于可读运维来源，调度实现不变。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/reconcile_trigger（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/billing/reconcile.go:34
+D:/code/go-admin-api/internal/modules/billing/reconcile.go:40
+D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:105"
+"D099","计费与账务","billing_reconcile_run.status","reconcile_run_status","running=运行中；completed=已完成","后端","0","0","0","仅展示适合","对账执行结果可翻译，运行锁与完成提交仍由代码控制。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/reconcile_run_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:107"
+"D100","计费与账务","billing_reconcile_diff.status","reconcile_diff_status","open=待处理；resolved=已解决","后端","0","0","0","仅展示适合","差异处理需要审计；只迁移显示，不让字典决定记账或流转。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/reconcile_diff_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/migrations/000020_billing_entitlement.up.sql:145"
+"D101","计费与账务","billing_statement.status","billing_statement_status","draft=草稿；issued=已出账","后端","0","2","2","仅展示适合","出账后不可变；只迁移显示，不让字典决定记账或流转。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/billing_statement_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/billing/statement.go:48
+D:/code/go-admin-api/internal/modules/billing/statement.go:133
+D:/code/go-admin-api/migrations/000022_billing_statement.up.sql:7"
+"D102","计费与账务","billing_statement_line.kind","statement_line_kind","call_cash=现金调用；call_units=额度调用；late_call_cash=迟到现金调用；late_call_units=迟到额度调用；subscription=订阅；late_subscription=迟到订阅；refund=退款；supplement=补扣","后端","0","4","4","仅展示适合","账单行类型适合在账单界面统一翻译；不允许配置新种类影响金额聚合与迟到数据归属。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/statement_line_kind（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/bootstrap/billing_statement_sources.go:11
+D:/code/go-admin-api/internal/bootstrap/billing_statement_sources.go:18
+D:/code/go-admin-api/internal/bootstrap/billing_statement_sources.go:22
+D:/code/go-admin-api/migrations/000022_billing_statement.up.sql:18"
+"D103","计费与账务","billing_adjustment.kind","billing_adjustment_kind","refund=退款；supplement=补扣","后端","0","1","1","仅展示适合","退款/补扣名称可统一，必须保留原流水引用、证据和差异校验。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/billing_adjustment_kind（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/internal/modules/billing/statement_adjustment.go:10
+D:/code/go-admin-api/migrations/000022_billing_statement.up.sql:30"
+"D104","计费与账务","billing_adjustment.status","billing_adjustment_status","open=待处理；applied=已应用","后端","0","0","0","仅展示适合","调账只能应用一次；只迁移显示，不让字典决定记账或流转。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/billing_adjustment_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P3","D:/code/go-admin-api/migrations/000022_billing_statement.up.sql:34"
+"D105","通知","channel_provider.channel","notification_channel","email=邮件；sms=短信；wecom=企业微信；dingtalk=钉钉；webhook=Webhook","前端 / 后端","29","2","31","仅展示适合","前后端多处维护同一渠道名称；保留代码允许集并与已实现/可用能力相交。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/notification_channel（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/api/model/notification.ts:1
+D:/code/admin-web/apps/admin/src/api/model/notification.ts:18
+D:/code/admin-web/apps/admin/src/api/model/notification.ts:30
+D:/code/go-admin-api/internal/kernel/notifier/inbox.go:26
+D:/code/go-admin-api/internal/kernel/setting/defaults.go:20
+D:/code/go-admin-api/migrations/000023_notification_channels.up.sql:5"
+"D106","通知","notify_template.format","","text=纯文本；html=HTML","前端 / 后端","1","2","3","排除","text/html控制转义与发送格式，属于渲染协议。继续由notify_template专用接口维护，不走系统字典。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/admin-web/apps/admin/src/api/model/notification.ts:63
+D:/code/go-admin-api/internal/kernel/notifier/channel/template.go:17
+D:/code/go-admin-api/internal/kernel/notifier/channel/template.go:24
+D:/code/go-admin-api/migrations/000023_notification_channels.up.sql:18"
+"D107","通知","notify_delivery.channel","notification_channel","email=邮件；sms=短信；wecom=企业微信；dingtalk=钉钉；webhook=Webhook","后端","0","1","1","仅展示适合","与供应商渠道共享展示字典，但实际发送能力继续由provider注册表控制。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/notification_channel（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/go-admin-api/internal/kernel/notifier/channel/model.go:39
+D:/code/go-admin-api/migrations/000023_notification_channels.up.sql:24"
+"D108","通知","notify_delivery.status","notification_delivery_status","pending=等待中；sent=已发送；failed=失败；skipped=已跳过","前端 / 后端","15","3","18","仅展示适合","前端deliveryStatuses集中硬编码；适合统一标签与颜色，轮询和重试分支保留。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/notification_delivery_status（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/views/system/notification/deliveries.vue:15
+D:/code/admin-web/apps/admin/src/views/system/notification/deliveries.vue:99
+D:/code/admin-web/apps/admin/src/views/system/notification/deliveries.vue:104
+D:/code/go-admin-api/internal/kernel/notifier/channel/service.go:46
+D:/code/go-admin-api/internal/kernel/notifier/channel/service.go:49
+D:/code/go-admin-api/internal/kernel/notifier/channel/service.go:50
+D:/code/go-admin-api/migrations/000023_notification_channels.up.sql:26"
+"D109","通知","notify_outbox.status","","pending=等待中；processing=处理中；channel_unavailable=渠道不可用；sent=已发送；failed=失败","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000023_notification_channels.up.sql:34"
+"D110","身份与组织","auth_token.purpose","","invite=邀请；reset=重置密码；verify=邮箱验证","后端","0","0","0","排除","实现、权限、资金不变量或基础设施协议的固定码值；不允许通过业务字典增删或改变语义。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/go-admin-api/migrations/000024_account_lifecycle.up.sql:24"
+"D111","字典基础设施","sys_dict.status","","active=启用；disabled=停用","前端 / 后端","9","3","12","排除","字典自身启停属于字典机制元状态；编辑页当前依赖user_status，应保留代码兜底以避免自举循环。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/admin-web/apps/admin/src/views/system/dict/dictionary-form.vue:4
+D:/code/admin-web/apps/admin/src/views/system/dict/dictionary-form.vue:22
+D:/code/admin-web/apps/admin/src/views/system/dict/dictionary-form.vue:30
+D:/code/go-admin-api/internal/modules/system/dict.go:62
+D:/code/go-admin-api/internal/modules/system/dict.go:64
+D:/code/go-admin-api/internal/modules/system/dict.go:71
+D:/code/go-admin-api/migrations/000025_system_dict.up.sql:7"
+"D112","字典基础设施","sys_dict_item.status","","active=启用；disabled=停用","前端 / 后端","11","0","11","排除","字典项元状态，不再以可编辑字典定义自身；避免字典被停用后无法维护。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/admin-web/apps/admin/src/views/system/dict/item-form.vue:8
+D:/code/admin-web/apps/admin/src/views/system/dict/item-form.vue:27
+D:/code/admin-web/apps/admin/src/views/system/dict/item-form.vue:31
+D:/code/go-admin-api/migrations/000025_system_dict.up.sql:21"
+"D113","通知","notification_preference.channel","notification_channel","email=邮件；sms=短信；wecom=企业微信；dingtalk=钉钉；webhook=Webhook","后端 / 前端","2","1","3","仅展示适合","订阅偏好共享渠道标签；不能通过新增字典项产生新发送通道。","保留类型、允许值校验与业务分支","GET /api/v1/meta/dicts/notification_channel（只用于文案/排序；选项与代码支持集合取交集）","码值不改；未知/缺失/停用项回显原值；历史记录继续可见。","P1","D:/code/admin-web/apps/admin/src/views/system/notification/preferences.vue:23
+D:/code/admin-web/apps/admin/src/views/system/notification/preferences.vue:39
+D:/code/go-admin-api/internal/kernel/notifier/inbox.go:13
+D:/code/go-admin-api/migrations/000027_notification_preference.up.sql:7"
+"D114","字典基础设施","sys_dict.scope","","system=系统；business=业务域","前端 / 后端","9","9","18","排除","system/business是字典写权限及seed策略的框架契约，必须保留代码常量。","保留","不接入","保持现有码值、代码校验、SQL约束和协议契约。","不迁移","D:/code/admin-web/apps/admin/src/api/core/dictionaries.ts:7
+D:/code/admin-web/apps/admin/src/api/core/dictionaries.ts:18
+D:/code/admin-web/apps/admin/src/api/core/dictionaries.ts:27
+D:/code/go-admin-api/internal/modules/system/dict.go:47
+D:/code/go-admin-api/internal/modules/system/dict_types.go:10
+D:/code/go-admin-api/internal/modules/system/dict_types.go:13
+D:/code/go-admin-api/migrations/000028_system_dict_scope.up.sql:3"
+"X001","身份与组织","AdminRole.status / Department.status","enable_status","active=启用；disabled=停用","前端 / 后端","12","2","14","仅展示适合","角色、部门表并非都有CHECK，但服务与前端明确只接受两值，适合共用启停显示。","保留服务校验和TS联合类型","GET /api/v1/meta/dicts/enable_status","角色/部门启停动作与授权缓存失效保持原语义。","P1","D:/code/admin-web/apps/admin/src/views/system/dept/department-form.vue:158
+D:/code/go-admin-api/internal/modules/identity/admin_depts.go:19
+D:/code/admin-web/apps/admin/src/views/system/dept/department-form.vue:36
+D:/code/admin-web/apps/admin/src/views/system/dept/department-form.vue:159
+D:/code/go-admin-api/internal/modules/identity/admin_depts.go:145"
+"X002","身份与组织","Invite.status / inviteView","invite_status","active=有效；expired=已过期；revoked=已撤销；used=已使用","前端 / 后端","6","4","10","仅展示适合","前端labels与后端计算投影重复；适合显示字典，状态按到期/撤销/使用次数计算。","保留inviteView计算及接受邀请校验","GET /api/v1/meta/dicts/invite_status","保留revoked/used/expired优先级；显示标签不参与核销。","P1","D:/code/admin-web/apps/admin/src/views/system/user/invite-panel.vue:56
+D:/code/go-admin-api/internal/modules/identity/account_invite.go:33
+D:/code/admin-web/apps/admin/src/views/system/user/invite-panel.vue:57
+D:/code/admin-web/apps/admin/src/views/system/user/invite-panel.vue:58
+D:/code/admin-web/apps/admin/src/views/system/user/invite-panel.vue:59
+D:/code/go-admin-api/internal/modules/identity/account_invite.go:36
+D:/code/go-admin-api/internal/modules/identity/account_invite.go:38"
+"X003","商品与类目","ProductSKUInput.Status / product_sku.status","enable_status","active=启用；disabled=停用","后端","0","1","1","仅展示适合","SKU与SPU状态不同，SKU仅两值；必须保留校验。","保留SKU输入校验","GET /api/v1/meta/dicts/enable_status","不得把draft/archived的SPU选项发给SKU。","P2","D:/code/go-admin-api/internal/modules/catalog/product.go:274"
+"X004","订单","States.DisplayStatus / validDisplayStatus","order_display_status","pending_payment=待付款；pending_shipment=待发货；shipped=已发货；completed=已完成；closed=已关闭；refunding=退款中；refunded=已退款；unknown=未知","后端","0","9","9","仅展示适合","现有order_status种子混淆事实维度和接口显示；新增八值只读展示字典。","保留DisplayStatus及validDisplayStatus","GET /api/v1/meta/dicts/order_display_status","paid→pending_shipment、cancelled→closed仅在显示投影处理；不更新数据库事实状态或外部协议。旧字典保留。","P0","D:/code/go-admin-api/internal/modules/order/status.go:90
+D:/code/go-admin-api/internal/modules/order/query.go:117
+D:/code/go-admin-api/migrations/000026_system_dict_seed.up.sql:8
+D:/code/go-admin-api/internal/modules/order/query.go:119
+D:/code/go-admin-api/internal/modules/order/status.go:91
+D:/code/go-admin-api/internal/modules/order/status.go:92"
+"X005","客户、报价与分享","CustomerInput.Source / normalizeCustomer","customer_source","manual=人工录入","后端","0","4","4","条件适合业务字典","当前只有manual默认值而非闭合枚举；可作为可维护获客来源，但须先确认实际历史值。","不需要固定枚举；保留长度/租户校验","GET /api/v1/meta/dicts/customer_source（渐进启用）","先收集租户历史自由文本并补词条，未知旧值可读可保留；不得立即收紧为仅manual。","P2","D:/code/go-admin-api/internal/modules/share/validation.go:35
+D:/code/go-admin-api/internal/modules/share/types.go:24
+D:/code/go-admin-api/internal/modules/share/validation.go:36
+D:/code/go-admin-api/internal/modules/share/validation.go:40"
+"X006","客户、报价与分享","pricing.Basis / Result.LayerName","price_basis","customer_quote=客户专属报价；customer_price_list=客户价目表；default_price_list=默认价目表；original=商品原价；unpriced=未定价","后端","0","15","15","仅展示适合","后端同时返回英文Basis和中文LayerName，适合管理端统一显示；价格优先级不能取字典sort。","保留Basis常量与Resolve优先级","管理预览可走meta；公开H5不强依赖需登录接口","冻结快照已有中文文案不重写；匿名分享使用快照显示或独立公开投影。","P2","D:/code/go-admin-api/internal/modules/share/pricing/types.go:7
+D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:74
+D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:12
+D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:35
+D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:43"
+"X007","通知","NotificationKind / providers / allowed","","smtp=SMTP；aliyun_dm=阿里云邮件；sendgrid=SendGrid；aliyun_sms=阿里云短信；wecom_bot=企微机器人；dingtalk_bot=钉钉机器人；http=HTTP Webhook","前端 / 后端","30","1","31","排除","供应商种类决定配置schema、密钥字段、传输驱动及channel-kind组合。保留专用能力注册表；可用能力接口提供名称，不允许字典新增驱动。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/admin-web/apps/admin/src/views/system/notification/provider-fields.ts:6
+D:/code/go-admin-api/internal/kernel/notifier/channel/config.go:22
+D:/code/admin-web/apps/admin/src/api/core/notifications.ts:55
+D:/code/admin-web/apps/admin/src/api/core/notifications.ts:73
+D:/code/admin-web/apps/admin/src/api/core/notifications.ts:78"
+"X008","通知","notifier.Message.Severity","business_alert_severity","info=提示；warning=警告；critical=严重","后端","0","11","11","仅展示适合","这是业务维护告警而非技术日志级别，可与漂移告警共用展示文案。","保留Validate及告警触发阈值","GET /api/v1/meta/dicts/business_alert_severity","通知快照/外发内容保持原有字段；字典缺项回退原码。","P2","D:/code/go-admin-api/internal/kernel/notifier/notifier.go:33
+D:/code/go-admin-api/internal/kernel/notifier/notifier.go:34
+D:/code/go-admin-api/internal/bootstrap/credential_notification_observe.go:19
+D:/code/go-admin-api/internal/bootstrap/credential_notification_observe.go:22"
+"X009","同步、映射与重放","unknown_value_policy","","reject=拒绝未知值；keep_raw=保留原始值；fallback_null=回退为空","后端","0","1","1","排除","这是已注册系统配置的固定策略枚举，代码实现策略能力，继续走/settings schema而非再建可编辑字典。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/go-admin-api/internal/kernel/setting/defaults.go:22"
+"X010","同步、映射与重放","connector.ResourceType / ingestion.ResourceType","","product=商品；order=订单；inventory=库存；category=类目","后端","0","21","21","排除","资源码决定连接器和upserter接口；新增字典项不会产生处理器。由代码能力注册表发布。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/go-admin-api/internal/modules/connector/types.go:9
+D:/code/go-admin-api/internal/modules/ingestion/mapping_types.go:12
+D:/code/go-admin-api/internal/modules/connector/platforms/shopee/shopee.go:46
+D:/code/go-admin-api/internal/modules/connector/platforms/shopee/shopee.go:62"
+"X011","同步、映射与重放","ReplayScope.Type","","time=时间范围；ids=指定ID；quarantine=隔离记录","后端","0","0","0","排除","重放选择器是固定请求协议，每种值有不同必填字段，不能通过字典扩展。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/go-admin-api/internal/modules/sync/replay_types.go:13"
+"X012","同步、映射与重放","connector.ErrKind","","auth_expired=授权过期；rate_limited=触发限流；unavailable=上游不可用；invalid_request=请求非法","后端","0","27","27","排除","平台错误归类驱动鉴权恢复与重试，属于底层技术常量。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/go-admin-api/internal/modules/connector/errs.go:6
+D:/code/go-admin-api/internal/modules/connector/errs.go:9
+D:/code/go-admin-api/internal/modules/connector/errs.go:10"
+"X013","通知","SMTP tls_mode","","starttls=STARTTLS；tls=TLS；plain=回环明文","前端 / 后端","4","4","8","排除","传输加密协议、安全校验固定，不是运营分类。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/admin-web/apps/admin/src/views/system/notification/provider-form.vue:150
+D:/code/admin-web/apps/admin/src/views/system/notification/provider-form.vue:47
+D:/code/admin-web/apps/admin/src/views/system/notification/provider-form.vue:151
+D:/code/go-admin-api/internal/kernel/notifier/channel/smtp.go:49
+D:/code/go-admin-api/internal/kernel/notifier/channel/smtp.go:78
+D:/code/go-admin-api/internal/kernel/notifier/channel/smtp.go:79"
+"X014","计费与账务","billing.Currency","","CNY=人民币","后端","0","1","1","排除","当前计费单币种人民币是资金契约，新增字典币种无法实现多币种账本。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/go-admin-api/internal/modules/billing/types.go:9"
+"X015","客户、报价与分享","pricing.Result.Precision","","spu=SPU级；sku=SKU级","后端","0","3","3","排除","SPU/SKU是商品模型和价格匹配精度，不允许业务变更。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:24
+D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:26
+D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:45"
+"X016","客户、报价与分享","pricing.Result.Reason","","matched=已匹配；no_eligible_price=无可用价格","后端","0","3","3","排除","价格解析器的固定诊断结果，无运营可扩展语义；可代码内集中翻译。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:35
+D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:46
+D:/code/go-admin-api/internal/modules/share/pricing/resolve.go:77"
+"X017","通知","NotificationProvider.enabled / NotificationTemplate.enabled","boolean_enable_status","true=启用；false=停用","前端 / 后端","4","2","6","仅展示适合","服务商和模板列表重复硬编码启停文案；仅统一展示，不把布尔值改为active/disabled。","保留boolean类型和启停检查","可选GET /api/v1/meta/dicts/boolean_enable_status；仅两处时可用共享翻译而不新增请求","接口继续传JSON布尔值；查标签时转为字符串；不和active/disabled字典混发。","P1","D:/code/admin-web/apps/admin/src/views/system/notification/providers.vue:126
+D:/code/go-admin-api/internal/kernel/notifier/channel/model.go:17
+D:/code/admin-web/apps/admin/src/views/system/notification/providers.vue:125
+D:/code/admin-web/apps/admin/src/views/system/notification/templates.vue:51
+D:/code/go-admin-api/internal/kernel/notifier/channel/model.go:32"
+"X018","通知","notifier.Message.Template（凭据告警固定标签码）","","credential.expiring.3d=凭据将在3天内到期；credential.expiring.1d=凭据将在1天内到期；credential.expired=凭据已到期；credential.needs_reauth=凭据需重新授权；credential.unknown=凭据状态未知；credential.failed=凭据刷新失败；credential.stuck=凭据刷新卡住；credential.recovered=凭据恢复；credential.protocol_pending=凭据刷新协议待处理","后端","0","14","14","排除","标签码绑定告警生成、去重、恢复和专用模板；正文由模板接口维护，不能让字典新增事件或改码。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/go-admin-api/internal/kernel/notifier/notifier.go:28
+D:/code/go-admin-api/internal/bootstrap/credential_notification_observe.go:19
+D:/code/go-admin-api/internal/bootstrap/credential_notification_observe.go:22
+D:/code/go-admin-api/internal/bootstrap/credential_notification_observe.go:29"
+"X019","订单","Correction.Kind / correctionProved","","payment_reversal=付款冲正；refund_reversal=退款冲正；fulfillment_correction=履约纠正；lifecycle_reopen=订单重开；mapping_correction=映射纠正","后端","0","1","1","排除","纠正类型参与证明校验和回退授权，属于不可由运营扩展的固定协议；展示名称可在代码内集中。","保留","不接入","保留现有码值与实现。","不迁移","D:/code/go-admin-api/internal/modules/order/validation.go:156
+D:/code/go-admin-api/internal/modules/order/validation.go:162"

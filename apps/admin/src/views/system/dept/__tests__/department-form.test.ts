@@ -9,6 +9,9 @@ import { ApiError } from '#/api/errors';
 import DepartmentForm from '../department-form.vue';
 
 const api = vi.hoisted(() => ({ create: vi.fn(), update: vi.fn() }));
+vi.mock('#/api/core/dictionaries', () => ({
+  getMetaDictionaryApi: async () => [],
+}));
 vi.mock('#/api/core/system', () => ({
   createDepartmentApi: api.create,
   updateDepartmentApi: api.update,

@@ -1,0 +1,129 @@
+{
+  "source": "real-18080",
+  "date": "2026-11-15T16:55:29.836Z",
+  "checks": [
+    {
+      "item": 1,
+      "assertion": "Real metadata label/color rendered by DictTag",
+      "value": "draft",
+      "label": "草稿",
+      "color": "default",
+      "screenshot": "01-label-color.png"
+    },
+    {
+      "item": 2,
+      "assertion": "Missing dictionary entry renders raw product code",
+      "source": "metadata-empty-response-fixture; real product list",
+      "value": "draft",
+      "screenshot": "02-missing-raw-code.png"
+    },
+    {
+      "item": 3,
+      "assertion": "Metadata HTTP 500 preserves the real product table and raw status",
+      "source": "metadata-500-fixture; real product list",
+      "rows": 20,
+      "screenshot": "03-metadata-500.png"
+    },
+    {
+      "item": 4,
+      "assertion": "Editing system product_status label updates the real product list after refresh",
+      "status": 200,
+      "value": "draft",
+      "label": "商品字典实时文案",
+      "color": "#722ed1",
+      "screenshot": "04-product-updated-label.png"
+    },
+    {
+      "item": 5,
+      "assertion": "Suspended tenants render 已停用 from tenant_status",
+      "screenshot": "05-tenant-status.png"
+    },
+    {
+      "item": 6,
+      "assertion": "Audit and login log result tags consume audit_result metadata",
+      "metadata": [
+        {
+          "value": "success",
+          "label": "成功",
+          "color": "green"
+        },
+        {
+          "value": "failure",
+          "label": "失败",
+          "color": "red"
+        }
+      ],
+      "pages": [
+        {
+          "path": "/system/audit-logs",
+          "screenshot": "06-audit-results.png"
+        },
+        {
+          "path": "/system/login-logs",
+          "screenshot": "06-login-results.png"
+        }
+      ]
+    },
+    {
+      "item": 7,
+      "assertion": "Role form uses a real edited dictionary label and falls back to local options for empty metadata",
+      "editedLabel": "字典驱动启用选项",
+      "screenshots": [
+        "07-dictionary-options.png",
+        "07-empty-dictionary-options.png"
+      ]
+    },
+    {
+      "item": 9,
+      "assertion": "System name edit succeeds; immutable fields/actions protected; maintenance re-enables disabled user_status without metadata",
+      "renamed": {
+        "status": 200,
+        "name": "商品状态（字典消费验收）"
+      },
+      "itemEdit": {
+        "status": 200,
+        "changedKeys": ["label", "color", "sort", "status"],
+        "statusUpdates": ["disabled", "active"]
+      },
+      "bootstrapMetadataRequests": 0,
+      "screenshots": [
+        "09-system-dictionary-renamed.png",
+        "09-system-item-editable.png",
+        "09-bootstrap-disabled-user-dictionary.png"
+      ]
+    },
+    {
+      "item": 10,
+      "assertion": "Twenty rows and repeated search share one product_status metadata request",
+      "rows": 20,
+      "requests": [
+        {
+          "path": "/api/v1/meta/dicts/product_status",
+          "status": 200,
+          "method": "GET"
+        }
+      ],
+      "screenshot": "10-network-panel.png",
+      "unitEvidence": "5-minute expiry, cross-page reuse and pending request deduplication unit tests"
+    }
+  ],
+  "browserErrors": [],
+  "cleanup": [
+    {
+      "resource": "enable item",
+      "restored": true
+    },
+    {
+      "resource": "user dictionary",
+      "restored": true
+    },
+    {
+      "resource": "product dictionary",
+      "restored": true
+    },
+    {
+      "resource": "product item",
+      "restored": true
+    }
+  ]
+}

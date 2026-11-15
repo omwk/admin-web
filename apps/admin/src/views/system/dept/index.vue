@@ -17,7 +17,6 @@ import {
   Modal,
   Space,
   Spin,
-  Tag,
   Tree,
 } from 'ant-design-vue';
 
@@ -28,6 +27,7 @@ import {
 } from '#/api/core/system';
 import { toApiError } from '#/api/errors';
 import { hasPermission } from '#/auth/permission';
+import DictTag from '#/components/dict-tag/index.vue';
 
 import { nodeLabel } from '../shared/tree';
 import DepartmentForm from './department-form.vue';
@@ -236,13 +236,7 @@ onUnmounted(() => {
                     show-zero
                     :number-style="{ backgroundColor: '#64748b' }"
                   />
-                  <Tag
-                    :color="
-                      department.status === 'active' ? 'success' : 'default'
-                    "
-                  >
-                    {{ department.status === 'active' ? '启用' : '停用' }}
-                  </Tag>
+                  <DictTag type="enable_status" :value="department.status" />
                 </Space>
                 <Space size="small">
                   <Button
@@ -327,9 +321,7 @@ onUnmounted(() => {
               {{ detail.sort }}
             </Descriptions.Item>
             <Descriptions.Item label="状态">
-              <Tag :color="detail.status === 'active' ? 'success' : 'default'">
-                {{ detail.status === 'active' ? '启用' : '停用' }}
-              </Tag>
+              <DictTag type="enable_status" :value="detail.status" />
             </Descriptions.Item>
           </Descriptions>
           <Empty

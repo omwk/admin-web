@@ -25,6 +25,7 @@ import {
   getSessionVersion,
   setTokens,
 } from '#/auth/token';
+import { clearMetaDictionaries } from '#/composables/use-meta-dictionary';
 import { $t } from '#/locales';
 import { resetRoutes, router } from '#/router';
 
@@ -35,6 +36,7 @@ export const useAuthStore = defineStore('auth', () => {
   let expiration: Promise<void> | undefined;
 
   function clearSession() {
+    clearMetaDictionaries();
     clearTokens();
     resetAllStores();
     resetRoutes();

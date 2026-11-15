@@ -22,6 +22,9 @@ const api = vi.hoisted(() => ({
   templates: vi.fn(),
   allowed: true,
 }));
+vi.mock('#/api/core/dictionaries', () => ({
+  getMetaDictionaryApi: async () => [],
+}));
 vi.mock('#/api/core/notifications', () => ({
   getNotificationPreferencesApi: api.preferences,
   saveNotificationPreferencesApi: api.savePreferences,

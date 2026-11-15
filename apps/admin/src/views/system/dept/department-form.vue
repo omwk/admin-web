@@ -16,6 +16,8 @@ import {
 
 import { createDepartmentApi, updateDepartmentApi } from '#/api/core/system';
 import { toApiError } from '#/api/errors';
+import { enableStatusOptions } from '#/composables/dictionary-options';
+import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 
 import { departmentParentOptions } from './department-tree';
 
@@ -51,6 +53,7 @@ const parents = computed(() => [
 ]);
 const busy = ref(false);
 const error = ref('');
+const dictionary = useMetaDictionary('enable_status', enableStatusOptions);
 
 async function save() {
   if (busy.value) return;
@@ -154,10 +157,7 @@ function flattenOptions(
         <Select
           v-model:value="form.status"
           aria-label="部门状态"
-          :options="[
-            { label: '启用', value: 'active' },
-            { label: '停用', value: 'disabled' },
-          ]"
+          :options="dictionary.options.value"
         />
       </Form.Item>
       <Space>

@@ -13,12 +13,12 @@ import {
   Modal,
   Space,
   Table,
-  Tag,
 } from 'ant-design-vue';
 
 import { deleteRoleApi, getRoleApi, getRolesApi } from '#/api/core/system';
 import { toApiError } from '#/api/errors';
 import { hasPermission } from '#/auth/permission';
+import DictTag from '#/components/dict-tag/index.vue';
 
 import RoleForm from './role-form.vue';
 import RoleGrants from './role-grants.vue';
@@ -151,12 +151,11 @@ onUnmounted(() => {
         @change="changePage"
       >
         <template #bodyCell="{ column, record, text }">
-          <Tag
+          <DictTag
             v-if="column.dataIndex === 'status'"
-            :color="text === 'active' ? 'success' : 'default'"
-          >
-            {{ text === 'active' ? '启用' : '禁用' }}
-          </Tag>
+            type="enable_status"
+            :value="text"
+          />
           <template v-else-if="column.dataIndex === 'data_scope'">
             {{ dataScopeLabels[record.data_scope as AdminRole['data_scope']] }}
           </template>
