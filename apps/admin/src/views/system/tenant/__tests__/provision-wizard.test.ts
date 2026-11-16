@@ -1,6 +1,8 @@
+import type { PropType } from 'vue';
+
 import type { TenantTemplate } from '#/api/model/tenant';
 
-import { createApp, h, nextTick, ref } from 'vue';
+import { createApp, defineComponent, h, nextTick, ref } from 'vue';
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
@@ -15,12 +17,23 @@ vi.mock('ant-design-vue', async (original) => {
   const actual = await original<typeof import('ant-design-vue')>();
   return {
     ...actual,
-    Select: {
-      props: ['value', 'options'],
+    Select: defineComponent({
+      props: {
+        value: { type: Number, default: undefined },
+        options: {
+          type: Array as PropType<Array<{ label: string; value: number }>>,
+          required: true,
+        },
+      },
       emits: ['update:value'],
+      setup(_props, { expose }) {
+        const element = ref<HTMLSelectElement>();
+        expose({ focus: () => element.value?.focus() });
+        return { element };
+      },
       template:
-        '<select :value="value" @change="$emit(\'update:value\', Number($event.target.value))"><option value="">请选择</option><option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option></select>',
-    },
+        '<select ref="element" :value="value" @change="$emit(\'update:value\', Number($event.target.value))"><option value="">请选择</option><option v-for="option in options" :key="option.value" :value="option.value">{{ option.label }}</option></select>',
+    }),
   };
 });
 const snapshot: TenantTemplate = {
@@ -45,6 +58,23 @@ function button(text: string) {
   ].find((element) => element.textContent?.replaceAll(/\s/g, '') === text);
   if (!result) throw new Error(`Missing button: ${text}`);
   return result;
+}
+function input(label: string) {
+  const element = document.querySelector<HTMLInputElement>(
+    `[aria-label="${label}"]`,
+  );
+  if (!element) throw new Error(`Missing input: ${label}`);
+  return element;
+}
+function field(label: string) {
+  const element = input(label).closest('.ant-form-item');
+  if (!element) throw new Error(`Missing field: ${label}`);
+  return element;
+}
+async function blur(label: string) {
+  input(label).focus();
+  input(label).blur();
+  await nextTick();
 }
 async function fill(label: string, value: string) {
   const element = document.querySelector<HTMLInputElement>(
@@ -102,6 +132,149 @@ afterEach(() => {
   root.remove();
 });
 describe('tenant provisioning and one-time invitation', () => {
+  it('leaves empty fields quiet on blur and focuses the first required error on submit', async () => {
+    await mount();
+    await blur('租户 Code');
+    await blur('租户名称');
+    expect(document.querySelector('.ant-form-item-has-error')).toBeNull();
+    button('下一步').click();
+    await vi.waitFor(() => {
+      expect(
+        field('租户 Code').classList.contains('ant-form-item-has-error'),
+      ).toBe(true);
+      expect(field('租户名称').textContent).toContain('名称须为 1–128 字符');
+      expect(document.activeElement).toBe(input('租户 Code'));
+    });
+    expect(document.querySelector('.ant-alert-error')).toBeNull();
+    expect(state.provision).not.toHaveBeenCalled();
+    await fill('租户 Code', 'ACME');
+    expect(
+      field('租户 Code').classList.contains('ant-form-item-has-error'),
+    ).toBe(true);
+    await fill('租户 Code', 'acme');
+    await vi.waitFor(() =>
+      expect(
+        field('租户 Code').classList.contains('ant-form-item-has-error'),
+      ).toBe(false),
+    );
+    button('下一步').click();
+    await vi.waitFor(() =>
+      expect(document.activeElement).toBe(input('租户名称')),
+    );
+  });
+  it('validates nonempty basic fields on blur and clears only corrected errors', async () => {
+    await mount();
+    await fill('租户 Code', '47Invalid');
+    expect(
+      field('租户 Code').classList.contains('ant-form-item-has-error'),
+    ).toBe(false);
+    await blur('租户 Code');
+    expect(field('租户 Code').textContent).toContain('Code 须以小写字母开头');
+    expect(
+      input('租户 Code').classList.contains('ant-input-status-error'),
+    ).toBe(true);
+    await fill('租户名称', '名'.repeat(129));
+    await blur('租户名称');
+    expect(field('租户名称').textContent).toContain('名称须为 1–128 字符');
+    await fill('租户名称', 'Acme');
+    await vi.waitFor(() =>
+      expect(
+        field('租户名称').classList.contains('ant-form-item-has-error'),
+      ).toBe(false),
+    );
+    expect(
+      field('租户 Code').classList.contains('ant-form-item-has-error'),
+    ).toBe(true);
+    expect(document.querySelector('.ant-alert-error')).toBeNull();
+  });
+  it('shows email errors beneath the input on blur and revalidates immediately while editing', async () => {
+    await mount();
+    await ready();
+    expect(input('管理员邮箱').placeholder).toBe('例如 ops@acme.com');
+    expect(field('管理员邮箱').textContent).toContain('留空也可以');
+    await blur('管理员邮箱');
+    expect(
+      field('管理员邮箱').classList.contains('ant-form-item-has-error'),
+    ).toBe(false);
+    await fill('管理员邮箱', '47wmdyhhd');
+    await blur('管理员邮箱');
+    expect(
+      field('管理员邮箱').querySelector('.ant-form-item-explain-error')
+        ?.textContent,
+    ).toContain('请填写有效的管理员邮箱');
+    expect(
+      input('管理员邮箱').classList.contains('ant-input-status-error'),
+    ).toBe(true);
+    expect(document.querySelector('.ant-alert-error')).toBeNull();
+    await fill('管理员邮箱', 'still-invalid');
+    expect(
+      field('管理员邮箱').classList.contains('ant-form-item-has-error'),
+    ).toBe(true);
+    await fill('管理员邮箱', 'ops@acme.com');
+    await vi.waitFor(() =>
+      expect(
+        field('管理员邮箱').classList.contains('ant-form-item-has-error'),
+      ).toBe(false),
+    );
+    await fill('管理员邮箱', 'invalid');
+    await blur('管理员邮箱');
+    await fill('管理员邮箱', '');
+    await vi.waitFor(() =>
+      expect(
+        field('管理员邮箱').classList.contains('ant-form-item-has-error'),
+      ).toBe(false),
+    );
+    expect(state.provision).not.toHaveBeenCalled();
+  });
+  it('validates all administrator fields on submit and focuses username before email', async () => {
+    await mount();
+    await ready();
+    await fill('管理员用户名', '');
+    await blur('管理员用户名');
+    expect(
+      field('管理员用户名').classList.contains('ant-form-item-has-error'),
+    ).toBe(false);
+    await fill('管理员邮箱', '47wmdyhhd');
+    button('确认开通').click();
+    await vi.waitFor(() => {
+      expect(field('管理员用户名').textContent).toContain(
+        '管理员用户名须为 1–256 字符',
+      );
+      expect(
+        field('管理员邮箱').classList.contains('ant-form-item-has-error'),
+      ).toBe(true);
+      expect(document.activeElement).toBe(input('管理员用户名'));
+    });
+    await fill('管理员用户名', 'a'.repeat(257));
+    expect(
+      field('管理员用户名').classList.contains('ant-form-item-has-error'),
+    ).toBe(true);
+    await fill('管理员用户名', 'admin');
+    button('确认开通').click();
+    await vi.waitFor(() =>
+      expect(document.activeElement).toBe(input('管理员邮箱')),
+    );
+    expect(document.querySelector('.ant-alert-error')).toBeNull();
+    expect(state.provision).not.toHaveBeenCalled();
+  });
+  it('keeps missing template errors at the selector instead of the server banner', async () => {
+    await mount();
+    await ready();
+    await fill('租户模板', '');
+    button('确认开通').click();
+    await vi.waitFor(() =>
+      expect(field('租户模板').textContent).toContain('请选择租户模板'),
+    );
+    expect(document.activeElement).toBe(input('租户模板'));
+    expect(document.querySelector('.ant-alert-error')).toBeNull();
+    expect(state.provision).not.toHaveBeenCalled();
+    await fill('租户模板', '3');
+    await vi.waitFor(() =>
+      expect(
+        field('租户模板').classList.contains('ant-form-item-has-error'),
+      ).toBe(false),
+    );
+  });
   it('validates each step and retains basic fields when navigating back', async () => {
     await mount();
     button('下一步').click();

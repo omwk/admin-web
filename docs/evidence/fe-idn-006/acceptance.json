@@ -1,0 +1,231 @@
+{
+  "date": "2026-11-17",
+  "origin": "http://127.0.0.1:5666",
+  "backend": "http://127.0.0.1:18080",
+  "browser": "Chrome, existing superadmin session",
+  "mockedResponses": false,
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "beforeSubmit": {
+        "errors": 0,
+        "invalid": "false",
+        "value": ""
+      },
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/admin/tenants",
+        "body": {
+          "code": "feidn006_1794869417303",
+          "name": "FE-IDN-006 表单验收",
+          "template_id": 2,
+          "admin_username": "admin"
+        }
+      },
+      "response": {
+        "status": 201,
+        "code": 0,
+        "tenant_id": 17,
+        "invitationIssued": true
+      },
+      "view": {
+        "description": "租户 ID：17。邀请链接 7 天内有效，仅可使用一次。对方的密码由本人设置，你无法看到。关闭后链接即丢弃；如需重发，请在租户列表重新签发管理员邀请。",
+        "linkBoxTop": 239.01129150390625,
+        "linkVisible": true,
+        "title": "邀请链接（仅本次显示）",
+        "viewportWidth": 1919
+      },
+      "screenshots": [
+        "01-empty-email-success-real.jpg",
+        "01-created-tenant-real.jpg",
+        "06-email-placeholder-real.jpg"
+      ],
+      "redaction": "Success screenshot cropped immediately above invitation textarea; invitation credential never saved."
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "trigger": "blur",
+      "banners": 0,
+      "help": "请填写有效的管理员邮箱（最多 256 字符），或留空",
+      "invalid": "true",
+      "redBorder": true,
+      "value": "47wmdyhhd",
+      "screenshot": "02-invalid-email-real.jpg"
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "trigger": "input, without blur",
+      "banners": 0,
+      "errorText": "",
+      "focused": true,
+      "invalid": "false",
+      "redBorder": false,
+      "value": "ops@acme.com",
+      "screenshot": "03-email-cleared-real.jpg"
+    },
+    {
+      "item": 4,
+      "result": "pass",
+      "banners": 0,
+      "fields": [
+        {
+          "className": "ant-input ant-input-status-error css-dev-only-do-not-override-gw3cp3",
+          "help": "租户 CodeCode 须以小写字母开头，仅含小写字母、数字、下划线或短横线，最多 64 字符",
+          "invalid": "true",
+          "label": "租户 Code"
+        },
+        {
+          "className": "ant-input ant-input-status-error css-dev-only-do-not-override-gw3cp3",
+          "help": "租户名称名称须为 1–128 字符",
+          "invalid": "true",
+          "label": "租户名称"
+        }
+      ],
+      "focused": "租户 Code",
+      "screenshot": "04-basic-focus-real.jpg"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "banner": ["资源冲突或仍被引用"],
+      "fieldErrors": 0,
+      "request": {
+        "method": "POST",
+        "path": "/api/v1/admin/tenants",
+        "body": {
+          "code": "feidn006_1794869417303",
+          "name": "FE-IDN-006 重复代码验收",
+          "template_id": 2,
+          "admin_username": "admin"
+        }
+      },
+      "response": {
+        "status": 409,
+        "code": 10004,
+        "message": "资源冲突或仍被引用"
+      },
+      "screenshot": "05-server-conflict-real.jpg"
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "help": "管理员邮箱（可选）填了就必须是合法邮箱；留空也可以，管理员可用邀请链接自行设置。",
+      "invalid": "false",
+      "placeholder": "例如 ops@acme.com",
+      "value": "",
+      "screenshot": "06-email-placeholder-real.jpg"
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "basicEvidence": "04-basic-focus-real.jpg",
+      "banners": 0,
+      "fields": [
+        {
+          "help": "管理员用户名管理员用户名须为 1–256 字符",
+          "invalid": "true",
+          "label": "管理员用户名",
+          "redBorder": true
+        },
+        {
+          "help": "管理员邮箱（可选）请填写有效的管理员邮箱（最多 256 字符），或留空填了就必须是合法邮箱；留空也可以，管理员可用邀请链接自行设置。",
+          "invalid": "true",
+          "label": "管理员邮箱",
+          "redBorder": true
+        }
+      ],
+      "focused": "管理员用户名",
+      "screenshot": "07-administrator-fields-real.jpg"
+    },
+    {
+      "item": 8,
+      "result": "pass",
+      "commands": [
+        {
+          "name": "lint",
+          "command": "bun run lint",
+          "exitCode": 0,
+          "log": "lint.txt"
+        },
+        {
+          "name": "typecheck",
+          "command": "pnpm check:type",
+          "exitCode": 0,
+          "tasks": 38,
+          "log": "typecheck.txt"
+        },
+        {
+          "name": "unit",
+          "command": "bun run test:unit --maxWorkers=2",
+          "exitCode": 0,
+          "files": 148,
+          "tests": 962,
+          "log": "unit.txt"
+        },
+        {
+          "name": "unit-admin",
+          "command": "bun run --cwd apps/admin test:unit --maxWorkers=2",
+          "exitCode": 0,
+          "files": 53,
+          "tests": 255,
+          "log": "unit-admin.txt"
+        },
+        {
+          "name": "build",
+          "command": "pnpm build:antd",
+          "exitCode": 0,
+          "tasks": 11,
+          "log": "build.txt"
+        }
+      ],
+      "notes": "Bun invokes the unchanged repository lint and Vitest scripts. pnpm typecheck and build ran with approved cache access. Logs include non-failing icon/resource and vi.mock warnings."
+    }
+  ],
+  "network": [
+    {
+      "sequence": 92,
+      "event": "Network.requestWillBeSent",
+      "requestId": "266096.2110",
+      "url": "http://127.0.0.1:5666/api/v1/admin/tenants?page=1&page_size=100",
+      "method": "GET"
+    },
+    {
+      "sequence": 93,
+      "event": "Network.requestWillBeSent",
+      "requestId": "266096.2111",
+      "url": "http://127.0.0.1:5666/api/v1/admin/tenant-templates?page=1&page_size=100",
+      "method": "GET"
+    },
+    {
+      "sequence": 100,
+      "event": "Network.responseReceived",
+      "requestId": "266096.2111",
+      "url": "http://127.0.0.1:5666/api/v1/admin/tenant-templates?page=1&page_size=100",
+      "status": 200
+    },
+    {
+      "sequence": 104,
+      "event": "Network.responseReceived",
+      "requestId": "266096.2110",
+      "url": "http://127.0.0.1:5666/api/v1/admin/tenants?page=1&page_size=100",
+      "status": 200
+    }
+  ],
+  "clientValidationProvisionRequests": 0,
+  "cleanup": {
+    "tenant_id": 17,
+    "code": "feidn006_1794869417303",
+    "method": "POST",
+    "path": "/api/v1/admin/tenants/17/disable",
+    "status": 200,
+    "tenantStatus": "suspended",
+    "retained": "Isolated acceptance tenant and its unactivated admin remain suspended; current tenant API has no delete operation. Existing base template 2 unchanged.",
+    "screenshot": "cleanup-tenant-suspended-real.jpg"
+  },
+  "restoredUserPage": "http://127.0.0.1:5666/system/menus",
+  "branch": "feat/fe-idn-006-form-ux",
+  "baseCommit": "d6587855c798d61ada967737fe964ca9737c2da7"
+}
