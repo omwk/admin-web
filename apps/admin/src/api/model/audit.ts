@@ -11,15 +11,20 @@ export interface AuditLog {
   id: number;
   actor_type: 'api_client' | 'system' | 'user';
   actor_id: null | number;
+  actor_name?: null | string;
+  actor_tenant_name?: null | string;
   action: string;
   resource_type: string;
   resource_id: string;
+  resource_label?: null | string;
   before: JsonValue;
   after: JsonValue;
   ip: string;
   user_agent: string;
   trace_id: string;
   result: LogResult;
+  error_code?: null | number;
+  error_message?: null | string;
   created_at: string;
   truncated: boolean;
 }
@@ -43,6 +48,9 @@ interface LogQuery {
   page_size: number;
 }
 export interface AuditLogQuery extends LogQuery {
+  keyword?: string;
+  actor_name?: string;
+  action_prefix?: string;
   actor_id?: number;
   action?: string;
   resource_type?: string;

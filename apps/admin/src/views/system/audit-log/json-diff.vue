@@ -3,49 +3,73 @@ import type { JsonValue } from '#/api/model/audit';
 
 import { computed } from 'vue';
 
-import { Tag, Tree } from 'ant-design-vue';
-
-import { diffTrees } from './json-diff';
+import { auditDiff } from './json-diff';
 
 const props = defineProps<{ before: JsonValue; after: JsonValue }>();
-const trees = computed(() => diffTrees(props.before, props.after));
-const changes = {
-  added: { color: 'success', label: '新增' },
-  changed: { color: 'warning', label: '修改' },
-  removed: { color: 'error', label: '移除' },
-};
+const diff = computed(() => auditDiff(props.before, props.after));
+const valueText = (value: JsonValue | undefined) =>
+  value === undefined ? '—' : JSON.stringify(value, null, 2);
 </script>
 
 <template>
-  <div class="grid gap-4 p-3 lg:grid-cols-2" data-testid="audit-diff">
-    <section
-      v-for="side in ['before', 'after'] as const"
-      :key="side"
-      :aria-label="side"
-      class="min-w-0 rounded border p-3"
-    >
+  <div
+    class="overflow-x-auto p-3"
+    data-testid="audit-diff"
+    :data-shape="diff.kind"
+  >
+    <p v-if="diff.kind === 'empty'">—</p>
+    <p v-else-if="diff.kind === 'unchanged'">无变化</p>
+    <template v-else>
       <h3 class="mb-3 font-semibold">
-        {{ side === 'before' ? 'before · 变更前' : 'after · 变更后' }}
+        {{
+          diff.kind === 'created'
+            ? '新建'
+            : diff.kind === 'deleted'
+              ? '删除'
+              : '变更字段'
+        }}
       </h3>
-      <Tree
-        :tree-data="trees[side]"
-        default-expand-all
-        :selectable="false"
-        block-node
+      <table
+        class="w-full border-collapse text-left text-sm"
+        aria-label="审计字段"
       >
-        <template #title="node">
-          <span class="whitespace-pre-wrap break-all font-mono text-xs">{{
-            node.title
-          }}</span>
-          <Tag
-            v-if="node.change !== 'same'"
-            :color="changes[node.change as keyof typeof changes].color"
-            class="ml-2"
-          >
-            {{ changes[node.change as keyof typeof changes].label }}
-          </Tag>
-        </template>
-      </Tree>
-    </section>
+        <thead>
+          <tr>
+            <th class="border p-2">字段</th>
+            <th v-if="diff.kind !== 'created'" class="border p-2">旧值</th>
+            <th v-if="diff.kind !== 'deleted'" class="border p-2">新值</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="field in diff.fields" :key="field.key">
+            <th scope="row" class="border p-2 font-mono font-normal">
+              {{ field.field }}
+            </th>
+            <td
+              v-if="diff.kind !== 'created'"
+              class="whitespace-pre-wrap break-all border p-2 font-mono"
+            >
+              <del v-if="field.before !== undefined">
+                <span>{{ valueText(field.before) }}</span>
+              </del>
+              <span v-else>—</span>
+            </td>
+            <td
+              v-if="diff.kind !== 'deleted'"
+              class="whitespace-pre-wrap break-all border p-2 font-mono"
+            >
+              <mark v-if="field.after !== undefined">
+                <span
+                  class="rounded bg-green-100 px-1 text-green-900 dark:bg-green-950 dark:text-green-100"
+                >
+                  {{ valueText(field.after) }}
+                </span>
+              </mark>
+              <span v-else>—</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </template>
   </div>
 </template>

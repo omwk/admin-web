@@ -17,6 +17,7 @@ import {
   Space,
   Table,
   Tag,
+  Typography,
 } from 'ant-design-vue';
 
 import {
@@ -79,6 +80,7 @@ let roleSequence = 0;
 const dictionary = useMetaDictionary('user_status', userStatusOptions);
 const statusOptions = dictionary.options;
 const columns = [
+  { dataIndex: 'id', title: 'ID', width: 110, fixed: 'left' as const },
   { dataIndex: 'username', title: '用户名', width: 150 },
   { dataIndex: 'nickname', title: '昵称', width: 140 },
   { dataIndex: 'email', title: '邮箱', width: 180 },
@@ -327,14 +329,20 @@ onUnmounted(() => {
         :data-source="users"
         :loading="loading"
         :pagination="pagination"
-        :scroll="{ x: 1520 }"
+        :scroll="{ x: 1630 }"
         row-key="id"
         data-testid="user-table"
         @change="handleTableChange"
       >
         <template #bodyCell="{ column, record, text }">
+          <Typography.Text
+            v-if="column.dataIndex === 'id'"
+            :copyable="{ text: String(record.id) }"
+          >
+            <span class="font-mono">{{ record.id }}</span>
+          </Typography.Text>
           <DictTag
-            v-if="column.dataIndex === 'status'"
+            v-else-if="column.dataIndex === 'status'"
             type="user_status"
             :value="record.status"
           />

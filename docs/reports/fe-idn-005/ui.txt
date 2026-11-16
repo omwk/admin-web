@@ -1,0 +1,11 @@
+FE-IDN-005 check 9 passed
+FE-IDN-005 check 10 passed
+FE-IDN-005 check 1 passed
+FE-IDN-005 check 2 passed
+FE-IDN-005 check 3 passed
+FE-IDN-005 check 4 passed
+FE-IDN-005 check 5 passed
+FE-IDN-005 check 7 passed
+FE-IDN-005 check 8 passed
+FE-IDN-005 check 11 passed
+{"checks":10,"browserErrors":0,"source":"real-backend-plus-explicit-response-fixtures"}

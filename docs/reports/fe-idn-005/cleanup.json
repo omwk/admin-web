@@ -1,0 +1,14 @@
+{
+  "created_resources": [],
+  "cutoff": "2026-11-16T03:59:55.0358144Z",
+  "database": "commercehub_test",
+  "deleted": 8,
+  "deleted_ids": [1807, 1808, 1809, 1810, 1811, 1812, 1813, 1814],
+  "method": "transaction-local audit-prune guard with task-specific predicate",
+  "migration": 31,
+  "modified_settings": [],
+  "remaining_task_noise": 0,
+  "retained_ids": [1804, 1805, 1806],
+  "sql": "BEGIN; SELECT set_config('commercehub.audit_prune_before', :cutoff, true); DELETE FROM audit_log WHERE created_at \u003e= :start AND created_at \u003c :cutoff AND user_agent = 'FE-IDN-005 acceptance browser' AND actor_id=1 AND tenant_id=1 AND id\u003e1806; COMMIT;",
+  "start": "2026-11-16T03:03:53.317825Z"
+}

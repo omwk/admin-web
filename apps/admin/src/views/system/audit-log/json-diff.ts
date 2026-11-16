@@ -64,3 +64,85 @@ export function diffTrees(before: JsonValue, after: JsonValue) {
     after: [tree(after, before, true, 'after')],
   };
 }
+
+export interface FieldDiff {
+  key: string;
+  field: string;
+  before: JsonValue | undefined;
+  after: JsonValue | undefined;
+  change: 'added' | 'changed' | 'removed';
+}
+export interface AuditDiff {
+  kind: 'created' | 'deleted' | 'empty' | 'unchanged' | 'updated';
+  fields: FieldDiff[];
+}
+
+function record(
+  value: JsonValue | undefined,
+): value is { [key: string]: JsonValue } {
+  return object(value) && !Array.isArray(value);
+}
+function empty(value: JsonValue | undefined): boolean {
+  return (
+    value === null ||
+    value === undefined ||
+    (object(value) && Object.keys(value).length === 0)
+  );
+}
+function fieldName(path: string[]): string {
+  let label = '';
+  for (const key of path)
+    label += /^[a-z_]\w*$/i.test(key)
+      ? `${label ? '.' : ''}${key}`
+      : `[${JSON.stringify(key)}]`;
+  return label || '$';
+}
+function fields(
+  before: JsonValue | undefined,
+  after: JsonValue | undefined,
+  path: string[] = [],
+): FieldDiff[] {
+  if (equal(before, after)) return [];
+  if (
+    (record(before) && record(after)) ||
+    (path.length === 0 &&
+      (before === undefined || after === undefined) &&
+      (record(before) || record(after)))
+  ) {
+    const keys = new Set([
+      ...Object.keys(before ?? {}),
+      ...Object.keys(after ?? {}),
+    ]);
+    return [...keys].flatMap((key) =>
+      fields(
+        record(before) && Object.hasOwn(before, key) ? before[key] : undefined,
+        record(after) && Object.hasOwn(after, key) ? after[key] : undefined,
+        [...path, key],
+      ),
+    );
+  }
+  let change: FieldDiff['change'] = 'changed';
+  if (before === undefined) change = 'added';
+  else if (after === undefined) change = 'removed';
+  return [
+    {
+      key: JSON.stringify(path),
+      field: fieldName(path),
+      before,
+      after,
+      change,
+    },
+  ];
+}
+
+export function auditDiff(before: JsonValue, after: JsonValue): AuditDiff {
+  const oldValue = empty(before) ? undefined : before;
+  const newValue = empty(after) ? undefined : after;
+  if (oldValue === undefined && newValue === undefined)
+    return { kind: 'empty', fields: [] };
+  if (equal(oldValue, newValue)) return { kind: 'unchanged', fields: [] };
+  let kind: AuditDiff['kind'] = 'updated';
+  if (oldValue === undefined) kind = 'created';
+  else if (newValue === undefined) kind = 'deleted';
+  return { kind, fields: fields(oldValue, newValue) };
+}

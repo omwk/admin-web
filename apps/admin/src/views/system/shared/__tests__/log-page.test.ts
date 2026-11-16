@@ -27,6 +27,8 @@ describe('read-only log query state', () => {
   it('uses RFC3339 bounds and exact server filter names', () => {
     const filters = {
       identity: 7,
+      keyword: '  admin  ',
+      actionPrefix: ' system.tenant. ',
       action: ' identity.login ',
       resourceType: ' user ',
       result: 'failure' as const,
@@ -37,6 +39,8 @@ describe('read-only log query state', () => {
     };
     expect(auditQuery(filters)).toEqual({
       actor_id: 7,
+      keyword: 'admin',
+      action_prefix: 'system.tenant.',
       action: 'identity.login',
       resource_type: 'user',
       result: 'failure',
@@ -54,23 +58,27 @@ describe('read-only log query state', () => {
   it('retains submitted filters across pages, resets on search/size changes, and clears filters', async () => {
     const { state, fetchPage, app } = setup();
     state.filters.action = 'identity.login';
+    state.filters.keyword = 'admin';
+    state.filters.actionPrefix = 'identity.';
     await state.search();
     state.filters.action = 'draft';
     await state.changePage({ current: 2, pageSize: 20 });
     expect(fetchPage).toHaveBeenLastCalledWith(
-      { action: 'identity.login' },
+      { action: 'identity.login', keyword: 'admin', actionPrefix: 'identity.' },
       2,
       20,
     );
     await state.changePage({ current: 2, pageSize: 50 });
     expect(fetchPage).toHaveBeenLastCalledWith(
-      { action: 'identity.login' },
+      { action: 'identity.login', keyword: 'admin', actionPrefix: 'identity.' },
       1,
       50,
     );
     await state.reset();
     expect(fetchPage).toHaveBeenLastCalledWith({}, 1, 50);
     expect(state.filters.action).toBeUndefined();
+    expect(state.filters.keyword).toBeUndefined();
+    expect(state.filters.actionPrefix).toBeUndefined();
     app.unmount();
   });
 
