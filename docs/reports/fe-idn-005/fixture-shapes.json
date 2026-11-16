@@ -1,0 +1,46 @@
+{
+  "source": "browser-response-fixtures-only",
+  "persistedRows": 0,
+  "cases": [101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111],
+  "pagination": [
+    {
+      "page": "1",
+      "page_size": "20"
+    },
+    {
+      "result": "success",
+      "keyword": "admin",
+      "action_prefix": "identity.",
+      "page": "1",
+      "page_size": "20"
+    },
+    {
+      "result": "success",
+      "keyword": "admin",
+      "action_prefix": "identity.",
+      "page": "2",
+      "page_size": "20"
+    },
+    {
+      "result": "success",
+      "keyword": "admin",
+      "action_prefix": "identity.",
+      "page": "2",
+      "page_size": "20"
+    },
+    {
+      "page": "1",
+      "page_size": "20"
+    },
+    {
+      "keyword": "admin",
+      "page": "1",
+      "page_size": "20"
+    },
+    {
+      "keyword": "admin",
+      "page": "1",
+      "page_size": "50"
+    }
+  ]
+}

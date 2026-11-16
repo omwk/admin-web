@@ -1,0 +1,56 @@
+{
+  "verified_at": "2026-11-16T04:09:33.158Z",
+  "branch": "feat/fe-idn-005-audit-readability",
+  "base_commit": "3b25bf5",
+  "checks": [
+    {
+      "name": "lint",
+      "command": "pnpm lint",
+      "exit_code": 0,
+      "evidence": "lint.txt"
+    },
+    {
+      "name": "typecheck",
+      "command": "pnpm -F @vben/web-antd typecheck",
+      "exit_code": 0,
+      "evidence": "typecheck.txt"
+    },
+    {
+      "name": "unit",
+      "command": "pnpm -F @vben/web-antd test:unit",
+      "exit_code": 0,
+      "evidence": "unit.txt"
+    },
+    {
+      "name": "build",
+      "command": "pnpm -F @vben/web-antd build",
+      "exit_code": 0,
+      "evidence": "build.txt"
+    }
+  ],
+  "unit": {
+    "files": 53,
+    "passed": 250,
+    "failed": 0
+  },
+  "browser": {
+    "command": "node apps/admin/e2e/fe-idn-005.mjs",
+    "exit_code": 0,
+    "acceptance_checks": 10,
+    "browser_errors": 0,
+    "evidence": "ui.json"
+  },
+  "action_labels": {
+    "backend": 83,
+    "frontend": 83,
+    "mismatches": 0,
+    "evidence": "action-labels.json"
+  },
+  "cleanup": {
+    "deleted": 8,
+    "retained_ids": [1804, 1805, 1806],
+    "remaining_task_noise": 0,
+    "evidence": "cleanup.json",
+    "verified": "cleanup-verify.json"
+  }
+}

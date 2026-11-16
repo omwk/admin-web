@@ -1,0 +1,96 @@
+[
+  {
+    "name": "keyword-actor",
+    "query": {
+      "keyword": "admin",
+      "page": "1",
+      "page_size": "20"
+    },
+    "total": 11,
+    "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+  },
+  {
+    "name": "keyword-resource",
+    "query": {
+      "keyword": "admin",
+      "page": "1",
+      "page_size": "20"
+    },
+    "total": 11,
+    "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+  },
+  {
+    "name": "keyword-action",
+    "query": {
+      "keyword": "identity.login",
+      "page": "1",
+      "page_size": "20"
+    },
+    "total": 10,
+    "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1805, 1804]
+  },
+  {
+    "name": "module",
+    "query": {
+      "action_prefix": "system.tenant.",
+      "page": "1",
+      "page_size": "20"
+    },
+    "total": 1,
+    "ids": [1806]
+  },
+  {
+    "name": "success",
+    "query": {
+      "result": "success",
+      "page": "1",
+      "page_size": "20"
+    },
+    "total": 11,
+    "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+  },
+  {
+    "name": "failure",
+    "query": {
+      "result": "failure",
+      "page": "1",
+      "page_size": "20"
+    },
+    "total": 0,
+    "ids": []
+  },
+  {
+    "name": "time",
+    "query": {
+      "from": "2026-11-15T16:00:00.000Z",
+      "to": "2026-11-16T15:59:59.000Z",
+      "page": "1",
+      "page_size": "20"
+    },
+    "total": 11,
+    "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+  },
+  {
+    "name": "combined",
+    "query": {
+      "result": "success",
+      "from": "2026-11-15T16:00:00.000Z",
+      "to": "2026-11-16T15:59:59.000Z",
+      "keyword": "admin",
+      "action_prefix": "identity.",
+      "page": "1",
+      "page_size": "20"
+    },
+    "total": 10,
+    "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1805, 1804]
+  },
+  {
+    "name": "reset",
+    "query": {
+      "page": "1",
+      "page_size": "20"
+    },
+    "total": 11,
+    "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+  }
+]

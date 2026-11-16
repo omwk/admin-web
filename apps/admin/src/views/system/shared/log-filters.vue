@@ -9,7 +9,7 @@ import { Button, DatePicker, Input, InputNumber, Select } from 'ant-design-vue';
 
 import { useMetaDictionary } from '#/composables/use-meta-dictionary';
 
-import { logResults } from './log-filters';
+import { auditModules, logResults } from './log-filters';
 
 const props = defineProps<{
   filters: LogFilters;
@@ -26,13 +26,13 @@ const emit = defineEmits<{
 
 const dictionary = useMetaDictionary('audit_result', logResults);
 
-const action = computed({
-  get: () => props.filters.action,
-  set: (value: string) => emit('update', { action: value }),
+const keyword = computed({
+  get: () => props.filters.keyword,
+  set: (value: string) => emit('update', { keyword: value }),
 });
-const resourceType = computed({
-  get: () => props.filters.resourceType,
-  set: (value: string) => emit('update', { resourceType: value }),
+const actionPrefix = computed({
+  get: () => props.filters.actionPrefix,
+  set: (value: string | undefined) => emit('update', { actionPrefix: value }),
 });
 const result = computed({
   get: () => props.filters.result,
@@ -60,26 +60,29 @@ const range = computed({
   >
     <Input
       v-if="kind === 'audit'"
-      v-model:value="action"
-      aria-label="操作类型"
-      placeholder="操作类型（如 identity.login）"
+      v-model:value="keyword"
+      aria-label="关键字"
+      placeholder="操作者、对象或操作关键字"
       :maxlength="128"
       allow-clear
       class="!w-64"
     />
-    <Input
+    <Select
       v-if="kind === 'audit'"
-      v-model:value="resourceType"
-      aria-label="资源类型"
-      placeholder="资源类型（如 user）"
-      :maxlength="64"
+      v-model:value="actionPrefix"
+      aria-label="模块"
+      placeholder="全部模块"
+      :options="auditModules"
+      show-search
+      option-filter-prop="label"
       allow-clear
       class="!w-48"
     />
     <InputNumber
+      v-if="kind === 'login'"
       v-model:value="identity"
-      :aria-label="kind === 'audit' ? '操作者 ID' : '用户 ID'"
-      :placeholder="kind === 'audit' ? '操作者 ID' : '用户 ID'"
+      aria-label="用户 ID"
+      placeholder="用户 ID"
       :min="1"
       :max="Number.MAX_SAFE_INTEGER"
       :precision="0"

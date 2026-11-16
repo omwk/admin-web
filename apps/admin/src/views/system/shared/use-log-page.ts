@@ -91,6 +91,8 @@ export function useLogPage<T>(
     await load();
   }
   async function reset() {
+    delete filters.keyword;
+    delete filters.actionPrefix;
     delete filters.action;
     delete filters.identity;
     delete filters.range;

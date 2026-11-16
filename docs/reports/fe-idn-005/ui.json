@@ -1,0 +1,224 @@
+{
+  "date": "2026-11-16T03:55:10.545Z",
+  "checks": [
+    {
+      "item": 1,
+      "assertion": "访问范围显示 12/0/1 个租户；成员 count=8 不误显示为 8 个租户，均无字段对比",
+      "source": "response-fixture",
+      "screenshot": "02-read-scope-fixture.png"
+    },
+    {
+      "item": 2,
+      "assertion": "只列出四个变化字段；旧值 del 删除线，新值 mark 高亮，未变化字段隐藏",
+      "source": "response-fixture",
+      "screenshot": "03-update-fields-fixture.png"
+    },
+    {
+      "item": 3,
+      "assertion": "仅 after 显示新建字段表和 ***；仅 before 显示删除字段表",
+      "source": "response-fixture",
+      "screenshots": ["04-created-fixture.png", "04-deleted-fixture.png"]
+    },
+    {
+      "item": 4,
+      "assertion": "相同对象忽略字段顺序显示无变化；before/after 都空显示 —",
+      "source": "response-fixture",
+      "screenshots": [
+        "05-unchanged-fixture.png",
+        "06-empty-source-fallback-fixture.png"
+      ]
+    },
+    {
+      "item": 5,
+      "assertion": "空 IP 单元格和详情中的 IP/UA 显示 —；操作者/对象缺名按用户 #7、#2 回退",
+      "source": "response-fixture",
+      "screenshot": "06-empty-source-fallback-fixture.png"
+    },
+    {
+      "item": 7,
+      "assertion": "真实审计显示 admin（default）；夹具验证租户 acme、用户 sales01、字典 order_status，以及用户 #7、#2 回退",
+      "source": "real-backend-and-response-fixture",
+      "screenshots": [
+        "01-real-names-actions.png",
+        "06-empty-source-fallback-fixture.png"
+      ]
+    },
+    {
+      "item": 8,
+      "assertion": "中文操作悬停显示原始 identity.login；未登记 action 保留 future.action",
+      "source": "real-backend-and-response-fixture",
+      "screenshots": [
+        "01-real-names-actions.png",
+        "06-empty-source-fallback-fixture.png"
+      ]
+    },
+    {
+      "item": 9,
+      "assertion": "真实 keyword/action_prefix/result/时间单独及组合查询、空态与重置通过；actor_name 契约通过",
+      "source": "real-backend",
+      "screenshot": "08-real-combined-filters.png",
+      "queries": "real-queries.json"
+    },
+    {
+      "item": 10,
+      "assertion": "真实用户列表 ID 等宽显示，可复制，剪贴板内容等于该行 ID",
+      "source": "real-backend",
+      "userId": "3",
+      "idVisibility": {
+        "id": "3",
+        "fullyVisible": true
+      },
+      "screenshot": "10-real-copyable-user-id.png"
+    },
+    {
+      "item": 11,
+      "assertion": "失败结果红点、失败原因 tooltip、展开 error_code/error_message 原样显示；目标租户 acme 可读",
+      "source": "response-fixture",
+      "screenshot": "07-failure-details-fixture.png"
+    }
+  ],
+  "browserErrors": [],
+  "fixtureQueries": [
+    {
+      "page": "1",
+      "page_size": "20"
+    },
+    {
+      "result": "success",
+      "keyword": "admin",
+      "action_prefix": "identity.",
+      "page": "1",
+      "page_size": "20"
+    },
+    {
+      "result": "success",
+      "keyword": "admin",
+      "action_prefix": "identity.",
+      "page": "2",
+      "page_size": "20"
+    },
+    {
+      "result": "success",
+      "keyword": "admin",
+      "action_prefix": "identity.",
+      "page": "2",
+      "page_size": "20"
+    },
+    {
+      "page": "1",
+      "page_size": "20"
+    },
+    {
+      "keyword": "admin",
+      "page": "1",
+      "page_size": "20"
+    },
+    {
+      "keyword": "admin",
+      "page": "1",
+      "page_size": "50"
+    }
+  ],
+  "realQueries": [
+    {
+      "name": "keyword-actor",
+      "query": {
+        "keyword": "admin",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 11,
+      "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+    },
+    {
+      "name": "keyword-resource",
+      "query": {
+        "keyword": "admin",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 11,
+      "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+    },
+    {
+      "name": "keyword-action",
+      "query": {
+        "keyword": "identity.login",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 10,
+      "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1805, 1804]
+    },
+    {
+      "name": "module",
+      "query": {
+        "action_prefix": "system.tenant.",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 1,
+      "ids": [1806]
+    },
+    {
+      "name": "success",
+      "query": {
+        "result": "success",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 11,
+      "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+    },
+    {
+      "name": "failure",
+      "query": {
+        "result": "failure",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 0,
+      "ids": []
+    },
+    {
+      "name": "time",
+      "query": {
+        "from": "2026-11-15T16:00:00.000Z",
+        "to": "2026-11-16T15:59:59.000Z",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 11,
+      "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+    },
+    {
+      "name": "combined",
+      "query": {
+        "result": "success",
+        "from": "2026-11-15T16:00:00.000Z",
+        "to": "2026-11-16T15:59:59.000Z",
+        "keyword": "admin",
+        "action_prefix": "identity.",
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 10,
+      "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1805, 1804]
+    },
+    {
+      "name": "reset",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "total": 11,
+      "ids": [1814, 1813, 1812, 1811, 1810, 1809, 1808, 1807, 1806, 1805, 1804]
+    }
+  ],
+  "cleanup": {
+    "createdResources": [],
+    "modifiedSettings": [],
+    "sampleAuditRowsInserted": 0,
+    "auditNoiseUserAgent": "FE-IDN-005 acceptance browser"
+  }
+}
