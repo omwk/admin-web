@@ -2,7 +2,7 @@ import type { IdentityMenu } from '#/api/model/menu';
 
 import { describe, expect, it } from 'vitest';
 
-import { auditFallbackRoutes, auditMenus } from '../audit-menus';
+import { auditMenus } from '../audit-menus';
 import { resolveMenuComponent } from '../component-registry';
 
 const menu = (id: number, path: string): IdentityMenu => ({
@@ -34,20 +34,7 @@ describe('audit menu boundary', () => {
       auditMenus([parent], ['system:audit:list'])[0]?.children,
     ).toHaveLength(3);
   });
-  it('provides hidden forbidden routes and resolves the backend component names', () => {
-    expect(auditFallbackRoutes()).toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({
-          path: '/system/audit-logs',
-          component: '/_core/fallback/forbidden.vue',
-          meta: { hideInMenu: true, title: '403' },
-        }),
-        expect.objectContaining({
-          path: '/system/login-logs',
-          component: '/_core/fallback/forbidden.vue',
-        }),
-      ]),
-    );
+  it('resolves the backend component names', () => {
     expect(resolveMenuComponent('system/audit-log/index')).toBe(
       '/system/audit-log/index.vue',
     );

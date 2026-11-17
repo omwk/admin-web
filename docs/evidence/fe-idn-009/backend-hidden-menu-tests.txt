@@ -1,0 +1,88 @@
+=== RUN   TestMenuTreeFilteringAndOrdering
+--- PASS: TestMenuTreeFilteringAndOrdering (0.00s)
+=== RUN   TestMenuTreeCapsDepthAtFiveAndDropsCycles
+--- PASS: TestMenuTreeCapsDepthAtFiveAndDropsCycles (0.00s)
+=== RUN   TestMenuTreeProjectsHiddenPagesWithGrants
+=== RUN   TestMenuTreeProjectsHiddenPagesWithGrants/granted_hidden_page
+=== RUN   TestMenuTreeProjectsHiddenPagesWithGrants/ungranted_hidden_page
+--- PASS: TestMenuTreeProjectsHiddenPagesWithGrants (0.00s)
+    --- PASS: TestMenuTreeProjectsHiddenPagesWithGrants/granted_hidden_page (0.00s)
+    --- PASS: TestMenuTreeProjectsHiddenPagesWithGrants/ungranted_hidden_page (0.00s)
+=== RUN   TestMenuSeedCoversDeclaredPages
+=== RUN   TestMenuSeedCoversDeclaredPages/tenant-1
+    seed_pages_test.go:59: tenant=1 declared pages=18 menus=28
+=== RUN   TestMenuSeedCoversDeclaredPages/tenant-23
+    seed_pages_test.go:59: tenant=23 declared pages=18 menus=28
+--- PASS: TestMenuSeedCoversDeclaredPages (0.61s)
+    --- PASS: TestMenuSeedCoversDeclaredPages/tenant-1 (0.31s)
+    --- PASS: TestMenuSeedCoversDeclaredPages/tenant-23 (0.29s)
+=== RUN   TestMenuSeedCoverageRejectsMissingPage
+--- PASS: TestMenuSeedCoverageRejectsMissingPage (0.00s)
+PASS
+ok  	github.com/omwk/go-admin-api/internal/modules/identity	0.910s
+=== RUN   TestMenuProjectionCacheSkipsLegacyPayload
+--- PASS: TestMenuProjectionCacheSkipsLegacyPayload (0.03s)
+PASS
+ok  	github.com/omwk/go-admin-api/internal/modules/identity/authz	0.306s
+=== RUN   TestIdentityProfileIntegrationSeedAndAggregatedReads
+=== PAUSE TestIdentityProfileIntegrationSeedAndAggregatedReads
+=== RUN   TestIdentityProfileIntegrationRolesAndHiddenAncestors
+=== PAUSE TestIdentityProfileIntegrationRolesAndHiddenAncestors
+=== RUN   TestIdentityProfileIntegrationDisabledUserIsDenied
+=== PAUSE TestIdentityProfileIntegrationDisabledUserIsDenied
+=== RUN   TestProfileRepositoryDryRunMatrixMatchesInterface
+=== RUN   TestProfileRepositoryDryRunMatrixMatchesInterface/Identity
+=== RUN   TestProfileRepositoryDryRunMatrixMatchesInterface/Menus
+=== RUN   TestProfileRepositoryDryRunMatrixMatchesInterface/RoleMenus
+=== NAME  TestProfileRepositoryDryRunMatrixMatchesInterface
+    identity_profile_query_test.go:45: repo.Profile 方法数 = 3; DryRun 登记数 = 3
+--- PASS: TestProfileRepositoryDryRunMatrixMatchesInterface (0.02s)
+    --- PASS: TestProfileRepositoryDryRunMatrixMatchesInterface/Identity (0.02s)
+    --- PASS: TestProfileRepositoryDryRunMatrixMatchesInterface/Menus (0.00s)
+    --- PASS: TestProfileRepositoryDryRunMatrixMatchesInterface/RoleMenus (0.00s)
+=== RUN   TestProfileIntegrationUsesExactlyTwoMenuQueries
+=== PAUSE TestProfileIntegrationUsesExactlyTwoMenuQueries
+=== RUN   TestProfileRepositoryRejectsMissingIdentity
+--- PASS: TestProfileRepositoryRejectsMissingIdentity (0.00s)
+=== RUN   TestSeedMenuIntegrationUpgradeAndIdempotency
+=== PAUSE TestSeedMenuIntegrationUpgradeAndIdempotency
+=== RUN   TestSeedMenuIntegrationPreservesCustomAndForeignMenus
+=== PAUSE TestSeedMenuIntegrationPreservesCustomAndForeignMenus
+=== RUN   TestSeedMenuIntegrationNewTenantNavigationAndPermissions
+=== PAUSE TestSeedMenuIntegrationNewTenantNavigationAndPermissions
+=== CONT  TestIdentityProfileIntegrationSeedAndAggregatedReads
+=== CONT  TestSeedMenuIntegrationNewTenantNavigationAndPermissions
+=== CONT  TestSeedMenuIntegrationPreservesCustomAndForeignMenus
+=== CONT  TestSeedMenuIntegrationUpgradeAndIdempotency
+=== CONT  TestProfileIntegrationUsesExactlyTwoMenuQueries
+=== CONT  TestIdentityProfileIntegrationDisabledUserIsDenied
+=== CONT  TestIdentityProfileIntegrationRolesAndHiddenAncestors
+=== NAME  TestIdentityProfileIntegrationSeedAndAggregatedReads
+    database.go:109: test database template clone: commercehub_test_1794925018_01m7mxwfd49aea1qd0yx7g1kcq
+=== NAME  TestSeedMenuIntegrationPreservesCustomAndForeignMenus
+    database.go:109: test database template clone: commercehub_test_1794925018_01m7mxwfrr2phxpqmqfr3a7h61
+=== NAME  TestSeedMenuIntegrationNewTenantNavigationAndPermissions
+    database.go:109: test database template clone: commercehub_test_1794925019_01m7mxwg6ck5ccdyjw198ym3jg
+=== NAME  TestSeedMenuIntegrationPreservesCustomAndForeignMenus
+    identity_seed_menu_integration_test.go:50: custom menu and foreign tenant with identical seed path preserved field for field
+--- PASS: TestIdentityProfileIntegrationSeedAndAggregatedReads (5.31s)
+=== NAME  TestSeedMenuIntegrationNewTenantNavigationAndPermissions
+    identity_seed_menu_integration_test.go:88: new tenant=2: 28 menus; root order 1/2/3/4; hidden routes projected with visible=false; OpenAPI valid
+=== NAME  TestSeedMenuIntegrationUpgradeAndIdempotency
+    database.go:109: test database template clone: commercehub_test_1794925023_01m7mxwmevjmcgs7b88j6gvshv
+--- PASS: TestSeedMenuIntegrationPreservesCustomAndForeignMenus (5.70s)
+=== NAME  TestProfileIntegrationUsesExactlyTwoMenuQueries
+    database.go:109: test database template clone: commercehub_test_1794925024_01m7mxwmvgkby4p43qpf0r5mmf
+--- PASS: TestSeedMenuIntegrationNewTenantNavigationAndPermissions (9.12s)
+--- PASS: TestProfileIntegrationUsesExactlyTwoMenuQueries (9.21s)
+=== NAME  TestIdentityProfileIntegrationDisabledUserIsDenied
+    database.go:109: test database template clone: commercehub_test_1794925027_01m7mxwr5w1df74br5df0y23r0
+=== NAME  TestIdentityProfileIntegrationRolesAndHiddenAncestors
+    database.go:109: test database template clone: commercehub_test_1794925027_01m7mxwre01grz4913wvqhtm5f
+=== NAME  TestSeedMenuIntegrationUpgradeAndIdempotency
+    identity_seed_menu_integration_test.go:34: menus 21 -> 28 -> 28; stable IDs, updated type/parent/fields, identical second seed
+--- PASS: TestSeedMenuIntegrationUpgradeAndIdempotency (11.66s)
+--- PASS: TestIdentityProfileIntegrationDisabledUserIsDenied (11.71s)
+--- PASS: TestIdentityProfileIntegrationRolesAndHiddenAncestors (12.06s)
+PASS
+ok  	github.com/omwk/go-admin-api/internal/bootstrap	12.469s

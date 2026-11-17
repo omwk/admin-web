@@ -30,14 +30,9 @@ export function menusToRoutes(
   parentPath = '',
 ): RouteRecordStringComponent[] {
   return [...menus]
-    .filter(
-      (menu) =>
-        menu.type !== 'button' &&
-        menu.visible !== false &&
-        menu.status !== 'disabled',
-    )
+    .filter((menu) => menu.type !== 'button' && menu.status !== 'disabled')
     .toSorted((a, b) => a.sort - b.sort || a.id - b.id)
-    .map((menu) => {
+    .flatMap((menu) => {
       const link =
         menu.is_external || menu.type === 'link'
           ? externalURL(menu.path)
@@ -60,12 +55,13 @@ export function menusToRoutes(
         component = 'MenuOutlet';
       }
       const route: RouteRecordStringComponent = {
-        children,
+        children: isDirectory ? children : [],
         component,
         meta: {
           // Only presentation metadata is accepted; never copy ignoreAccess or
           // other frontend guard flags from the backend's free-form meta object.
           icon: menu.icon || undefined,
+          hideInMenu: menu.visible === false,
           keepAlive: menu.keep_alive && component !== NOT_FOUND_COMPONENT,
           order: menu.sort,
           title:
@@ -75,9 +71,23 @@ export function menusToRoutes(
         name: `IdentityMenu_${menu.id}`,
         path,
       };
-      if (isDirectory) route.redirect = children[0]?.path;
+      if (isDirectory)
+        route.redirect = children.find(
+          (child) => !child.meta?.hideInMenu,
+        )?.path;
       if (isInternalPath(menu.redirect)) route.redirect = menu.redirect;
-      return route;
+      // Page components do not contain a RouterView. Mount their descendants
+      // beside the page while retaining the backend-derived sidebar owner.
+      return [
+        route,
+        ...(isDirectory
+          ? []
+          : children.map((child) =>
+              child.meta?.hideInMenu
+                ? { ...child, meta: { ...child.meta, activePath: path } }
+                : child,
+            )),
+      ];
     });
 }
 

@@ -24,22 +24,14 @@ export function personalRoutes(): RouteRecordStringComponent[] {
   ];
 }
 
-/** Missing grants for known application pages resolve to 403; unknown URLs stay 404. */
+/** Shared permission-denied page; business paths only come from backend menus. */
 export function forbiddenShellRoutes(): RouteRecordStringComponent[] {
   return [
-    '/system/users',
-    '/system/roles',
-    '/system/menus',
-    '/system/depts',
-    '/system/notifications',
-    '/system/notifications/channels',
-    '/trade/orders',
-    '/crm/customers',
-    '/crm/inquiries',
-  ].map((path, index) => ({
-    path,
-    name: `ShellForbidden_${index}`,
-    component: '/_core/fallback/forbidden.vue',
-    meta: { hideInMenu: true, hideInTab: true, title: '403' },
-  }));
+    {
+      path: '/403',
+      name: 'Forbidden',
+      component: '/_core/fallback/forbidden.vue',
+      meta: { hideInMenu: true, hideInTab: true, title: '403' },
+    },
+  ];
 }

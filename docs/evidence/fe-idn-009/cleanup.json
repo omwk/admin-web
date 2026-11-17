@@ -1,0 +1,76 @@
+{
+  "cutoff": "2026-11-17T14:33:39.371Z",
+  "rows": [
+    {
+      "table": "audit_log",
+      "deleted": 17
+    },
+    {
+      "table": "sys_refresh_token",
+      "deleted": 16
+    },
+    {
+      "table": "password_history",
+      "deleted": 2
+    },
+    {
+      "table": "auth_token",
+      "deleted": 0
+    },
+    {
+      "table": "sys_user",
+      "deleted": 1
+    }
+  ],
+  "sql": [
+    {
+      "sql": "SELECT set_config('commercehub.audit_prune_before',$1,true)",
+      "params": ["2026-11-17T14:33:39.371Z"]
+    },
+    {
+      "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at>=$3 AND created_at<$4 RETURNING id",
+      "params": [
+        "FE-IDN-009 acceptance API",
+        "FE-IDN-009 acceptance browser",
+        "2026-11-17T14:32:48.824Z",
+        "2026-11-17T14:33:39.371Z"
+      ],
+      "rows": 17
+    },
+    {
+      "sql": "DELETE FROM sys_refresh_token WHERE user_agent IN ($1,$2) AND created_at>=$3 RETURNING id",
+      "params": [
+        "FE-IDN-009 acceptance API",
+        "FE-IDN-009 acceptance browser",
+        "2026-11-17T14:32:48.824Z"
+      ],
+      "rows": 16
+    },
+    {
+      "sql": "DELETE FROM password_history WHERE tenant_id=1 AND user_id=$1 RETURNING id",
+      "params": [105],
+      "rows": 2
+    },
+    {
+      "sql": "DELETE FROM auth_token WHERE tenant_id=1 AND user_id=$1 RETURNING id",
+      "params": [105],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM sys_user WHERE tenant_id=1 AND id=$1 AND username=$2 AND deleted_at IS NOT NULL RETURNING id",
+      "params": [105, "feidn009_1794925968824"],
+      "rows": 1
+    }
+  ],
+  "remaining": {
+    "taskUsers": 0,
+    "taskRoles": 0,
+    "taskProducts": 0,
+    "taskTemplates": 0,
+    "taskAudits": 0,
+    "taskSessions": 0,
+    "menusRestored": true,
+    "settingsUnchanged": true,
+    "baselineAuditRecordsPreserved": 17
+  }
+}

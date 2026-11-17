@@ -1,0 +1,8 @@
+{
+  "exitCode": 0,
+  "startedAt": "2026-11-17T14:28:24.2071480Z",
+  "finishedAt": "2026-11-17T14:28:54.0741796Z",
+  "cwd": "D:/code/admin-web",
+  "command": "bun run build:antd",
+  "name": "10-build"
+}

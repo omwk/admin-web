@@ -1,0 +1,816 @@
+{
+  "task": "FE-IDN-009",
+  "startedAt": "2026-11-17T14:32:48.824Z",
+  "origin": "http://127.0.0.1:5669",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [
+    {
+      "item": 1,
+      "assertion": "三个合成路由文件已删除，access.ts 无组装或导入",
+      "result": "pass",
+      "source": "filesystem"
+    },
+    {
+      "item": 2,
+      "assertion": "真实后端驱动商品目录下商品管理、系统目录下数据字典与系统配置",
+      "result": "pass",
+      "screenshots": [
+        "02-catalog-sidebar-real.png",
+        "03-system-sidebar-real.png"
+      ]
+    },
+    {
+      "item": 3,
+      "assertion": "目录顺序系统/交易/商品/客户；子页面归属正确",
+      "result": "pass",
+      "roots": [
+        {
+          "name": "系统",
+          "path": "/system",
+          "sort": 1
+        },
+        {
+          "name": "交易",
+          "path": "/trade",
+          "sort": 2
+        },
+        {
+          "name": "商品",
+          "path": "/catalog",
+          "sort": 3
+        },
+        {
+          "name": "客户",
+          "path": "/crm",
+          "sort": 4
+        }
+      ],
+      "screenshots": [
+        "02-catalog-sidebar-real.png",
+        "03-system-sidebar-real.png"
+      ]
+    },
+    {
+      "item": 4,
+      "assertion": "三个隐藏行来自真实 /auth/menus，visible=false，侧边栏无入口",
+      "result": "pass",
+      "paths": [
+        "/catalog/products/:id",
+        "/system/tenants/templates",
+        "/system/tenants/templates/:id"
+      ],
+      "screenshot": "03-system-sidebar-real.png"
+    },
+    {
+      "item": 5,
+      "assertion": "粘贴真实商品详情和模板编辑 URL，整页刷新仍正常加载；未替换业务响应",
+      "result": "pass",
+      "productURL": "/catalog/products/124",
+      "editorURL": "/system/tenants/templates/15",
+      "screenshots": [
+        "05-product-direct-refresh-real.png",
+        "05-template-direct-refresh-real.png"
+      ]
+    },
+    {
+      "item": 6,
+      "assertion": "通过真实菜单 API 临时停用数据字典，后端投影无此行；保留权限的管理员直访/刷新均 404",
+      "result": "pass",
+      "menuId": 497,
+      "mutation": "PUT status=disabled (remove from active menu projection)",
+      "path": "/system/dicts",
+      "screenshot": "06-dictionary-removed-404-real.png"
+    },
+    {
+      "item": 7,
+      "assertion": "真实受限账号无 product:spu:list，虽保留菜单授权也无商品入口；直访 404",
+      "result": "pass",
+      "userId": 105,
+      "roleId": 90,
+      "screenshot": "07-no-product-permission-real.png",
+      "source": "real-account-and-backend"
+    },
+    {
+      "item": 8,
+      "assertion": "真实投影的每个 component 均可在显式注册表解析；允许未引用注册项",
+      "result": "pass",
+      "count": 18,
+      "source": "real-backend-and-registry"
+    },
+    {
+      "item": 9,
+      "assertion": "平台管理员的租户/模板页均来自后端；非平台管理员即使有 tenant 权限仍无入口，前端直访 404",
+      "result": "pass",
+      "restrictedUser": {
+        "isSuper": false,
+        "tenantId": 1
+      },
+      "screenshots": [
+        "09-non-platform-tenant-real.png",
+        "09-platform-template-menu-real.png"
+      ]
+    },
+    {
+      "item": 10,
+      "assertion": "lint/typecheck/unit/build 全部通过",
+      "result": "pass",
+      "commands": [
+        "10-lint",
+        "10-typecheck",
+        "10-unit-admin",
+        "10-unit-root",
+        "10-build",
+        "backend-hidden-menu-tests",
+        "backend-lint"
+      ]
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/auth/menus",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYSS2QXSC99VR6DWA4TTP1"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/products?page_size=20",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYSVCN5YPEMPPEQS7HY8M1"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/tenant-templates?page_size=100",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYT214PNTTKJF0PFZ0GPT9"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/menus",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYT5T3YSKR5VNXXV2J1028"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/menus/497",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYT5VTFM7QJZ6XNGVMPHTH"
+    },
+    {
+      "method": "GET",
+      "path": "/auth/menus",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYT6143H458QR2V2FD9WWR"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/menus/497",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYTB6HSBX75PX7PP1ZA0PW"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/roles",
+      "status": 201,
+      "code": 0,
+      "traceId": "01M7MYTF7T8VNXK6FCETAEKSKZ"
+    },
+    {
+      "method": "GET",
+      "path": "/admin/permissions",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYTFD046J504JSWJPV4AQ2"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/roles/90/permissions",
+      "status": 204
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/roles/90/menus",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/admin/depts",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYTFSS2YQEH8DFE1N2VBCS"
+    },
+    {
+      "method": "POST",
+      "path": "/admin/users",
+      "status": 201,
+      "code": 0,
+      "traceId": "01M7MYTFT86EG4RKD0FAJYDVTZ"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/users/105/roles",
+      "status": 204
+    },
+    {
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYTG4Y0MQ7GMJWA3MZQRKP"
+    },
+    {
+      "method": "PUT",
+      "path": "/auth/password",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/auth/menus",
+      "status": 200,
+      "code": 0,
+      "traceId": "01M7MYTN1JV22TQM7FWZVCVWQX"
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/users/105/roles",
+      "status": 204
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/users/105",
+      "status": 204
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/roles/90/menus",
+      "status": 204
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/roles/90/permissions",
+      "status": 204
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/roles/90",
+      "status": 204
+    },
+    {
+      "method": "POST",
+      "path": "/auth/logout",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "resources": {
+    "users": [
+      {
+        "id": 105,
+        "username": "feidn009_1794925968824"
+      }
+    ],
+    "roles": [
+      {
+        "id": 90,
+        "code": "feidn009_1794925968824"
+      }
+    ],
+    "products": [],
+    "templates": []
+  },
+  "backendMenus": [
+    {
+      "id": 1,
+      "parent_id": 0,
+      "name": "系统",
+      "type": "dir",
+      "path": "/system",
+      "sort": 1,
+      "visible": true,
+      "keep_alive": false,
+      "is_external": false,
+      "meta": {},
+      "children": [
+        {
+          "id": 2,
+          "parent_id": 1,
+          "name": "用户",
+          "type": "menu",
+          "path": "/system/users",
+          "component": "system/user/index",
+          "sort": 1,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:user:list",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 3,
+          "parent_id": 1,
+          "name": "菜单",
+          "type": "menu",
+          "path": "/system/menus",
+          "component": "system/menu/index",
+          "sort": 2,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:menu:list",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 4,
+          "parent_id": 1,
+          "name": "角色",
+          "type": "menu",
+          "path": "/system/roles",
+          "component": "system/role/index",
+          "sort": 3,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:role:list",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 13,
+          "parent_id": 1,
+          "name": "部门",
+          "type": "menu",
+          "path": "/system/depts",
+          "component": "system/dept/index",
+          "sort": 4,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:user:list",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 17,
+          "parent_id": 1,
+          "name": "通知中心",
+          "type": "menu",
+          "path": "/system/notifications",
+          "component": "system/notification/index",
+          "sort": 5,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:notify:list",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 18,
+          "parent_id": 1,
+          "name": "通知渠道",
+          "type": "menu",
+          "path": "/system/notifications/channels",
+          "component": "system/notification/channels",
+          "sort": 6,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:notify:manage",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 20,
+          "parent_id": 1,
+          "name": "审计日志",
+          "type": "menu",
+          "path": "/system/audit-logs",
+          "component": "system/audit-log/index",
+          "sort": 7,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:audit:list",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 21,
+          "parent_id": 1,
+          "name": "登录历史",
+          "type": "menu",
+          "path": "/system/login-logs",
+          "component": "system/login-log/index",
+          "sort": 8,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:audit:list",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 31,
+          "parent_id": 1,
+          "name": "租户管理",
+          "type": "menu",
+          "path": "/system/tenants",
+          "component": "system/tenant/index",
+          "sort": 9,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:tenant:list",
+          "meta": {},
+          "children": [
+            {
+              "id": 495,
+              "parent_id": 31,
+              "name": "租户模板",
+              "type": "menu",
+              "path": "/system/tenants/templates",
+              "component": "system/tenant/index",
+              "sort": 1,
+              "visible": false,
+              "keep_alive": false,
+              "is_external": false,
+              "permission_code": "system:tenant:manage",
+              "meta": {},
+              "children": []
+            },
+            {
+              "id": 496,
+              "parent_id": 31,
+              "name": "模板编辑",
+              "type": "menu",
+              "path": "/system/tenants/templates/:id",
+              "component": "system/tenant/template-editor",
+              "sort": 2,
+              "visible": false,
+              "keep_alive": false,
+              "is_external": false,
+              "permission_code": "system:tenant:manage",
+              "meta": {},
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": 497,
+          "parent_id": 1,
+          "name": "数据字典",
+          "type": "menu",
+          "path": "/system/dicts",
+          "component": "system/dict/index",
+          "sort": 10,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:dict:list",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 498,
+          "parent_id": 1,
+          "name": "系统配置",
+          "type": "menu",
+          "path": "/system/settings",
+          "component": "system/setting/index",
+          "sort": 11,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "system:setting:list",
+          "meta": {},
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "parent_id": 0,
+      "name": "交易",
+      "type": "dir",
+      "path": "/trade",
+      "sort": 2,
+      "visible": true,
+      "keep_alive": false,
+      "is_external": false,
+      "meta": {},
+      "children": [
+        {
+          "id": 6,
+          "parent_id": 5,
+          "name": "订单",
+          "type": "menu",
+          "path": "/trade/orders",
+          "component": "trade/order/index",
+          "sort": 1,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "trade:order:list",
+          "meta": {},
+          "children": []
+        }
+      ]
+    },
+    {
+      "id": 499,
+      "parent_id": 0,
+      "name": "商品",
+      "type": "dir",
+      "path": "/catalog",
+      "sort": 3,
+      "visible": true,
+      "keep_alive": false,
+      "is_external": false,
+      "meta": {},
+      "children": [
+        {
+          "id": 500,
+          "parent_id": 499,
+          "name": "商品管理",
+          "type": "menu",
+          "path": "/catalog/products",
+          "component": "catalog/product/index",
+          "sort": 1,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "product:spu:list",
+          "meta": {},
+          "children": [
+            {
+              "id": 501,
+              "parent_id": 500,
+              "name": "商品详情",
+              "type": "menu",
+              "path": "/catalog/products/:id",
+              "component": "catalog/product/detail",
+              "sort": 1,
+              "visible": false,
+              "keep_alive": false,
+              "is_external": false,
+              "permission_code": "product:spu:read",
+              "meta": {},
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "parent_id": 0,
+      "name": "客户",
+      "type": "dir",
+      "path": "/crm",
+      "sort": 4,
+      "visible": true,
+      "keep_alive": false,
+      "is_external": false,
+      "meta": {},
+      "children": [
+        {
+          "id": 9,
+          "parent_id": 8,
+          "name": "客户列表",
+          "type": "menu",
+          "path": "/crm/customers",
+          "component": "crm/customer/index",
+          "sort": 1,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "crm:customer:list",
+          "meta": {},
+          "children": []
+        },
+        {
+          "id": 10,
+          "parent_id": 8,
+          "name": "询盘",
+          "type": "menu",
+          "path": "/crm/inquiries",
+          "component": "crm/inquiry/index",
+          "sort": 2,
+          "visible": true,
+          "keep_alive": false,
+          "is_external": false,
+          "permission_code": "crm:inquiry:list",
+          "meta": {},
+          "children": []
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "menuId": 2,
+      "path": "/system/users",
+      "component": "system/user/index",
+      "resolved": "/system/user/index.vue"
+    },
+    {
+      "menuId": 3,
+      "path": "/system/menus",
+      "component": "system/menu/index",
+      "resolved": "/system/menu/index.vue"
+    },
+    {
+      "menuId": 4,
+      "path": "/system/roles",
+      "component": "system/role/index",
+      "resolved": "/system/role/index.vue"
+    },
+    {
+      "menuId": 13,
+      "path": "/system/depts",
+      "component": "system/dept/index",
+      "resolved": "/system/dept/index.vue"
+    },
+    {
+      "menuId": 17,
+      "path": "/system/notifications",
+      "component": "system/notification/index",
+      "resolved": "/system/notification/index.vue"
+    },
+    {
+      "menuId": 18,
+      "path": "/system/notifications/channels",
+      "component": "system/notification/channels",
+      "resolved": "/system/notification/channels.vue"
+    },
+    {
+      "menuId": 20,
+      "path": "/system/audit-logs",
+      "component": "system/audit-log/index",
+      "resolved": "/system/audit-log/index.vue"
+    },
+    {
+      "menuId": 21,
+      "path": "/system/login-logs",
+      "component": "system/login-log/index",
+      "resolved": "/system/login-log/index.vue"
+    },
+    {
+      "menuId": 31,
+      "path": "/system/tenants",
+      "component": "system/tenant/index",
+      "resolved": "/system/tenant/index.vue"
+    },
+    {
+      "menuId": 495,
+      "path": "/system/tenants/templates",
+      "component": "system/tenant/index",
+      "resolved": "/system/tenant/index.vue"
+    },
+    {
+      "menuId": 496,
+      "path": "/system/tenants/templates/:id",
+      "component": "system/tenant/template-editor",
+      "resolved": "/system/tenant/template-editor.vue"
+    },
+    {
+      "menuId": 497,
+      "path": "/system/dicts",
+      "component": "system/dict/index",
+      "resolved": "/system/dict/index.vue"
+    },
+    {
+      "menuId": 498,
+      "path": "/system/settings",
+      "component": "system/setting/index",
+      "resolved": "/system/setting/index.vue"
+    },
+    {
+      "menuId": 6,
+      "path": "/trade/orders",
+      "component": "trade/order/index",
+      "resolved": "/trade/order/index.vue"
+    },
+    {
+      "menuId": 500,
+      "path": "/catalog/products",
+      "component": "catalog/product/index",
+      "resolved": "/catalog/product/index.vue"
+    },
+    {
+      "menuId": 501,
+      "path": "/catalog/products/:id",
+      "component": "catalog/product/detail",
+      "resolved": "/catalog/product/detail.vue"
+    },
+    {
+      "menuId": 9,
+      "path": "/crm/customers",
+      "component": "crm/customer/index",
+      "resolved": "/crm/customer/index.vue"
+    },
+    {
+      "menuId": 10,
+      "path": "/crm/inquiries",
+      "component": "crm/inquiry/index",
+      "resolved": "/crm/inquiry/index.vue"
+    }
+  ],
+  "cleanupAPI": [
+    {
+      "path": "/admin/users/105",
+      "status": 204
+    },
+    {
+      "path": "/admin/roles/90",
+      "status": 204
+    }
+  ],
+  "cleanup": {
+    "cutoff": "2026-11-17T14:33:39.371Z",
+    "rows": [
+      {
+        "table": "audit_log",
+        "deleted": 17
+      },
+      {
+        "table": "sys_refresh_token",
+        "deleted": 16
+      },
+      {
+        "table": "password_history",
+        "deleted": 2
+      },
+      {
+        "table": "auth_token",
+        "deleted": 0
+      },
+      {
+        "table": "sys_user",
+        "deleted": 1
+      }
+    ],
+    "sql": [
+      {
+        "sql": "SELECT set_config('commercehub.audit_prune_before',$1,true)",
+        "params": ["2026-11-17T14:33:39.371Z"]
+      },
+      {
+        "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at>=$3 AND created_at<$4 RETURNING id",
+        "params": [
+          "FE-IDN-009 acceptance API",
+          "FE-IDN-009 acceptance browser",
+          "2026-11-17T14:32:48.824Z",
+          "2026-11-17T14:33:39.371Z"
+        ],
+        "rows": 17
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE user_agent IN ($1,$2) AND created_at>=$3 RETURNING id",
+        "params": [
+          "FE-IDN-009 acceptance API",
+          "FE-IDN-009 acceptance browser",
+          "2026-11-17T14:32:48.824Z"
+        ],
+        "rows": 16
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=1 AND user_id=$1 RETURNING id",
+        "params": [105],
+        "rows": 2
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=1 AND user_id=$1 RETURNING id",
+        "params": [105],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=1 AND id=$1 AND username=$2 AND deleted_at IS NOT NULL RETURNING id",
+        "params": [105, "feidn009_1794925968824"],
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "taskUsers": 0,
+      "taskRoles": 0,
+      "taskProducts": 0,
+      "taskTemplates": 0,
+      "taskAudits": 0,
+      "taskSessions": 0,
+      "menusRestored": true,
+      "settingsUnchanged": true,
+      "baselineAuditRecordsPreserved": 17
+    }
+  },
+  "finishedAt": "2026-11-17T14:33:39.565Z",
+  "passed": true
+}

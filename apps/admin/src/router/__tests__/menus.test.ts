@@ -112,6 +112,7 @@ describe('backend menus and permissions', () => {
     expect(routes.map((route) => route.name)).toEqual([
       'IdentityMenu_1',
       'IdentityMenu_8',
+      'IdentityMenu_10',
     ]);
     expect(routes[0]).toMatchObject({
       component: 'MenuOutlet',
@@ -124,6 +125,7 @@ describe('backend menus and permissions', () => {
       meta: { keepAlive: true, title: '用户' },
     });
     expect(routes[0]?.children?.[0]?.meta).not.toHaveProperty('ignoreAccess');
+    expect(routes[2]?.meta?.hideInMenu).toBe(true);
     expect(findHomePath(routes)).toBe('/system/users');
   });
 
@@ -234,26 +236,9 @@ describe('backend menus and permissions', () => {
     expect(router.resolve('/profile/sessions').matched.at(-1)?.name).toBe(
       'MySessions',
     );
-    expect(
-      router.resolve('/system/users').matched.at(-1)?.components?.default,
-    ).toBe(componentRegistry['/_core/fallback/forbidden.vue']);
-  });
-
-  it('keeps granted fallback routes instead of overwriting them with 403', async () => {
-    state.permissions = [
-      'catalog:product:list',
-      'system:config:list',
-      'system:tenant:list',
-    ];
-    const router = createRouter({
-      history: createMemoryHistory(),
-      routes: [
-        { children: [], meta: { title: 'Root' }, name: 'Root', path: '/' },
-      ],
-    });
-    await generateAccess({ router, routes: [] });
-    expect(
-      router.resolve('/catalog/products').matched.at(-1)?.components?.default,
-    ).toBe(componentRegistry['/catalog/product/index.vue']);
+    expect(router.resolve('/system/users').matched).toEqual([]);
+    expect(router.resolve('/403').matched.at(-1)?.components?.default).toBe(
+      componentRegistry['/_core/fallback/forbidden.vue'],
+    );
   });
 });

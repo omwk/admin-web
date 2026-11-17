@@ -1,0 +1,8 @@
+{
+  "command": "bun run --cwd apps/admin test:unit --maxWorkers=4",
+  "startedAt": "2026-11-17T14:23:03.0180655Z",
+  "name": "10-unit-admin",
+  "exitCode": 0,
+  "cwd": "D:/code/admin-web",
+  "finishedAt": "2026-11-17T14:24:46.2200879Z"
+}

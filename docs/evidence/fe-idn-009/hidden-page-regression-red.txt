@@ -1,0 +1,35 @@
+$ vitest run --config vitest.config.ts src/router/__tests__/menu-driven.test.ts "--maxWorkers=2"
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+ ❯ src/router/__tests__/menu-driven.test.ts (5 tests | 1 failed) 32ms
+     × registers hidden detail and editor nodes from the backend, without sidebar entries 8ms
+
+⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/router/__tests__/menu-driven.test.ts > menu driven routing > registers hidden detail and editor nodes from the backend, without sidebar entries
+AssertionError: expected undefined to be '/catalog/products' // Object.is equality
+
+- Expected:
+"/catalog/products"
+
++ Received:
+undefined
+
+ ❯ src/router/__tests__/menu-driven.test.ts:179:40
+    177|       );
+    178|       expect(resolved.meta.hideInMenu).toBe(true);
+    179|       expect(resolved.meta.activePath).toBe(
+       |                                        ^
+    180|         path.startsWith('/catalog/')
+    181|           ? '/catalog/products'
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  1 failed | 4 passed (5)
+   Start at  22:13:52
+   Duration  2.12s (transform 724ms, setup 0ms, import 1.26s, tests 32ms, environment 500ms)
+
+error: script "test:unit" exited with code 1
