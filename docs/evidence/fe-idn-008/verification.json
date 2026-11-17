@@ -1,0 +1,50 @@
+{
+  "task": "FE-IDN-008",
+  "branch": "feat/fe-idn-008-tenant-lifecycle",
+  "base": "d82c8c6",
+  "checks": [
+    {
+      "command": "bun run lint",
+      "exitCode": 0,
+      "status": "pass",
+      "log": "12-lint.txt"
+    },
+    {
+      "command": "pnpm check:type",
+      "exitCode": 0,
+      "successfulTasks": 38,
+      "totalTasks": 38,
+      "log": "12-typecheck.txt"
+    },
+    {
+      "command": "bun run test:unit --maxWorkers=4",
+      "exitCode": 0,
+      "files": 151,
+      "tests": 1007,
+      "log": "12-unit-root.txt"
+    },
+    {
+      "command": "bun run --cwd apps/admin test:unit --maxWorkers=4",
+      "exitCode": 0,
+      "files": 56,
+      "tests": 300,
+      "log": "12-unit-admin.txt"
+    },
+    {
+      "command": "pnpm build:antd",
+      "exitCode": 0,
+      "successfulTasks": 11,
+      "totalTasks": 11,
+      "log": "12-build.txt"
+    },
+    {
+      "command": "bun run --cwd apps/admin test:e2e:fe-idn-008",
+      "exitCode": 0,
+      "functionalAcceptanceChecks": 11,
+      "browserErrors": 0,
+      "log": "e2e.txt"
+    }
+  ],
+  "cleanup": "cleanup.json",
+  "acceptance": "acceptance.json"
+}

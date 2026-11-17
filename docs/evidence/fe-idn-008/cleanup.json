@@ -1,0 +1,66 @@
+{
+  "tenantDeletes": [
+    {
+      "id": 25,
+      "alreadyDeletedByAcceptance": true
+    }
+  ],
+  "templateDeletes": [
+    {
+      "id": 14,
+      "status": 204
+    }
+  ],
+  "rows": [
+    {
+      "table": "audit_log",
+      "deleted": 24
+    },
+    {
+      "table": "sys_refresh_token",
+      "deleted": 6
+    }
+  ],
+  "modifiedSettings": [],
+  "sql": [
+    {
+      "sql": "SELECT set_config('commercehub.audit_prune_before',$1,true)",
+      "params": ["2026-11-17T01:00:59.021Z"]
+    },
+    {
+      "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at>=$3 AND created_at<$4 RETURNING id",
+      "params": [
+        "FE-IDN-008 acceptance API",
+        "FE-IDN-008 acceptance browser",
+        "2026-11-17T01:00:30.706Z",
+        "2026-11-17T01:00:59.021Z"
+      ],
+      "rows": 24
+    },
+    {
+      "sql": "DELETE FROM sys_refresh_token WHERE user_agent IN ($1,$2) AND created_at>=$3 RETURNING id",
+      "params": [
+        "FE-IDN-008 acceptance API",
+        "FE-IDN-008 acceptance browser",
+        "2026-11-17T01:00:30.706Z"
+      ],
+      "rows": 6
+    }
+  ],
+  "remaining": {
+    "taskTenants": 0,
+    "taskTemplates": 0,
+    "taskBusinessRows": 0,
+    "taskAudits": 0,
+    "taskSessions": 0,
+    "baselineTenantsPreserved": 1,
+    "baselineTemplatesPreserved": 1,
+    "baselineAuditRecordsPreserved": 2,
+    "settingsUnchanged": true
+  },
+  "auditPrune": {
+    "cutoff": "2026-11-17T01:00:59.021Z",
+    "method": "audit-prune transaction-local cutoff guard plus task-specific user-agent and start time",
+    "reason": "CLI audit-prune has only an upper bound; retain unrelated audit records by adding the exact task predicate."
+  }
+}

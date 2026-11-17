@@ -181,7 +181,7 @@ async function remove() {
     <TemplateForm
       v-if="form && canManageTenants()"
       :mode="form"
-      :tenants="tenants"
+      :tenants="tenants.filter((tenant) => !tenant.deleted_at)"
       :template="form === 'clone' ? copying : undefined"
       @close="form = undefined"
       @saved="saved"

@@ -11,6 +11,7 @@ import { canManageTenants, platformTenantId } from '#/auth/tenant';
 
 import AdminInvite from './admin-invite.vue';
 import RenameForm from './rename-form.vue';
+import TenantLifecycle from './tenant-lifecycle.vue';
 
 const props = defineProps<{ tenant: Tenant; disabled: boolean }>();
 const emit = defineEmits<{
@@ -26,6 +27,7 @@ async function changeStatus(disable: boolean) {
   if (
     busy.value ||
     props.disabled ||
+    props.tenant.deleted_at ||
     !canManageTenants() ||
     (disable && props.tenant.id === platformTenantId)
   )
@@ -56,51 +58,63 @@ function renamed() {
 
 <template>
   <Space wrap>
-    <Button size="small" :disabled="disabled || busy" @click="emit('members')">
-      查看成员
-    </Button>
-    <template v-if="canManageTenants()">
-      <AdminInvite
-        :tenant="tenant"
-        :disabled="disabled || busy"
-        @busy="emit('busy', $event)"
-        @changed="emit('changed')"
-      />
+    <template v-if="!tenant.deleted_at">
       <Button
-        v-if="tenant.id !== platformTenantId"
         size="small"
         :disabled="disabled || busy"
-        @click="renaming = true"
+        @click="emit('members')"
       >
-        编辑名称
+        查看成员
       </Button>
-      <Tooltip v-if="tenant.id === platformTenantId" title="平台租户不可停用">
-        <span><Button size="small" danger disabled>停用</Button></span>
-      </Tooltip>
-      <Button
-        v-else-if="tenant.status === 'active'"
-        size="small"
-        danger
-        :disabled="disabled || busy"
-        @click="
-          error = '';
-          confirming = true;
-        "
-      >
-        停用
-      </Button>
-      <Button
-        v-else
-        size="small"
-        :disabled="disabled"
-        :loading="busy"
-        @click="changeStatus(false)"
-      >
-        启用
-      </Button>
+      <template v-if="canManageTenants()">
+        <AdminInvite
+          :tenant="tenant"
+          :disabled="disabled || busy"
+          @busy="emit('busy', $event)"
+          @changed="emit('changed')"
+        />
+        <Button
+          v-if="tenant.id !== platformTenantId"
+          size="small"
+          :disabled="disabled || busy"
+          @click="renaming = true"
+        >
+          编辑名称
+        </Button>
+        <Tooltip v-if="tenant.id === platformTenantId" title="平台租户不可停用">
+          <span><Button size="small" danger disabled>停用</Button></span>
+        </Tooltip>
+        <Button
+          v-else-if="tenant.status === 'active'"
+          size="small"
+          danger
+          :disabled="disabled || busy"
+          @click="
+            error = '';
+            confirming = true;
+          "
+        >
+          停用
+        </Button>
+        <Button
+          v-else
+          size="small"
+          :disabled="disabled"
+          :loading="busy"
+          @click="changeStatus(false)"
+        >
+          启用
+        </Button>
+      </template>
     </template>
+    <TenantLifecycle
+      :tenant="tenant"
+      :disabled="disabled || busy"
+      @busy="emit('busy', $event)"
+      @changed="emit('changed')"
+    />
   </Space>
-  <template v-if="canManageTenants()">
+  <template v-if="canManageTenants() && !tenant.deleted_at">
     <Alert
       v-if="error && !confirming"
       :message="error"

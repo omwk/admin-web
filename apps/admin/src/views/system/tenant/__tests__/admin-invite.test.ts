@@ -14,6 +14,7 @@ vi.mock('#/api/core/tenants', () => ({
   reissueTenantAdminInviteApi: state.send,
 }));
 const tenant: Tenant = {
+  deleted_at: null,
   id: 8,
   code: 'acme',
   name: 'Acme',

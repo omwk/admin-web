@@ -35,6 +35,9 @@ vi.mock('#/api/core/tenants', () => ({
   getAllTenantTemplatesApi: state.templates,
   disableTenantApi: state.disable,
   enableTenantApi: vi.fn(),
+  archiveTenantApi: vi.fn(),
+  restoreTenantApi: vi.fn(),
+  deleteTenantApi: vi.fn(),
   renameTenantApi: vi.fn(),
   deleteTenantTemplateApi: state.remove,
   createTenantTemplateApi: vi.fn(),
@@ -46,6 +49,7 @@ vi.mock('#/api/core/tenants', () => ({
   getTenantMembersApi: vi.fn(),
 }));
 const tenant: Tenant = {
+  deleted_at: null,
   id: 1,
   code: 'default',
   name: '平台',

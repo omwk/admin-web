@@ -1,12 +1,28 @@
 <script setup lang="ts">
 import type { Tenant, TenantTemplate } from '#/api/model/tenant';
 
-import { computed, onDeactivated, onMounted, onUnmounted, ref } from 'vue';
+import {
+  computed,
+  onDeactivated,
+  onMounted,
+  onUnmounted,
+  ref,
+  watch,
+} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import { Page } from '@vben/common-ui';
 
-import { Alert, Button, Card, Space, Table, Tabs, Tag } from 'ant-design-vue';
+import {
+  Alert,
+  Button,
+  Card,
+  Space,
+  Switch,
+  Table,
+  Tabs,
+  Tag,
+} from 'ant-design-vue';
 
 import { getAllTenantsApi, getAllTenantTemplatesApi } from '#/api/core/tenants';
 import { toApiError } from '#/api/errors';
@@ -15,7 +31,6 @@ import {
   canViewTenants,
   platformTenantId,
 } from '#/auth/tenant';
-import DictTag from '#/components/dict-tag/index.vue';
 import { formatDateTime } from '#/utils/datetime';
 import Forbidden from '#/views/_core/fallback/forbidden.vue';
 
@@ -23,6 +38,7 @@ import MemberDrawer from './member-drawer.vue';
 import ProvisionWizard from './provision-wizard.vue';
 import Templates from './templates.vue';
 import TenantActions from './tenant-actions.vue';
+import TenantStatus from './tenant-status.vue';
 
 defineOptions({ name: 'SystemTenantList' });
 const tenants = ref<Tenant[]>([]);
@@ -45,20 +61,21 @@ const tab = computed({
 const wizard = ref(false);
 const usageKnown = ref(false);
 const page = ref(1);
+const includeArchived = ref(false);
 const selectedTenant = ref<Tenant>();
 let sequence = 0;
 const columns = computed(() => [
   { dataIndex: 'id', title: 'ID', width: 80 },
   { dataIndex: 'code', title: 'Code', width: 180 },
   { dataIndex: 'name', title: '名称', width: 200 },
-  { dataIndex: 'status', title: '状态', width: 110 },
+  { dataIndex: 'status', title: '状态', width: 210 },
   { dataIndex: 'admin_active_count', title: '管理员', width: 110 },
   { dataIndex: 'provisioned_from', title: '来源模板', width: 180 },
   { dataIndex: 'created_at', title: '创建时间', width: 180 },
   {
     dataIndex: 'actions',
     title: '操作',
-    width: canManageTenants() ? 450 : 120,
+    width: canManageTenants() ? 520 : 120,
   },
 ]);
 async function load() {
@@ -69,12 +86,16 @@ async function load() {
   error.value = '';
   templateError.value = '';
   const [directory, snapshots] = await Promise.allSettled([
-    getAllTenantsApi(),
+    getAllTenantsApi(includeArchived.value || tab.value === 'templates'),
     canManageTenants() ? getAllTenantTemplatesApi() : Promise.resolve([]),
   ]);
   if (current !== sequence) return;
   if (directory.status === 'fulfilled') {
     tenants.value = directory.value;
+    page.value = Math.min(
+      page.value,
+      Math.max(1, Math.ceil(tenants.value.length / 20)),
+    );
     usageKnown.value = true;
   } else {
     tenants.value = [];
@@ -97,6 +118,11 @@ function manageTemplates() {
   tab.value = 'templates';
 }
 onMounted(load);
+watch([includeArchived, tab], () => {
+  page.value = 1;
+  selectedTenant.value = undefined;
+  void load();
+});
 onDeactivated(() => {
   selectedTenant.value = undefined;
 });
@@ -125,6 +151,14 @@ onUnmounted(() => {
         <Card title="租户列表">
           <template #extra>
             <Space>
+              <label class="flex items-center gap-2">
+                <Switch
+                  v-model:checked="includeArchived"
+                  aria-label="包含已归档"
+                  :disabled="acting"
+                />
+                包含已归档
+              </label>
               <Button :disabled="loading || acting" @click="load">刷新</Button>
               <Button
                 v-if="canManageTenants()"
@@ -147,7 +181,7 @@ onUnmounted(() => {
               showTotal: (count: number) => `共 ${count} 个租户`,
               onChange: (value: number) => (page = value),
             }"
-            :scroll="{ x: 1510 }"
+            :scroll="{ x: 1680 }"
             row-key="id"
           >
             <template #bodyCell="{ column, record, text }">
@@ -160,10 +194,9 @@ onUnmounted(() => {
                   平台
                 </Tag>
               </template>
-              <DictTag
+              <TenantStatus
                 v-else-if="column.dataIndex === 'status'"
-                type="tenant_status"
-                :value="record.status"
+                :tenant="record as Tenant"
               />
               <template v-else-if="column.dataIndex === 'admin_active_count'">
                 <Tag v-if="text === 0" color="red">未激活</Tag>

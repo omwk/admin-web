@@ -1,0 +1,13 @@
+$ node e2e/fe-idn-008.mjs
+FE-IDN-008 acceptance 2: passed
+FE-IDN-008 acceptance 4: passed
+FE-IDN-008 acceptance 1: passed
+FE-IDN-008 acceptance 3: passed
+FE-IDN-008 acceptance 5: passed
+FE-IDN-008 acceptance 6: passed
+FE-IDN-008 acceptance 11: passed
+FE-IDN-008 acceptance 7: passed
+FE-IDN-008 acceptance 8: passed
+FE-IDN-008 acceptance 9: passed
+FE-IDN-008 acceptance 10: passed
+FE-IDN-008: 11 acceptance checks passed; task fixtures cleaned

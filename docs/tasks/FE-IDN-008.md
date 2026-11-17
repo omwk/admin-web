@@ -3,7 +3,7 @@
 - ID: FE-IDN-008
 - 类型: 新增
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 已完成
 - 预计: 0.5 人日
 - 分支: `feat/fe-idn-008-tenant-lifecycle`
 - 依赖: BE-IDN-011（归档/删除，已合并）
@@ -110,6 +110,12 @@
 | 10  | 成功后       | 删除后行消失，提示「租户已删除」                 |
 | 11  | 权限         | 无 manage 时所有写操作隐藏                       |
 | 12  | 构建         | lint / typecheck / unit / build 全绿             |
+
+## 验收记录（2026-11-17）
+
+- §3 十二条逐项证据、真实后端响应与明确标注的 UI 夹具见 [验收记录](../evidence/fe-idn-008/README.md)。
+- 分支 `feat/fe-idn-008-tenant-lifecycle`，基线 `d82c8c6`。
+- 已清理：租户/模板 DELETE API + 本卡类目 SQL + audit-prune cutoff guard（本卡 UA/时间限定）→ 三轮 3 个租户、3 个模板、2 条类目、67 条审计、16 条会话已清理；残留 0，配置未改动，无关基线记录保留。SQL 与行数见 [清理记录](../evidence/fe-idn-008/cleanup.json) 及验收说明。
 
 ## 4. Codex prompt
 

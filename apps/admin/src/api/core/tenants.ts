@@ -18,10 +18,18 @@ const options: ApiRequestConfig = {
   preserveBusinessMessage: true,
 };
 
-export const getTenantsApi = (page = 1, pageSize = 100) =>
+export const getTenantsApi = (
+  page = 1,
+  pageSize = 100,
+  includeArchived = false,
+) =>
   requestClient.get<PageResult<Tenant>>('/admin/tenants', {
     ...options,
-    params: { page, page_size: pageSize },
+    params: {
+      page,
+      page_size: pageSize,
+      ...(includeArchived ? { include_archived: true } : {}),
+    },
   });
 export const getTenantApi = (id: number) =>
   requestClient.get<Tenant>(`/admin/tenants/${id}`, options);
@@ -46,6 +54,23 @@ export const disableTenantApi = (id: number) =>
   );
 export const enableTenantApi = (id: number) =>
   requestClient.post<Tenant>(`/admin/tenants/${id}/enable`, undefined, options);
+export const archiveTenantApi = (id: number) =>
+  requestClient.post<Tenant>(
+    `/admin/tenants/${id}/archive`,
+    undefined,
+    options,
+  );
+export const restoreTenantApi = (id: number) =>
+  requestClient.post<Tenant>(
+    `/admin/tenants/${id}/restore`,
+    undefined,
+    options,
+  );
+export const deleteTenantApi = (id: number, confirm: string) =>
+  requestClient.delete<undefined>(`/admin/tenants/${id}`, {
+    ...options,
+    params: { confirm },
+  });
 export const provisionTenantApi = (input: TenantProvision) =>
   requestClient.post<TenantProvisionResult>('/admin/tenants', input, options);
 export const getTenantTemplatesApi = (page = 1, pageSize = 100) =>
@@ -88,6 +113,7 @@ async function collectPages<T>(
     if (result.list.length === 0 || list.length >= result.total) return list;
   }
 }
-export const getAllTenantsApi = () => collectPages(getTenantsApi);
+export const getAllTenantsApi = (includeArchived = false) =>
+  collectPages((page) => getTenantsApi(page, 100, includeArchived));
 export const getAllTenantTemplatesApi = () =>
   collectPages(getTenantTemplatesApi);
