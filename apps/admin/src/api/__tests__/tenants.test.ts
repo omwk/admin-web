@@ -1,6 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
+  cloneTenantTemplateApi,
+  createTenantTemplateApi,
   deleteTenantTemplateApi,
   disableTenantApi,
   getAllTenantsApi,
@@ -9,6 +11,7 @@ import {
   provisionTenantApi,
   reissueTenantAdminInviteApi,
   renameTenantApi,
+  updateTenantTemplateApi,
 } from '#/api/core/tenants';
 import { requestClient } from '#/api/request';
 
@@ -24,6 +27,53 @@ vi.mock('ant-design-vue', () => ({ message: { error: vi.fn() } }));
 
 beforeEach(() => vi.clearAllMocks());
 describe('tenant API contracts', () => {
+  it('omits the source tenant for blank templates and uses the dedicated clone endpoint', async () => {
+    const input = { code: 'readonly', name: '只读版', description: '' };
+    requestClient.instance.defaults.adapter = async (config) => {
+      expect(config.method).toBe('post');
+      expect(config.url).toBe('/admin/tenant-templates');
+      expect(JSON.parse(config.data)).toEqual(input);
+      return respond(config, envelope({ id: 9, roles: [] }), 201);
+    };
+    expect(await createTenantTemplateApi(input)).toMatchObject({ roles: [] });
+    requestClient.instance.defaults.adapter = async (config) => {
+      expect(config.method).toBe('post');
+      expect(config.url).toBe('/admin/tenant-templates/9/clone');
+      expect(JSON.parse(config.data)).toEqual({ code: 'copy', name: '副本' });
+      return respond(config, envelope({ id: 10 }), 201);
+    };
+    expect(
+      await cloneTenantTemplateApi(9, { code: 'copy', name: '副本' }),
+    ).toEqual({ id: 10 });
+  });
+  it.each([
+    { roles: [] },
+    {
+      roles: [
+        {
+          code: 'reader',
+          name: '只读',
+          data_scope: 'self' as const,
+          status: 'active' as const,
+          remark: null,
+          permissions: ['catalog:product:list'],
+          menus: ['/catalog/product'],
+        },
+      ],
+    },
+  ])(
+    'sends name and the complete roles array together, including empty replacement',
+    async ({ roles }) => {
+      const input = { name: '只读版', description: '说明', roles };
+      requestClient.instance.defaults.adapter = async (config) => {
+        expect(config.method).toBe('put');
+        expect(config.url).toBe('/admin/tenant-templates/9');
+        expect(JSON.parse(config.data)).toEqual(input);
+        return respond(config, envelope({ id: 9, ...input }));
+      };
+      expect(await updateTenantTemplateApi(9, input)).toMatchObject(input);
+    },
+  );
   it('uses the member endpoint with explicit server pagination', async () => {
     requestClient.instance.defaults.adapter = async (config) => {
       expect(config.url).toBe('/admin/tenants/8/members');
@@ -96,6 +146,19 @@ describe('tenant API contracts', () => {
         () => disableTenantApi(1),
         () => reissueTenantAdminInviteApi(2),
         () => deleteTenantTemplateApi(1),
+        () =>
+          createTenantTemplateApi({
+            code: 'blank',
+            name: '空白',
+            description: '',
+          }),
+        () =>
+          updateTenantTemplateApi(1, {
+            name: '模板',
+            description: '',
+            roles: [],
+          }),
+        () => cloneTenantTemplateApi(1, { code: 'copy', name: '副本' }),
       ];
       for (const action of actions)
         await expect(action()).rejects.toMatchObject({ message: text, status });

@@ -39,6 +39,7 @@ export function tenantFallbackRoutes(
   user?: null | TenantIdentity,
 ): RouteRecordStringComponent[] {
   const visible = allowed(codes, user);
+  const manageable = visible && codes.includes('system:tenant:manage');
   return [
     {
       path: tenantPath,
@@ -47,6 +48,27 @@ export function tenantFallbackRoutes(
         ? '/system/tenant/index.vue'
         : '/_core/fallback/forbidden.vue',
       meta: { title: '租户管理', hideInMenu: !visible, keepAlive: false },
+    },
+    {
+      path: `${tenantPath}/templates`,
+      name: 'SystemTenantTemplates',
+      component: manageable
+        ? '/system/tenant/index.vue'
+        : '/_core/fallback/forbidden.vue',
+      meta: { title: '租户模板', hideInMenu: true, keepAlive: false },
+    },
+    {
+      path: `${tenantPath}/templates/:id`,
+      name: 'SystemTenantTemplateEditor',
+      component: manageable
+        ? '/system/tenant/template-editor.vue'
+        : '/_core/fallback/forbidden.vue',
+      meta: {
+        title: '编辑租户模板',
+        hideInMenu: true,
+        keepAlive: false,
+        activePath: tenantPath,
+      },
     },
   ];
 }

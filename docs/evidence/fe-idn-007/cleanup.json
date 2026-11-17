@@ -1,0 +1,224 @@
+{
+  "startedAt": "2026-11-16T23:47:46.240Z",
+  "resources": {
+    "tenants": [
+      {
+        "id": 19,
+        "code": "feidn007_1794872866240_tenant"
+      },
+      {
+        "id": 20,
+        "code": "feidn007_1794874031078_tenant"
+      },
+      {
+        "id": 21,
+        "code": "feidn007_1794874285618_tenant"
+      },
+      {
+        "id": 22,
+        "code": "feidn007_1794874285618_zero_tenant"
+      }
+    ],
+    "templates": [
+      {
+        "id": 4,
+        "code": "feidn007_1794872866240"
+      },
+      {
+        "id": 5,
+        "code": "feidn007_1794872866240_copy"
+      },
+      {
+        "id": 6,
+        "code": "feidn007_1794874031078"
+      },
+      {
+        "id": 7,
+        "code": "feidn007_1794874031078_copy"
+      },
+      {
+        "id": 8,
+        "code": "feidn007_1794874285618"
+      },
+      {
+        "id": 9,
+        "code": "feidn007_1794874285618_copy"
+      },
+      {
+        "id": 10,
+        "code": "feidn007_1794874285618_zero"
+      },
+      {
+        "id": 11,
+        "code": "feidn007_1794874285618_tenant_snapshot"
+      }
+    ]
+  },
+  "sql": [
+    "DELETE FROM auth_token WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM notification_preference WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_user_role WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_role_dept WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_role_menu WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_role_permission WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM password_history WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_refresh_token WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_dict_item WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_dict WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_user WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_role WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_menu WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_dept WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM sys_permission WHERE tenant_id IN (19,20,21,22) RETURNING 1",
+    "DELETE FROM tenant WHERE id IN (19,20,21,22) AND code ~ '^feidn007_[0-9]+' RETURNING id",
+    "SELECT set_config('commercehub.audit_prune_before', '2026-11-17T00:17:51.504Z', true)",
+    "DELETE FROM audit_log WHERE ((user_agent IN ('FE-IDN-007 acceptance API', 'FE-IDN-007 acceptance browser') OR (id BETWEEN 1857 AND 1869 AND user_agent LIKE '%HeadlessChrome/157.%')) AND created_at >= '2026-11-16T23:47:46.240Z') AND created_at < '2026-11-17T00:17:51.504Z' RETURNING id",
+    "DELETE FROM sys_refresh_token WHERE tenant_id=1 AND user_id=1 AND created_at >= '2026-11-16T23:47:46.240Z' AND (user_agent IN ('FE-IDN-007 acceptance API', 'FE-IDN-007 acceptance browser') OR (id BETWEEN 913 AND 916 AND user_agent LIKE '%HeadlessChrome/157.%')) RETURNING id"
+  ],
+  "rows": [
+    {
+      "table": "auth_token",
+      "deleted": 4
+    },
+    {
+      "table": "notification_preference",
+      "deleted": 0
+    },
+    {
+      "table": "sys_user_role",
+      "deleted": 3
+    },
+    {
+      "table": "sys_role_dept",
+      "deleted": 0
+    },
+    {
+      "table": "sys_role_menu",
+      "deleted": 63
+    },
+    {
+      "table": "sys_role_permission",
+      "deleted": 3
+    },
+    {
+      "table": "password_history",
+      "deleted": 3
+    },
+    {
+      "table": "sys_refresh_token",
+      "deleted": 5
+    },
+    {
+      "table": "sys_dict_item",
+      "deleted": 132
+    },
+    {
+      "table": "sys_dict",
+      "deleted": 36
+    },
+    {
+      "table": "sys_user",
+      "deleted": 4
+    },
+    {
+      "table": "sys_role",
+      "deleted": 3
+    },
+    {
+      "table": "sys_menu",
+      "deleted": 84
+    },
+    {
+      "table": "sys_dept",
+      "deleted": 4
+    },
+    {
+      "table": "sys_permission",
+      "deleted": 472
+    },
+    {
+      "table": "tenant",
+      "deleted": 4
+    },
+    {
+      "table": "audit_log",
+      "deleted": 75,
+      "ids": [
+        1857, 1858, 1859, 1860, 1861, 1862, 1867, 1869, 1873, 1863, 1864, 1865,
+        1866, 1868, 1871, 1872, 1874, 1875, 1882, 1883, 1884, 1876, 1877, 1878,
+        1879, 1880, 1886, 1889, 1907, 1909, 1881, 1885, 1887, 1888, 1890, 1891,
+        1892, 1893, 1894, 1895, 1896, 1897, 1898, 1906, 1899, 1900, 1901, 1902,
+        1903, 1904, 1905, 1908, 1911, 1912, 1910, 1913, 1914, 1916, 1915, 1917,
+        1918, 1919, 1920, 1921, 1922, 1923, 1924, 1925, 1926, 1927, 1928, 1929,
+        1930, 1931, 1932
+      ]
+    },
+    {
+      "table": "platform task refresh sessions",
+      "deleted": 23,
+      "ids": [
+        913, 914, 916, 915, 920, 921, 926, 928, 935, 919, 922, 925, 927, 932,
+        933, 929, 934, 936, 937, 938, 939, 940, 941
+      ]
+    }
+  ],
+  "templateDeletes": [
+    {
+      "id": 4,
+      "status": 204
+    },
+    {
+      "id": 5,
+      "status": 204
+    },
+    {
+      "id": 6,
+      "status": 204
+    },
+    {
+      "id": 7,
+      "status": 204
+    },
+    {
+      "id": 8,
+      "status": 204
+    },
+    {
+      "id": 9,
+      "status": 204
+    },
+    {
+      "id": 10,
+      "status": 204
+    },
+    {
+      "id": 11,
+      "status": 204
+    }
+  ],
+  "modifiedSettings": [],
+  "remaining": {
+    "taskTenants": 0,
+    "taskTemplates": 0,
+    "taskAudits": 0,
+    "tenants": [
+      {
+        "id": "1",
+        "code": "default"
+      }
+    ],
+    "templates": [
+      {
+        "id": "2",
+        "code": "base"
+      }
+    ],
+    "preservedAuditCount": 2
+  },
+  "auditPrune": {
+    "method": "audit-prune transaction-local cutoff guard with task-specific predicate",
+    "cutoff": "2026-11-17T00:17:51.504Z",
+    "reason": "CLI audit-prune only accepts an upper bound and would remove unrelated baseline records; preserve them using the same guard and an exact task predicate."
+  },
+  "finishedAt": "2026-11-17T00:17:51.524Z"
+}

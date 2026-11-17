@@ -2,6 +2,7 @@
 import type { Tenant, TenantTemplate } from '#/api/model/tenant';
 
 import { computed, onDeactivated, onMounted, onUnmounted, ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 
 import { Page } from '@vben/common-ui';
 
@@ -30,7 +31,17 @@ const loading = ref(false);
 const acting = ref(false);
 const error = ref('');
 const templateError = ref('');
-const tab = ref('tenants');
+const route = useRoute();
+const router = useRouter();
+const tab = computed({
+  get: () =>
+    route.path === '/system/tenants/templates' ? 'templates' : 'tenants',
+  set: (value: string) => {
+    void router.push(
+      value === 'templates' ? '/system/tenants/templates' : '/system/tenants',
+    );
+  },
+});
 const wizard = ref(false);
 const usageKnown = ref(false);
 const page = ref(1);

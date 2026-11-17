@@ -1,0 +1,400 @@
+{
+  "startedAt": "2026-11-17T00:11:25.618Z",
+  "checks": [
+    {
+      "item": 1,
+      "assertion": "列表显示角色数、角色权限去重数和使用中租户数量；真实引用后删除禁用，直接删除接口 409",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "templateId": 8,
+      "roles": 1,
+      "permissions": 1,
+      "usage": 1,
+      "deleteProtection": {
+        "status": 409,
+        "code": 10004,
+        "message": "资源仍被引用或受保护"
+      },
+      "screenshot": "01-template-counts-protection-real.png"
+    },
+    {
+      "item": 2,
+      "assertion": "空白创建不提交 source_tenant_id，真实 201 返回 roles=[]，直接进入编辑路由",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "templateId": 8,
+      "request": {
+        "code": "feidn007_1794874285618",
+        "name": "只读版 feidn007_1794874285618",
+        "description": ""
+      },
+      "roleCount": 0,
+      "screenshot": "02-blank-editor-real.png"
+    },
+    {
+      "item": 3,
+      "assertion": "新增只读角色，勾选一个真实注册权限；PUT 同时提交 name 和完整 roles，返回 200",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "templateId": 8,
+      "status": 200,
+      "request": {
+        "name": "只读版 feidn007_1794874285618",
+        "description": "",
+        "roles": [
+          {
+            "code": "reader",
+            "name": "只读",
+            "data_scope": "self",
+            "status": "active",
+            "remark": null,
+            "permissions": ["product:spu:list"],
+            "menus": [
+              "/system",
+              "/system/users",
+              "/system/menus",
+              "/system/roles",
+              "/trade",
+              "/trade/orders",
+              "/trade/orders/view",
+              "/crm",
+              "/crm/customers",
+              "/crm/inquiries",
+              "/system/depts",
+              "/system/depts/create",
+              "/system/depts/update",
+              "/system/depts/delete",
+              "/system/notifications",
+              "/system/notifications/channels",
+              "/system/notifications/read",
+              "/system/audit-logs",
+              "/system/login-logs",
+              "/system/tenants",
+              "/system/tenants/manage"
+            ]
+          }
+        ]
+      },
+      "traceId": "01M7KDGF29CGK36NAZC9G9MT7K",
+      "screenshot": "03-role-permission-saved-real.png"
+    },
+    {
+      "item": 4,
+      "assertion": "默认模块折叠；搜索自动展开；整组勾选包含被搜索隐藏的权限，取消后恢复只读单权限",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "module": "product",
+      "modulePermissionCount": 10,
+      "readPermission": "product:spu:list",
+      "screenshot": "04-module-search-select-all-real.png"
+    },
+    {
+      "item": 5,
+      "assertion": "五种数据范围逐个切换、真实 PUT 保存并回读一致，最终恢复仅本人",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "scopes": [
+        {
+          "value": "all",
+          "label": "全部",
+          "status": 200,
+          "traceId": "01M7KDGGMGPTEANBZFQ231EP8Q"
+        },
+        {
+          "value": "dept",
+          "label": "本部门",
+          "status": 200,
+          "traceId": "01M7KDGHMQHK8C5H8MHVJDD316"
+        },
+        {
+          "value": "dept_and_child",
+          "label": "本部门及下级",
+          "status": 200,
+          "traceId": "01M7KDGHZ340VD23AX2YZRFHDM"
+        },
+        {
+          "value": "custom",
+          "label": "自定义",
+          "status": 200,
+          "traceId": "01M7KDGJK6CMVD0QY2ME0Q4BCS"
+        },
+        {
+          "value": "self",
+          "label": "仅本人",
+          "status": 200,
+          "traceId": "01M7KDGK9ANVFRZQ0FECE9GGW5"
+        }
+      ],
+      "screenshot": "05-five-data-scopes-real.png"
+    },
+    {
+      "item": 6,
+      "assertion": "刷新后角色名、不可改 code、仅本人范围和已勾权限回填，模板菜单图保持一致且只读",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "roles": [
+        {
+          "code": "reader",
+          "name": "只读",
+          "menus": [
+            "/system",
+            "/system/users",
+            "/system/menus",
+            "/system/roles",
+            "/trade",
+            "/trade/orders",
+            "/trade/orders/view",
+            "/crm",
+            "/crm/customers",
+            "/crm/inquiries",
+            "/system/depts",
+            "/system/depts/create",
+            "/system/depts/update",
+            "/system/depts/delete",
+            "/system/notifications",
+            "/system/notifications/channels",
+            "/system/notifications/read",
+            "/system/audit-logs",
+            "/system/login-logs",
+            "/system/tenants",
+            "/system/tenants/manage"
+          ],
+          "remark": null,
+          "status": "active",
+          "data_scope": "self",
+          "permissions": ["product:spu:list"]
+        }
+      ],
+      "menusUnchanged": true,
+      "screenshot": "06-reloaded-real.png"
+    },
+    {
+      "item": 7,
+      "assertion": "专用 clone 接口真实 201；副本改名并增授权限后，原模板角色及权限原样保留",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "originalId": 8,
+      "cloneId": 9,
+      "sourceRoles": [
+        {
+          "code": "reader",
+          "name": "只读",
+          "menus": [
+            "/system",
+            "/system/users",
+            "/system/menus",
+            "/system/roles",
+            "/trade",
+            "/trade/orders",
+            "/trade/orders/view",
+            "/crm",
+            "/crm/customers",
+            "/crm/inquiries",
+            "/system/depts",
+            "/system/depts/create",
+            "/system/depts/update",
+            "/system/depts/delete",
+            "/system/notifications",
+            "/system/notifications/channels",
+            "/system/notifications/read",
+            "/system/audit-logs",
+            "/system/login-logs",
+            "/system/tenants",
+            "/system/tenants/manage"
+          ],
+          "remark": null,
+          "status": "active",
+          "data_scope": "self",
+          "permissions": ["product:spu:list"]
+        }
+      ],
+      "cloneRoles": [
+        {
+          "code": "reader",
+          "name": "副本角色",
+          "menus": [
+            "/system",
+            "/system/users",
+            "/system/menus",
+            "/system/roles",
+            "/trade",
+            "/trade/orders",
+            "/trade/orders/view",
+            "/crm",
+            "/crm/customers",
+            "/crm/inquiries",
+            "/system/depts",
+            "/system/depts/create",
+            "/system/depts/update",
+            "/system/depts/delete",
+            "/system/notifications",
+            "/system/notifications/channels",
+            "/system/notifications/read",
+            "/system/audit-logs",
+            "/system/login-logs",
+            "/system/tenants",
+            "/system/tenants/manage"
+          ],
+          "remark": null,
+          "status": "active",
+          "data_scope": "self",
+          "permissions": ["product:category:list", "product:spu:list"]
+        }
+      ],
+      "screenshot": "07-independent-clone-real.png"
+    },
+    {
+      "item": 8,
+      "assertion": "真实向导开通只读版租户、接受邀请并登录新租户；在该租户下 GET 角色和授权，只有只读角色与单个权限",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "tenantId": 21,
+      "tenantCode": "feidn007_1794874285618_tenant",
+      "provisionStatus": 201,
+      "provisionTraceId": "01M7KDGVMKHCWJZJ8FKK4JKSMV",
+      "loginTenantId": 21,
+      "roles": [
+        {
+          "id": 76,
+          "tenant_id": 21,
+          "code": "reader",
+          "name": "只读",
+          "data_scope": "self",
+          "remark": null,
+          "status": "active"
+        }
+      ],
+      "rolePermissionIds": [2397],
+      "rolePermissionCodes": ["product:spu:list"],
+      "screenshots": ["08-provisioned-real.png", "08-tenant-roles-real.png"]
+    },
+    {
+      "item": 9,
+      "assertion": "仅列表响应使用空集合夹具：向导显示空态与跳转，隐藏下拉、禁用开通，按钮跳到模板页",
+      "source": "browser-response-fixture",
+      "result": "pass",
+      "emptySelectorCount": 0,
+      "submitDisabled": true,
+      "destination": "/system/tenants/templates",
+      "screenshot": "09-empty-templates-ui-fixture.png"
+    },
+    {
+      "item": 10,
+      "assertion": "选择零角色模板显示完整警告，确认开通仍可用，真实 POST 返回 201",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "templateId": 10,
+      "roleCount": 0,
+      "tenantId": 22,
+      "status": 201,
+      "screenshots": [
+        "10-zero-role-warning-real.png",
+        "10-zero-role-provisioned-real.png"
+      ]
+    },
+    {
+      "item": 11,
+      "assertion": "修改后站内离开显示确认；取消保留草稿；浏览器刷新触发真实 beforeunload，取消刷新仍保留，放弃后未写入服务端",
+      "source": "real-backend-and-browser",
+      "result": "pass",
+      "routeConfirmation": true,
+      "refreshDialogType": "beforeunload",
+      "cancelledDraftRetained": true,
+      "screenshot": "11-unsaved-route-confirm-real.png"
+    },
+    {
+      "item": 12,
+      "assertion": "lint / typecheck / unit / build 全部退出 0",
+      "source": "workspace-commands",
+      "result": "pass",
+      "evidence": "verification.json"
+    }
+  ],
+  "resources": {
+    "templates": [
+      {
+        "id": 8,
+        "code": "feidn007_1794874285618"
+      },
+      {
+        "id": 9,
+        "code": "feidn007_1794874285618_copy"
+      },
+      {
+        "id": 10,
+        "code": "feidn007_1794874285618_zero"
+      },
+      {
+        "id": 11,
+        "code": "feidn007_1794874285618_tenant_snapshot"
+      }
+    ],
+    "tenants": [
+      {
+        "id": 21,
+        "code": "feidn007_1794874285618_tenant"
+      },
+      {
+        "id": 22,
+        "code": "feidn007_1794874285618_zero_tenant"
+      }
+    ]
+  },
+  "browserErrors": [],
+  "cleanup": {
+    "command": "bun .temp/fe-idn-007-cleanup.mjs",
+    "tenantsDeleted": 4,
+    "templatesDeleted": 8,
+    "auditRowsDeleted": 75,
+    "verification": "cleanup-verify.json",
+    "remainingTaskResources": 0
+  },
+  "baseline": {
+    "tenants": [
+      {
+        "id": 20,
+        "code": "feidn007_1794874031078_tenant"
+      },
+      {
+        "id": 19,
+        "code": "feidn007_1794872866240_tenant"
+      },
+      {
+        "id": 1,
+        "code": "default"
+      }
+    ],
+    "templates": [
+      {
+        "id": 7,
+        "code": "feidn007_1794874031078_copy"
+      },
+      {
+        "id": 6,
+        "code": "feidn007_1794874031078"
+      },
+      {
+        "id": 5,
+        "code": "feidn007_1794872866240_copy"
+      },
+      {
+        "id": 4,
+        "code": "feidn007_1794872866240"
+      },
+      {
+        "id": 2,
+        "code": "base"
+      }
+    ]
+  },
+  "finishedAt": "2026-11-17T00:12:37.215Z",
+  "snapshotCreation": {
+    "status": 201,
+    "traceId": "01M7KDQH03VQ9A00WBVGARQ97A",
+    "sourceTenantId": 21,
+    "templateId": 11,
+    "roleCount": 1,
+    "rolePermissionCodes": ["product:spu:list"],
+    "screenshot": "supplement-snapshot-real.png"
+  }
+}

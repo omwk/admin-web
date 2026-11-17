@@ -1,4 +1,5 @@
 import type { UserStatus } from './admin-user';
+import type { DataScope } from './system';
 
 export interface Tenant {
   id: number;
@@ -39,21 +40,25 @@ export interface TenantProvisionResult {
   invite_url: string;
 }
 
+export interface TenantTemplateRole {
+  code: string;
+  name: string;
+  data_scope: DataScope;
+  status: 'active' | 'disabled';
+  remark?: null | string;
+  menus: string[];
+  permissions: string[];
+}
+
 export interface TenantTemplate {
   id: number;
   code: string;
   name: string;
   description: string;
-  roles: {
-    code: string;
-    name: string;
-    data_scope: string;
-    status: string;
-    menus: string[];
-    permissions: string[];
-  }[];
+  roles: TenantTemplateRole[];
   menus: {
     key: string;
+    parent_key?: string;
     name: string;
     path: null | string;
     type: string;
@@ -66,8 +71,14 @@ export interface TenantTemplate {
 }
 
 export interface TenantTemplateInput {
-  source_tenant_id: number;
+  source_tenant_id?: number;
   code: string;
   name: string;
   description: string;
+}
+
+export interface TenantTemplateUpdate {
+  name: string;
+  description: string;
+  roles: TenantTemplateRole[];
 }

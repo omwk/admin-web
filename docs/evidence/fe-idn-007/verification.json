@@ -1,0 +1,68 @@
+{
+  "verifiedAt": "2026-11-17T00:21:52.321Z",
+  "branch": "feat/fe-idn-007-template-editor",
+  "base": "d0f2b442489aa7e0f91373cde665722ead7ab865",
+  "backendContract": "de01599667f926c69dbf5b0d7f4411c0411ce95f",
+  "checks": [
+    {
+      "command": "bun run lint",
+      "exitCode": 0,
+      "result": "format / oxlint / eslint / stylelint passed",
+      "log": "lint.log"
+    },
+    {
+      "command": "pnpm check:type",
+      "exitCode": 0,
+      "result": "38 successful, 38 total",
+      "log": "typecheck.log"
+    },
+    {
+      "command": "bun run test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "result": "150 files / 983 tests passed",
+      "log": "unit-root.log"
+    },
+    {
+      "command": "bun run --cwd apps/admin test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "result": "55 files / 276 tests passed",
+      "log": "unit-admin.log"
+    },
+    {
+      "command": "bun run --cwd apps/admin test:unit --maxWorkers=2 src/views/system/tenant/__tests__/template-editor-state.test.ts src/views/system/tenant/__tests__/template-editor.test.ts",
+      "exitCode": 0,
+      "result": "Final source: 2 files / 16 tests passed",
+      "log": "unit-final-editor.log"
+    },
+    {
+      "command": "pnpm build:antd",
+      "exitCode": 0,
+      "result": "11 successful, 11 total",
+      "log": "build.log"
+    },
+    {
+      "command": "node apps/admin/e2e/fe-idn-007.mjs",
+      "exitCode": 0,
+      "result": "11 functional acceptance checks passed; item 8 real provisioning, invitation acceptance and tenant login",
+      "log": "browser.log"
+    },
+    {
+      "command": "node .temp/fe-idn-007-supplement.mjs",
+      "exitCode": 0,
+      "result": "Real snapshot creation and final layout passed",
+      "log": "supplement.log"
+    },
+    {
+      "command": "bun .temp/fe-idn-007-cleanup.mjs",
+      "exitCode": 0,
+      "result": "4 tenants / 8 templates / 75 audit rows deleted; baseline preserved",
+      "log": "cleanup.log"
+    },
+    {
+      "command": "bun .temp/fe-idn-007-verify-cleanup.mjs",
+      "exitCode": 0,
+      "result": "102 tenant-scoped tables clear; task audit/session leftovers 0",
+      "log": "cleanup-verify.json"
+    }
+  ]
+}

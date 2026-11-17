@@ -18,6 +18,10 @@ const state = vi.hoisted(() => ({
 vi.mock('@vben/common-ui', () => ({
   Page: { template: '<main><slot /></main>' },
 }));
+vi.mock('vue-router', () => ({
+  useRoute: () => ({ path: '/system/tenants' }),
+  useRouter: () => ({ push: vi.fn() }),
+}));
 vi.mock('#/api/core/dictionaries', () => ({
   getMetaDictionaryApi: vi.fn().mockResolvedValue([]),
 }));
@@ -34,6 +38,7 @@ vi.mock('#/api/core/tenants', () => ({
   renameTenantApi: vi.fn(),
   deleteTenantTemplateApi: state.remove,
   createTenantTemplateApi: vi.fn(),
+  cloneTenantTemplateApi: vi.fn(),
   updateTenantTemplateApi: vi.fn(),
   getTenantTemplateApi: vi.fn(),
   provisionTenantApi: vi.fn(),
@@ -148,7 +153,8 @@ describe('tenant protections', () => {
     app.mount(root);
     await nextTick();
     expect(buttons('删除模板')[0]?.disabled).toBe(true);
-    expect(buttons('生成模板')[0]?.disabled).toBe(true);
+    expect(buttons('从租户创建')[0]?.disabled).toBe(true);
+    expect(buttons('新建空白模板')[0]?.disabled).toBe(false);
     expect(state.remove).not.toHaveBeenCalled();
   });
   it('hides all writes without manage and does not request the manage-only templates endpoint', async () => {
@@ -162,6 +168,9 @@ describe('tenant protections', () => {
       '停用',
       '启用',
       '生成模板',
+      '从租户创建',
+      '新建空白模板',
+      '复制模板',
       '删除模板',
       '重发管理员邀请',
       '重置管理员',

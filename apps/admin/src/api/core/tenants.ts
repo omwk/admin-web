@@ -8,6 +8,7 @@ import type {
   TenantProvisionResult,
   TenantTemplate,
   TenantTemplateInput,
+  TenantTemplateUpdate,
 } from '#/api/model/tenant';
 
 import { requestClient } from '#/api/request';
@@ -58,7 +59,7 @@ export const createTenantTemplateApi = (input: TenantTemplateInput) =>
   requestClient.post<TenantTemplate>('/admin/tenant-templates', input, options);
 export const updateTenantTemplateApi = (
   id: number,
-  input: { description: string; name: string },
+  input: TenantTemplateUpdate,
 ) =>
   requestClient.put<TenantTemplate>(
     `/admin/tenant-templates/${id}`,
@@ -67,6 +68,15 @@ export const updateTenantTemplateApi = (
   );
 export const deleteTenantTemplateApi = (id: number) =>
   requestClient.delete(`/admin/tenant-templates/${id}`, options);
+export const cloneTenantTemplateApi = (
+  id: number,
+  input: { code: string; name: string },
+) =>
+  requestClient.post<TenantTemplate>(
+    `/admin/tenant-templates/${id}/clone`,
+    input,
+    options,
+  );
 
 async function collectPages<T>(
   getPage: (page: number) => Promise<PageResult<T>>,

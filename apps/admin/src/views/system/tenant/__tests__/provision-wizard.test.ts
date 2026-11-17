@@ -52,6 +52,7 @@ let app: ReturnType<typeof createApp>;
 let root: HTMLDivElement;
 const visible = ref(true);
 const created = vi.fn();
+const manageTemplates = vi.fn();
 function button(text: string) {
   const result = [
     ...document.querySelectorAll<HTMLButtonElement>('button'),
@@ -99,6 +100,7 @@ async function mount(templates = [snapshot]) {
               visible.value = false;
             },
             onCreated: created,
+            onTemplates: manageTemplates,
           })
         : null,
   });
@@ -121,6 +123,7 @@ beforeEach(() => {
   state.allowed = true;
   state.provision.mockReset();
   created.mockReset();
+  manageTemplates.mockReset();
   visible.value = true;
   localStorage.clear();
   sessionStorage.clear();
@@ -388,9 +391,25 @@ describe('tenant provisioning and one-time invitation', () => {
     await fill('租户名称', 'Acme');
     button('下一步').click();
     await vi.waitFor(() =>
-      expect(document.body.textContent).toContain('暂无租户模板'),
+      expect(document.body.textContent).toContain('还没有可用的租户模板'),
     );
     expect(button('确认开通').disabled).toBe(true);
-    expect(button('生成模板')).toBeDefined();
+    expect(document.querySelector('[aria-label="租户模板"]')).toBeNull();
+    button('去创建模板').click();
+    expect(manageTemplates).toHaveBeenCalledOnce();
+  });
+  it('warns for a zero-role template while still allowing provisioning', async () => {
+    state.provision.mockResolvedValue({
+      tenant_id: 8,
+      invite_url: '/auth/invite/accept?tenant_id=8',
+    });
+    await mount();
+    await ready();
+    expect(document.querySelector('.ant-alert-warning')?.textContent).toContain(
+      '该模板不含角色，开通后除管理员外没有其他角色可用。',
+    );
+    expect(button('确认开通').disabled).toBe(false);
+    button('确认开通').click();
+    await vi.waitFor(() => expect(state.provision).toHaveBeenCalledOnce());
   });
 });

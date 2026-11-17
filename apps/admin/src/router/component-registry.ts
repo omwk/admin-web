@@ -24,6 +24,8 @@ export const componentRegistry: ComponentRecordType = {
   '/system/role/index.vue': () => import('#/views/system/role/index.vue'),
   '/system/dept/index.vue': () => import('#/views/system/dept/index.vue'),
   '/system/tenant/index.vue': () => import('#/views/system/tenant/index.vue'),
+  '/system/tenant/template-editor.vue': () =>
+    import('#/views/system/tenant/template-editor.vue'),
   '/system/tenants/index.vue': () => import('#/views/system/tenant/index.vue'),
   '/system/dict/index.vue': () => import('#/views/system/dict/index.vue'),
   '/system/dicts/index.vue': () => import('#/views/system/dict/index.vue'),
