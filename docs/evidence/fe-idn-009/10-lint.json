@@ -1,0 +1,8 @@
+{
+  "exitCode": 0,
+  "cwd": "D:/code/admin-web",
+  "finishedAt": "2026-11-17T14:36:02.8935271Z",
+  "command": "bun run lint",
+  "name": "10-lint",
+  "startedAt": "2026-11-17T14:35:31.3974477Z"
+}

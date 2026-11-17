@@ -1,0 +1,156 @@
+{
+  "task": "FE-IDN-009",
+  "verifiedAt": "2026-11-17T14:38:39.870Z",
+  "branch": "feat/fe-idn-009-menu-driven",
+  "base": "6a7e585",
+  "passed": true,
+  "acceptanceItems": [
+    {
+      "item": 1,
+      "result": "pass"
+    },
+    {
+      "item": 2,
+      "result": "pass"
+    },
+    {
+      "item": 3,
+      "result": "pass"
+    },
+    {
+      "item": 4,
+      "result": "pass"
+    },
+    {
+      "item": 5,
+      "result": "pass"
+    },
+    {
+      "item": 6,
+      "result": "pass"
+    },
+    {
+      "item": 7,
+      "result": "pass"
+    },
+    {
+      "item": 8,
+      "result": "pass"
+    },
+    {
+      "item": 9,
+      "result": "pass"
+    },
+    {
+      "item": 10,
+      "result": "pass"
+    }
+  ],
+  "gates": [
+    {
+      "name": "10-lint",
+      "exitCode": 0,
+      "cwd": "D:/code/admin-web",
+      "finishedAt": "2026-11-17T14:36:02.8935271Z",
+      "command": "bun run lint",
+      "startedAt": "2026-11-17T14:35:31.3974477Z"
+    },
+    {
+      "name": "10-typecheck",
+      "cwd": "D:/code/admin-web",
+      "exitCode": 0,
+      "command": "bun run check:type",
+      "startedAt": "2026-11-17T14:28:30.6002713Z",
+      "finishedAt": "2026-11-17T14:29:16.1560181Z"
+    },
+    {
+      "name": "10-unit-admin",
+      "command": "bun run --cwd apps/admin test:unit --maxWorkers=4",
+      "startedAt": "2026-11-17T14:23:03.0180655Z",
+      "exitCode": 0,
+      "cwd": "D:/code/admin-web",
+      "finishedAt": "2026-11-17T14:24:46.2200879Z"
+    },
+    {
+      "name": "10-unit-root",
+      "startedAt": "2026-11-17T14:16:43.7394531Z",
+      "command": "bun run test:unit --maxWorkers=4",
+      "exitCode": 0,
+      "finishedAt": "2026-11-17T14:18:57.4562041Z",
+      "cwd": "D:/code/admin-web"
+    },
+    {
+      "name": "10-build",
+      "exitCode": 0,
+      "startedAt": "2026-11-17T14:28:24.2071480Z",
+      "finishedAt": "2026-11-17T14:28:54.0741796Z",
+      "cwd": "D:/code/admin-web",
+      "command": "bun run build:antd"
+    },
+    {
+      "name": "backend-hidden-menu-tests",
+      "startedAt": "2026-11-17T14:16:41.8768525Z",
+      "cwd": "D:/code/go-admin-api",
+      "command": "go test -count=1 -v ./internal/modules/identity ./internal/modules/identity/authz ./internal/bootstrap -run TestMenu|TestIdentityProfile|TestSeedMenu|TestProfileRepository|TestProfileIntegration",
+      "exitCode": 0,
+      "finishedAt": "2026-11-17T14:17:20.0237585Z"
+    },
+    {
+      "name": "backend-lint",
+      "startedAt": "2026-11-17T14:18:23.0819348Z",
+      "cwd": "D:/code/go-admin-api",
+      "exitCode": 0,
+      "command": "golangci-lint run ./internal/modules/identity/... ./internal/bootstrap/...",
+      "finishedAt": "2026-11-17T14:19:02.3891707Z"
+    }
+  ],
+  "hashes": [
+    {
+      "path": "apps/admin/src/api/core/menu.ts",
+      "sha256": "b029679421c99f69f40ab4c86dcba50b6edc3e1e75fc8c8b14dfae4af3aaa7ef"
+    },
+    {
+      "path": "apps/admin/src/router/access.ts",
+      "sha256": "9d6222c3db1aebc634ea8b91f503193500bd3a68d63ce53f0d509eda96586e26"
+    },
+    {
+      "path": "apps/admin/src/router/guard.ts",
+      "sha256": "6b850aeb1fee45bbb09819575a4d701d5053d0a3b031cfb8b84b7fb9e2234419"
+    },
+    {
+      "path": "apps/admin/src/router/menu-adapter.ts",
+      "sha256": "644086e80e6aca68d1b61d0c5775d42b95ac50f6fc2a3978237a5cf0ce96d4f0"
+    },
+    {
+      "path": "apps/admin/src/router/menu-permissions.ts",
+      "sha256": "2434a9aa544dff2849e87bb0ee0bec025aee616c49f6f9b57d622e183982d656"
+    },
+    {
+      "path": "apps/admin/src/router/shell.ts",
+      "sha256": "db9cb4e813d35abdc96fedb797ca188a537fc045f020a7bfcd2c3ba5f72b3a03"
+    },
+    {
+      "path": "apps/admin/src/router/audit-menus.ts",
+      "sha256": "24acca98c0962d8c10b37a8e75ca5a5164953837f8790be96e4de608939deaa5"
+    },
+    {
+      "path": "apps/admin/src/router/notification-menus.ts",
+      "sha256": "f428efa8865b5b88748bbbb43b4cd2f772e11b978f5ce26cf5b973ef241a4ee6"
+    },
+    {
+      "path": "apps/admin/src/router/component-registry.ts",
+      "sha256": "d847393aadbfb4fec06598f4f9cd4be1b04f8b6c982a8c4ff1e5a7df7b4b4e03"
+    }
+  ],
+  "cleanup": {
+    "taskUsers": 0,
+    "taskRoles": 0,
+    "taskProducts": 0,
+    "taskTemplates": 0,
+    "taskAudits": 0,
+    "taskSessions": 0,
+    "menusRestored": true,
+    "settingsUnchanged": true,
+    "baselineAuditRecordsPreserved": 17
+  }
+}

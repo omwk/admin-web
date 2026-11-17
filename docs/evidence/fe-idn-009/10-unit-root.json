@@ -1,0 +1,8 @@
+{
+  "name": "10-unit-root",
+  "startedAt": "2026-11-17T14:16:43.7394531Z",
+  "command": "bun run test:unit --maxWorkers=4",
+  "exitCode": 0,
+  "finishedAt": "2026-11-17T14:18:57.4562041Z",
+  "cwd": "D:/code/admin-web"
+}

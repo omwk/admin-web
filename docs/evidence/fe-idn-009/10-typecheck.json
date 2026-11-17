@@ -1,0 +1,8 @@
+{
+  "cwd": "D:/code/admin-web",
+  "exitCode": 0,
+  "command": "bun run check:type",
+  "startedAt": "2026-11-17T14:28:30.6002713Z",
+  "name": "10-typecheck",
+  "finishedAt": "2026-11-17T14:29:16.1560181Z"
+}

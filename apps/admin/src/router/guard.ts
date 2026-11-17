@@ -6,13 +6,11 @@ import { isCancel } from '@vben/request';
 import { useAccessStore, useUserStore } from '@vben/stores';
 import { startProgress, stopProgress } from '@vben/utils';
 
-import { hasCatalogPermission } from '#/auth/catalog-permission';
 import { getAccessToken } from '#/auth/token';
 import { accessRoutes, coreRouteNames } from '#/router/routes';
 import { useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
-import { catalogRouteAction } from './catalog';
 import { isInternalPath } from './menu-adapter';
 
 function safeRedirect(value: unknown, fallback: string) {
@@ -55,12 +53,7 @@ function createRouterGuard(router: Router) {
         replace: true,
       };
     }
-    if (accessStore.isAccessChecked) {
-      const action = catalogRouteAction(to.path);
-      return action && !hasCatalogPermission(action)
-        ? { path: '/403', replace: true }
-        : true;
-    }
+    if (accessStore.isAccessChecked) return true;
 
     try {
       const userInfo = userStore.userInfo || (await authStore.fetchUserInfo());

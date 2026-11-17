@@ -1,0 +1,7 @@
+{
+  "startedAt": "2026-11-17T14:16:41.8768525Z",
+  "cwd": "D:/code/go-admin-api",
+  "command": "go test -count=1 -v ./internal/modules/identity ./internal/modules/identity/authz ./internal/bootstrap -run TestMenu|TestIdentityProfile|TestSeedMenu|TestProfileRepository|TestProfileIntegration",
+  "exitCode": 0,
+  "finishedAt": "2026-11-17T14:17:20.0237585Z"
+}

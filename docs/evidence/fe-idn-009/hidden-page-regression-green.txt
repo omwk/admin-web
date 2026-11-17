@@ -1,0 +1,10 @@
+$ vitest run --config vitest.config.ts src/router "--maxWorkers=4"
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+
+ Test Files  5 passed (5)
+      Tests  20 passed (20)
+   Start at  22:28:28
+   Duration  4.96s (transform 3.92s, setup 0ms, import 7.52s, tests 138ms, environment 7.14s)
+

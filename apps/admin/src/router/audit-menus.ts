@@ -1,8 +1,6 @@
-import type { RouteRecordStringComponent } from '@vben/types';
-
 import type { IdentityMenu } from '#/api/model/menu';
 
-const paths = ['/system/audit-logs', '/system/login-logs'];
+const paths = new Set(['/system/audit-logs', '/system/login-logs']);
 
 /** A retained menu grant must not expose pages without the audit permission. */
 export function auditMenus(
@@ -15,7 +13,7 @@ export function auditMenus(
       ? menu.path
       : `${parent}/${menu.path ?? ''}`;
     if (
-      paths.includes(path.replace(/\/$/, '')) &&
+      paths.has(path.replace(/\/$/, '')) &&
       !codes.includes('system:audit:list')
     )
       return [];
@@ -23,14 +21,4 @@ export function auditMenus(
       { ...menu, children: auditMenus(menu.children ?? [], codes, path) },
     ];
   });
-}
-
-/** Absent projected menus still resolve direct navigation to the existing 403. */
-export function auditFallbackRoutes(): RouteRecordStringComponent[] {
-  return paths.map((path, index) => ({
-    component: '/_core/fallback/forbidden.vue',
-    meta: { hideInMenu: true, title: '403' },
-    name: `AuditForbidden_${index}`,
-    path,
-  }));
 }
