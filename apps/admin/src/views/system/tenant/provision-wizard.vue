@@ -1,11 +1,19 @@
 <script setup lang="ts">
 import type { TenantTemplate } from '#/api/model/tenant';
 
-import { nextTick, onDeactivated, onUnmounted, reactive, ref } from 'vue';
+import {
+  computed,
+  nextTick,
+  onDeactivated,
+  onUnmounted,
+  reactive,
+  ref,
+} from 'vue';
 
 import {
   Alert,
   Button,
+  Empty,
   Form,
   Input,
   Modal,
@@ -36,6 +44,9 @@ const form = reactive({
   admin_username: '',
   admin_email: '',
 });
+const selectedTemplate = computed(() =>
+  props.templates.find((item) => item.id === form.template_id),
+);
 type Field = keyof typeof form;
 type FieldInput = { focus: () => void };
 const fieldErrors = reactive<Record<Field, string>>({
@@ -229,23 +240,21 @@ onUnmounted(() => {
         </Form.Item>
       </template>
       <template v-else>
-        <Alert
+        <Empty
           v-if="templates.length === 0"
-          message="暂无租户模板，请先从现有租户生成快照。"
-          type="info"
+          description="还没有可用的租户模板"
           class="mb-4"
         >
-          <template #action>
-            <Button
-              v-if="canManageTenants()"
-              size="small"
-              @click="emit('templates')"
-            >
-              生成模板
-            </Button>
-          </template>
-        </Alert>
+          <Button
+            v-if="canManageTenants()"
+            size="small"
+            @click="emit('templates')"
+          >
+            去创建模板
+          </Button>
+        </Empty>
         <Form.Item
+          v-else
           label="租户模板"
           :validate-status="fieldErrors.template_id ? 'error' : undefined"
           :help="fieldErrors.template_id || undefined"
@@ -268,6 +277,13 @@ onUnmounted(() => {
             @update:value="revalidateField('template_id')"
           />
         </Form.Item>
+        <Alert
+          v-if="selectedTemplate && selectedTemplate.roles.length === 0"
+          message="该模板不含角色，开通后除管理员外没有其他角色可用。"
+          type="warning"
+          show-icon
+          class="mb-4"
+        />
         <Form.Item
           label="管理员用户名"
           :validate-status="fieldErrors.admin_username ? 'error' : undefined"

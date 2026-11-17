@@ -1,0 +1,437 @@
+{
+  "verifiedAt": "2026-11-17T00:19:48.993Z",
+  "remainingTaskAudits": 0,
+  "remainingTaskSessions": 0,
+  "tenants": [
+    {
+      "id": "1",
+      "code": "default"
+    }
+  ],
+  "templates": [
+    {
+      "id": "2",
+      "code": "base"
+    }
+  ],
+  "preservedAudits": [
+    {
+      "id": "1856",
+      "created_at": "2026-11-16T23:42:59.492Z"
+    },
+    {
+      "id": "1870",
+      "created_at": "2026-11-17T00:06:46.647Z"
+    }
+  ],
+  "tables": [
+    {
+      "table": "api_call",
+      "remaining": 0
+    },
+    {
+      "table": "api_call_log",
+      "remaining": 0
+    },
+    {
+      "table": "api_call_log_202610",
+      "remaining": 0
+    },
+    {
+      "table": "api_call_log_202611",
+      "remaining": 0
+    },
+    {
+      "table": "api_call_log_202612",
+      "remaining": 0
+    },
+    {
+      "table": "api_call_log_202701",
+      "remaining": 0
+    },
+    {
+      "table": "api_call_meter",
+      "remaining": 0
+    },
+    {
+      "table": "api_client",
+      "remaining": 0
+    },
+    {
+      "table": "api_client_resource_grant",
+      "remaining": 0
+    },
+    {
+      "table": "api_client_route",
+      "remaining": 0
+    },
+    {
+      "table": "api_client_secret",
+      "remaining": 0
+    },
+    {
+      "table": "api_quota",
+      "remaining": 0
+    },
+    {
+      "table": "api_route",
+      "remaining": 0
+    },
+    {
+      "table": "audit_log",
+      "remaining": 0
+    },
+    {
+      "table": "auth_token",
+      "remaining": 0
+    },
+    {
+      "table": "billing_adjustment",
+      "remaining": 0
+    },
+    {
+      "table": "billing_compensation",
+      "remaining": 0
+    },
+    {
+      "table": "billing_reconcile_diff",
+      "remaining": 0
+    },
+    {
+      "table": "billing_reconcile_month",
+      "remaining": 0
+    },
+    {
+      "table": "billing_reconcile_run",
+      "remaining": 0
+    },
+    {
+      "table": "billing_statement",
+      "remaining": 0
+    },
+    {
+      "table": "billing_statement_line",
+      "remaining": 0
+    },
+    {
+      "table": "call_charge",
+      "remaining": 0
+    },
+    {
+      "table": "category",
+      "remaining": 0
+    },
+    {
+      "table": "category_mapping",
+      "remaining": 0
+    },
+    {
+      "table": "channel_provider",
+      "remaining": 0
+    },
+    {
+      "table": "credential_audit",
+      "remaining": 0
+    },
+    {
+      "table": "credential_maintenance",
+      "remaining": 0
+    },
+    {
+      "table": "credential_notification_dedup",
+      "remaining": 0
+    },
+    {
+      "table": "credential_notification_setting",
+      "remaining": 0
+    },
+    {
+      "table": "credential_refresh_invocation",
+      "remaining": 0
+    },
+    {
+      "table": "credential_refresh_reconciliation",
+      "remaining": 0
+    },
+    {
+      "table": "credential_refresh_run",
+      "remaining": 0
+    },
+    {
+      "table": "credential_refresh_stage",
+      "remaining": 0
+    },
+    {
+      "table": "credential_version",
+      "remaining": 0
+    },
+    {
+      "table": "customer",
+      "remaining": 0
+    },
+    {
+      "table": "dead_letter",
+      "remaining": 0
+    },
+    {
+      "table": "entitlement",
+      "remaining": 0
+    },
+    {
+      "table": "export_job",
+      "remaining": 0
+    },
+    {
+      "table": "file_object",
+      "remaining": 0
+    },
+    {
+      "table": "idempotency_key",
+      "remaining": 0
+    },
+    {
+      "table": "inquiry",
+      "remaining": 0
+    },
+    {
+      "table": "inventory_snapshot",
+      "remaining": 0
+    },
+    {
+      "table": "listing",
+      "remaining": 0
+    },
+    {
+      "table": "listing_sku",
+      "remaining": 0
+    },
+    {
+      "table": "mapping_profile",
+      "remaining": 0
+    },
+    {
+      "table": "mapping_version",
+      "remaining": 0
+    },
+    {
+      "table": "notification",
+      "remaining": 0
+    },
+    {
+      "table": "notification_preference",
+      "remaining": 0
+    },
+    {
+      "table": "notify_delivery",
+      "remaining": 0
+    },
+    {
+      "table": "notify_outbox",
+      "remaining": 0
+    },
+    {
+      "table": "notify_template",
+      "remaining": 0
+    },
+    {
+      "table": "order_address",
+      "remaining": 0
+    },
+    {
+      "table": "order_item",
+      "remaining": 0
+    },
+    {
+      "table": "order_status_history",
+      "remaining": 0
+    },
+    {
+      "table": "order_sync_pending",
+      "remaining": 0
+    },
+    {
+      "table": "outbox_event",
+      "remaining": 0
+    },
+    {
+      "table": "password_history",
+      "remaining": 0
+    },
+    {
+      "table": "platform_category",
+      "remaining": 0
+    },
+    {
+      "table": "price_list",
+      "remaining": 0
+    },
+    {
+      "table": "price_list_item",
+      "remaining": 0
+    },
+    {
+      "table": "pricing_plan",
+      "remaining": 0
+    },
+    {
+      "table": "product_media",
+      "remaining": 0
+    },
+    {
+      "table": "product_sku",
+      "remaining": 0
+    },
+    {
+      "table": "product_spu",
+      "remaining": 0
+    },
+    {
+      "table": "quarantine_record",
+      "remaining": 0
+    },
+    {
+      "table": "raw_dedup",
+      "remaining": 0
+    },
+    {
+      "table": "raw_payload",
+      "remaining": 0
+    },
+    {
+      "table": "raw_payload_202611",
+      "remaining": 0
+    },
+    {
+      "table": "raw_payload_202612",
+      "remaining": 0
+    },
+    {
+      "table": "recharge_code",
+      "remaining": 0
+    },
+    {
+      "table": "replay_run",
+      "remaining": 0
+    },
+    {
+      "table": "sales_order",
+      "remaining": 0
+    },
+    {
+      "table": "schema_baseline",
+      "remaining": 0
+    },
+    {
+      "table": "schema_drift_event",
+      "remaining": 0
+    },
+    {
+      "table": "share_inquiry_receipt",
+      "remaining": 0
+    },
+    {
+      "table": "share_link",
+      "remaining": 0
+    },
+    {
+      "table": "share_privacy_run",
+      "remaining": 0
+    },
+    {
+      "table": "share_snapshot",
+      "remaining": 0
+    },
+    {
+      "table": "share_visit",
+      "remaining": 0
+    },
+    {
+      "table": "shop",
+      "remaining": 0
+    },
+    {
+      "table": "shop_credential",
+      "remaining": 0
+    },
+    {
+      "table": "sync_cursor",
+      "remaining": 0
+    },
+    {
+      "table": "sync_job",
+      "remaining": 0
+    },
+    {
+      "table": "sync_run",
+      "remaining": 0
+    },
+    {
+      "table": "sys_dept",
+      "remaining": 0
+    },
+    {
+      "table": "sys_dict",
+      "remaining": 0
+    },
+    {
+      "table": "sys_dict_item",
+      "remaining": 0
+    },
+    {
+      "table": "sys_menu",
+      "remaining": 0
+    },
+    {
+      "table": "sys_permission",
+      "remaining": 0
+    },
+    {
+      "table": "sys_refresh_token",
+      "remaining": 0
+    },
+    {
+      "table": "sys_role",
+      "remaining": 0
+    },
+    {
+      "table": "sys_role_dept",
+      "remaining": 0
+    },
+    {
+      "table": "sys_role_menu",
+      "remaining": 0
+    },
+    {
+      "table": "sys_role_permission",
+      "remaining": 0
+    },
+    {
+      "table": "sys_setting",
+      "remaining": 0
+    },
+    {
+      "table": "sys_user",
+      "remaining": 0
+    },
+    {
+      "table": "sys_user_role",
+      "remaining": 0
+    },
+    {
+      "table": "unit_txn",
+      "remaining": 0
+    },
+    {
+      "table": "usage_daily",
+      "remaining": 0
+    },
+    {
+      "table": "wallet",
+      "remaining": 0
+    },
+    {
+      "table": "wallet_txn",
+      "remaining": 0
+    }
+  ]
+}

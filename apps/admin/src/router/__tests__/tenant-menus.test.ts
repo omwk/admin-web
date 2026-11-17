@@ -34,6 +34,31 @@ const menu: IdentityMenu = {
   ],
 };
 describe('platform tenant entry', () => {
+  it('protects direct template routes and registers an uncached editor', () => {
+    const restricted = tenantFallbackRoutes(codes, platform).slice(1);
+    expect(restricted).toHaveLength(2);
+    expect(
+      restricted.every(
+        (route) => route.component === '/_core/fallback/forbidden.vue',
+      ),
+    ).toBe(true);
+    const routes = tenantFallbackRoutes(
+      [...codes, 'system:tenant:manage'],
+      platform,
+    );
+    expect(routes[1]).toMatchObject({
+      path: '/system/tenants/templates',
+      meta: { hideInMenu: true, keepAlive: false },
+    });
+    expect(routes[2]).toMatchObject({
+      path: '/system/tenants/templates/:id',
+      component: '/system/tenant/template-editor.vue',
+      meta: { hideInMenu: true, keepAlive: false },
+    });
+    expect(resolveMenuComponent('system/tenant/template-editor')).toBe(
+      '/system/tenant/template-editor.vue',
+    );
+  });
   it('requires platform tenant membership, super status and list permission', () => {
     expect(isPlatformAdministrator(platform)).toBe(true);
     for (const identity of [
