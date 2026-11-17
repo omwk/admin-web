@@ -1,0 +1,277 @@
+{
+  "task": "FE-IDN-008",
+  "startedAt": "2026-11-17T01:00:30.706Z",
+  "checks": [
+    {
+      "item": 2,
+      "assertion": "默认请求未带 include_archived；真实归档后默认列表与界面均无该租户",
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "tenantId": 25,
+      "query": "?page=1&page_size=100",
+      "screenshot": "02-default-hides-archived-real.png"
+    },
+    {
+      "item": 4,
+      "assertion": "真实确认归档后 status=suspended 且 deleted_at 非空；原租户管理员登录被拒绝 403/20111",
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "archive": {
+        "status": 200,
+        "code": 0,
+        "message": "ok",
+        "traceId": "01M7KGABD6GZQMY8Q463QR0ZM7"
+      },
+      "deletedAt": "2026-11-17T01:00:38.708686Z",
+      "login": {
+        "status": 403,
+        "code": 20111,
+        "message": "租户已停用",
+        "traceId": "01M7KGABJ9CXJD2C01YW3W2XBN"
+      },
+      "screenshots": [
+        "04-archive-confirm-real.png",
+        "02-default-hides-archived-real.png"
+      ]
+    },
+    {
+      "item": 1,
+      "assertion": "正常绿色、已停用灰色、已归档红色；归档优先于 suspended",
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "states": ["active", "suspended", "archived"],
+      "screenshots": [
+        "01-active-real.png",
+        "01-suspended-real.png",
+        "03-includes-archived-time-real.png"
+      ]
+    },
+    {
+      "item": 3,
+      "assertion": "开关开启带 include_archived=true，显示真实归档时间；关闭恢复默认无此参数",
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "query": "?page=1&page_size=100&include_archived=true",
+      "utcTime": "2026-11-17T01:00:38.708686Z",
+      "displayedTime": "2026-11-17 09:00:38",
+      "screenshot": "03-includes-archived-time-real.png"
+    },
+    {
+      "item": 5,
+      "assertion": "恢复后 active、deleted_at=null，原账号密码再次登录 200",
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "restore": {
+        "status": 200,
+        "code": 0,
+        "message": "ok",
+        "traceId": "01M7KGAE1AZJ7CD4MCW02ZC4HN"
+      },
+      "login": {
+        "status": 200,
+        "code": 0,
+        "message": "ok",
+        "traceId": "01M7KGAE730T211JGB4F332M8B"
+      },
+      "screenshot": "05-restored-login-real.png"
+    },
+    {
+      "item": 6,
+      "assertion": "平台归档禁用并提示；直调归档/删除均 409；平台已归档响应夹具验证删除禁用与同一提示",
+      "result": "pass",
+      "source": "real-platform-protection-plus-explicit-archived-platform-UI-fixture",
+      "archive": {
+        "status": 409,
+        "code": 10004,
+        "message": "平台租户不可归档",
+        "traceId": "01M7KGAEWGM6NTAPX19SF5NHZ7"
+      },
+      "purge": {
+        "status": 409,
+        "code": 10004,
+        "message": "平台租户不可删除",
+        "traceId": "01M7KGAEX93FNY0NTRAEZSG5ZF"
+      },
+      "archivedPlatformSource": "UI response fixture; real backend never permits platform archival",
+      "screenshots": [
+        "06-platform-archive-real.png",
+        "06-platform-delete-ui-fixture.png"
+      ]
+    },
+    {
+      "item": 11,
+      "assertion": "移除 manage 后开通/编辑/停启/邀请/归档/恢复/删除全部隐藏；归档行无查看成员",
+      "result": "pass",
+      "source": "real-super-session-with-manage-removed-from-menu-response",
+      "reason": "平台超管实际始终拥有 manage；只对菜单权限响应删除该权限以验证前端分支。租户列表仍来自真实后端。",
+      "screenshot": "11-no-manage-ui-fixture.png"
+    },
+    {
+      "item": 7,
+      "assertion": "空值、错误 code、大小写差异、首尾空格均禁用；完全一致才可提交，无虚构统计数字",
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "mismatches": [
+        "FEIDN008_1794877230706_TENANT",
+        "feidn008_1794877230706_tenant ",
+        " feidn008_1794877230706_tenant",
+        "wrong"
+      ],
+      "screenshots": [
+        "07-wrong-code-disabled-real.png",
+        "07-exact-code-enabled-real.png"
+      ]
+    },
+    {
+      "item": 8,
+      "assertion": "真实删除请求在宽限期内返回 409，弹窗逐字显示后端原文",
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "status": 409,
+      "code": 10004,
+      "message": "归档未满 7 天",
+      "traceId": "01M7KGAV2D6E3KYWTC1PWPEVYD",
+      "screenshot": "08-grace-409-real.png"
+    },
+    {
+      "item": 9,
+      "assertion": "只对本卡租户回拨归档时间并加入一条类目，真实删除返回业务数据 409；用户及类目仍在",
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "status": 409,
+      "code": 10004,
+      "message": "租户仍有业务数据，暂不支持彻底删除",
+      "traceId": "01M7KGAVYMAB7TG1CVV846FSAK",
+      "businessFixture": {
+        "table": "category",
+        "id": "17",
+        "count": 1
+      },
+      "screenshot": "09-business-data-409-real.png"
+    },
+    {
+      "item": 10,
+      "assertion": "真实 DELETE 带完全一致 confirm 返回 204；刷新后行消失并提示租户已删除，数据库租户及用户均为零",
+      "result": "pass",
+      "source": "real-backend-and-browser",
+      "status": 204,
+      "tenantId": 25,
+      "screenshot": "10-deleted-row-gone-real.png"
+    }
+  ],
+  "resources": {
+    "tenants": [
+      {
+        "id": 25,
+        "code": "feidn008_1794877230706_tenant"
+      }
+    ],
+    "templates": [
+      {
+        "id": 14,
+        "code": "feidn008_1794877230706_template"
+      }
+    ]
+  },
+  "browserErrors": [],
+  "fixtureSQL": [
+    {
+      "sql": "UPDATE tenant SET deleted_at=now()-interval '366 days' WHERE id=$1 AND code=$2 AND deleted_at IS NOT NULL RETURNING id,deleted_at",
+      "params": [25, "feidn008_1794877230706_tenant"],
+      "rows": 1,
+      "deletedAt": "2025-11-16T01:00:55.153Z"
+    },
+    {
+      "sql": "INSERT INTO category(tenant_id,name,path,level) VALUES($1,$2,'1',1) RETURNING id",
+      "params": [25, "feidn008_1794877230706_tenant"],
+      "rows": 1
+    },
+    {
+      "sql": "DELETE FROM category WHERE tenant_id=$1 AND name=$2 RETURNING id",
+      "params": [25, "feidn008_1794877230706_tenant"],
+      "rows": 1
+    }
+  ],
+  "templateReference": {
+    "source": "real-backend-and-browser",
+    "archivedReferenceIncluded": true,
+    "deleteDisabled": true,
+    "archivedSourceExcluded": true,
+    "screenshot": "supplement-archived-template-reference-real.png"
+  },
+  "confirmation400": {
+    "source": "UI request query overridden to wrong code; response is from the real backend",
+    "status": 400,
+    "code": 10001,
+    "message": "确认码不匹配",
+    "traceId": "01M7KGAX9KPG1XR2QDC9KPCDBQ",
+    "screenshot": "supplement-confirmation-400-real-backend.png"
+  },
+  "cleanup": {
+    "tenantDeletes": [
+      {
+        "id": 25,
+        "alreadyDeletedByAcceptance": true
+      }
+    ],
+    "templateDeletes": [
+      {
+        "id": 14,
+        "status": 204
+      }
+    ],
+    "rows": [
+      {
+        "table": "audit_log",
+        "deleted": 24
+      },
+      {
+        "table": "sys_refresh_token",
+        "deleted": 6
+      }
+    ],
+    "modifiedSettings": [],
+    "sql": [
+      {
+        "sql": "SELECT set_config('commercehub.audit_prune_before',$1,true)",
+        "params": ["2026-11-17T01:00:59.021Z"]
+      },
+      {
+        "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at>=$3 AND created_at<$4 RETURNING id",
+        "params": [
+          "FE-IDN-008 acceptance API",
+          "FE-IDN-008 acceptance browser",
+          "2026-11-17T01:00:30.706Z",
+          "2026-11-17T01:00:59.021Z"
+        ],
+        "rows": 24
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE user_agent IN ($1,$2) AND created_at>=$3 RETURNING id",
+        "params": [
+          "FE-IDN-008 acceptance API",
+          "FE-IDN-008 acceptance browser",
+          "2026-11-17T01:00:30.706Z"
+        ],
+        "rows": 6
+      }
+    ],
+    "remaining": {
+      "taskTenants": 0,
+      "taskTemplates": 0,
+      "taskBusinessRows": 0,
+      "taskAudits": 0,
+      "taskSessions": 0,
+      "baselineTenantsPreserved": 1,
+      "baselineTemplatesPreserved": 1,
+      "baselineAuditRecordsPreserved": 2,
+      "settingsUnchanged": true
+    },
+    "auditPrune": {
+      "cutoff": "2026-11-17T01:00:59.021Z",
+      "method": "audit-prune transaction-local cutoff guard plus task-specific user-agent and start time",
+      "reason": "CLI audit-prune has only an upper bound; retain unrelated audit records by adding the exact task predicate."
+    }
+  },
+  "finishedAt": "2026-11-17T01:01:00.381Z"
+}

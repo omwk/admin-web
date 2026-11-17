@@ -6,6 +6,7 @@ export interface Tenant {
   code: string;
   name: string;
   status: 'active' | 'suspended';
+  deleted_at: null | string;
   admin_active_count: number;
   member_count: number;
   provisioned_from: null | number;

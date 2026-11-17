@@ -28,6 +28,7 @@ vi.mock('#/composables/use-meta-dictionary', () => ({
   },
 }));
 const tenant: Tenant = {
+  deleted_at: null,
   id: 8,
   code: 'acme',
   name: 'Acme',
