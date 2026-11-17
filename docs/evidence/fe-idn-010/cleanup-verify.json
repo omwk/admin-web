@@ -1,0 +1,23 @@
+{
+  "verifiedAt": "2026-11-17T18:12:20.286Z",
+  "command": "go run ./cmd/cli audit-prune --before 2026-11-17T18:12:17.527Z",
+  "cwd": "D:\\code\\go-admin-api",
+  "exitCode": 0,
+  "stdout": "deleted=0",
+  "before": {
+    "database": "commercehub_test",
+    "totalaudits": 0,
+    "users": 0,
+    "providers": 0,
+    "audits": 0,
+    "sessions": 0
+  },
+  "after": {
+    "database": "commercehub_test",
+    "totalaudits": 0,
+    "users": 0,
+    "providers": 0,
+    "audits": 0,
+    "sessions": 0
+  }
+}

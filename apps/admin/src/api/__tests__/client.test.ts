@@ -22,6 +22,33 @@ function setup() {
 }
 
 describe('identity request client', () => {
+  it.each([200, 400])(
+    'retains backend field details through HTTP %i errors',
+    async (status) => {
+      const { client, notify } = setup();
+      const text = 'SMTP 地址需包含端口，例如 smtp.163.com:465';
+      client.instance.defaults.adapter = (config) =>
+        respond(
+          config,
+          {
+            ...envelope(null, 10_001),
+            message: text,
+            details: { field: 'smtp_addr' },
+          },
+          status,
+        );
+      const options: ApiRequestConfig = { silent: true };
+      await expect(
+        client.post('/admin/notifications/providers', {}, options),
+      ).rejects.toMatchObject({
+        status,
+        businessMessage: text,
+        details: { field: 'smtp_addr' },
+      });
+      expect(notify).not.toHaveBeenCalled();
+    },
+  );
+
   it.each([400, 409])(
     'preserves a department HTTP %i business message only when requested',
     async (status) => {

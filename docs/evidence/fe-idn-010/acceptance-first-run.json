@@ -1,0 +1,85 @@
+{
+  "task": "FE-IDN-010",
+  "startedAt": "2026-11-17T17:51:20.911Z",
+  "origin": "http://127.0.0.1:5666",
+  "backend": "http://127.0.0.1:18080",
+  "backendRevision": "095844f",
+  "checks": [],
+  "requests": [
+    {
+      "source": "real-browser",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200
+    }
+  ],
+  "browserErrors": [],
+  "resources": {
+    "providers": [],
+    "user": {
+      "id": "106",
+      "tenant_id": "1",
+      "username": "feidn010_1794937880912"
+    }
+  },
+  "failure": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('button', { name: '新增服务商', exact: true })\u001b[22m\n",
+  "cleanup": {
+    "cutoff": "2026-11-17T17:51:58.510Z",
+    "sql": [
+      {
+        "sql": "SELECT set_config('commercehub.audit_prune_before',$1,true)",
+        "params": ["2026-11-17T17:51:58.510Z"]
+      },
+      {
+        "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at>=$3 AND created_at<$4 RETURNING id",
+        "params": [
+          "FE-IDN-010 acceptance API",
+          "FE-IDN-010 acceptance browser",
+          "2026-11-17T17:51:20.911Z",
+          "2026-11-17T17:51:58.510Z"
+        ],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE user_id=$1 AND user_agent IN ($2,$3) AND created_at>=$4 RETURNING id",
+        "params": [
+          "106",
+          "FE-IDN-010 acceptance API",
+          "FE-IDN-010 acceptance browser",
+          "2026-11-17T17:51:20.911Z"
+        ],
+        "rows": 2
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=1 AND user_id=$1 RETURNING id",
+        "params": ["106"],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=1 AND (user_id=$1 OR created_by=$1) RETURNING id",
+        "params": ["106"],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user_role WHERE tenant_id=1 AND user_id=$1 RETURNING role_id",
+        "params": ["106"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=1 AND id=$1 AND username=$2 RETURNING id",
+        "params": ["106", "feidn010_1794937880912"],
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "users": 0,
+      "providers": 0,
+      "audits": 0,
+      "sessions": 0
+    },
+    "baselinePreserved": true,
+    "baselineAuditRecordsPreserved": 0
+  },
+  "finishedAt": "2026-11-17T17:51:58.777Z",
+  "passed": false
+}

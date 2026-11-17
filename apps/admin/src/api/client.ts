@@ -70,6 +70,7 @@ export function createApiClient(
       throw new ApiError({
         code: body?.code,
         config: response.config,
+        details: body?.details,
         message: body?.message,
         status: response.status,
         traceId: body?.trace_id,
