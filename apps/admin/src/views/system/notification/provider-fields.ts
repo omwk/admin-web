@@ -21,26 +21,57 @@ export interface ProviderField {
   label: string;
   required?: boolean;
   private?: boolean;
+  placeholder?: string;
+  hint?: string;
 }
+const guidance: Record<string, { hint: string; placeholder: string }> = {
+  smtp_addr: {
+    placeholder: 'smtp.163.com:465',
+    hint: '587 端口通常配 STARTTLS，465 配 TLS',
+  },
+  username: {
+    placeholder: 'appvae@163.com',
+    hint: '163/QQ 邮箱需填写完整邮箱地址',
+  },
+  password: {
+    placeholder: '输入授权码',
+    hint: '163 等邮箱使用授权码，不是登录密码',
+  },
+  from_address: {
+    placeholder: 'noreply@example.com',
+    hint: '必须与发件人权限一致',
+  },
+  endpoint: {
+    placeholder: 'https://example.com/hook',
+    hint: '必须是 http(s)',
+  },
+  from_name: { placeholder: '订单通知', hint: '显示在收件人邮箱里' },
+};
 const field = (
   key: string,
   label: string,
   required = false,
   privateValue = false,
-): ProviderField => ({ key, label, required, private: privateValue });
-const endpoint = field('endpoint', '服务地址', true, true);
+): ProviderField => ({
+  key,
+  label,
+  required,
+  private: privateValue,
+  ...guidance[key],
+});
+const endpoint = field('endpoint', '服务地址', true);
 const accessKeys = [
-  field('access_key_id', 'Access Key ID', true, true),
+  field('access_key_id', 'Access Key ID', true),
   field('access_key_secret', 'Access Key Secret', true, true),
 ];
 export function providerFields(kind: NotificationKind): ProviderField[] {
   switch (kind) {
     case 'smtp': {
       return [
-        field('smtp_addr', 'SMTP 地址（host:port）', true, true),
-        field('username', 'SMTP 用户名', false, true),
+        field('smtp_addr', 'SMTP 地址（host:port）', true),
+        field('username', 'SMTP 用户名'),
         field('password', 'SMTP 密码', false, true),
-        field('from_address', '发件人邮箱', true, true),
+        field('from_address', '发件人邮箱', true),
         field('from_name', '发件人名称'),
         field('tls_mode', 'TLS 模式', true),
       ];
@@ -50,7 +81,7 @@ export function providerFields(kind: NotificationKind): ProviderField[] {
         endpoint,
         ...accessKeys,
         field('region', '区域', true),
-        field('from_address', '发件人邮箱', true, true),
+        field('from_address', '发件人邮箱', true),
         field('from_name', '发件人名称'),
       ];
     }
@@ -58,7 +89,7 @@ export function providerFields(kind: NotificationKind): ProviderField[] {
       return [
         endpoint,
         field('api_key', 'API Key', true, true),
-        field('from_address', '发件人邮箱', true, true),
+        field('from_address', '发件人邮箱', true),
         field('from_name', '发件人名称'),
       ];
     }

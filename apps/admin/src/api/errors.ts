@@ -45,6 +45,7 @@ export class ApiError extends Error {
   readonly businessMessage?: string;
   readonly code?: number;
   readonly config?: RequestClientConfig;
+  readonly details?: Record<string, unknown>;
   readonly status?: number;
   readonly traceId?: string;
 
@@ -52,6 +53,7 @@ export class ApiError extends Error {
     options: {
       code?: number;
       config?: RequestClientConfig;
+      details?: Record<string, unknown>;
       message?: string;
       status?: number;
       traceId?: string;
@@ -74,6 +76,7 @@ export class ApiError extends Error {
     this.businessMessage = options.message;
     this.code = options.code;
     this.config = options.config;
+    this.details = options.details;
     this.status = options.status;
     this.traceId = options.traceId;
   }
@@ -84,13 +87,19 @@ export function toApiError(error: unknown): ApiError {
   const failure = error as null | {
     config?: RequestClientConfig;
     response?: {
-      data?: { code?: number; message?: string; trace_id?: string };
+      data?: {
+        code?: number;
+        details?: Record<string, unknown>;
+        message?: string;
+        trace_id?: string;
+      };
       status?: number;
     };
   };
   return new ApiError({
     code: failure?.response?.data?.code,
     config: failure?.config,
+    details: failure?.response?.data?.details,
     message: failure?.response?.data?.message,
     status: failure?.response?.status,
     traceId: failure?.response?.data?.trace_id,

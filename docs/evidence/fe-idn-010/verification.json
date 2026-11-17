@@ -1,0 +1,158 @@
+{
+  "task": "FE-IDN-010",
+  "verifiedAt": "2026-11-17T18:16:24.497Z",
+  "branch": "feat/fe-idn-010-channel-form",
+  "base": "d4a6412",
+  "backendRevision": "095844f",
+  "passed": true,
+  "acceptanceItems": [
+    {
+      "item": 1,
+      "result": "pass"
+    },
+    {
+      "item": 2,
+      "result": "pass"
+    },
+    {
+      "item": 3,
+      "result": "pass"
+    },
+    {
+      "item": 4,
+      "result": "pass"
+    },
+    {
+      "item": 5,
+      "result": "pass"
+    },
+    {
+      "item": 6,
+      "result": "pass"
+    },
+    {
+      "item": 7,
+      "result": "pass"
+    },
+    {
+      "item": 8,
+      "result": "pass"
+    },
+    {
+      "item": 9,
+      "result": "pass"
+    },
+    {
+      "item": 10,
+      "result": "pass"
+    },
+    {
+      "item": 11,
+      "result": "pass"
+    }
+  ],
+  "gates": [
+    {
+      "name": "lint",
+      "command": "bun run lint",
+      "file": "lint.log",
+      "result": "pass",
+      "summary": "All matched files use the correct format."
+    },
+    {
+      "name": "typecheck",
+      "command": "bun run check:type",
+      "file": "typecheck.log",
+      "result": "pass",
+      "summary": "38 successful, 38 total"
+    },
+    {
+      "name": "unit-admin",
+      "command": "bun run --cwd apps/admin test:unit --maxWorkers=2",
+      "file": "unit-admin.log",
+      "result": "pass",
+      "summary": "Tests  318 passed (318)"
+    },
+    {
+      "name": "unit-workspace",
+      "command": "bun run test:unit --maxWorkers=2",
+      "file": "unit-workspace.log",
+      "result": "pass",
+      "summary": "Tests  1025 passed (1025)"
+    },
+    {
+      "name": "build",
+      "command": "bun run build:antd",
+      "file": "build.log",
+      "result": "pass",
+      "summary": "11 successful, 11 total"
+    }
+  ],
+  "evidenceLimits": {
+    "fieldlessBanner": "HTTP response fixture; items 4, 5 and 9 use the real backend",
+    "delivery": "Provider creation only; no connection test or email delivery was requested"
+  },
+  "screenshotsVisuallyInspected": [
+    "01-smtp-visible-password-masked-real.png",
+    "02-sendgrid-masked-real.png",
+    "02-aliyun-masked-real.png",
+    "02-secret-masked-real.png",
+    "04-smtp-port-field-error-real.png",
+    "05-username-field-error-real.png",
+    "10-465-starttls-warning-real.png"
+  ],
+  "cleanup": {
+    "database": "commercehub_test",
+    "totalaudits": 0,
+    "users": 0,
+    "providers": 0,
+    "audits": 0,
+    "sessions": 0
+  },
+  "hashes": [
+    {
+      "path": "apps/admin/package.json",
+      "sha256": "5b832537821f228974f8be6d60f1b18c203c3332e48f4f7a56967f02ae572a58"
+    },
+    {
+      "path": "apps/admin/src/api/client.ts",
+      "sha256": "48798cc153e7718d93d7ae81d002a9dcb1767dc7efda60a0b80ba8c19d92a3fd"
+    },
+    {
+      "path": "apps/admin/src/api/errors.ts",
+      "sha256": "cea6f25ae4dc61b7de7becf3eec41026999579184ddffdfaf8990fdc2a42a11e"
+    },
+    {
+      "path": "apps/admin/src/api/model/response.ts",
+      "sha256": "4d0b7e69b639fe7cf3e9004a42c1516cc610c5901d1908c6a42813088032eca4"
+    },
+    {
+      "path": "apps/admin/src/api/__tests__/client.test.ts",
+      "sha256": "44acd82665fc0490deff2764d37155a2237e1aceddd4ff048ae2c9e75579cd2c"
+    },
+    {
+      "path": "apps/admin/src/views/system/notification/provider-form.vue",
+      "sha256": "5d71d5340bbf9924f2d9ea9b0eacd9e746f6f648553d3adc22a87911c38ae6e5"
+    },
+    {
+      "path": "apps/admin/src/views/system/notification/provider-fields.ts",
+      "sha256": "dfe61b0b62d84913e240949ab7946949274628b36b05f69a88c297887a59758c"
+    },
+    {
+      "path": "apps/admin/src/views/system/notification/__tests__/provider-form.test.ts",
+      "sha256": "5f7b4706fa56895a798431186dc5d946352c81e69876079edd09dd806f5ff9bd"
+    },
+    {
+      "path": "apps/admin/e2e/fe-idn-010.mjs",
+      "sha256": "d35c0b20b9917681c2d4bf5064fc27eed216ba6bfcb23f95b359f17924b5aefb"
+    },
+    {
+      "path": "apps/admin/e2e/fe-idn-010-support.mjs",
+      "sha256": "d7af0a23c75e9c9804756738b6c19d568dc5d4cba88974f3960034d93fa6e951"
+    },
+    {
+      "path": "apps/admin/e2e/fe-idn-010-db.mjs",
+      "sha256": "1bed9cdc79575b6111485ffb7f63e8fa4578e57daa52f5d26e80879270b7b358"
+    }
+  ]
+}

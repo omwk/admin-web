@@ -1,0 +1,372 @@
+{
+  "task": "FE-IDN-010",
+  "startedAt": "2026-11-17T17:56:21.973Z",
+  "origin": "http://127.0.0.1:5666",
+  "backend": "http://127.0.0.1:18080",
+  "backendRevision": "095844f",
+  "checks": [
+    {
+      "item": 1,
+      "assertion": "SMTP 地址、用户名、发件人邮箱明文可核对",
+      "result": "pass",
+      "types": {
+        "SMTP 地址（host:port）": "text",
+        "SMTP 用户名": "text",
+        "发件人邮箱": "text"
+      },
+      "screenshot": "01-smtp-visible-password-masked-real.png"
+    },
+    {
+      "item": 2,
+      "assertion": "密码、API Key、Access Key Secret、Secret 均为 password 输入框",
+      "result": "pass",
+      "smtpScreenshot": "01-smtp-visible-password-masked-real.png",
+      "masked": [
+        {
+          "kind": "SendGrid",
+          "label": "API Key",
+          "inputType": "password",
+          "screenshot": "02-sendgrid-masked-real.png"
+        },
+        {
+          "kind": "阿里云邮件",
+          "label": "Access Key Secret",
+          "inputType": "password",
+          "screenshot": "02-aliyun-masked-real.png"
+        },
+        {
+          "kind": "HTTP Webhook",
+          "label": "签名 Secret",
+          "inputType": "password",
+          "screenshot": "02-secret-masked-real.png"
+        }
+      ]
+    },
+    {
+      "item": 3,
+      "assertion": "六个字段的占位与提示均与 §2.2 一致",
+      "result": "pass",
+      "guidance": [
+        [
+          "SMTP 地址（host:port）",
+          "smtp.163.com:465",
+          "587 端口通常配 STARTTLS，465 配 TLS"
+        ],
+        ["SMTP 用户名", "appvae@163.com", "163/QQ 邮箱需填写完整邮箱地址"],
+        ["SMTP 密码", "输入授权码", "163 等邮箱使用授权码，不是登录密码"],
+        ["发件人邮箱", "noreply@example.com", "必须与发件人权限一致"],
+        ["发件人名称", "订单通知", "显示在收件人邮箱里"]
+      ],
+      "endpoint": ["https://example.com/hook", "必须是 http(s)"]
+    },
+    {
+      "item": 4,
+      "assertion": "真实 400 的 smtp_addr 错误显示在地址输入框下方并标红",
+      "result": "pass",
+      "response": {
+        "source": "real-browser",
+        "method": "POST",
+        "path": "/admin/notifications/providers",
+        "status": 400,
+        "code": 10001,
+        "message": "SMTP 地址需包含端口，例如 smtp.163.com:465",
+        "details": {
+          "field": "smtp_addr",
+          "reason": "SMTP 地址需包含端口，例如 smtp.163.com:465"
+        },
+        "traceId": "01M7NAEHTMG48PKBP3ETTSPXAR",
+        "configKeys": [
+          "smtp_addr",
+          "username",
+          "password",
+          "from_address",
+          "from_name",
+          "tls_mode"
+        ]
+      },
+      "screenshot": "04-smtp-port-field-error-real.png"
+    },
+    {
+      "item": 5,
+      "assertion": "仅填写密码时真实 400 定位到用户名，文案提到用户名",
+      "result": "pass",
+      "response": {
+        "source": "real-browser",
+        "method": "POST",
+        "path": "/admin/notifications/providers",
+        "status": 400,
+        "code": 10001,
+        "message": "已填写密码时必须同时填写 SMTP 用户名",
+        "details": {
+          "field": "username",
+          "reason": "已填写密码时必须同时填写 SMTP 用户名"
+        },
+        "traceId": "01M7NAEJVBJ979EXEBAD52BG1M",
+        "configKeys": [
+          "smtp_addr",
+          "password",
+          "from_address",
+          "from_name",
+          "tls_mode"
+        ]
+      },
+      "screenshot": "05-username-field-error-real.png"
+    },
+    {
+      "item": 6,
+      "assertion": "分别编辑地址和用户名后，对应字段错误与红框消失",
+      "result": "pass",
+      "screenshot": "06-field-errors-cleared-real.png"
+    },
+    {
+      "item": 8,
+      "assertion": "切换类型清空共享及专属 config、字段错误；保留 name/priority/enabled",
+      "result": "pass",
+      "retained": {
+        "name": "feidn010_1794938181973",
+        "priority": 17,
+        "enabled": false
+      },
+      "screenshot": "08-kind-switch-cleared-real.png"
+    },
+    {
+      "item": 7,
+      "assertion": "无 field 时使用顶部横幅兜底（明确标记的响应夹具）",
+      "result": "pass",
+      "source": "fieldless-response-fixture",
+      "response": {
+        "source": "fieldless-response-fixture",
+        "method": "POST",
+        "path": "/admin/notifications/providers",
+        "status": 400,
+        "code": 10001,
+        "message": "通道配置无效（无字段响应夹具）",
+        "traceId": "fe-idn-010-fieldless-fixture",
+        "configKeys": [
+          "smtp_addr",
+          "username",
+          "password",
+          "from_address",
+          "from_name",
+          "tls_mode"
+        ]
+      },
+      "screenshot": "07-top-banner-response-fixture.png"
+    },
+    {
+      "item": 9,
+      "assertion": "完整 SMTP 配置真实返回 201，随后出现在列表",
+      "result": "pass",
+      "response": {
+        "source": "real-browser",
+        "method": "POST",
+        "path": "/admin/notifications/providers",
+        "status": 201,
+        "code": 0,
+        "message": "ok",
+        "traceId": "01M7NAES6WWZ7GE8RF7R2X2PKD",
+        "configKeys": [
+          "smtp_addr",
+          "username",
+          "password",
+          "from_address",
+          "from_name",
+          "tls_mode"
+        ]
+      },
+      "screenshot": "09-created-provider-list-real.png"
+    },
+    {
+      "item": 10,
+      "assertion": "465+STARTTLS 与 587+TLS 显示警告；匹配或其他端口不显示；警告不阻止 201",
+      "result": "pass",
+      "screenshots": [
+        "10-465-starttls-warning-real.png",
+        "10-587-tls-warning-real.png"
+      ],
+      "nonblockingStatus": 201
+    }
+  ],
+  "requests": [
+    {
+      "source": "real-browser",
+      "method": "POST",
+      "path": "/auth/login",
+      "status": 200
+    },
+    {
+      "source": "real-browser",
+      "method": "POST",
+      "path": "/admin/notifications/providers",
+      "status": 400,
+      "code": 10001,
+      "message": "SMTP 地址需包含端口，例如 smtp.163.com:465",
+      "details": {
+        "field": "smtp_addr",
+        "reason": "SMTP 地址需包含端口，例如 smtp.163.com:465"
+      },
+      "traceId": "01M7NAEHTMG48PKBP3ETTSPXAR",
+      "configKeys": [
+        "smtp_addr",
+        "username",
+        "password",
+        "from_address",
+        "from_name",
+        "tls_mode"
+      ]
+    },
+    {
+      "source": "real-browser",
+      "method": "POST",
+      "path": "/admin/notifications/providers",
+      "status": 400,
+      "code": 10001,
+      "message": "已填写密码时必须同时填写 SMTP 用户名",
+      "details": {
+        "field": "username",
+        "reason": "已填写密码时必须同时填写 SMTP 用户名"
+      },
+      "traceId": "01M7NAEJVBJ979EXEBAD52BG1M",
+      "configKeys": [
+        "smtp_addr",
+        "password",
+        "from_address",
+        "from_name",
+        "tls_mode"
+      ]
+    },
+    {
+      "source": "real-browser",
+      "method": "POST",
+      "path": "/admin/notifications/providers",
+      "status": 400,
+      "code": 10001,
+      "message": "已填写密码时必须同时填写 SMTP 用户名",
+      "details": {
+        "field": "username",
+        "reason": "已填写密码时必须同时填写 SMTP 用户名"
+      },
+      "traceId": "01M7NAEMDGBJE7FHZDBJ5RZ8SQ",
+      "configKeys": [
+        "smtp_addr",
+        "password",
+        "from_address",
+        "from_name",
+        "tls_mode"
+      ]
+    },
+    {
+      "source": "fieldless-response-fixture",
+      "method": "POST",
+      "path": "/admin/notifications/providers",
+      "status": 400,
+      "code": 10001,
+      "message": "通道配置无效（无字段响应夹具）",
+      "traceId": "fe-idn-010-fieldless-fixture",
+      "configKeys": [
+        "smtp_addr",
+        "username",
+        "password",
+        "from_address",
+        "from_name",
+        "tls_mode"
+      ]
+    },
+    {
+      "source": "real-browser",
+      "method": "POST",
+      "path": "/admin/notifications/providers",
+      "status": 201,
+      "code": 0,
+      "message": "ok",
+      "traceId": "01M7NAES6WWZ7GE8RF7R2X2PKD",
+      "configKeys": [
+        "smtp_addr",
+        "username",
+        "password",
+        "from_address",
+        "from_name",
+        "tls_mode"
+      ]
+    },
+    {
+      "source": "real-api",
+      "method": "DELETE",
+      "path": "/admin/notifications/providers/3",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "resources": {
+    "providers": [
+      {
+        "id": 3,
+        "name": "feidn010_1794938181973"
+      }
+    ],
+    "user": {
+      "id": "108",
+      "tenant_id": "1",
+      "username": "feidn010_1794938181973"
+    }
+  },
+  "cleanup": {
+    "cutoff": "2026-11-17T17:56:44.409Z",
+    "sql": [
+      {
+        "sql": "SELECT set_config('commercehub.audit_prune_before',$1,true)",
+        "params": ["2026-11-17T17:56:44.409Z"]
+      },
+      {
+        "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at>=$3 AND created_at<$4 RETURNING id",
+        "params": [
+          "FE-IDN-010 acceptance API",
+          "FE-IDN-010 acceptance browser",
+          "2026-11-17T17:56:21.973Z",
+          "2026-11-17T17:56:44.409Z"
+        ],
+        "rows": 3
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE user_id=$1 AND user_agent IN ($2,$3) AND created_at>=$4 RETURNING id",
+        "params": [
+          "108",
+          "FE-IDN-010 acceptance API",
+          "FE-IDN-010 acceptance browser",
+          "2026-11-17T17:56:21.973Z"
+        ],
+        "rows": 2
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=1 AND user_id=$1 RETURNING id",
+        "params": ["108"],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=1 AND (user_id=$1 OR created_by=$1) RETURNING id",
+        "params": ["108"],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user_role WHERE tenant_id=1 AND user_id=$1 RETURNING role_id",
+        "params": ["108"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=1 AND id=$1 AND username=$2 RETURNING id",
+        "params": ["108", "feidn010_1794938181973"],
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "users": 0,
+      "providers": 0,
+      "audits": 0,
+      "sessions": 0
+    },
+    "baselinePreserved": true,
+    "baselineAuditRecordsPreserved": 0
+  },
+  "finishedAt": "2026-11-17T17:56:44.573Z",
+  "passed": true
+}
