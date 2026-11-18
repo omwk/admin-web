@@ -1,0 +1,148 @@
+{
+  "cutoff": "2026-11-18T11:01:53.599Z",
+  "sql": [
+    {
+      "sql": "SELECT set_config('commercehub.audit_prune_before',$1,true)",
+      "params": ["2026-11-18T11:01:53.599Z"]
+    },
+    {
+      "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at>=$3 AND created_at<$4 RETURNING id",
+      "params": [
+        "FE-IDN-011 acceptance API",
+        "FE-IDN-011 acceptance browser",
+        "2026-11-18T10:58:28.215Z",
+        "2026-11-18T11:01:53.599Z"
+      ],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM sys_refresh_token WHERE user_id=$1 AND user_agent IN ($2,$3) AND created_at>=$4 RETURNING id",
+      "params": [
+        "110",
+        "FE-IDN-011 acceptance API",
+        "FE-IDN-011 acceptance browser",
+        "2026-11-18T10:58:28.215Z"
+      ],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM password_history WHERE tenant_id=1 AND user_id=$1 RETURNING id",
+      "params": ["110"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM auth_token WHERE tenant_id=1 AND (user_id=$1 OR created_by=$1) RETURNING id",
+      "params": ["110"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["57", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["57", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["58", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["58", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["59", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["59", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["60", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["60", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["61", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["61", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["62", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["62", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["63", "feidn011_1794999508215.order"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["63", "feidn011_1794999508215.order"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["64", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+      "params": ["64", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_template WHERE tenant_id=1 AND id=$1 AND code=$2 RETURNING id",
+      "params": ["24", "feidn011_1794999508215.verify"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM notify_template WHERE tenant_id=1 AND id=$1 AND code=$2 RETURNING id",
+      "params": ["25", "feidn011_1794999508215.order"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM sys_user_role WHERE tenant_id=1 AND user_id=$1 RETURNING role_id",
+      "params": ["110"],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM sys_user WHERE tenant_id=1 AND id=$1 AND username=$2 RETURNING id",
+      "params": ["110", "feidn011_1794999508215"],
+      "rows": 0
+    }
+  ],
+  "remaining": {
+    "users": 0,
+    "templates": 0,
+    "deliveries": 0,
+    "outboxes": 0,
+    "sessions": 0,
+    "audits": 0
+  },
+  "baselinePreserved": false
+}

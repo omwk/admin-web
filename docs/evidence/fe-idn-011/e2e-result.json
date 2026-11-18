@@ -1,0 +1,4 @@
+{
+  "exitCode": 0,
+  "command": "node --env-file=D:/code/go-admin-api/.env apps/admin/e2e/fe-idn-011.mjs"
+}

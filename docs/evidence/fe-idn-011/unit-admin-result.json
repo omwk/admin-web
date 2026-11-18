@@ -1,0 +1,4 @@
+{
+  "command": "pnpm --filter @vben/web-antd test:unit --maxWorkers=2",
+  "exitCode": 0
+}

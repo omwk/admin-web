@@ -1,0 +1,778 @@
+{
+  "task": "FE-IDN-011",
+  "startedAt": "2026-11-18T11:11:36.225Z",
+  "origin": "http://127.0.0.1:5666",
+  "backend": "http://127.0.0.1:18080",
+  "backendRevision": "1da2fdb",
+  "checks": [
+    {
+      "item": 1,
+      "assertion": "中文模板名，悬浮显示真实 code",
+      "result": "pass",
+      "template": {
+        "id": 32,
+        "code": "feidn011_1795000296225.verify",
+        "subject": "身份验证（验收）"
+      },
+      "screenshot": "01-template-code-tooltip-real.png"
+    },
+    {
+      "item": 2,
+      "assertion": "掩码邮箱/手机与旧记录破折号",
+      "result": "pass",
+      "masks": ["a***@example.invalid", "138****8000"],
+      "oldRecipientMasked": null,
+      "screenshot": "02-masked-recipients-real.png"
+    },
+    {
+      "item": 3,
+      "assertion": "四态文案与橙/绿/红/灰颜色正确",
+      "result": "pass",
+      "screenshot": "02-masked-recipients-real.png"
+    },
+    {
+      "item": 4,
+      "assertion": "中文失败原因，悬浮保留原始错误码",
+      "result": "pass",
+      "code": "message_unavailable",
+      "screenshot": "04-error-code-tooltip-real.png"
+    },
+    {
+      "item": 7,
+      "assertion": "sent 与近期 pending 禁用重试，悬浮解释原因",
+      "result": "pass",
+      "screenshot": "07-disabled-sent-real.png"
+    },
+    {
+      "item": 9,
+      "assertion": "超 5 分钟且 attempts=0 的 pending 显示提示并批量入队",
+      "result": "pass",
+      "fixtureStalled": [
+        {
+          "id": 93,
+          "status": "pending",
+          "channel": "email",
+          "template_code": "feidn011_1795000296225.verify",
+          "recipient_masked": "c***@example.invalid",
+          "created_at": "2026-11-18T11:05:36.769Z",
+          "attempts": 0
+        },
+        {
+          "id": 94,
+          "status": "pending",
+          "channel": "sms",
+          "template_code": "feidn011_1795000296225.verify",
+          "recipient_masked": "139****9000",
+          "created_at": "2026-11-18T11:04:36.772Z",
+          "attempts": 0
+        }
+      ],
+      "requestIds": [93, 94],
+      "response": {
+        "retried": 2,
+        "skipped": 0
+      },
+      "traceId": "01M7Q5P409Z2Y20YT5PRGY0GYD",
+      "screenshot": "09-stalled-worker-warning-real.png"
+    },
+    {
+      "item": 5,
+      "assertion": "failed 单条真实重试，刷新后该行待发送",
+      "result": "pass",
+      "id": 89,
+      "status": 200,
+      "traceId": "01M7Q5P6MP0C4MDNZAY5Y18S5T",
+      "refreshedStatus": "pending",
+      "screenshot": "05-single-retry-pending-real.png"
+    },
+    {
+      "item": 6,
+      "assertion": "三条混合状态批量重试，成功 2 条/跳过 1 条",
+      "result": "pass",
+      "ids": [95, 90, 91],
+      "status": 200,
+      "traceId": "01M7Q5P97DJYZXPCRZD453M9AS",
+      "retried": 2,
+      "skipped": 1,
+      "screenshot": "06-mixed-batch-retry-real.png"
+    },
+    {
+      "item": 8,
+      "assertion": "状态/渠道/模板单独与三项组合均由真实后端过滤",
+      "result": "pass",
+      "individual": [
+        {
+          "query": {
+            "page": "1",
+            "page_size": "20",
+            "status": "sent"
+          },
+          "ids": [91, 55, 54, 53],
+          "traceId": "01M7Q5PC10APJ0CJAYM45VTJRS"
+        },
+        {
+          "query": {
+            "page": "1",
+            "page_size": "20",
+            "channel": "sms"
+          },
+          "ids": [95, 90, 94],
+          "traceId": "01M7Q5PCXRFPAERCN6XDET00MS"
+        },
+        {
+          "query": {
+            "page": "1",
+            "page_size": "20",
+            "template_code": "feidn011_1795000296225.verify"
+          },
+          "ids": [92, 91, 90, 89, 96, 93, 94],
+          "traceId": "01M7Q5PE4916ZV3D6GJBYXH0F8"
+        }
+      ],
+      "combined": {
+        "query": {
+          "page": "1",
+          "page_size": "20",
+          "status": "sent",
+          "channel": "email",
+          "template_code": "feidn011_1795000296225.verify"
+        },
+        "ids": [91],
+        "traceId": "01M7Q5PFV5D3VZ7WS4PM5SS714"
+      },
+      "screenshot": "08-combined-filters-real.png"
+    },
+    {
+      "item": 10,
+      "assertion": "真实空查询呈现两行空态文案",
+      "result": "pass",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "status": "skipped",
+        "channel": "email",
+        "template_code": "feidn011_1795000296225.verify"
+      },
+      "total": 0,
+      "screenshot": "10-empty-state-real.png"
+    }
+  ],
+  "requests": [
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "query": {},
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/system/notifications/channels",
+      "query": {},
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "query": {},
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/providers",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/templates",
+      "query": {
+        "page": "1",
+        "page_size": "100"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/notifications/deliveries/retry",
+      "query": {},
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/notifications/deliveries/89/retry",
+      "query": {},
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/notifications/deliveries/retry",
+      "query": {},
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "status": "sent"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "channel": "sms"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "template_code": "feidn011_1795000296225.verify"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "status": "sent",
+        "channel": "email",
+        "template_code": "feidn011_1795000296225.verify"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "100",
+        "status": "pending"
+      },
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/deliveries",
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "status": "skipped",
+        "channel": "email",
+        "template_code": "feidn011_1795000296225.verify"
+      },
+      "status": 200
+    }
+  ],
+  "browserErrors": [],
+  "resources": {
+    "user": {
+      "id": 114,
+      "tenant_id": 1,
+      "username": "feidn011_1795000296225"
+    },
+    "templates": [
+      {
+        "id": 32,
+        "code": "feidn011_1795000296225.verify",
+        "subject": "身份验证（验收）"
+      },
+      {
+        "id": 33,
+        "code": "feidn011_1795000296225.order",
+        "subject": "订单通知（验收）"
+      }
+    ],
+    "deliveries": [
+      {
+        "id": 89,
+        "status": "failed",
+        "channel": "email",
+        "template_code": "feidn011_1795000296225.verify",
+        "recipient_masked": "a***@example.invalid",
+        "created_at": "2026-11-18T11:11:36.754Z",
+        "attempts": 1
+      },
+      {
+        "id": 90,
+        "status": "skipped",
+        "channel": "sms",
+        "template_code": "feidn011_1795000296225.verify",
+        "recipient_masked": "138****8000",
+        "created_at": "2026-11-18T11:11:36.762Z",
+        "attempts": 0
+      },
+      {
+        "id": 91,
+        "status": "sent",
+        "channel": "email",
+        "template_code": "feidn011_1795000296225.verify",
+        "recipient_masked": null,
+        "created_at": "2026-11-18T11:11:36.764Z",
+        "attempts": 1
+      },
+      {
+        "id": 92,
+        "status": "pending",
+        "channel": "email",
+        "template_code": "feidn011_1795000296225.verify",
+        "recipient_masked": "b***@example.invalid",
+        "created_at": "2026-11-18T11:11:36.767Z",
+        "attempts": 0
+      },
+      {
+        "id": 93,
+        "status": "pending",
+        "channel": "email",
+        "template_code": "feidn011_1795000296225.verify",
+        "recipient_masked": "c***@example.invalid",
+        "created_at": "2026-11-18T11:05:36.769Z",
+        "attempts": 0
+      },
+      {
+        "id": 94,
+        "status": "pending",
+        "channel": "sms",
+        "template_code": "feidn011_1795000296225.verify",
+        "recipient_masked": "139****9000",
+        "created_at": "2026-11-18T11:04:36.772Z",
+        "attempts": 0
+      },
+      {
+        "id": 95,
+        "status": "failed",
+        "channel": "sms",
+        "template_code": "feidn011_1795000296225.order",
+        "recipient_masked": "137****7000",
+        "created_at": "2026-11-18T11:11:36.774Z",
+        "attempts": 1
+      },
+      {
+        "id": 96,
+        "status": "pending",
+        "channel": "email",
+        "template_code": "feidn011_1795000296225.verify",
+        "recipient_masked": "d***@example.invalid",
+        "created_at": "2026-11-18T11:05:36.776Z",
+        "attempts": 1
+      }
+    ]
+  },
+  "timeDisplay": {
+    "localTime": "2026-11-18 19:11:36",
+    "utc": "2026-11-18T19:11:36.754+08:00",
+    "screenshot": "time-local-utc-tooltip-real.png"
+  },
+  "passed": true,
+  "cleanup": {
+    "cutoff": "2026-11-18T11:12:01.983Z",
+    "sql": [
+      {
+        "sql": "SELECT set_config('commercehub.audit_prune_before',$1,true)",
+        "params": ["2026-11-18T11:12:01.983Z"]
+      },
+      {
+        "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at>=$3 AND created_at<$4 RETURNING id",
+        "params": [
+          "FE-IDN-011 acceptance API",
+          "FE-IDN-011 acceptance browser",
+          "2026-11-18T11:11:36.225Z",
+          "2026-11-18T11:12:01.983Z"
+        ],
+        "rows": 6
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE user_id=$1 AND user_agent IN ($2,$3) AND created_at>=$4 RETURNING id",
+        "params": [
+          114,
+          "FE-IDN-011 acceptance API",
+          "FE-IDN-011 acceptance browser",
+          "2026-11-18T11:11:36.225Z"
+        ],
+        "rows": 2
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=1 AND user_id=$1 RETURNING id",
+        "params": [114],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=1 AND (user_id=$1 OR created_by=$1) RETURNING id",
+        "params": [114],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [89, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [89, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [90, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [90, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [91, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [91, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [92, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [92, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [93, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [93, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [94, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [94, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [95, "feidn011_1795000296225.order"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [95, "feidn011_1795000296225.order"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [96, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": [96, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_template WHERE tenant_id=1 AND id=$1 AND code=$2 RETURNING id",
+        "params": [32, "feidn011_1795000296225.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_template WHERE tenant_id=1 AND id=$1 AND code=$2 RETURNING id",
+        "params": [33, "feidn011_1795000296225.order"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_user_role WHERE tenant_id=1 AND user_id=$1 RETURNING role_id",
+        "params": [114],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=1 AND id=$1 AND username=$2 RETURNING id",
+        "params": [114, "feidn011_1795000296225"],
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "users": 0,
+      "templates": 0,
+      "deliveries": 0,
+      "outboxes": 0,
+      "sessions": 0,
+      "audits": 0
+    },
+    "baselinePreserved": true,
+    "baselineAuditRecordsPreserved": 0
+  }
+}

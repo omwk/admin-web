@@ -1,0 +1,4 @@
+{
+  "command": "pnpm test:unit --maxWorkers=2",
+  "exitCode": 0
+}

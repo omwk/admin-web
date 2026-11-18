@@ -1,0 +1,4 @@
+{
+  "command": "pnpm check:type",
+  "exitCode": 0
+}

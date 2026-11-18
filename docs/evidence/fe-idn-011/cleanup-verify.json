@@ -1,0 +1,22 @@
+{
+  "verifiedAt": "2026-11-18T11:20:10.462Z",
+  "states": [
+    {
+      "status": "failed",
+      "count": 51
+    },
+    {
+      "status": "sent",
+      "count": 3
+    }
+  ],
+  "stalled": [],
+  "auditCount": 0,
+  "remaining": {
+    "users": 0,
+    "templates": 0,
+    "deliveries": 0,
+    "outboxes": 0,
+    "audits": 0
+  }
+}
