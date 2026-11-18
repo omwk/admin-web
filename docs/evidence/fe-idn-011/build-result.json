@@ -1,0 +1,4 @@
+{
+  "command": "pnpm build:antd",
+  "exitCode": 0
+}

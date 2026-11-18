@@ -72,13 +72,25 @@ export interface NotificationDelivery {
   tenant_id: number;
   channel: NotificationChannel;
   template_code: string;
+  template_name: string;
+  recipient_masked: null | string;
   recipient_hash: string;
   recipient_domain: string;
   provider_id: null | number;
   status: 'failed' | 'pending' | 'sent' | 'skipped';
   attempts: number;
   last_error: string;
+  last_error_message: string;
   created_at: string;
   sent_at: null | string;
   next_retry_at: null | string;
+}
+export interface NotificationDeliveryFilters {
+  status?: NotificationDelivery['status'];
+  channel?: NotificationChannel;
+  template_code?: string;
+}
+export interface NotificationDeliveryRetryResult {
+  retried: number;
+  skipped: number;
 }

@@ -11,6 +11,7 @@ import {
   getNotificationsApi,
   readAllNotificationsApi,
   readNotificationApi,
+  retryNotificationDeliveriesApi,
   retryNotificationDeliveryApi,
   saveNotificationPreferencesApi,
   saveNotificationProviderApi,
@@ -30,6 +31,33 @@ vi.mock('#/api/request', () => ({ requestClient: client }));
 beforeEach(() => vi.resetAllMocks());
 
 describe('notification API contracts', () => {
+  it('sends delivery filters and the batch retry IDs using the backend contract', async () => {
+    await getNotificationDeliveriesApi(2, 50, {
+      status: 'failed',
+      channel: 'email',
+      template_code: 'identity.verify',
+    });
+    expect(client.get).toHaveBeenCalledWith('/admin/notifications/deliveries', {
+      silent: true,
+      params: {
+        page: 2,
+        page_size: 50,
+        status: 'failed',
+        channel: 'email',
+        template_code: 'identity.verify',
+      },
+    });
+    client.post.mockResolvedValue({ retried: 2, skipped: 1 });
+    await expect(retryNotificationDeliveriesApi([1, 2, 3])).resolves.toEqual({
+      retried: 2,
+      skipped: 1,
+    });
+    expect(client.post).toHaveBeenCalledWith(
+      '/admin/notifications/deliveries/retry',
+      { ids: [1, 2, 3] },
+      { silent: true },
+    );
+  });
   it('uses current-user inbox filters and read routes without a separate read grant', async () => {
     await getNotificationsApi({
       page: 2,

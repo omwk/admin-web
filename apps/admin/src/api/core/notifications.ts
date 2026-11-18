@@ -1,6 +1,8 @@
 import type { ApiRequestConfig } from '#/api/client';
 import type {
   NotificationDelivery,
+  NotificationDeliveryFilters,
+  NotificationDeliveryRetryResult,
   NotificationInbox,
   NotificationPreference,
   NotificationPreferenceView,
@@ -103,14 +105,24 @@ export const saveNotificationTemplateApi = (
     input,
     silent,
   );
-export const getNotificationDeliveriesApi = (page = 1, pageSize = 20) =>
+export const getNotificationDeliveriesApi = (
+  page = 1,
+  pageSize = 20,
+  filters: NotificationDeliveryFilters = {},
+) =>
   requestClient.get<PageResult<NotificationDelivery>>(`${base}/deliveries`, {
     ...silent,
-    params: { page, page_size: pageSize },
+    params: { page, page_size: pageSize, ...filters },
   });
 export const retryNotificationDeliveryApi = (id: number) =>
   requestClient.post<NotificationDelivery>(
     `${base}/deliveries/${id}/retry`,
     undefined,
+    silent,
+  );
+export const retryNotificationDeliveriesApi = (ids: number[]) =>
+  requestClient.post<NotificationDeliveryRetryResult>(
+    `${base}/deliveries/retry`,
+    { ids },
     silent,
   );

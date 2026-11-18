@@ -1,0 +1,254 @@
+{
+  "task": "FE-IDN-011",
+  "startedAt": "2026-11-18T10:58:28.215Z",
+  "origin": "http://127.0.0.1:5666",
+  "backend": "http://127.0.0.1:18080",
+  "backendRevision": "1da2fdb",
+  "checks": [],
+  "requests": [],
+  "browserErrors": [],
+  "resources": {
+    "user": {
+      "id": "110",
+      "tenant_id": "1",
+      "username": "feidn011_1794999508215"
+    },
+    "templates": [
+      {
+        "id": "24",
+        "code": "feidn011_1794999508215.verify",
+        "subject": "身份验证（验收）"
+      },
+      {
+        "id": "25",
+        "code": "feidn011_1794999508215.order",
+        "subject": "订单通知（验收）"
+      }
+    ],
+    "deliveries": [
+      {
+        "id": "57",
+        "status": "failed",
+        "channel": "email",
+        "template_code": "feidn011_1794999508215.verify",
+        "recipient_masked": "a***@example.invalid",
+        "created_at": "2026-11-18T10:58:28.926Z",
+        "attempts": 1
+      },
+      {
+        "id": "58",
+        "status": "skipped",
+        "channel": "sms",
+        "template_code": "feidn011_1794999508215.verify",
+        "recipient_masked": "138****8000",
+        "created_at": "2026-11-18T10:58:28.939Z",
+        "attempts": 0
+      },
+      {
+        "id": "59",
+        "status": "sent",
+        "channel": "email",
+        "template_code": "feidn011_1794999508215.verify",
+        "recipient_masked": null,
+        "created_at": "2026-11-18T10:58:28.945Z",
+        "attempts": 1
+      },
+      {
+        "id": "60",
+        "status": "pending",
+        "channel": "email",
+        "template_code": "feidn011_1794999508215.verify",
+        "recipient_masked": "b***@example.invalid",
+        "created_at": "2026-11-18T10:58:28.949Z",
+        "attempts": 0
+      },
+      {
+        "id": "61",
+        "status": "pending",
+        "channel": "email",
+        "template_code": "feidn011_1794999508215.verify",
+        "recipient_masked": "c***@example.invalid",
+        "created_at": "2026-11-18T10:52:28.954Z",
+        "attempts": 0
+      },
+      {
+        "id": "62",
+        "status": "pending",
+        "channel": "sms",
+        "template_code": "feidn011_1794999508215.verify",
+        "recipient_masked": "139****9000",
+        "created_at": "2026-11-18T10:51:28.958Z",
+        "attempts": 0
+      },
+      {
+        "id": "63",
+        "status": "failed",
+        "channel": "sms",
+        "template_code": "feidn011_1794999508215.order",
+        "recipient_masked": "137****7000",
+        "created_at": "2026-11-18T10:58:28.961Z",
+        "attempts": 1
+      },
+      {
+        "id": "64",
+        "status": "pending",
+        "channel": "email",
+        "template_code": "feidn011_1794999508215.verify",
+        "recipient_masked": "d***@example.invalid",
+        "created_at": "2026-11-18T10:52:28.971Z",
+        "attempts": 1
+      }
+    ]
+  },
+  "cleanup": {
+    "cutoff": "2026-11-18T11:01:29.308Z",
+    "sql": [
+      {
+        "sql": "SELECT set_config('commercehub.audit_prune_before',$1,true)",
+        "params": ["2026-11-18T11:01:29.308Z"]
+      },
+      {
+        "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at>=$3 AND created_at<$4 RETURNING id",
+        "params": [
+          "FE-IDN-011 acceptance API",
+          "FE-IDN-011 acceptance browser",
+          "2026-11-18T10:58:28.215Z",
+          "2026-11-18T11:01:29.308Z"
+        ],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE user_id=$1 AND user_agent IN ($2,$3) AND created_at>=$4 RETURNING id",
+        "params": [
+          "110",
+          "FE-IDN-011 acceptance API",
+          "FE-IDN-011 acceptance browser",
+          "2026-11-18T10:58:28.215Z"
+        ],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=1 AND user_id=$1 RETURNING id",
+        "params": ["110"],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=1 AND (user_id=$1 OR created_by=$1) RETURNING id",
+        "params": ["110"],
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["57", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["57", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["58", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["58", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["59", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["59", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["60", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["60", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["61", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["61", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["62", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["62", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["63", "feidn011_1794999508215.order"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["63", "feidn011_1794999508215.order"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["64", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=1 AND id=$1 AND template_code=$2 RETURNING id",
+        "params": ["64", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_template WHERE tenant_id=1 AND id=$1 AND code=$2 RETURNING id",
+        "params": ["24", "feidn011_1794999508215.verify"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_template WHERE tenant_id=1 AND id=$1 AND code=$2 RETURNING id",
+        "params": ["25", "feidn011_1794999508215.order"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_user_role WHERE tenant_id=1 AND user_id=$1 RETURNING role_id",
+        "params": ["110"],
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=1 AND id=$1 AND username=$2 RETURNING id",
+        "params": ["110", "feidn011_1794999508215"],
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "users": 0,
+      "templates": 0,
+      "deliveries": 0,
+      "outboxes": 0,
+      "sessions": 0,
+      "audits": 0
+    },
+    "baselinePreserved": true,
+    "baselineAuditRecordsPreserved": 0
+  },
+  "passed": false,
+  "failure": "Bun browser launch stalled; terminated the task-owned runner before any browser acceptance steps."
+}

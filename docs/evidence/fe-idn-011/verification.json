@@ -1,0 +1,221 @@
+{
+  "task": "FE-IDN-011",
+  "verifiedAt": "2026-11-18T11:23:04.848Z",
+  "branch": "feat/fe-idn-011-delivery-page",
+  "baseRevision": "abccf58971bb6eb7c2a80fcc20a9325067b65cea",
+  "backendFeatureRevision": "1da2fdb",
+  "passed": true,
+  "acceptance": [
+    {
+      "item": 1,
+      "assertion": "中文模板名，悬浮显示真实 code",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "01-template-code-tooltip-real.png"
+    },
+    {
+      "item": 2,
+      "assertion": "掩码邮箱/手机与旧记录破折号",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "02-masked-recipients-real.png"
+    },
+    {
+      "item": 3,
+      "assertion": "四态文案与橙/绿/红/灰颜色正确",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "02-masked-recipients-real.png"
+    },
+    {
+      "item": 4,
+      "assertion": "中文失败原因，悬浮保留原始错误码",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "04-error-code-tooltip-real.png"
+    },
+    {
+      "item": 5,
+      "assertion": "failed 单条真实重试，刷新后该行待发送",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "05-single-retry-pending-real.png"
+    },
+    {
+      "item": 6,
+      "assertion": "三条混合状态批量重试，成功 2 条/跳过 1 条",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "06-mixed-batch-retry-real.png"
+    },
+    {
+      "item": 7,
+      "assertion": "sent 与近期 pending 禁用重试，悬浮解释原因",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "07-disabled-sent-real.png"
+    },
+    {
+      "item": 8,
+      "assertion": "状态/渠道/模板单独与三项组合均由真实后端过滤",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "08-combined-filters-real.png"
+    },
+    {
+      "item": 9,
+      "assertion": "超 5 分钟且 attempts=0 的 pending 显示提示并批量入队",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "09-stalled-worker-warning-real.png"
+    },
+    {
+      "item": 10,
+      "assertion": "真实空查询呈现两行空态文案",
+      "result": "pass",
+      "evidence": "acceptance.json",
+      "screenshot": "10-empty-state-real.png"
+    },
+    {
+      "item": 11,
+      "assertion": "lint / typecheck / unit / build",
+      "result": "pass",
+      "evidence": [
+        {
+          "command": "pnpm lint",
+          "exitCode": 0,
+          "result": "lint-result.json",
+          "log": "lint.log"
+        },
+        {
+          "command": "pnpm check:type",
+          "exitCode": 0,
+          "result": "typecheck-result.json",
+          "log": "typecheck.log"
+        },
+        {
+          "command": "pnpm --filter @vben/web-antd test:unit --maxWorkers=2",
+          "exitCode": 0,
+          "result": "unit-admin-result.json",
+          "log": "unit-admin.log"
+        },
+        {
+          "command": "pnpm test:unit --maxWorkers=2",
+          "exitCode": 0,
+          "result": "unit-workspace-result.json",
+          "log": "unit-workspace.log"
+        },
+        {
+          "command": "pnpm build:antd",
+          "exitCode": 0,
+          "result": "build-result.json",
+          "log": "build.log"
+        },
+        {
+          "exitCode": 0,
+          "command": "node --env-file=D:/code/go-admin-api/.env apps/admin/e2e/fe-idn-011.mjs",
+          "result": "e2e-result.json",
+          "log": "e2e.log"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "typecheckTasks": 38,
+    "adminTestFiles": 58,
+    "adminTests": 330,
+    "workspaceTestFiles": 153,
+    "workspaceTests": 1037,
+    "buildTasks": 11,
+    "browserErrors": 0
+  },
+  "commands": [
+    {
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "result": "lint-result.json",
+      "log": "lint.log"
+    },
+    {
+      "command": "pnpm check:type",
+      "exitCode": 0,
+      "result": "typecheck-result.json",
+      "log": "typecheck.log"
+    },
+    {
+      "command": "pnpm --filter @vben/web-antd test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "result": "unit-admin-result.json",
+      "log": "unit-admin.log"
+    },
+    {
+      "command": "pnpm test:unit --maxWorkers=2",
+      "exitCode": 0,
+      "result": "unit-workspace-result.json",
+      "log": "unit-workspace.log"
+    },
+    {
+      "command": "pnpm build:antd",
+      "exitCode": 0,
+      "result": "build-result.json",
+      "log": "build.log"
+    },
+    {
+      "exitCode": 0,
+      "command": "node --env-file=D:/code/go-admin-api/.env apps/admin/e2e/fe-idn-011.mjs",
+      "result": "e2e-result.json",
+      "log": "e2e.log"
+    }
+  ],
+  "cleanup": {
+    "runs": [
+      "cleanup-first-run.json",
+      "cleanup-interaction-failure.json",
+      "cleanup-selector-failure.json",
+      "cleanup-worker-race.json",
+      "cleanup.json"
+    ],
+    "deleted": {
+      "audit_log": 19,
+      "sys_refresh_token": 8,
+      "password_history": 0,
+      "auth_token": 0,
+      "notify_outbox": 40,
+      "notify_delivery": 40,
+      "notify_template": 10,
+      "sys_user_role": 5,
+      "sys_user": 5
+    },
+    "totalDeleted": 127,
+    "baselinePreserved": true,
+    "remaining": {
+      "users": 0,
+      "templates": 0,
+      "deliveries": 0,
+      "outboxes": 0,
+      "audits": 0
+    },
+    "stalled": [],
+    "auditCount": 0,
+    "auditPrune": {
+      "command": "go run ./cmd/cli audit-prune --before 2026-11-18T11:14:02.3794858+00:00",
+      "cutoff": "2026-11-18T11:14:02.3794858+00:00",
+      "exitCode": 0,
+      "deleted": 0,
+      "log": "audit-prune.log"
+    }
+  },
+  "sourceSha256": {
+    "apps/admin/package.json": "102a7ba7e30d5b5ade2900ad6bb6f7787c9b54d36d3bfa4212211bf9abdd1f37",
+    "apps/admin/src/api/model/notification.ts": "d1426a91cfb796c8ee74adec55c89b286eb139722e6be38689c1016d492955f1",
+    "apps/admin/src/api/core/notifications.ts": "7e9864d204e1b12103ccd810bcb5939aabdf62797f222c321dc4f1af8cf72b20",
+    "apps/admin/src/api/__tests__/notifications.test.ts": "a5cad7c2aa68c72b61f6f707293e19b73552da3be3cdd0813a1c2c7f9fba509e",
+    "apps/admin/src/views/system/notification/deliveries.vue": "fbb5ae44b88a15c2c665a3b30ed593d3d9346a83debd52571b2fad2dfac4e886",
+    "apps/admin/src/views/system/notification/use-delivery-page.ts": "adc345504caf46c3f9363aad660ed20a38b0554c6aa5ea9a1d607882fb974c53",
+    "apps/admin/src/views/system/notification/__tests__/deliveries.test.ts": "f9b9d28d6053f713b6257313f1bd7a91f9a7100361d6b36236fb770554f6097c",
+    "apps/admin/src/views/system/notification/__tests__/components.test.ts": "5bf96e6d7e81893c146293e37191de115aeeb67d4648b6c74038008e49b13cdf",
+    "apps/admin/e2e/fe-idn-011.mjs": "a4a0a707dcbd6575506704b81e9bab4d37339fd2ae93219936c0e5dda1dfe76f",
+    "apps/admin/e2e/fe-idn-011-support.mjs": "8b7b61849c7f1c8707ff7b31167d7bc54473a1911d00df9e761b1276481a771f",
+    "apps/admin/e2e/fe-idn-011-db.mjs": "58586b09e852cff363ef102df742ce62009aaff677ca24e1143711378cb62855"
+  }
+}

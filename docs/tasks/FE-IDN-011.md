@@ -3,7 +3,7 @@
 - ID: FE-IDN-011
 - 类型: 修复
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 已实现，验收通过（2026-11-18）
 - 预计: 0.5 人日
 - 分支: `feat/fe-idn-011-delivery-page`
 - 依赖: BE-IDN-015（投递记录可读与可操作）
@@ -78,6 +78,10 @@
 | 9   | 卡住提示 | 存在超时 pending 时显示提示条并可批量入队 |
 | 10  | 空态     | 无数据显示空态文案                        |
 | 11  | 构建     | lint / typecheck / unit / build 全绿      |
+
+验收记录（2026-11-18）：§3 十一项证据、真实接口 trace、截图与检查日志见 [FE-IDN-011 验收记录](../evidence/fe-idn-011/README.md)。第 2 项掩码邮箱/手机及旧记录 `—`、第 9 项两条超时 pending 提示条均已截图；单条重试刷新后为 pending，三条混合批量重试成功 2 / 跳过 1。
+
+已清理：本卡五次验收/调试夹具共 127 行已按 ID/code/User-Agent 限定删除；`go run ./cmd/cli audit-prune --before 2026-11-18T11:14:02.3794858+00:00` → `deleted=0`。用户、模板、投递、outbox、会话及本卡审计余量为 0，原数据哈希校验一致。逐条 SQL 与影响行数见 [清理记录](../evidence/fe-idn-011/cleanup.json)，全局复核见 [cleanup-verify.json](../evidence/fe-idn-011/cleanup-verify.json)。
 
 ## 4. 不做
 

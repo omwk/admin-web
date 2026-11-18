@@ -36,6 +36,7 @@ vi.mock('#/api/core/notifications', () => ({
   deleteNotificationProviderApi: vi.fn(),
   saveNotificationTemplateApi: vi.fn(),
   retryNotificationDeliveryApi: vi.fn(),
+  retryNotificationDeliveriesApi: vi.fn(),
 }));
 vi.mock('#/auth/permission', () => ({ hasPermission: () => api.allowed }));
 vi.mock('@vben/common-ui', () => ({
