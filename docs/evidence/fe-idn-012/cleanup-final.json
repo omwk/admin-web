@@ -1,0 +1,32 @@
+{
+  "tenantIDs": [28, 30, 31, 29, 32],
+  "runs": 5,
+  "deleted": {
+    "audit_log": 0,
+    "sys_refresh_token": 0,
+    "auth_token": 20,
+    "password_history": 10,
+    "sys_user_role": 0,
+    "sys_user": 13,
+    "sys_dept": 5,
+    "tenant": 5
+  },
+  "remaining": {
+    "sys_refresh_token": 0,
+    "auth_token": 0,
+    "password_history": 0,
+    "sys_user_role": 0,
+    "sys_user": 0,
+    "sys_dept": 0,
+    "sys_role": 0,
+    "sys_menu": 0,
+    "sys_setting": 0,
+    "notify_template": 0,
+    "tenant": 0,
+    "audit_log": 0
+  },
+  "originalAuditRecords": 6,
+  "configuration": "No existing configuration changed",
+  "preservedAuditRecords": 6,
+  "checkedAt": "2026-11-18T22:02:00.335Z"
+}

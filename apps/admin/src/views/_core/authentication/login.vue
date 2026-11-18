@@ -7,7 +7,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { AuthenticationLogin, z } from '@vben/common-ui';
 import { $t } from '@vben/locales';
 
-import { getLastTenantCode } from '#/auth/login-tenant';
+import { getLoginTenantCode } from '#/auth/login-tenant';
 import { useAuthStore } from '#/store';
 
 defineOptions({ name: 'Login' });
@@ -20,8 +20,7 @@ async function goRegister() {
   const tenant = typeof values?.tenant === 'string' ? values.tenant.trim() : '';
   await router.push({ name: 'Register', query: tenant ? { tenant } : {} });
 }
-const invitedTenant =
-  typeof route.query.tenant === 'string' ? route.query.tenant.trim() : '';
+const invitedTenant = getLoginTenantCode(route.query.tenant);
 const formSchema = computed((): VbenFormSchema[] => [
   {
     component: 'VbenInput',
@@ -31,7 +30,7 @@ const formSchema = computed((): VbenFormSchema[] => [
       maxlength: 64,
       placeholder: '请输入企业代码',
     },
-    defaultValue: invitedTenant || getLastTenantCode(),
+    defaultValue: invitedTenant,
     fieldName: 'tenant',
     hideLabel: false,
     label: '企业代码',

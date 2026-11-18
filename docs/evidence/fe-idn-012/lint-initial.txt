@@ -1,0 +1,19 @@
+$ vsh lint
+Checking formatting...
+
+All matched files use the correct format.
+Finished in 6160ms on 1558 files using 4 threads.
+Invalid icon name: "var(--vben-tiptap-max-height)"
+Invalid icon name: "var(--vben-tiptap-min-height)"
+Invalid icon name: "10px"
+Invalid icon name: "transform,color,background-color,border-color,box-shadow"
+Invalid icon name: "transform,box-shadow,border-color"
+Invalid icon name: "1.04"
+apps/admin/src/views/_core/authentication/__tests__/account-link.test.ts:181:31: error typescript(no-non-null-assertion): Forbidden non-null assertion.
+
+ ERROR  Lint failed:
+  - oxlint --threads=4
+
+运行 vsh lint --format 可自动修复。
+
+[ELIFECYCLE] Command failed with exit code 1.

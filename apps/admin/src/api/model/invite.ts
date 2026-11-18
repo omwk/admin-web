@@ -13,9 +13,12 @@ export interface Invite extends InviteInput {
   used_count: number;
   username?: string;
 }
-export interface AcceptInviteInput {
+export type AccountLinkTenant =
+  | { tenant: string; tenant_id?: never }
+  | { tenant?: never; tenant_id: number };
+
+export type AcceptInviteInput = AccountLinkTenant & {
   password: string;
-  tenant_id: number;
   token: string;
   username: string;
-}
+};

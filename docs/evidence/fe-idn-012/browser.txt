@@ -1,0 +1,3 @@
+$ node e2e/fe-idn-012.mjs
+FE-IDN-012 browser acceptance 1-6: passed; fixture cleanup: passed
+EXIT_CODE=0

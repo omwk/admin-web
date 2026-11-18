@@ -1,0 +1,10 @@
+$ vitest run --config vitest.config.ts "src/auth/__tests__/account-link.test.ts" "src/auth/__tests__/login-tenant.test.ts" "src/views/_core/authentication/__tests__/register-verify.test.ts" "src/views/_core/authentication/__tests__/account-link.test.ts"
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+
+ Test Files  4 passed (4)
+      Tests  64 passed (64)
+   Start at  05:43:13
+   Duration  7.60s (transform 284ms, setup 0ms, import 7.75s, tests 3.10s, environment 2.70s)
+

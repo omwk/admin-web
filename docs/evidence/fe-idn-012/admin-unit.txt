@@ -1,0 +1,11 @@
+$ vitest run --config vitest.config.ts "--maxWorkers=2"
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+
+ Test Files  58 passed (58)
+      Tests  379 passed (379)
+   Start at  05:53:37
+   Duration  98.43s (transform 3.91s, setup 0ms, import 110.46s, tests 33.47s, environment 33.36s)
+
+EXIT_CODE=0

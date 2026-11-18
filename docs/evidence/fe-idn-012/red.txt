@@ -1,0 +1,163 @@
+$ vitest run --config vitest.config.ts "src/auth/__tests__/account-link.test.ts" "src/views/_core/authentication/__tests__/register-verify.test.ts" "src/views/_core/authentication/__tests__/account-link.test.ts"
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+ ❯ src/auth/__tests__/account-link.test.ts (5 tests | 1 failed) 12ms
+     × normalizes /auth/register/verify with tenant code and legacy ID intact 3ms
+ ❯ src/views/_core/authentication/__tests__/account-link.test.ts (34 tests | 10 failed) 1566ms
+     × opens a valid code or legacy ID link: ?tenant=acme#token=x 128ms
+     × opens a valid code or legacy ID link: ?tenant=%20acme%20#token=x 67ms
+     × opens a valid code or legacy ID link: ?tenant=acme&tenant_id=invalid#token=x 40ms
+     × retains completion and login tenant after credential removal: 'tenant=%20acme%20&tenant_id=2' 119ms
+     × retains completion and login tenant after credential removal: 'tenant_id=2' 106ms
+     × opens a valid code or legacy ID link: ?tenant=acme#token=x 31ms
+     × opens a valid code or legacy ID link: ?tenant=%20acme%20#token=x 29ms
+     × opens a valid code or legacy ID link: ?tenant=acme&tenant_id=invalid#token=x 34ms
+     × retains completion and login tenant after credential removal: 'tenant=%20acme%20&tenant_id=2' 91ms
+     × retains completion and login tenant after credential removal: 'tenant_id=2' 106ms
+ ❯ src/views/_core/authentication/__tests__/register-verify.test.ts (9 tests | 7 failed) 7303ms
+     × shows the recovery message for a rejected token: ?token=invalid 1026ms
+     × shows the recovery message for a rejected token: ?tenant=acme&tenant_id=2#token=invalid 1019ms
+     × shows the recovery message for a rejected token: ?tenant=&tenant_id=invalid#token=invalid 1012ms
+     × fails locally with a missing or oversized token:  1020ms
+     × fails locally with a missing or oversized token: ?tenant=acme 1021ms
+     × fails locally with a missing or oversized token: ?tenant=&tenant_id=invalid 1021ms
+     × fails locally with a missing or oversized token: #token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx 1024ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 18 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/auth/__tests__/account-link.test.ts > account links and password rules > normalizes /auth/register/verify with tenant code and legacy ID intact
+Error: 无法识别的账号链接
+ ❯ frontendAccountLink src/auth/account-link.ts:5:11
+      3|   const url = new URL(link, origin);
+      4|   if (!['/auth/invite/accept', '/auth/password/reset'].includes(url.pa…
+      5|     throw new Error('无法识别的账号链接');
+       |           ^
+      6|   }
+      7|   return new URL(`${url.pathname}${url.search}${url.hash}`, origin).hr…
+ ❯ src/auth/__tests__/account-link.test.ts:12:7
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/18]⎯
+
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public invite account link > opens a valid code or legacy ID link: ?tenant=acme#token=x
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public invite account link > opens a valid code or legacy ID link: ?tenant=%20acme%20#token=x
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public invite account link > opens a valid code or legacy ID link: ?tenant=acme&tenant_id=invalid#token=x
+AssertionError: expected '接受邀请链接不完整，请联系管理员重新生成。部门与角色由邀请人预置。请自行设…' not to contain '链接不完整'
+
+Expected: "链接不完整"
+Received: "接受邀请链接不完整，请联系管理员重新生成。部门与角色由邀请人预置。请自行设置密码，管理员无法看到。用户名新密码确认密码创建账号"
+
+ ❯ src/views/_core/authentication/__tests__/account-link.test.ts:105:39
+    103|   ])('opens a valid code or legacy ID link: %s', async (suffix) => {
+    104|     await mount(mode, suffix);
+    105|     expect(container.textContent).not.toContain('链接不完整');
+       |                                       ^
+    106|     expect(input('新密码').disabled).toBe(false);
+    107|     expect(container.querySelector<HTMLButtonElement>('button[type="su…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/18]⎯
+
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public invite account link > retains completion and login tenant after credential removal: 'tenant=%20acme%20&tenant_id=2'
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public reset account link > retains completion and login tenant after credential removal: 'tenant=%20acme%20&tenant_id=2'
+AssertionError: expected undefined to be 'acme' // Object.is equality
+
+- Expected:
+"acme"
+
++ Received:
+undefined
+
+ ❯ src/views/_core/authentication/__tests__/account-link.test.ts:145:52
+    143|     await vi.waitFor(() => expect(container.textContent).toContain(mod…
+    144|     expect(router.currentRoute.value.hash).toBe('');
+    145|     expect(router.currentRoute.value.query.tenant).toBe(code);
+       |                                                    ^
+    146|     expect(container.textContent).toContain('企业代码');
+    147|     const href = container.querySelector('a')?.getAttribute('href');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/18]⎯
+
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public invite account link > retains completion and login tenant after credential removal: 'tenant_id=2'
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public reset account link > retains completion and login tenant after credential removal: 'tenant_id=2'
+AssertionError: expected undefined to be '' // Object.is equality
+
+- Expected:
+""
+
++ Received:
+undefined
+
+ ❯ src/views/_core/authentication/__tests__/account-link.test.ts:145:52
+    143|     await vi.waitFor(() => expect(container.textContent).toContain(mod…
+    144|     expect(router.currentRoute.value.hash).toBe('');
+    145|     expect(router.currentRoute.value.query.tenant).toBe(code);
+       |                                                    ^
+    146|     expect(container.textContent).toContain('企业代码');
+    147|     const href = container.querySelector('a')?.getAttribute('href');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/18]⎯
+
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public reset account link > opens a valid code or legacy ID link: ?tenant=acme#token=x
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public reset account link > opens a valid code or legacy ID link: ?tenant=%20acme%20#token=x
+ FAIL  src/views/_core/authentication/__tests__/account-link.test.ts > public reset account link > opens a valid code or legacy ID link: ?tenant=acme&tenant_id=invalid#token=x
+AssertionError: expected '设置新密码链接不完整，请联系管理员重新生成。新密码确认密码更新密码' not to contain '链接不完整'
+
+Expected: "链接不完整"
+Received: "设置新密码链接不完整，请联系管理员重新生成。新密码确认密码更新密码"
+
+ ❯ src/views/_core/authentication/__tests__/account-link.test.ts:105:39
+    103|   ])('opens a valid code or legacy ID link: %s', async (suffix) => {
+    104|     await mount(mode, suffix);
+    105|     expect(container.textContent).not.toContain('链接不完整');
+       |                                       ^
+    106|     expect(input('新密码').disabled).toBe(false);
+    107|     expect(container.querySelector<HTMLButtonElement>('button[type="su…
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/18]⎯
+
+ FAIL  src/views/_core/authentication/__tests__/register-verify.test.ts > email verification > shows the recovery message for a rejected token: ?token=invalid
+ FAIL  src/views/_core/authentication/__tests__/register-verify.test.ts > email verification > shows the recovery message for a rejected token: ?tenant=acme&tenant_id=2#token=invalid
+ FAIL  src/views/_core/authentication/__tests__/register-verify.test.ts > email verification > shows the recovery message for a rejected token: ?tenant=&tenant_id=invalid#token=invalid
+AssertionError: expected '链接无效或已过期 重新注册 ' to contain '链接已失效，请重新获取验证邮件'
+
+Expected: "链接已失效，请重新获取验证邮件"
+Received: "链接无效或已过期 重新注册 "
+
+ ❯ src/views/_core/authentication/__tests__/register-verify.test.ts:58:32
+     56|     await mount(suffix);
+     57|     await vi.waitFor(() =>
+     58|       expect(root.textContent).toContain('链接已失效，请重新获取验证邮件'),
+       |                                ^
+     59|     );
+     60|     expect(root.textContent).not.toContain('private backend detail');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/18]⎯
+
+ FAIL  src/views/_core/authentication/__tests__/register-verify.test.ts > email verification > fails locally with a missing or oversized token: 
+ FAIL  src/views/_core/authentication/__tests__/register-verify.test.ts > email verification > fails locally with a missing or oversized token: ?tenant=acme
+ FAIL  src/views/_core/authentication/__tests__/register-verify.test.ts > email verification > fails locally with a missing or oversized token: ?tenant=&tenant_id=invalid
+ FAIL  src/views/_core/authentication/__tests__/register-verify.test.ts > email verification > fails locally with a missing or oversized token: #token=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+AssertionError: expected '链接无效或已过期 重新注册 ' to contain '链接已失效，请重新获取验证邮件'
+
+Expected: "链接已失效，请重新获取验证邮件"
+Received: "链接无效或已过期 重新注册 "
+
+ ❯ src/views/_core/authentication/__tests__/register-verify.test.ts:66:32
+     64|     await mount(suffix);
+     65|     await vi.waitFor(() =>
+     66|       expect(root.textContent).toContain('链接已失效，请重新获取验证邮件'),
+       |                                ^
+     67|     );
+     68|     expect(verify).not.toHaveBeenCalled();
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[7/18]⎯
+
+
+ Test Files  3 failed (3)
+      Tests  18 failed | 30 passed (48)
+   Start at  05:36:36
+   Duration  11.19s (transform 217ms, setup 0ms, import 5.89s, tests 8.88s, environment 1.84s)
+
+D:\code\admin-web\apps\admin:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @vben/web-antd@5.8.0 test:unit: `vitest run --config vitest.config.ts "src/auth/__tests__/account-link.test.ts" "src/views/_core/authentication/__tests__/register-verify.test.ts" "src/views/_core/authentication/__tests__/account-link.test.ts"`
+Exit status 1

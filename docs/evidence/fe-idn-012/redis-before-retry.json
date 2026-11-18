@@ -1,0 +1,6 @@
+{
+  "database": 12,
+  "purpose": "Isolated acceptance API rate-limit reset",
+  "command": "redis-cli -n 12 DEL <two exact loopback-IP rate-limit keys>",
+  "removed": 2
+}

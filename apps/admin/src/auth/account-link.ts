@@ -1,7 +1,13 @@
 /** Backend links may use a deployment origin; keep the credential in the fragment. */
 export function frontendAccountLink(link: string, origin: string) {
   const url = new URL(link, origin);
-  if (!['/auth/invite/accept', '/auth/password/reset'].includes(url.pathname)) {
+  if (
+    ![
+      '/auth/invite/accept',
+      '/auth/password/reset',
+      '/auth/register/verify',
+    ].includes(url.pathname)
+  ) {
     throw new Error('无法识别的账号链接');
   }
   return new URL(`${url.pathname}${url.search}${url.hash}`, origin).href;

@@ -1,0 +1,49 @@
+2026/11/19 05:41:46 WARN app.public_url is unset; using development default module=config action=default_public_url
+2026/11/19 05:41:46 WARN app.public_url is unset; using development default module=config action=default_public_url
+2026/11/19 05:41:49 WARN app.public_url is unset; using development default module=config action=default_public_url
+--- FAIL: TestIdentityAccountTenantCodeIntegrationInviteAndReset (6.33s)
+    template.go:85: test database template build: commercehub_tpl_364bb43079cb4083fea0fc5f3d84dd1d (real migration chain)
+    database.go:109: test database template clone: commercehub_test_1795038109_01m7r9qqjzex9cm7j18njndy5b
+    --- FAIL: TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_only (0.19s)
+        identity_account_tenant_code_integration_test.go:42: 
+            	Error Trace:	D:/code/go-admin-api/internal/bootstrap/identity_account_tenant_code_integration_test.go:42
+            	Error:      	Not equal: 
+            	            	expected: 201
+            	            	actual  : 400
+            	Test:       	TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_only
+            	Messages:   	{"code":10001,"message":"邀请或链接无效","trace_id":"identity-integration-trace"}
+    --- FAIL: TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_wins_over_conflicting_ID (0.19s)
+        identity_account_tenant_code_integration_test.go:42: 
+            	Error Trace:	D:/code/go-admin-api/internal/bootstrap/identity_account_tenant_code_integration_test.go:42
+            	Error:      	Not equal: 
+            	            	expected: 201
+            	            	actual  : 400
+            	Test:       	TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_wins_over_conflicting_ID
+            	Messages:   	{"code":10001,"message":"邀请或链接无效","trace_id":"identity-integration-trace"}
+    --- FAIL: TestIdentityAccountTenantCodeIntegrationInviteAndReset/trimmed_code (0.19s)
+        identity_account_tenant_code_integration_test.go:42: 
+            	Error Trace:	D:/code/go-admin-api/internal/bootstrap/identity_account_tenant_code_integration_test.go:42
+            	Error:      	Not equal: 
+            	            	expected: 201
+            	            	actual  : 400
+            	Test:       	TestIdentityAccountTenantCodeIntegrationInviteAndReset/trimmed_code
+            	Messages:   	{"code":10001,"message":"邀请或链接无效","trace_id":"identity-integration-trace"}
+    --- FAIL: TestIdentityAccountTenantCodeIntegrationInviteAndReset/unknown_code_never_falls_back (0.21s)
+        identity_account_tenant_code_integration_test.go:42: 
+            	Error Trace:	D:/code/go-admin-api/internal/bootstrap/identity_account_tenant_code_integration_test.go:42
+            	Error:      	Not equal: 
+            	            	expected: 400
+            	            	actual  : 201
+            	Test:       	TestIdentityAccountTenantCodeIntegrationInviteAndReset/unknown_code_never_falls_back
+            	Messages:   	{"code":0,"message":"ok","data":{"id":5,"username":"code-member-5"},"trace_id":"identity-integration-trace"}
+    --- FAIL: TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_is_case_sensitive (0.21s)
+        identity_account_tenant_code_integration_test.go:42: 
+            	Error Trace:	D:/code/go-admin-api/internal/bootstrap/identity_account_tenant_code_integration_test.go:42
+            	Error:      	Not equal: 
+            	            	expected: 400
+            	            	actual  : 201
+            	Test:       	TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_is_case_sensitive
+            	Messages:   	{"code":0,"message":"ok","data":{"id":6,"username":"code-member-6"},"trace_id":"identity-integration-trace"}
+FAIL
+FAIL	github.com/omwk/go-admin-api/internal/bootstrap	7.321s
+FAIL
