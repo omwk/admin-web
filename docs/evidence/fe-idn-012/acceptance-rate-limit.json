@@ -1,0 +1,114 @@
+{
+  "task": "FE-IDN-012",
+  "startedAt": "2026-11-18T21:57:19.610Z",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "url": "?tenant=acme#token=x",
+      "screenshot": "01-code-link.png"
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "url": "?tenant_id=2#token=x",
+      "screenshot": "02-legacy-link.png"
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "screenshot": "03-incomplete-link.png",
+      "disabled": true
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/auth/invite/accept",
+      "method": "POST",
+      "status": 201,
+      "tenant": "feidn012_1795039039610",
+      "authenticated": false
+    },
+    {
+      "path": "/api/v1/auth/invite/accept",
+      "method": "POST",
+      "status": 201,
+      "tenant_id": 31,
+      "authenticated": false
+    },
+    {
+      "path": "/api/v1/auth/invite/accept",
+      "method": "POST",
+      "status": 429,
+      "tenant": "feidn012_1795039039610",
+      "authenticated": false
+    }
+  ],
+  "browserErrors": [],
+  "fixture": {
+    "tenant": {
+      "id": 31,
+      "code": "feidn012_1795039039610"
+    },
+    "originalAuditRecords": 6
+  },
+  "failure": "Expected values to be strictly equal:\n\n429 !== 201\n",
+  "cleanup": {
+    "cutoff": "2026-11-18T21:57:43.761Z",
+    "sql": [
+      {
+        "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at >= $3 AND created_at < $4 RETURNING id",
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 31,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 31,
+        "rows": 4
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 31,
+        "rows": 2
+      },
+      {
+        "sql": "DELETE FROM sys_user_role WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 31,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 31,
+        "rows": 3
+      },
+      {
+        "sql": "DELETE FROM sys_dept WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 31,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM tenant WHERE id=$1 AND code=$2 RETURNING id",
+        "tenantID": 31,
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "sys_refresh_token": 0,
+      "auth_token": 0,
+      "password_history": 0,
+      "sys_user_role": 0,
+      "sys_user": 0,
+      "sys_dept": 0
+    },
+    "originalAuditRecords": 6,
+    "baselinePreserved": true,
+    "configurationRestored": "No existing configuration changed"
+  },
+  "completedAt": "2026-11-18T21:57:43.871Z"
+}

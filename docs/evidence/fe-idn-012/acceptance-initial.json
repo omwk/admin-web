@@ -1,0 +1,75 @@
+{
+  "task": "FE-IDN-012",
+  "startedAt": "2026-11-18T21:48:21.134Z",
+  "origin": "http://127.0.0.1:5666",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [],
+  "requests": [],
+  "browserErrors": [
+    "Failed to fetch dynamically imported module: http://127.0.0.1:5666/src/bootstrap.ts?t=1795038132285"
+  ],
+  "fixture": {
+    "tenant": {
+      "id": 28,
+      "code": "feidn012_1795038501134"
+    },
+    "originalAuditRecords": 6
+  },
+  "failure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('新密码', { exact: true }) to be visible\u001b[22m\n",
+  "cleanup": {
+    "cutoff": "2026-11-18T21:48:53.431Z",
+    "sql": [
+      {
+        "sql": "DELETE FROM audit_log WHERE user_agent IN ($1,$2) AND created_at >= $3 AND created_at < $4 RETURNING id",
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 28,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 28,
+        "rows": 4
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 28,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user_role WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 28,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 28,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_dept WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 28,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM tenant WHERE id=$1 AND code=$2 RETURNING id",
+        "tenantID": 28,
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "sys_refresh_token": 0,
+      "auth_token": 0,
+      "password_history": 0,
+      "sys_user_role": 0,
+      "sys_user": 0,
+      "sys_dept": 0
+    },
+    "originalAuditRecords": 6,
+    "baselinePreserved": true,
+    "configurationRestored": "No existing configuration changed"
+  },
+  "completedAt": "2026-11-18T21:48:53.540Z"
+}

@@ -4,6 +4,7 @@ import { ApiError } from '#/api/errors';
 
 import {
   getLastTenantCode,
+  getLoginTenantCode,
   LOGIN_CREDENTIAL_ERROR,
   loginFailureMessage,
   rememberTenantCode,
@@ -16,6 +17,18 @@ beforeEach(() => {
 });
 
 describe('tenant code login', () => {
+  it('prefills the link code ahead of remembered tenant codes', () => {
+    rememberTenantCode('remembered');
+    expect(getLoginTenantCode(' acme ')).toBe('acme');
+    expect(getLoginTenantCode(undefined)).toBe('remembered');
+  });
+
+  it('keeps an explicitly empty legacy-link tenant blank', () => {
+    rememberTenantCode('remembered');
+    expect(getLoginTenantCode('')).toBe('');
+    expect(getLoginTenantCode('   ')).toBe('');
+  });
+
   it('uses the configured default with a default-code fallback', () => {
     vi.stubEnv('VITE_DEFAULT_TENANT_CODE', '');
     expect(getLastTenantCode()).toBe('default');

@@ -3,7 +3,7 @@
 - ID: FE-IDN-012
 - 类型: 修复
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 已实现（待评审）
 - 预计: 0.3 人日
 - 分支: `feat/fe-idn-012-account-link`
 - 依赖: BE-IDN-016（链接改用租户 code）
@@ -78,6 +78,10 @@ const tenantID = Number(q.tenant_id);
 | 5   | 旧链接登录 | 不回填错误值（留空）                        |
 | 6   | 验证页     | 无效 token 显示失效提示                     |
 | 7   | 构建       | lint / typecheck / unit / build 全绿        |
+
+验收记录（2026-11-19）：§3 七项已通过，逐项截图、真实接口状态、完整检查日志见 [FE-IDN-012 验收记录](../evidence/fe-idn-012/README.md)。前端基线为 `main@f2ddf07`；经用户确认，另在后端 `7e64607` 基线上补齐邀请接受与密码重置的 tenant code 解析，两仓库均使用 `feat/fe-idn-012-account-link`。
+
+已清理：五次验收/调试夹具按 tenant ID/code 删除 53 行（租户 5、用户 13、部门 5、账号凭证 20、密码历史 10），本卡审计余量 0，原有 6 条审计及已有业务数据哈希一致；专用 Redis DB 12 的验收限流键已删除，临时 API/前端服务已停止，未修改已有系统配置。逐条 SQL、影响行数见各次 `acceptance*.json`，汇总与全局复核见 [cleanup-final.json](../evidence/fe-idn-012/cleanup-final.json)。
 
 ## 4. Codex prompt
 

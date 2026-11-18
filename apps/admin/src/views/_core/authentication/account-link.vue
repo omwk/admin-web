@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { AccountLinkTenant } from '#/api/model/invite';
+
 import { computed, ref } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 
@@ -14,7 +16,16 @@ const router = useRouter();
 const credential = ref(
   new URLSearchParams(route.hash.replace(/^#/, '')).get('token') ?? '',
 );
-const tenant = Number(route.query.tenant_id);
+const tenantCode =
+  typeof route.query.tenant === 'string' ? route.query.tenant.trim() : '';
+const tenantID =
+  typeof route.query.tenant_id === 'string'
+    ? Number(route.query.tenant_id)
+    : Number.NaN;
+const validTenantID = Number.isSafeInteger(tenantID) && tenantID > 0;
+const tenant: AccountLinkTenant = tenantCode
+  ? { tenant: tenantCode }
+  : { tenant_id: tenantID };
 const username = ref('');
 const password = ref('');
 const confirmation = ref('');
@@ -22,7 +33,7 @@ const busy = ref(false);
 const done = computed(() => Boolean(props.complete));
 const error = ref('');
 const validLink = computed(
-  () => Boolean(credential.value) && Number.isSafeInteger(tenant) && tenant > 0,
+  () => Boolean(credential.value) && Boolean(tenantCode || validTenantID),
 );
 const title = computed(() =>
   props.mode === 'invite' ? '接受邀请' : '设置新密码',
@@ -46,14 +57,14 @@ async function submit() {
   try {
     await (props.mode === 'invite'
       ? acceptInviteApi({
+          ...tenant,
           password: password.value,
-          tenant_id: tenant,
           token: credential.value,
           username: username.value.trim(),
         })
       : consumeResetLinkApi({
+          ...tenant,
           newPassword: password.value,
-          tenant_id: tenant,
           token: credential.value,
         }));
     credential.value = '';
@@ -61,7 +72,7 @@ async function submit() {
     confirmation.value = '';
     await router.replace({
       name: 'AccountLinkComplete',
-      query: { mode: props.mode, tenant_id: tenant },
+      query: { mode: props.mode, tenant: tenantCode },
     });
   } catch (error_) {
     const failure = toApiError(error_);
@@ -87,7 +98,7 @@ async function submit() {
         <RouterLink
           :to="{
             path: '/auth/login',
-            query: { tenant: route.query.tenant },
+            query: { tenant: tenantCode },
           }"
         >
           <Button type="primary">前往登录</Button>

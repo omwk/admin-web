@@ -1,0 +1,24 @@
+=== RUN   TestIdentityAccountTenantCodeIntegrationInviteAndReset
+=== PAUSE TestIdentityAccountTenantCodeIntegrationInviteAndReset
+=== CONT  TestIdentityAccountTenantCodeIntegrationInviteAndReset
+2026/11/19 05:43:22 WARN app.public_url is unset; using development default module=config action=default_public_url
+2026/11/19 05:43:22 WARN app.public_url is unset; using development default module=config action=default_public_url
+    database.go:109: test database template clone: commercehub_test_1795038202_01m7r9tjgmbvb7njcqm79b633y
+2026/11/19 05:43:22 WARN app.public_url is unset; using development default module=config action=default_public_url
+=== RUN   TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_only
+=== RUN   TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_wins_over_conflicting_ID
+=== RUN   TestIdentityAccountTenantCodeIntegrationInviteAndReset/trimmed_code
+=== RUN   TestIdentityAccountTenantCodeIntegrationInviteAndReset/legacy_ID
+=== RUN   TestIdentityAccountTenantCodeIntegrationInviteAndReset/blank_code_falls_back
+=== RUN   TestIdentityAccountTenantCodeIntegrationInviteAndReset/unknown_code_never_falls_back
+=== RUN   TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_is_case_sensitive
+--- PASS: TestIdentityAccountTenantCodeIntegrationInviteAndReset (6.06s)
+    --- PASS: TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_only (0.65s)
+    --- PASS: TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_wins_over_conflicting_ID (0.90s)
+    --- PASS: TestIdentityAccountTenantCodeIntegrationInviteAndReset/trimmed_code (0.99s)
+    --- PASS: TestIdentityAccountTenantCodeIntegrationInviteAndReset/legacy_ID (1.16s)
+    --- PASS: TestIdentityAccountTenantCodeIntegrationInviteAndReset/blank_code_falls_back (1.39s)
+    --- PASS: TestIdentityAccountTenantCodeIntegrationInviteAndReset/unknown_code_never_falls_back (0.01s)
+    --- PASS: TestIdentityAccountTenantCodeIntegrationInviteAndReset/code_is_case_sensitive (0.01s)
+PASS
+ok  	github.com/omwk/go-admin-api/internal/bootstrap	6.970s

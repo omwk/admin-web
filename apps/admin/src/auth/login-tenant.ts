@@ -13,6 +13,11 @@ export function getLastTenantCode(): string {
   }
 }
 
+export function getLoginTenantCode(tenant: unknown): string {
+  // Legacy account links explicitly clear the field instead of guessing a code.
+  return typeof tenant === 'string' ? tenant.trim() : getLastTenantCode();
+}
+
 export function rememberTenantCode(code: string) {
   try {
     localStorage.setItem(TENANT_CODE_KEY, code.trim());

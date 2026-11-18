@@ -47,7 +47,7 @@ onMounted(async () => {
       </RouterLink>
     </template>
   </Result>
-  <Result v-else status="error" title="链接无效或已过期">
+  <Result v-else status="error" title="链接已失效，请重新获取验证邮件">
     <template #extra>
       <RouterLink :to="{ name: 'Register' }" class="vben-link">
         重新注册

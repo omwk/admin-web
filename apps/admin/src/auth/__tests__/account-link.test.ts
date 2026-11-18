@@ -3,6 +3,24 @@ import { describe, expect, it } from 'vitest';
 import { frontendAccountLink, passwordError } from '../account-link';
 
 describe('account links and password rules', () => {
+  it.each([
+    '/auth/invite/accept',
+    '/auth/password/reset',
+    '/auth/register/verify',
+  ])('normalizes %s with tenant code and legacy ID intact', (path) => {
+    expect(
+      frontendAccountLink(
+        `https://deployment.example${path}?tenant=acme&tenant_id=2#token=opaque`,
+        'http://127.0.0.1:5666',
+      ),
+    ).toBe(`http://127.0.0.1:5666${path}?tenant=acme&tenant_id=2#token=opaque`);
+    expect(
+      frontendAccountLink(
+        `${path}?tenant=acme#token=opaque`,
+        'https://admin.example',
+      ),
+    ).toBe(`https://admin.example${path}?tenant=acme#token=opaque`);
+  });
   it('targets the current frontend while retaining the tenant and fragment credential', () => {
     expect(
       frontendAccountLink(

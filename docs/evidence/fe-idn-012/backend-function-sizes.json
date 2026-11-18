@@ -1,0 +1,77 @@
+[
+  {
+    "File": "account_link.go",
+    "Start": 12,
+    "Lines": 20
+  },
+  {
+    "File": "account_link.go",
+    "Start": 33,
+    "Lines": 10
+  },
+  {
+    "File": "account_link.go",
+    "Start": 44,
+    "Lines": 20
+  },
+  {
+    "File": "account_invite_http.go",
+    "Start": 10,
+    "Lines": 21
+  },
+  {
+    "File": "account_invite_http.go",
+    "Start": 32,
+    "Lines": 14
+  },
+  {
+    "File": "account_invite_http.go",
+    "Start": 47,
+    "Lines": 13
+  },
+  {
+    "File": "account_invite_http.go",
+    "Start": 61,
+    "Lines": 11
+  },
+  {
+    "File": "account_invite_http.go",
+    "Start": 73,
+    "Lines": 23
+  },
+  {
+    "File": "account_recovery_http.go",
+    "Start": 11,
+    "Lines": 5
+  },
+  {
+    "File": "account_recovery_http.go",
+    "Start": 17,
+    "Lines": 26
+  },
+  {
+    "File": "account_recovery_http.go",
+    "Start": 44,
+    "Lines": 22
+  },
+  {
+    "File": "account_recovery_http.go",
+    "Start": 67,
+    "Lines": 3
+  },
+  {
+    "File": "identity_account_tenant_code_integration_test.go",
+    "Start": 14,
+    "Lines": 52
+  },
+  {
+    "File": "identity_account_tenant_code_integration_test.go",
+    "Start": 67,
+    "Lines": 12
+  },
+  {
+    "File": "identity_account_tenant_code_integration_test.go",
+    "Start": 80,
+    "Lines": 12
+  }
+]

@@ -1,0 +1,12 @@
+$ vitest run --dom "--maxWorkers=2"
+
+ RUN  v4.1.11 D:/code/admin-web
+
+Warning: A vi.mock("sortablejs/modular/sortable.complete.esm.js") call in "D:/code/admin-web/packages/@core/composables/src/__tests__/use-sortable.test.ts" is not at the top level of the module. Although it appears nested, it will be hoisted and executed before any tests run. Move it to the top level to reflect its actual execution order. This will become an error in a future version.
+See: https://vitest.dev/guide/mocking/modules#how-it-works
+
+ Test Files  153 passed (153)
+      Tests  1086 passed (1086)
+   Start at  05:49:02
+   Duration  233.82s (transform 18.85s, setup 0ms, import 226.58s, tests 60.59s, environment 113.74s)
+

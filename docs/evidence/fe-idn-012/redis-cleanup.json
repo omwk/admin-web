@@ -1,0 +1,8 @@
+{
+  "before": 3,
+  "command": "redis-cli -n 12 DEL <three exact loopback-IP rate-limit keys>",
+  "remaining": 0,
+  "temporaryApiStopped": true,
+  "database": 12,
+  "removed": 3
+}

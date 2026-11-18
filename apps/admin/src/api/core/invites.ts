@@ -1,6 +1,7 @@
 import type { ApiRequestConfig } from '#/api/client';
 import type {
   AcceptInviteInput,
+  AccountLinkTenant,
   Invite,
   InviteInput,
 } from '#/api/model/invite';
@@ -25,8 +26,6 @@ export const acceptInviteApi = (input: AcceptInviteInput) =>
     input,
     anonymous,
   );
-export const consumeResetLinkApi = (input: {
-  newPassword: string;
-  tenant_id: number;
-  token: string;
-}) => requestClient.post('/auth/password/reset', input, anonymous);
+export const consumeResetLinkApi = (
+  input: AccountLinkTenant & { newPassword: string; token: string },
+) => requestClient.post('/auth/password/reset', input, anonymous);
