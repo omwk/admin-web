@@ -11,7 +11,13 @@ export const notificationChannels: {
   { label: 'Webhook', value: 'webhook' },
 ];
 export function channelLabel(value: string) {
+  const personal: Record<string, string> = {
+    inbox: '站内信',
+    bark: 'Bark',
+    gotify: 'Gotify',
+  };
   return (
+    personal[value] ??
     notificationChannels.find((channel) => channel.value === value)?.label ??
     value
   );

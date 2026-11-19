@@ -36,6 +36,8 @@ export const componentRegistry: ComponentRecordType = {
     import('#/views/system/notification/index.vue'),
   '/system/notification/channels.vue': () =>
     import('#/views/system/notification/channels.vue'),
+  '/system/notification/broadcasts.vue': () =>
+    import('#/views/system/notification/broadcasts.vue'),
   '/system/audit-log/index.vue': () =>
     import('#/views/system/audit-log/index.vue'),
   '/system/login-log/index.vue': () =>

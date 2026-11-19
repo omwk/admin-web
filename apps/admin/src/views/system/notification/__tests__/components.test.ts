@@ -77,17 +77,54 @@ function fill(label: string, value: string) {
   input.dispatchEvent(new Event('input', { bubbles: true }));
 }
 describe('preference matrix interaction', () => {
+  it('groups security templates by name, disables their switches and explains the constraint', async () => {
+    api.preferences.mockResolvedValue({
+      preferences: [
+        {
+          template: 'identity.verify',
+          name: '邮箱验证',
+          transactional: true,
+          channel: 'email',
+          enabled: true,
+          inherited: true,
+          available: true,
+          reason: '',
+        },
+      ],
+    });
+    mount(Preferences);
+    await vi.waitFor(() => expect(container.textContent).toContain('邮箱验证'));
+    expect(container.textContent).toContain(
+      '安全邮件（验证/重置/邀请）不可关闭',
+    );
+    expect(
+      container.querySelector<HTMLButtonElement>('[role="switch"]')?.disabled,
+    ).toBe(true);
+    expect(
+      [...container.querySelectorAll('button')].some((item) =>
+        item.textContent?.includes('自定义'),
+      ),
+    ).toBe(false);
+  });
   it('shows disabled inherited values, saves one false override and rereads it', async () => {
     const initial = {
       preferences: [
         {
           template: 'notification.default',
+          name: '系统通知',
+          transactional: false,
+          available: true,
+          reason: '',
           channel: 'email',
           enabled: true,
           inherited: true,
         },
         {
           template: 'notification.default',
+          name: '系统通知',
+          transactional: false,
+          available: true,
+          reason: '',
           channel: 'sms',
           enabled: false,
           inherited: true,
@@ -122,7 +159,11 @@ describe('preference matrix interaction', () => {
     button('保存偏好', container).click();
     await vi.waitFor(() =>
       expect(api.savePreferences).toHaveBeenCalledWith([
-        { template: 'notification.default', channel: 'email', enabled: false },
+        {
+          template: 'notification.default',
+          channel: 'email',
+          enabled: false,
+        },
       ]),
     );
     await vi.waitFor(() =>
@@ -143,6 +184,10 @@ describe('preference matrix interaction', () => {
       preferences: [
         {
           template: 'notification.default',
+          name: '系统通知',
+          transactional: false,
+          available: true,
+          reason: '',
           channel: 'email',
           enabled: true,
           inherited: false,

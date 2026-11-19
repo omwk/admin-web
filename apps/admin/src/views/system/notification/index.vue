@@ -11,6 +11,7 @@ import {
   Badge,
   Button,
   Card,
+  Drawer,
   Empty,
   message,
   Select,
@@ -42,7 +43,13 @@ const unread = ref('all');
 const template = ref<string>();
 const templateOptions = ref<{ label: string; value: string }[]>([]);
 const activeTab = ref('inbox');
+const payloadLabels: Record<string, string> = {
+  body: '正文',
+  title: '标题',
+  message: '正文',
+};
 const acting = ref(false);
+const selected = ref<NotificationInbox>();
 const actionError = ref('');
 const allowed = computed(() => hasPermission('system:notify:list'));
 const { rows, loading, error, pagination, load, changePage } =
@@ -55,10 +62,11 @@ const { rows, loading, error, pagination, load, changePage } =
     }),
   );
 const columns = [
+  { title: '标题', dataIndex: 'title', width: 260 },
+  { title: '摘要', dataIndex: 'summary', width: 320 },
+  { title: '模板', dataIndex: 'template_name', width: 200 },
   { title: '状态', dataIndex: 'read_at', width: 100 },
   { title: '时间', dataIndex: 'created_at', width: 190 },
-  { title: '类型', dataIndex: 'template', width: 240 },
-  { title: '摘要', dataIndex: 'summary', ellipsis: true },
   { title: '操作', dataIndex: 'actions', width: 130 },
 ];
 async function refresh(reset = false) {
@@ -71,6 +79,11 @@ async function read(record?: NotificationInbox) {
   actionError.value = '';
   try {
     await (record ? readNotificationApi(record.id) : readAllNotificationsApi());
+    if (record) {
+      record.read_at = new Date().toISOString();
+      if (selected.value?.id === record.id)
+        selected.value = { ...selected.value, read_at: record.read_at };
+    }
     await refresh();
     message.success(record ? '已标记为已读' : '全部通知已读');
   } catch (error_) {
@@ -83,14 +96,21 @@ async function lookups() {
   try {
     const { preferences } = await getNotificationPreferencesApi();
     templateOptions.value = [
-      ...new Set(preferences.map((value) => value.template)),
-    ].map((value) => ({ label: value, value }));
+      ...new Map(
+        preferences.map((value) => [
+          value.template,
+          { label: value.name || value.template, value: value.template },
+        ]),
+      ).values(),
+    ];
   } catch (error_) {
     actionError.value = notificationError(error_);
   }
 }
-function expand(expanded: boolean, record: NotificationInbox) {
-  if (expanded && !record.read_at) void read(record);
+function open(record: NotificationInbox) {
+  if (acting.value) return;
+  selected.value = record;
+  if (!record.read_at) void read(record);
 }
 let mounted = false;
 onMounted(() => {
@@ -114,15 +134,26 @@ onActivated(() => {
     />
     <Card v-else>
       <template #title>
-        <Space>通知中心 <Badge :count="notifications.count" show-zero /></Space>
+        <Space>
+          通知中心
+          <Badge :count="notifications.error ? 0 : notifications.count" />
+        </Space>
       </template>
       <template #extra>
-        <Button
-          v-if="hasPermission('system:notify:manage')"
-          @click="router.push('/system/notifications/channels')"
-        >
-          通知渠道
-        </Button>
+        <Space>
+          <Button
+            v-if="hasPermission('system:notify:broadcast')"
+            @click="router.push('/system/notifications/broadcasts')"
+          >
+            发布公告
+          </Button>
+          <Button
+            v-if="hasPermission('system:notify:manage')"
+            @click="router.push('/system/notifications/channels')"
+          >
+            通知渠道
+          </Button>
+        </Space>
       </template>
       <Tabs v-model:active-key="activeTab">
         <Tabs.TabPane key="inbox" tab="站内通知">
@@ -142,6 +173,8 @@ onActivated(() => {
               aria-label="模板类型"
               placeholder="全部模板"
               allow-clear
+              show-search
+              option-filter-prop="label"
               class="!w-64"
               :options="templateOptions"
               @change="refresh(true)"
@@ -178,18 +211,25 @@ onActivated(() => {
             "
             :custom-row="
               (record: NotificationInbox) => ({
-                class: '',
+                class: 'cursor-pointer',
                 'data-notification-id': record.id,
+                onClick: () => open(record),
               })
             "
-            :scroll="{ x: 850 }"
-            expand-row-by-click
+            :scroll="{ x: 1200 }"
             @change="changePage"
-            @expand="expand"
           >
             <template #emptyText><Empty description="暂无通知" /></template>
             <template #bodyCell="{ column, record }">
-              <template v-if="column.dataIndex === 'read_at'">
+              <template v-if="column.dataIndex === 'title'">
+                <span
+                  v-if="!record.read_at"
+                  class="mr-2 inline-block size-2 rounded-full bg-blue-500"
+                  aria-label="未读"
+                ></span>
+                {{ record.title || record.template_name || '通知' }}
+              </template>
+              <template v-else-if="column.dataIndex === 'read_at'">
                 <Tag :color="record.read_at ? 'default' : 'blue'">
                   {{ record.read_at ? '已读' : '● 未读' }}
                 </Tag>
@@ -198,7 +238,9 @@ onActivated(() => {
                 {{ formatDateTime(record.created_at) }}
               </template>
               <template v-else-if="column.dataIndex === 'summary'">
-                {{ notificationSummary(record.payload) }}
+                <p class="line-clamp-2 whitespace-normal break-words">
+                  {{ record.summary || notificationSummary(record.payload) }}
+                </p>
               </template>
               <template v-else-if="column.dataIndex === 'actions'">
                 <Button
@@ -210,26 +252,6 @@ onActivated(() => {
                 </Button>
               </template>
             </template>
-            <template #expandedRowRender="{ record }">
-              <dl
-                class="grid grid-cols-[minmax(80px,180px)_1fr] gap-3 p-3"
-                data-testid="notification-detail"
-              >
-                <template
-                  v-for="entry in payloadEntries(record.payload)"
-                  :key="entry.key"
-                >
-                  <dt class="text-gray-500">{{ entry.key }}</dt>
-                  <dd class="whitespace-pre-wrap break-all">
-                    {{ entry.value }}
-                  </dd>
-                </template>
-              </dl>
-              <Empty
-                v-if="!Object.keys(record.payload).length"
-                description="暂无详情"
-              />
-            </template>
           </Table>
         </Tabs.TabPane>
         <Tabs.TabPane key="preferences" tab="通知偏好">
@@ -237,5 +259,34 @@ onActivated(() => {
         </Tabs.TabPane>
       </Tabs>
     </Card>
+    <Drawer
+      :open="!!selected"
+      :title="selected?.title || '通知详情'"
+      :width="640"
+      @close="selected = undefined"
+    >
+      <div v-if="selected" data-testid="notification-detail">
+        <p class="mb-4 text-gray-500">
+          {{ selected.template_name }} ·
+          {{ formatDateTime(selected.created_at) }} ·
+          {{ selected.read_at ? '已读' : '未读' }}
+        </p>
+        <dl class="grid grid-cols-[100px_1fr] gap-3">
+          <template
+            v-for="entry in payloadEntries(selected.payload)"
+            :key="entry.key"
+          >
+            <dt class="text-gray-500">
+              {{ payloadLabels[entry.key] || entry.key }}
+            </dt>
+            <dd class="whitespace-pre-wrap break-words">{{ entry.value }}</dd>
+          </template>
+        </dl>
+        <Empty
+          v-if="!Object.keys(selected.payload).length"
+          description="暂无详情"
+        />
+      </div>
+    </Drawer>
   </Page>
 </template>

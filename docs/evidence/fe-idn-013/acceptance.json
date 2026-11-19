@@ -1,0 +1,1026 @@
+{
+  "task": "FE-IDN-013",
+  "startedAt": "2026-11-19T13:56:17.061Z",
+  "origin": "http://127.0.0.1:5667/#",
+  "backend": "http://127.0.0.1:18080",
+  "backendRevision": "acae5f0",
+  "migration": 36,
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "variables": [
+        {
+          "name": "AppName",
+          "description": "系统名称",
+          "example": "CommerceHub",
+          "required": true
+        },
+        {
+          "name": "UserName",
+          "description": "用户显示名称",
+          "example": "示例用户",
+          "required": true
+        },
+        {
+          "name": "TenantName",
+          "description": "租户名称",
+          "example": "示例租户",
+          "required": true
+        },
+        {
+          "name": "Link",
+          "description": "操作链接（预览为无令牌的示例地址）",
+          "example": "https://example.invalid/account",
+          "required": true
+        },
+        {
+          "name": "ExpiresInHours",
+          "description": "链接有效期，单位：小时",
+          "example": "24",
+          "required": true
+        },
+        {
+          "name": "ExpiresAt",
+          "description": "到期时间（RFC3339 UTC）",
+          "example": "2026-11-20T00:00:00Z",
+          "required": true
+        },
+        {
+          "name": "SupportEmail",
+          "description": "客服邮箱，可为空",
+          "example": "support@example.invalid",
+          "required": false
+        }
+      ],
+      "screenshot": "01-variables.png",
+      "additionalScreenshot": "01-variables-support.png"
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "body": "前{{.Link}}后",
+      "caret": 10
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "blocked": true,
+      "unknown": "NotDeclared",
+      "noSaveRequest": true,
+      "screenshot": "03-unknown-variable.png"
+    },
+    {
+      "item": 4,
+      "result": "pass",
+      "subject": "验证你的 CommerceHub 邮箱",
+      "body": "示例用户 你好：\n\n你正在 CommerceHub（租户：示例租户）注册账号。请打开下面的链接验证邮箱：\n\nhttps://example.invalid/account\n\n该链接 24 小时内有效，且只能使用一次。\n如果这不是你本人的操作，可以忽略本邮件，你的邮箱不会被注册。\n\n—— CommerceHub\n如遇问题请联系：support@example.invalid",
+      "screenshot": "04-template-preview.png"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "delivery": {
+        "id": 109,
+        "template_name": "验证注册邮箱",
+        "status": "sent"
+      },
+      "screenshot": "05-test-sent.png"
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "name": "验证注册邮箱",
+      "tooltip": "identity.verify",
+      "screenshot": "06-preference-name.png"
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "securityDisabled": true,
+      "ordinaryToggleSaved": true,
+      "screenshot": "07-security-preferences.png"
+    },
+    {
+      "item": 8,
+      "result": "pass",
+      "unread": 0,
+      "visibleBadgeCount": 0,
+      "screenshot": "08-zero-badge.png"
+    },
+    {
+      "item": 9,
+      "result": "pass",
+      "focusRefresh": true,
+      "count": 1,
+      "broadcast_id": 22,
+      "polling": "60000 ms; unit fake-timer assertion",
+      "screenshot": "09-focus-badge.png"
+    },
+    {
+      "item": 10,
+      "result": "pass",
+      "title": "验收新消息",
+      "summary": "通知中心完整正文 第二行内容",
+      "template_name": "系统公告",
+      "read": true,
+      "screenshot": "10-inbox-detail.png"
+    },
+    {
+      "item": 11,
+      "result": "pass",
+      "option": "系统公告",
+      "screenshot": "11-template-filter.png"
+    },
+    {
+      "item": 12,
+      "result": "pass",
+      "counts": {
+        "all": 3,
+        "roles": 2,
+        "users": 1
+      },
+      "published": {
+        "broadcast_id": 24,
+        "recipients": 1
+      },
+      "inboxStored": true,
+      "emailDeliveryStored": true,
+      "screenshots": [
+        "12-audience-all.png",
+        "12-audience-roles.png",
+        "12-audience-users.png",
+        "12-confirmation.png",
+        "12-broadcast-history.png"
+      ]
+    },
+    {
+      "item": 13,
+      "result": "pass",
+      "path": "/403",
+      "businessRequests": 0,
+      "screenshot": "13-broadcast-forbidden.png"
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7T1G1P9ABN9KTW0YMGJHE62"
+    },
+    {
+      "path": "/api/v1/admin/notifications/providers",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7T1G1YMZDSZ4W6MZ0DCNSXN"
+    },
+    {
+      "path": "/js/notifications-CJ6gfwei.js",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200,
+      "query": {
+        "page": "1",
+        "page_size": "3"
+      }
+    },
+    {
+      "path": "/api/v1/admin/notifications/providers",
+      "method": "GET",
+      "status": 200,
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "path": "/api/v1/admin/notifications/templates",
+      "method": "GET",
+      "status": 200,
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "path": "/api/v1/admin/notifications/templates/variables",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/templates/variables",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7T1G62SNRTZT2E7ZP29AXVN"
+    },
+    {
+      "path": "/api/v1/admin/notifications/templates?page=1&page_size=100",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7T1G6M81GG374CWH7EQ13MV"
+    },
+    {
+      "path": "/api/v1/admin/notifications/templates/23/preview",
+      "method": "POST",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/deliveries?page=1&page_size=100",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7T1G6WES8F8D9346HJ15SM0"
+    },
+    {
+      "path": "/api/v1/admin/notifications/templates/23/test",
+      "method": "POST",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/deliveries?page=1&page_size=100",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7T1G7DTS7VFSATHY7KNNSSE"
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200,
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "path": "/api/v1/admin/notifications/preferences",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/preferences",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/preferences",
+      "method": "PUT",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7T1G9KJ5BMX9H641F801B4T"
+    },
+    {
+      "path": "/api/v1/admin/notifications/broadcasts",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7T1G9Q3JRNEEG61TE4MEY58"
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200,
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "path": "/api/v1/admin/notifications/21/read",
+      "method": "PUT",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200,
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200,
+      "query": {
+        "page": "1",
+        "page_size": "20",
+        "template": "notification.broadcast"
+      }
+    },
+    {
+      "path": "/api/v1/admin/notifications/?page=1&page_size=20&template=notification.broadcast",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7T1GB48727RM58KTJMXX9M3"
+    },
+    {
+      "path": "/api/v1/admin/notifications/broadcasts",
+      "method": "GET",
+      "status": 200,
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "path": "/api/v1/admin/notifications/broadcasts/preview",
+      "method": "POST",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/broadcasts/preview",
+      "method": "POST",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/broadcasts/preview",
+      "method": "POST",
+      "status": 200,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/broadcasts",
+      "method": "POST",
+      "status": 201,
+      "query": {}
+    },
+    {
+      "path": "/api/v1/admin/notifications/broadcasts",
+      "method": "GET",
+      "status": 200,
+      "query": {
+        "page": "1",
+        "page_size": "20"
+      }
+    },
+    {
+      "path": "/api/v1/admin/users/169/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/169",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/170/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/170",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/141/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/141/permissions",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/141/depts",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/141",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/140/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7T1GGZ2YEGJXRXRB2QXWC44"
+    },
+    {
+      "path": "/api/v1/admin/menus/839",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/840",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/841",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/849",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/850",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/851",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/848",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/854",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/852",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/853",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/855",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/856",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/858",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/859",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/860",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/857",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/861",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/862",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/838",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/844",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/843",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/842",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/865",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/864",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/863",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/846",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/847",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/845",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/168",
+      "method": "DELETE",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "navigations": [
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:19.101Z"
+    },
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:19.382Z"
+    },
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:19.562Z"
+    },
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:21.078Z"
+    },
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:21.294Z"
+    },
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:21.302Z"
+    },
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:23.798Z"
+    },
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:23.804Z"
+    },
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:27.482Z"
+    },
+    {
+      "path": "/",
+      "time": "2026-11-19T13:56:27.487Z"
+    }
+  ],
+  "fixture": {
+    "tenant": {
+      "id": 47,
+      "code": "feidn013_1795096577061"
+    },
+    "users": [
+      {
+        "id": 168,
+        "username": "owner"
+      },
+      {
+        "id": 169,
+        "username": "reader"
+      },
+      {
+        "id": 170,
+        "username": "member"
+      }
+    ],
+    "audienceRole": {
+      "id": 141
+    },
+    "provider": 21
+  },
+  "smtpAcceptedMessages": 2,
+  "apiCleanup": [
+    {
+      "path": "/api/v1/admin/users/169/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/169",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/170/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/170",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/141/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/141/permissions",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/141/depts",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/141",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/140/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7T1GGZ2YEGJXRXRB2QXWC44"
+    },
+    {
+      "path": "/api/v1/admin/menus/839",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/840",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/841",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/849",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/850",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/851",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/848",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/854",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/852",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/853",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/855",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/856",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/858",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/859",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/860",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/857",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/861",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/862",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/838",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/844",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/843",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/842",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/865",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/864",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/863",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/846",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/847",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/845",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/168",
+      "method": "DELETE",
+      "status": 204
+    }
+  ],
+  "cleanup": {
+    "cutoff": "2026-11-19T13:56:34.777Z",
+    "sql": [
+      {
+        "sql": "DELETE FROM audit_log WHERE tenant_id=$1 AND created_at >= $2 AND created_at < $3 RETURNING id",
+        "rows": 45
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 2
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 2
+      },
+      {
+        "sql": "DELETE FROM notification_preference WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notification WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 4
+      },
+      {
+        "sql": "DELETE FROM sys_user_channel WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 3
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user_role WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_role_menu WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_role_permission WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 119
+      },
+      {
+        "sql": "DELETE FROM sys_role_dept WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 3
+      },
+      {
+        "sql": "DELETE FROM sys_role WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_menu WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_permission WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 119
+      },
+      {
+        "sql": "DELETE FROM sys_dept WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_setting WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM channel_provider WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notify_template WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM idempotency_key WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM outbox_event WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 47,
+        "rows": 34
+      },
+      {
+        "sql": "DELETE FROM tenant WHERE id=$1 AND code=$2 RETURNING id",
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "notify_outbox": 0,
+      "notify_delivery": 0,
+      "notification_preference": 0,
+      "notification": 0,
+      "sys_user_channel": 0,
+      "sys_refresh_token": 0,
+      "auth_token": 0,
+      "password_history": 0,
+      "sys_user_role": 0,
+      "sys_role_menu": 0,
+      "sys_role_permission": 0,
+      "sys_role_dept": 0,
+      "sys_user": 0,
+      "sys_role": 0,
+      "sys_menu": 0,
+      "sys_permission": 0,
+      "sys_dept": 0,
+      "sys_setting": 0,
+      "channel_provider": 0,
+      "notify_template": 0,
+      "idempotency_key": 0,
+      "outbox_event": 0,
+      "audit_log": 0,
+      "tenant": 0
+    },
+    "originalAuditRecords": 13,
+    "baselinePreserved": true,
+    "configurationRestored": "No existing settings or providers changed"
+  },
+  "completedAt": "2026-11-19T13:56:35.125Z"
+}

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watch } from 'vue';
+import { computed, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
 
 import { Bell } from '@vben/icons';
@@ -12,22 +12,29 @@ import { useNotificationStore } from '#/store/notification';
 const router = useRouter();
 const notifications = useNotificationStore();
 const allowed = computed(() => hasPermission('system:notify:list'));
-watch(
-  allowed,
-  (value) => {
-    if (value) void notifications.refresh();
-    else notifications.clear();
-  },
-  { immediate: true },
-);
+watchEffect((onCleanup) => {
+  if (!allowed.value) {
+    notifications.clear();
+    return;
+  }
+  const refresh = () => {
+    void notifications.refresh();
+  };
+  refresh();
+  const timer = window.setInterval(refresh, 60_000);
+  window.addEventListener('focus', refresh);
+  onCleanup(() => {
+    window.clearInterval(timer);
+    window.removeEventListener('focus', refresh);
+  });
+});
 </script>
 
 <template>
   <Tooltip v-if="allowed" :title="notifications.error || '通知中心'">
     <Badge
-      :count="notifications.count"
+      :count="notifications.error ? 0 : notifications.count"
       :overflow-count="99"
-      show-zero
       data-testid="notification-badge"
     >
       <Button

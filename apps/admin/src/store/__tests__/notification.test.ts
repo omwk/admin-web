@@ -41,4 +41,19 @@ describe('notification badge session state', () => {
     await pending;
     expect(store.count).toBe(0);
   });
+  it('clears stale counts on request failure and restores them after recovery', async () => {
+    api.count
+      .mockResolvedValueOnce({ count: 4 })
+      .mockRejectedValueOnce(new Error('计数不可用'))
+      .mockResolvedValueOnce({ count: 2 });
+    const store = useNotificationStore();
+    await store.refresh();
+    expect(store.count).toBe(4);
+    await store.refresh();
+    expect(store.count).toBe(0);
+    expect(store.error).toBe('计数不可用');
+    await store.refresh();
+    expect(store.count).toBe(2);
+    expect(store.error).toBe('');
+  });
 });

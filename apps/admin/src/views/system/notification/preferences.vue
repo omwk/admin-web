@@ -10,8 +10,8 @@ import {
   message,
   Space,
   Spin,
-  Switch,
   Table,
+  Tooltip,
 } from 'ant-design-vue';
 
 import {
@@ -20,7 +20,8 @@ import {
 } from '#/api/core/notifications';
 import { notificationError } from '#/api/notification-safety';
 
-import { notificationChannels } from './options';
+import { channelLabel } from './options';
+import PreferenceCell from './preference-cell.vue';
 import { changedPreferences } from './preference-state';
 
 const original = ref<NotificationPreferenceView[]>([]);
@@ -29,19 +30,36 @@ const loading = ref(false);
 const saving = ref(false);
 const error = ref('');
 const changes = computed(() => changedPreferences(original.value, draft.value));
-const templates = computed(() =>
-  [...new Set(draft.value.map((item) => item.template))].map((template) => ({
-    template,
-  })),
-);
-const columns = [
+const templates = computed(() => [
+  ...new Map(
+    draft.value.map((item) => [
+      item.template,
+      {
+        template: item.template,
+        name: item.name || item.template,
+        transactional: item.transactional,
+      },
+    ]),
+  ).values(),
+]);
+const groups = computed(() => [
+  {
+    title: '安全邮件',
+    rows: templates.value.filter((item) => item.transactional),
+  },
+  {
+    title: '业务通知',
+    rows: templates.value.filter((item) => !item.transactional),
+  },
+]);
+const columns = computed(() => [
   { title: '模板', dataIndex: 'template', width: 230 },
-  ...notificationChannels.map(({ label, value }) => ({
-    title: label,
+  ...[...new Set(draft.value.map((item) => item.channel))].map((value) => ({
+    title: channelLabel(value),
     dataIndex: value,
     width: 190,
   })),
-];
+]);
 function preference(template: string, channel: string) {
   return draft.value.find(
     (item) => item.template === template && item.channel === channel,
@@ -77,17 +95,21 @@ async function save() {
     saving.value = false;
   }
 }
-function toggle(
-  template: string,
-  channel: string,
-  checked: boolean | number | string,
-) {
+function toggle(template: string, channel: string, checked: boolean) {
   const item = preference(template, channel);
-  if (item) item.enabled = Boolean(checked);
+  if (
+    item &&
+    !item.transactional &&
+    item.available !== false &&
+    !item.inherited &&
+    !saving.value
+  )
+    item.enabled = checked;
 }
 function customize(template: string, channel: string) {
   const item = preference(template, channel);
-  if (item) item.inherited = false;
+  if (item && !item.transactional && item.available !== false && !saving.value)
+    item.inherited = false;
 }
 onMounted(load);
 </script>
@@ -102,72 +124,39 @@ onMounted(load);
     />
     <Alert v-if="error" :message="error" type="error" show-icon class="mb-4" />
     <Spin :spinning="loading">
-      <Table
-        row-key="template"
-        :columns="columns"
-        :data-source="templates"
-        :pagination="false"
-        :scroll="{ x: 1180 }"
-      >
-        <template #emptyText>
-          <Empty description="暂无可配置的通知模板" />
-        </template>
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex !== 'template'">
-            <template
-              v-if="preference(record.template, String(column.dataIndex))"
+      <section v-for="group in groups" :key="group.title" class="mb-5">
+        <h3 class="mb-3 font-semibold">{{ group.title }}</h3>
+        <Table
+          row-key="template"
+          :columns="columns"
+          :data-source="group.rows"
+          :pagination="false"
+          :scroll="{ x: 1000 }"
+        >
+          <template #emptyText>
+            <Empty description="暂无可配置的通知模板" />
+          </template>
+          <template #bodyCell="{ column, record }">
+            <Tooltip
+              v-if="column.dataIndex === 'template'"
+              :title="record.template"
             >
-              <div
-                :class="{
-                  'text-gray-400': preference(
-                    record.template,
-                    String(column.dataIndex),
-                  )?.inherited,
-                }"
-                :data-preference="`${record.template}:${column.dataIndex}`"
-              >
-                <Switch
-                  :checked="
-                    preference(record.template, String(column.dataIndex))
-                      ?.enabled
-                  "
-                  :disabled="
-                    saving ||
-                    preference(record.template, String(column.dataIndex))
-                      ?.inherited
-                  "
-                  :aria-label="`${record.template} ${column.title}`"
-                  @change="
-                    (checked) =>
-                      toggle(record.template, String(column.dataIndex), checked)
-                  "
-                />
-                <div
-                  v-if="
-                    preference(record.template, String(column.dataIndex))
-                      ?.inherited
-                  "
-                  class="mt-2 text-xs"
-                >
-                  继承租户设置
-                  <Button
-                    type="link"
-                    size="small"
-                    :disabled="saving"
-                    @click="
-                      customize(record.template, String(column.dataIndex))
-                    "
-                  >
-                    自定义
-                  </Button>
-                </div>
-                <div v-else class="mt-2 text-xs text-gray-500">个人设置</div>
-              </div>
-            </template>
+              <span>{{ record.name }}</span>
+            </Tooltip>
+            <PreferenceCell
+              v-else-if="preference(record.template, String(column.dataIndex))"
+              :value="preference(record.template, String(column.dataIndex))!"
+              :saving="saving"
+              :label="String(column.title)"
+              @change="
+                toggle(record.template, String(column.dataIndex), $event)
+              "
+              @customize="customize(record.template, String(column.dataIndex))"
+            />
             <span v-else>—</span>
           </template>
-        </template>
-      </Table>
+        </Table>
+      </section>
     </Spin>
     <Space class="mt-4">
       <Button

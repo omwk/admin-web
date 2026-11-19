@@ -17,6 +17,9 @@ export interface NotificationInbox {
   id: number;
   channel: 'inbox' | NotificationChannel;
   template: string;
+  title: string;
+  summary: string;
+  template_name: string;
   payload: Record<string, unknown>;
   status: string;
   attempts: number;
@@ -31,6 +34,10 @@ export interface NotificationPreference {
   enabled: boolean;
 }
 export interface NotificationPreferenceView extends NotificationPreference {
+  name: string;
+  transactional: boolean;
+  available: boolean;
+  reason: string;
   inherited: boolean;
 }
 export interface NotificationProvider {
@@ -67,6 +74,37 @@ export type NotificationTemplateInput = Pick<
   NotificationTemplate,
   'body' | 'enabled' | 'format' | 'locale' | 'subject'
 >;
+export interface NotificationVariable {
+  name: string;
+  description: string;
+  example: string;
+  required: boolean;
+}
+export interface NotificationTemplatePreview {
+  subject: string;
+  body: string;
+}
+export type BroadcastChannel = 'email' | 'inbox';
+export interface BroadcastAudience {
+  type: 'all' | 'roles' | 'users';
+  ids?: number[];
+}
+export interface NotificationBroadcastInput {
+  title: string;
+  body: string;
+  channels: BroadcastChannel[];
+  audience: BroadcastAudience;
+}
+export interface NotificationBroadcastResult {
+  broadcast_id: number;
+  recipients: number;
+}
+export interface NotificationBroadcast extends NotificationBroadcastResult {
+  title: string;
+  channels: string[];
+  audience: BroadcastAudience;
+  created_at: string;
+}
 export interface NotificationDelivery {
   id: number;
   tenant_id: number;
