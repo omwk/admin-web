@@ -1,0 +1,9 @@
+$ node e2e/fe-idn-015.mjs
+FE-IDN-015 acceptance 1: passed
+FE-IDN-015 acceptance 5: passed
+FE-IDN-015 acceptance 3: passed
+FE-IDN-015 acceptance 4: passed
+The local SMTP sink did not receive an email verification link
+D:\code\admin-web\apps\admin:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @vben/web-antd@5.8.0 test:e2e:fe-idn-015: `node e2e/fe-idn-015.mjs`
+Exit status 1

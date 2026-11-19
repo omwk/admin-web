@@ -1,0 +1,68 @@
+{
+  "task": "FE-IDN-015",
+  "branch": "feat/fe-idn-015-profile-editable",
+  "base": "3a7d566",
+  "backend": "ed695bb (contains acae5f0)",
+  "verifiedAt": "2026-11-19T23:03:25.554Z",
+  "checks": [
+    {
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "log": "lint.txt"
+    },
+    {
+      "command": "pnpm --filter @vben/web-antd typecheck",
+      "exitCode": 0,
+      "log": "typecheck.txt"
+    },
+    {
+      "command": "pnpm --filter @vben/web-antd test:unit",
+      "exitCode": 0,
+      "files": 66,
+      "tests": 435,
+      "log": "unit-app.txt"
+    },
+    {
+      "command": "pnpm test:unit",
+      "exitCode": 0,
+      "files": 161,
+      "tests": 1142,
+      "log": "unit-workspace.txt"
+    },
+    {
+      "command": "pnpm exec vitest run --config vitest.config.ts src/auth/__tests__/email-verify-link.test.ts",
+      "cwd": "apps/admin",
+      "exitCode": 0,
+      "files": 1,
+      "tests": 6,
+      "log": "unit-link.txt"
+    },
+    {
+      "command": "pnpm --filter @vben/web-antd build",
+      "exitCode": 0,
+      "log": "build.txt"
+    },
+    {
+      "command": "bun --env-file=D:/code/go-admin-api/.env apps/admin/e2e/fe-idn-015-runtime.mjs",
+      "exitCode": 0,
+      "log": "browser.txt",
+      "report": "acceptance.json",
+      "runtime": "runtime.json",
+      "acceptanceItems": [1, 2, 3, 4, 5, 6, 7, 8]
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "notes": [
+    "Full app/workspace suites include email verification and profile regressions. After lint-only explicit undefined and removal of a test non-null assertion, the affected six tests, typecheck and build were rerun.",
+    "Existing icon-name and happy-dom/sortable warnings remain non-failing."
+  ],
+  "cleanup": {
+    "report": "cleanup.json",
+    "runtime": "runtime.json",
+    "sharedResourceReport": "shared-cleanup-verification.json",
+    "finalResourceReport": "final-resource-check.json"
+  }
+}

@@ -4,6 +4,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { createApiClient } from '../client';
 import {
+  changeMyEmailApi,
   changeMyPasswordApi,
   getMyProfileApi,
   getMySessionsApi,
@@ -11,6 +12,7 @@ import {
   logoutOthersApi,
   revokeMySessionApi,
   updateMyProfileApi,
+  verifyMyEmailApi,
 } from '../core/self-service';
 import { envelope, respond } from './transport';
 
@@ -69,6 +71,28 @@ describe('personal account contracts', () => {
       preserveBusinessMessage: true,
       silent: true,
     });
+  });
+
+  it('requests email change separately and verifies without session credentials', async () => {
+    await changeMyEmailApi('new@example.test');
+    expect(calls.post).toHaveBeenCalledWith(
+      '/auth/profile/email/change',
+      { email: 'new@example.test' },
+      {
+        preserveBusinessMessage: true,
+        silent: true,
+      },
+    );
+    await verifyMyEmailApi('opaque');
+    expect(calls.post).toHaveBeenCalledWith(
+      '/auth/profile/email/verify',
+      { token: 'opaque' },
+      {
+        preserveBusinessMessage: true,
+        silent: true,
+        authenticated: false,
+      },
+    );
   });
 
   it('submits camelCase passwords and marks credential rejection as a form error', async () => {

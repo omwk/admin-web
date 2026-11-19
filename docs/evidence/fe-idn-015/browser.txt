@@ -1,0 +1,9 @@
+FE-IDN-015 acceptance 1: passed
+FE-IDN-015 acceptance 5: passed
+FE-IDN-015 acceptance 3: passed
+FE-IDN-015 acceptance 4: passed
+FE-IDN-015 acceptance 2: passed
+FE-IDN-015 acceptance 6: passed
+FE-IDN-015 acceptance 7: passed
+FE-IDN-015 acceptance 8: passed
+FE-IDN-015 browser acceptance 1-8: passed; fixture cleanup: passed

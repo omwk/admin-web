@@ -1,0 +1,27 @@
+{
+  "schema": "feidn015_runtime_1795127904903",
+  "backend": "http://127.0.0.1:18081",
+  "redisDB": 15,
+  "commands": [
+    {
+      "name": "migrate",
+      "code": 0
+    },
+    {
+      "name": "seed",
+      "code": 0
+    },
+    {
+      "name": "browser",
+      "code": 255
+    }
+  ],
+  "startedAt": "2026-11-19T22:38:24.906Z",
+  "failure": "browser failed (see local runtime log)\n\n255 !== 0\n",
+  "ownedProcessesStopped": false,
+  "remainingSchemas": 0,
+  "redisKeysDeleted": 9,
+  "remainingRedisKeys": 0,
+  "originalDevelopmentDataPreserved": true,
+  "finishedAt": "2026-11-19T22:40:09.534Z"
+}

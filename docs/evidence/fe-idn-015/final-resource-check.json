@@ -1,0 +1,34 @@
+{
+  "checkedAt": "2026-11-19T23:00:52.486Z",
+  "database": "commercehub_test",
+  "remainingOwnedSchemas": 0,
+  "remainingTaskTenants": 0,
+  "remainingOwnedRedisKeys": 0,
+  "remainingSharedTaskRedisKeys": 0,
+  "preservedOriginalAuditRecords": 13,
+  "passed": true,
+  "listeners": [
+    {
+      "LocalPort": 18080,
+      "OwningProcess": 272076
+    },
+    {
+      "LocalPort": 5666,
+      "OwningProcess": 233208
+    }
+  ],
+  "preservedExistingProcesses": [
+    {
+      "Id": 272076,
+      "ProcessName": "api"
+    },
+    {
+      "Id": 233208,
+      "ProcessName": "node"
+    },
+    {
+      "Id": 284196,
+      "ProcessName": "worker"
+    }
+  ]
+}

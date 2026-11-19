@@ -37,6 +37,7 @@
     "test:e2e:fe-idn-011": "node e2e/fe-idn-011.mjs",
     "test:e2e:fe-idn-012": "node e2e/fe-idn-012.mjs",
     "test:e2e:fe-idn-014": "node e2e/fe-idn-014.mjs",
+    "test:e2e:fe-idn-015": "node e2e/fe-idn-015.mjs",
     "typecheck": "vue-tsc --noEmit",
     "test:unit": "vitest run --config vitest.config.ts"
   },
