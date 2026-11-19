@@ -35,6 +35,7 @@ export interface Overview {
 export interface ProfileInput {
   nickname: string;
   email?: string;
+  phone?: string;
   avatar: string;
 }
 

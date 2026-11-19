@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-11-19T22:52:11.861Z",
+  "tenantID": 51,
+  "fixtureCode": "feidn015_1795127200360",
+  "remaining": {
+    "tenant": 0,
+    "sys_user": 0,
+    "sys_role": 0,
+    "sys_menu": 0,
+    "sys_permission": 0,
+    "sys_dept": 0,
+    "channel_provider": 0,
+    "notify_delivery": 0,
+    "notify_outbox": 0,
+    "notification": 0,
+    "sys_user_channel": 0,
+    "sys_setting": 0,
+    "audit_log": 0,
+    "auth_token": 0,
+    "sys_refresh_token": 0
+  },
+  "redisDB": 0,
+  "redisKeysDeleted": 2,
+  "remainingScopedRedisKeys": 0,
+  "preservedOriginalAuditRecords": 13,
+  "passed": true
+}

@@ -116,6 +116,13 @@ const coreRoutes: RouteRecordRaw[] = [
         },
       },
       {
+        name: 'EmailVerify',
+        path: 'email/verify',
+        component: () =>
+          import('#/views/_core/authentication/email-verify.vue'),
+        meta: { title: '验证新邮箱' },
+      },
+      {
         name: 'RegisterVerify',
         path: 'register/verify',
         component: () =>

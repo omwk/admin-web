@@ -1,6 +1,7 @@
 import type { ApiRequestConfig } from '#/api/client';
 import type {
   IdentitySession,
+  IdentityUser,
   Overview,
   ProfileInput,
 } from '#/api/model/identity';
@@ -13,6 +14,7 @@ const profileWrite: ApiRequestConfig = {
   preserveBusinessMessage: true,
   silent: true,
 };
+const emailVerify: ApiRequestConfig = { ...profileWrite, authenticated: false };
 const passwordWrite: ApiRequestConfig = { credentialCheck: true, silent: true };
 
 export const getMySessionsApi = (page = 1, pageSize = 20) =>
@@ -46,7 +48,23 @@ export async function getMyProfileApi() {
 }
 
 export const updateMyProfileApi = (input: ProfileInput) =>
-  requestClient.put('/auth/profile', input, profileWrite);
+  requestClient.put<
+    Pick<IdentityUser, 'avatar' | 'email' | 'nickname' | 'phone'>
+  >('/auth/profile', input, profileWrite);
+
+export const changeMyEmailApi = (email: string) =>
+  requestClient.post<{ pending: boolean; expires_in_hours: number }>(
+    '/auth/profile/email/change',
+    { email },
+    profileWrite,
+  );
+
+export const verifyMyEmailApi = (token: string) =>
+  requestClient.post<{ email: string }>(
+    '/auth/profile/email/verify',
+    { token },
+    emailVerify,
+  );
 
 export const changeMyPasswordApi = (input: {
   oldPassword: string;

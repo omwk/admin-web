@@ -1,0 +1,667 @@
+{
+  "task": "FE-IDN-015",
+  "startedAt": "2026-11-19T22:40:34.252Z",
+  "origin": "http://127.0.0.1:5666",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7TZG1FEYADNXP4C0SA93RBR"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7TZG1P9B596VGPXP2FENPJE"
+    },
+    {
+      "path": "/api/v1/auth/profile",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M7TZG1WR0RVJEGRVD9GWBGRY"
+    },
+    {
+      "path": "/api/v1/admin/notifications/providers",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7TZG1XPYXZ801PJT5HTC6TA"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications/providers/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/auth/notification-channels",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7TZH4XCVXPAYRRKZGXHNJQN"
+    },
+    {
+      "path": "/api/v1/admin/users/3/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/3",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/4/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/4",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/5/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/5/permissions",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/5/depts",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/5",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/4/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7TZH56FPSN6NX9913ZQD04D"
+    },
+    {
+      "path": "/api/v1/admin/menus/30",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/31",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/32",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/37",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/38",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/39",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/33",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/36",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/34",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/35",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/46",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/47",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/49",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/50",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/51",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/48",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/52",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/53",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/29",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/42",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/41",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/40",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/56",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/55",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/54",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/44",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/45",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/43",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/2",
+      "method": "DELETE",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "fixture": {
+    "tenant": {
+      "id": 2,
+      "code": "feidn015_1795128034253"
+    },
+    "users": [
+      {
+        "id": 2,
+        "username": "owner"
+      },
+      {
+        "id": 3,
+        "username": "reader"
+      },
+      {
+        "id": 4,
+        "username": "member"
+      }
+    ],
+    "provider": 1
+  },
+  "failure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('img', { name: '头像预览', exact: true }) to be visible\u001b[22m\n",
+  "failureScreenshot": "failure.png",
+  "apiCleanup": [
+    {
+      "path": "/api/v1/admin/notifications/providers/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/auth/notification-channels",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7TZH4XCVXPAYRRKZGXHNJQN"
+    },
+    {
+      "path": "/api/v1/admin/users/3/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/3",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/4/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/4",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/5/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/5/permissions",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/5/depts",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/5",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/4/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7TZH56FPSN6NX9913ZQD04D"
+    },
+    {
+      "path": "/api/v1/admin/menus/30",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/31",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/32",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/37",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/38",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/39",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/33",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/36",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/34",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/35",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/46",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/47",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/49",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/50",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/51",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/48",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/52",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/53",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/29",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/42",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/41",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/40",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/56",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/55",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/54",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/44",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/45",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/43",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/2",
+      "method": "DELETE",
+      "status": 204
+    }
+  ],
+  "cleanup": {
+    "cutoff": "2026-11-19T22:41:12.310Z",
+    "sql": [
+      {
+        "sql": "DELETE FROM audit_log WHERE tenant_id=$1 AND created_at >= $2 AND created_at < $3 RETURNING id",
+        "rows": 43
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM notification_preference WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM notification WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user_channel WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 4
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user_role WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_role_menu WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_role_permission WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 119
+      },
+      {
+        "sql": "DELETE FROM sys_role_dept WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 3
+      },
+      {
+        "sql": "DELETE FROM sys_role WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_menu WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_permission WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 119
+      },
+      {
+        "sql": "DELETE FROM sys_dept WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_setting WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM channel_provider WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM notify_template WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM idempotency_key WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM outbox_event WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 2,
+        "rows": 34
+      },
+      {
+        "sql": "DELETE FROM tenant WHERE id=$1 AND code=$2 RETURNING id",
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "notify_outbox": 0,
+      "notify_delivery": 0,
+      "notification_preference": 0,
+      "notification": 0,
+      "sys_user_channel": 0,
+      "sys_refresh_token": 0,
+      "auth_token": 0,
+      "password_history": 0,
+      "sys_user_role": 0,
+      "sys_role_menu": 0,
+      "sys_role_permission": 0,
+      "sys_role_dept": 0,
+      "sys_user": 0,
+      "sys_role": 0,
+      "sys_menu": 0,
+      "sys_permission": 0,
+      "sys_dept": 0,
+      "sys_setting": 0,
+      "channel_provider": 0,
+      "notify_template": 0,
+      "idempotency_key": 0,
+      "outbox_event": 0,
+      "audit_log": 0,
+      "tenant": 0
+    },
+    "originalAuditRecords": 0,
+    "baselinePreserved": true,
+    "configurationRestored": "No existing settings or providers changed"
+  },
+  "passed": false,
+  "finishedAt": "2026-11-19T22:41:12.934Z"
+}

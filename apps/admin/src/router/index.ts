@@ -4,9 +4,20 @@ import {
   createWebHistory,
 } from 'vue-router';
 
+import { normalizeEmailVerificationLink } from '#/auth/email-verify-link';
+
 import { createRouterGuard } from './guard';
 import { createStaticRouteResetter } from './reset';
 import { routes } from './routes';
+
+if (import.meta.env.VITE_ROUTER_HISTORY === 'hash') {
+  const verificationLink = normalizeEmailVerificationLink(
+    window.location.href,
+    import.meta.env.VITE_BASE,
+  );
+  if (verificationLink)
+    window.history.replaceState(window.history.state, '', verificationLink);
+}
 
 /**
  *  @zh_CN 创建vue-router实例

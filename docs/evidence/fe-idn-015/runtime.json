@@ -1,0 +1,47 @@
+{
+  "schema": "feidn015_runtime_1795128885548",
+  "backend": "http://127.0.0.1:18081",
+  "origin": "http://127.0.0.1:5667",
+  "history": "hash",
+  "redisDB": 15,
+  "commands": [
+    {
+      "name": "build-api",
+      "code": 0
+    },
+    {
+      "name": "build-cli",
+      "code": 0
+    },
+    {
+      "name": "build-worker",
+      "code": 0
+    },
+    {
+      "name": "migrate",
+      "code": 0
+    },
+    {
+      "name": "seed",
+      "code": 0
+    },
+    {
+      "name": "browser",
+      "code": 0
+    },
+    {
+      "name": "audit-prune",
+      "code": 0
+    }
+  ],
+  "startedAt": "2026-11-19T22:54:45.550Z",
+  "database": "commercehub_test",
+  "redisInitialKeys": 0,
+  "processExitResults": [143, 143, 143],
+  "ownedProcessesStopped": true,
+  "remainingSchemas": 0,
+  "redisKeysDeleted": 55,
+  "remainingRedisKeys": 0,
+  "originalDevelopmentDataPreserved": true,
+  "finishedAt": "2026-11-19T22:55:18.563Z"
+}

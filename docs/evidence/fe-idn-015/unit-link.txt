@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  07:00:13
+   Duration  1.60s (transform 55ms, setup 0ms, import 82ms, tests 6ms, environment 917ms)
+
