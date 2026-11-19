@@ -233,6 +233,13 @@ describe('backend menus and permissions', () => {
     expect(result.accessibleMenus).toEqual([]);
     expect(router.resolve('/home').matched.at(-1)?.name).toBe('Home');
     expect(router.resolve('/profile').matched.at(-1)?.name).toBe('Profile');
+    expect(router.resolve('/profile/notifications').matched.at(-1)?.name).toBe(
+      'PersonalNotifications',
+    );
+    expect(
+      router.resolve('/system/notifications/preferences').matched.at(-1)?.name,
+    ).toBe('NotificationPreferences');
+    expect(router.resolve('/profile/notifications').meta.keepAlive).toBe(false);
     expect(router.resolve('/profile/sessions').matched.at(-1)?.name).toBe(
       'MySessions',
     );

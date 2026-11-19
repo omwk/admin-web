@@ -16,6 +16,18 @@ export function personalRoutes(): RouteRecordStringComponent[] {
       meta: { hideInMenu: true, title: '个人资料', keepAlive: false },
     },
     {
+      component: '/_core/profile/notifications.vue',
+      path: '/profile/notifications',
+      name: 'PersonalNotifications',
+      meta: { hideInMenu: true, title: '通知方式', keepAlive: false },
+    },
+    {
+      component: '/system/notification/preferences-page.vue',
+      path: '/system/notifications/preferences',
+      name: 'NotificationPreferences',
+      meta: { hideInMenu: true, title: '通知偏好', keepAlive: false },
+    },
+    {
       component: '/_core/profile/sessions.vue',
       path: '/profile/sessions',
       name: 'MySessions',

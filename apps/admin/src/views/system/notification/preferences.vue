@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import type { NotificationPreferenceView } from '#/api/model/notification';
 
-import { computed, onMounted, ref } from 'vue';
+import { computed, onActivated, onMounted, ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
 import {
   Alert,
@@ -66,8 +67,11 @@ function preference(template: string, channel: string) {
   );
 }
 function accept(values: NotificationPreferenceView[]) {
-  original.value = values.map((item) => ({ ...item }));
-  draft.value = values.map((item) => ({ ...item }));
+  const personal = values.filter((item) =>
+    ['bark', 'email', 'gotify', 'webhook'].includes(item.channel),
+  );
+  original.value = personal.map((item) => ({ ...item }));
+  draft.value = personal.map((item) => ({ ...item }));
 }
 async function load() {
   loading.value = true;
@@ -112,10 +116,21 @@ function customize(template: string, channel: string) {
     item.inherited = false;
 }
 onMounted(load);
+let activated = false;
+onActivated(() => {
+  if (activated) void load();
+  activated = true;
+});
 </script>
 
 <template>
   <div data-testid="notification-preferences">
+    <RouterLink
+      to="/profile/notifications"
+      class="mb-4 inline-block text-primary"
+    >
+      配置个人通知方式
+    </RouterLink>
     <Alert
       type="info"
       message="关闭邮件等外部渠道后，站内通知仍会收到。"

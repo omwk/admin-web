@@ -1,0 +1,175 @@
+{
+  "fixture": {
+    "tenant": {
+      "id": 49,
+      "code": "feidn014_1795102687498"
+    },
+    "users": [
+      {
+        "id": 174,
+        "username": "owner"
+      },
+      {
+        "id": 175,
+        "username": "reader"
+      },
+      {
+        "id": 176,
+        "username": "member"
+      }
+    ]
+  },
+  "cleanup": {
+    "cutoff": "2026-11-19T15:38:35.401Z",
+    "sql": [
+      {
+        "sql": "DELETE FROM audit_log WHERE tenant_id=$1 AND created_at >= $2 AND created_at < $3 RETURNING id",
+        "rows": 49
+      },
+      {
+        "sql": "DELETE FROM notify_outbox WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 2
+      },
+      {
+        "sql": "DELETE FROM notify_delivery WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 2
+      },
+      {
+        "sql": "DELETE FROM notification_preference WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM notification WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_user_channel WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_refresh_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 11
+      },
+      {
+        "sql": "DELETE FROM auth_token WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM password_history WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user_role WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_role_menu WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_role_permission WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 119
+      },
+      {
+        "sql": "DELETE FROM sys_role_dept WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_user WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 3
+      },
+      {
+        "sql": "DELETE FROM sys_role WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_menu WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM sys_permission WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 119
+      },
+      {
+        "sql": "DELETE FROM sys_dept WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM sys_setting WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 1
+      },
+      {
+        "sql": "DELETE FROM channel_provider WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM notify_template WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM idempotency_key WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 0
+      },
+      {
+        "sql": "DELETE FROM outbox_event WHERE tenant_id=$1 RETURNING tenant_id",
+        "tenantID": 49,
+        "rows": 34
+      },
+      {
+        "sql": "DELETE FROM tenant WHERE id=$1 AND code=$2 RETURNING id",
+        "rows": 1
+      }
+    ],
+    "remaining": {
+      "notify_outbox": 0,
+      "notify_delivery": 0,
+      "notification_preference": 0,
+      "notification": 0,
+      "sys_user_channel": 0,
+      "sys_refresh_token": 0,
+      "auth_token": 0,
+      "password_history": 0,
+      "sys_user_role": 0,
+      "sys_role_menu": 0,
+      "sys_role_permission": 0,
+      "sys_role_dept": 0,
+      "sys_user": 0,
+      "sys_role": 0,
+      "sys_menu": 0,
+      "sys_permission": 0,
+      "sys_dept": 0,
+      "sys_setting": 0,
+      "channel_provider": 0,
+      "notify_template": 0,
+      "idempotency_key": 0,
+      "outbox_event": 0,
+      "audit_log": 0,
+      "tenant": 0
+    },
+    "originalAuditRecords": 13,
+    "baselinePreserved": true,
+    "configurationRestored": "No existing settings or providers changed"
+  },
+  "result": "All assertions passed; screenshot repeated to include column headers."
+}

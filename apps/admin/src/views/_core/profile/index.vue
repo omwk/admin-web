@@ -46,7 +46,13 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Page title="个人资料" description="管理基本信息、登录密码和设备会话。">
+  <Page
+    title="个人资料"
+    description="管理基本信息、登录密码、通知方式和设备会话。"
+  >
+    <RouterLink to="/profile/notifications">
+      <Button class="mb-4 mr-3">通知方式</Button>
+    </RouterLink>
     <RouterLink to="/profile/sessions">
       <Button class="mb-4">我的会话</Button>
     </RouterLink>

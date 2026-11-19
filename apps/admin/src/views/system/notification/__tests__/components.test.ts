@@ -1,6 +1,7 @@
 import type { Component } from 'vue';
 
 import { createApp, nextTick } from 'vue';
+import { createMemoryHistory, createRouter } from 'vue-router';
 
 import { message } from 'ant-design-vue';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
@@ -59,6 +60,12 @@ afterEach(async () => {
 });
 function mount(component: Component, props: Record<string, unknown> = {}) {
   app = createApp(component, props);
+  app.use(
+    createRouter({
+      history: createMemoryHistory(),
+      routes: [{ path: '/:path(.*)*', component: {} }],
+    }),
+  );
   app.mount(container);
 }
 function button(text: string, root: ParentNode = document): HTMLButtonElement {

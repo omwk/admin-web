@@ -1,9 +1,20 @@
 export type NotificationChannel =
+  | 'bark'
   | 'dingtalk'
   | 'email'
+  | 'gotify'
   | 'sms'
   | 'webhook'
   | 'wecom';
+export type PersonalNotificationChannel = 'bark' | 'gotify' | 'webhook';
+export interface PersonalNotificationChannelView {
+  channel: PersonalNotificationChannel;
+  endpoint_masked: string;
+  enabled: boolean;
+  verified_at: null | string;
+  created_at: string;
+  updated_at: string;
+}
 export type NotificationKind =
   | 'aliyun_dm'
   | 'aliyun_sms'
