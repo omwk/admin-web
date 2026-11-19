@@ -1,5 +1,8 @@
 import type { ApiRequestConfig } from '#/api/client';
 import type {
+  NotificationBroadcast,
+  NotificationBroadcastInput,
+  NotificationBroadcastResult,
   NotificationDelivery,
   NotificationDeliveryFilters,
   NotificationDeliveryRetryResult,
@@ -10,6 +13,8 @@ import type {
   NotificationProviderInput,
   NotificationTemplate,
   NotificationTemplateInput,
+  NotificationTemplatePreview,
+  NotificationVariable,
 } from '#/api/model/notification';
 import type { PageResult } from '#/api/model/response';
 
@@ -105,6 +110,44 @@ export const saveNotificationTemplateApi = (
     input,
     silent,
   );
+export const getNotificationTemplateVariablesApi = () =>
+  requestClient.get<Record<string, NotificationVariable[]>>(
+    `${base}/templates/variables`,
+    silent,
+  );
+export const previewNotificationTemplateApi = (id: number) =>
+  requestClient.post<NotificationTemplatePreview>(
+    `${base}/templates/${id}/preview`,
+    undefined,
+    silent,
+  );
+export const testNotificationTemplateApi = (id: number) =>
+  requestClient.post<{ delivery_id: number }>(
+    `${base}/templates/${id}/test`,
+    undefined,
+    silent,
+  );
+export const previewNotificationBroadcastApi = (
+  input: NotificationBroadcastInput,
+) =>
+  requestClient.post<{ recipients: number }>(
+    `${base}/broadcasts/preview`,
+    input,
+    silent,
+  );
+export const createNotificationBroadcastApi = (
+  input: NotificationBroadcastInput,
+) =>
+  requestClient.post<NotificationBroadcastResult>(
+    `${base}/broadcasts`,
+    input,
+    silent,
+  );
+export const getNotificationBroadcastsApi = (page = 1, pageSize = 20) =>
+  requestClient.get<PageResult<NotificationBroadcast>>(`${base}/broadcasts`, {
+    ...silent,
+    params: { page, page_size: pageSize },
+  });
 export const getNotificationDeliveriesApi = (
   page = 1,
   pageSize = 20,

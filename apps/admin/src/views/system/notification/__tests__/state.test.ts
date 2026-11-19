@@ -17,12 +17,20 @@ describe('notification preferences', () => {
   const original: NotificationPreferenceView[] = [
     {
       template: 'notification.default',
+      name: '业务通知',
+      transactional: false,
+      available: true,
+      reason: '',
       channel: 'email',
       enabled: true,
       inherited: true,
     },
     {
       template: 'notification.default',
+      name: '业务通知',
+      transactional: false,
+      available: true,
+      reason: '',
       channel: 'sms',
       enabled: false,
       inherited: false,
@@ -49,6 +57,20 @@ describe('notification preferences', () => {
     const sms = original[1];
     if (!sms) throw new Error('Missing SMS preference');
     expect(changedPreferences(original, [{ ...sms }])).toEqual([]);
+  });
+  it('never submits security opt-outs or unavailable channels even if draft state is changed', () => {
+    const value = original[0];
+    if (!value) throw new Error('Missing preference');
+    expect(
+      changedPreferences(original, [
+        { ...value, transactional: true, inherited: false, enabled: false },
+      ]),
+    ).toEqual([]);
+    expect(
+      changedPreferences(original, [
+        { ...value, available: false, inherited: false, enabled: false },
+      ]),
+    ).toEqual([]);
   });
 });
 describe('notification payload text', () => {

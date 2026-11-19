@@ -3,7 +3,7 @@
 - ID: FE-IDN-013
 - 类型: 修复
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 已实现并验收（2026-11-19）
 - 预计: 2 人日
 - 分支: `feat/fe-idn-013-notification-complete`
 - 依赖: BE-IDN-018
@@ -110,7 +110,7 @@
 
 ```
 实现 docs/tasks/FE-IDN-013.md。仓库 D:\code\admin-web。
-分支：feat/fe-idn-013-notification-complete（从最新 main b6873ed 开）
+分支：feat/fe-idn-013-notification-complete（从最新 main 75abb6d 开）
 
 后端已就绪（BE-IDN-018 合并后）：
   GET /admin/notifications/templates/variables
@@ -133,3 +133,10 @@ notification-badge.vue、index.vue、options.ts
 验收按卡片 §5 十四条逐条贴证据；第 1、3、4、10、12 条要截图。
 完成后停下报告，并按 AGENTS §12 清理测试数据。
 ```
+
+## 7. 实施与验收记录
+
+- 实施分支：`feat/fe-idn-013-notification-complete`，按会话要求从 `75abb6d` 开始；后端 `acae5f0`、迁移 36。
+- §5 十四项逐条证据与截图：[FE-IDN-013 验收记录](../evidence/fe-idn-013/README.md)。
+- 最终检查：`pnpm lint`、`pnpm check:type`、`pnpm test:unit`、`pnpm build:antd` 均退出 0；38 个类型检查任务成功，156 个测试文件 / 1102 个测试通过，11 个构建任务成功。
+- 已清理：`node apps/admin/e2e/fe-idn-013.mjs` 的 finally API + 定向 SQL 清理 → 测试租户及关联数据剩余 0，本卡审计删除 45 条，既有 13 条审计与配置摘要保持不变；[删除语句与影响行数](../evidence/fe-idn-013/cleanup.md)。

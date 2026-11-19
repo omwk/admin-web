@@ -20,8 +20,10 @@ export const useNotificationStore = defineStore('notification', () => {
         error.value = '';
       }
     } catch (error_) {
-      if (request === sequence && session === getSessionVersion())
+      if (request === sequence && session === getSessionVersion()) {
+        count.value = 0;
         error.value = notificationError(error_);
+      }
     }
   }
   function clear() {

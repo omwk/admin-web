@@ -3,7 +3,11 @@ import type { IdentityMenu } from '#/api/model/menu';
 import { describe, expect, it } from 'vitest';
 
 import { resolveMenuComponent } from '../component-registry';
-import { notificationMenus } from '../notification-menus';
+import {
+  broadcastEntryRoutes,
+  broadcastRouteDenied,
+  notificationMenus,
+} from '../notification-menus';
 
 const menu = (id: number, path: string): IdentityMenu => ({
   id,
@@ -17,6 +21,30 @@ const menu = (id: number, path: string): IdentityMenu => ({
   meta: {},
 });
 describe('notification menu permissions', () => {
+  it('guards broadcasts independently of retained menu grants and resolves the page', () => {
+    expect(broadcastEntryRoutes([], [])).toEqual([]);
+    const entry = broadcastEntryRoutes([], ['system:notify:broadcast']);
+    expect(entry[0]?.path).toBe('/system/notifications/broadcasts');
+    expect(broadcastEntryRoutes(entry, ['system:notify:broadcast'])).toEqual(
+      [],
+    );
+    const broadcast = menu(20, '/system/notifications/broadcasts');
+    expect(notificationMenus([broadcast], ['system:notify:list'])).toEqual([]);
+    expect(
+      notificationMenus([broadcast], ['system:notify:broadcast']),
+    ).toHaveLength(1);
+    expect(broadcastRouteDenied('/system/notifications/broadcasts/', [])).toBe(
+      true,
+    );
+    expect(
+      broadcastRouteDenied('/system/notifications/broadcasts', [
+        'system:notify:broadcast',
+      ]),
+    ).toBe(false);
+    expect(resolveMenuComponent('system/notification/broadcasts')).toBe(
+      '/system/notification/broadcasts.vue',
+    );
+  });
   const inbox = menu(1, '/system/notifications');
   const channels = menu(2, '/system/notifications/channels');
   it('hides channel menus even when the backend returned a retained menu grant', () => {

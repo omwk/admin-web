@@ -12,6 +12,7 @@ import { useAuthStore } from '#/store';
 
 import { generateAccess } from './access';
 import { isInternalPath } from './menu-adapter';
+import { broadcastRouteDenied } from './notification-menus';
 
 function safeRedirect(value: unknown, fallback: string) {
   if (typeof value !== 'string') return fallback;
@@ -53,7 +54,11 @@ function createRouterGuard(router: Router) {
         replace: true,
       };
     }
-    if (accessStore.isAccessChecked) return true;
+    if (accessStore.isAccessChecked) {
+      if (broadcastRouteDenied(to.path, accessStore.accessCodes))
+        return { path: '/403', replace: true };
+      return true;
+    }
 
     try {
       const userInfo = userStore.userInfo || (await authStore.fetchUserInfo());

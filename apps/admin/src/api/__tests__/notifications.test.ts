@@ -4,11 +4,16 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { createApiClient } from '../client';
 import {
+  createNotificationBroadcastApi,
   deleteNotificationProviderApi,
+  getNotificationBroadcastsApi,
   getNotificationDeliveriesApi,
   getNotificationPreferencesApi,
   getNotificationProvidersApi,
   getNotificationsApi,
+  getNotificationTemplateVariablesApi,
+  previewNotificationBroadcastApi,
+  previewNotificationTemplateApi,
   readAllNotificationsApi,
   readNotificationApi,
   retryNotificationDeliveriesApi,
@@ -17,6 +22,7 @@ import {
   saveNotificationProviderApi,
   saveNotificationTemplateApi,
   testNotificationProviderApi,
+  testNotificationTemplateApi,
 } from '../core/notifications';
 import { notificationError, safeProviderConfig } from '../notification-safety';
 import { envelope, respond } from './transport';
@@ -31,6 +37,50 @@ vi.mock('#/api/request', () => ({ requestClient: client }));
 beforeEach(() => vi.resetAllMocks());
 
 describe('notification API contracts', () => {
+  it('uses saved numeric template IDs for rendering and test delivery', async () => {
+    await getNotificationTemplateVariablesApi();
+    await previewNotificationTemplateApi(37);
+    await testNotificationTemplateApi(37);
+    expect(client.get).toHaveBeenCalledWith(
+      '/admin/notifications/templates/variables',
+      { silent: true },
+    );
+    expect(client.post).toHaveBeenCalledWith(
+      '/admin/notifications/templates/37/preview',
+      undefined,
+      { silent: true },
+    );
+    expect(client.post).toHaveBeenCalledWith(
+      '/admin/notifications/templates/37/test',
+      undefined,
+      { silent: true },
+    );
+  });
+  it('submits exact broadcast audience/channels and paginates history', async () => {
+    const input = {
+      title: '维护',
+      body: '正文',
+      channels: ['inbox' as const],
+      audience: { type: 'roles' as const, ids: [7, 9] },
+    };
+    await previewNotificationBroadcastApi(input);
+    await createNotificationBroadcastApi(input);
+    await getNotificationBroadcastsApi(2, 50);
+    expect(client.post).toHaveBeenCalledWith(
+      '/admin/notifications/broadcasts/preview',
+      input,
+      { silent: true },
+    );
+    expect(client.post).toHaveBeenCalledWith(
+      '/admin/notifications/broadcasts',
+      input,
+      { silent: true },
+    );
+    expect(client.get).toHaveBeenCalledWith('/admin/notifications/broadcasts', {
+      silent: true,
+      params: { page: 2, page_size: 50 },
+    });
+  });
   it('sends delivery filters and the batch retry IDs using the backend contract', async () => {
     await getNotificationDeliveriesApi(2, 50, {
       status: 'failed',

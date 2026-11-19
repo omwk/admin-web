@@ -1,11 +1,12 @@
 import type { GenerateMenuAndRoutesOptions } from '@vben/types';
 
 import { generateAccessible } from '@vben/access';
-import { useUserStore } from '@vben/stores';
+import { useAccessStore, useUserStore } from '@vben/stores';
 
 import { getAllMenusApi } from '#/api';
 
 import { componentRegistry } from './component-registry';
+import { broadcastEntryRoutes } from './notification-menus';
 import { forbiddenShellRoutes, personalRoutes } from './shell';
 
 async function generateAccess(options: GenerateMenuAndRoutesOptions) {
@@ -35,7 +36,12 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
           homePath: '/home',
         });
       }
-      return [...routes, ...forbiddenShellRoutes(), ...personalRoutes()];
+      return [
+        ...routes,
+        ...broadcastEntryRoutes(routes, useAccessStore().accessCodes),
+        ...forbiddenShellRoutes(),
+        ...personalRoutes(),
+      ];
     },
     forbiddenComponent: () => import('#/views/_core/fallback/forbidden.vue'),
     layoutMap: { MenuOutlet: () => import('#/layouts/menu-outlet.vue') },

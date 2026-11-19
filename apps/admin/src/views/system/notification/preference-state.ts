@@ -19,6 +19,8 @@ export function changedPreferences(
       const previous = before.get(preferenceKey(value));
       return (
         !value.inherited &&
+        !value.transactional &&
+        value.available &&
         previous &&
         (previous.inherited || value.enabled !== previous.enabled)
       );
