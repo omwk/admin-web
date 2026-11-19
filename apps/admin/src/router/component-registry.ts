@@ -7,6 +7,10 @@ export const NOT_FOUND_COMPONENT = '/_core/fallback/not-found.vue';
 export const componentRegistry: ComponentRecordType = {
   '/home/index.vue': () => import('#/views/home/index.vue'),
   '/_core/profile/index.vue': () => import('#/views/_core/profile/index.vue'),
+  '/_core/profile/notifications.vue': () =>
+    import('#/views/_core/profile/notifications.vue'),
+  '/system/notification/preferences-page.vue': () =>
+    import('#/views/system/notification/preferences-page.vue'),
   '/_core/profile/sessions.vue': () =>
     import('#/views/_core/profile/sessions.vue'),
   [NOT_FOUND_COMPONENT]: () => import('#/views/_core/fallback/not-found.vue'),

@@ -1,0 +1,38 @@
+{
+  "checkedAt": "2026-11-19T16:15:07.312Z",
+  "info": {
+    "database": "commercehub_test",
+    "schema": "public"
+  },
+  "tenantIDs": [48, 49, 50],
+  "remaining": {
+    "notify_outbox": 0,
+    "notify_delivery": 0,
+    "notification_preference": 0,
+    "notification": 0,
+    "sys_user_channel": 0,
+    "sys_refresh_token": 0,
+    "auth_token": 0,
+    "password_history": 0,
+    "sys_user_role": 0,
+    "sys_role_menu": 0,
+    "sys_role_permission": 0,
+    "sys_role_dept": 0,
+    "sys_user": 0,
+    "sys_role": 0,
+    "sys_menu": 0,
+    "sys_permission": 0,
+    "sys_dept": 0,
+    "sys_setting": 0,
+    "channel_provider": 0,
+    "notify_template": 0,
+    "idempotency_key": 0,
+    "outbox_event": 0,
+    "audit_log": 0,
+    "tenant": 0
+  },
+  "temporaryTenantCount": 0,
+  "originalAuditRecords": 13,
+  "baselinePreservedDuringEachCleanup": true,
+  "result": "pass"
+}

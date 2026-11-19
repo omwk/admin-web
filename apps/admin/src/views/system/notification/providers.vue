@@ -77,6 +77,13 @@ onMounted(() => load());
 
 <template>
   <div data-testid="notification-providers">
+    <Alert
+      type="info"
+      message="企业微信、钉钉机器人：系统公告专用，不发送个人通知。"
+      description="个人通知请在「个人资料 → 通知方式」配置。"
+      show-icon
+      class="mb-4"
+    />
     <Space class="mb-4">
       <Button type="primary" @click="edit()">新增服务商</Button>
 
@@ -114,6 +121,12 @@ onMounted(() => load());
             record.kind
           }}
           / {{ channelLabel(record.channel) }}
+          <p
+            v-if="['wecom', 'dingtalk'].includes(record.channel)"
+            class="mt-1 text-xs text-gray-500"
+          >
+            系统公告专用，不发送个人通知
+          </p>
         </template>
         <template v-else-if="column.dataIndex === 'config'">
           <Tag>
