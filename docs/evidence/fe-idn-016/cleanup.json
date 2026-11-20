@@ -1,0 +1,47 @@
+{
+  "sql": [
+    {
+      "sql": "DELETE FROM sys_user_role WHERE role_id=$1 RETURNING role_id",
+      "parameters": [4],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM sys_role_menu WHERE role_id=$1 RETURNING role_id",
+      "parameters": [4],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM sys_role_permission WHERE role_id=$1 RETURNING role_id",
+      "parameters": [4],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM sys_role_dept WHERE role_id=$1 RETURNING role_id",
+      "parameters": [4],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM sys_refresh_token WHERE user_id=$1 RETURNING user_id",
+      "parameters": [2],
+      "rows": 2
+    },
+    {
+      "sql": "DELETE FROM sys_user WHERE id=$1 RETURNING id",
+      "parameters": [2],
+      "rows": 1
+    },
+    {
+      "sql": "DELETE FROM sys_role WHERE id=$1 RETURNING id",
+      "parameters": [4],
+      "rows": 0
+    },
+    {
+      "sql": "DELETE FROM outbox_event WHERE event_type='file.cleanup' AND status='sent' RETURNING id",
+      "rows": 2
+    }
+  ],
+  "remaining": {
+    "storage_provider": 0,
+    "file_object": 0
+  }
+}

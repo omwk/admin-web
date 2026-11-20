@@ -1,0 +1,478 @@
+{
+  "task": "FE-IDN-016",
+  "startedAt": "2026-11-20T16:54:39.866Z",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [
+    {
+      "item": 12,
+      "result": "pass",
+      "storage": "还没有对象存储配置 / 未配置时上传功能不可用 / 新建配置",
+      "files": "暂无文件 / 上传与配置引导",
+      "screenshots": ["12-storage-empty.png", "12-files-empty.png"]
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "createStatus": 201,
+      "testStatus": "ok",
+      "screenshot": "02-create-test-real.png"
+    },
+    {
+      "item": 1,
+      "result": "pass",
+      "providers": 1,
+      "defaultMarks": 1,
+      "screenshot": "01-list-real.png"
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "plaintextMatchesAPI": true,
+      "copiedMatchesAPI": true,
+      "types": ["text", "password", "text"],
+      "screenshot": "03-secret-visible-copy-real.png",
+      "credentialPixelsMasked": true
+    },
+    {
+      "item": 4,
+      "result": "pass",
+      "status": "access_denied",
+      "displayed": "认证失败",
+      "screenshot": "04-auth-failed-real.png"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "providers": 2,
+      "oldDefaultMarks": 0,
+      "newDefaultMarks": 1,
+      "screenshot": "05-switch-default-real.png"
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "defaultDeleteDisabled": true,
+      "explanation": "请先切换默认配置",
+      "screenshot": "06-default-protection-real.png"
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "uploadStatus": 201,
+      "dragAndDrop": true,
+      "progressComplete": true,
+      "sha256": "998b697f5a500fd62edd8c7ee772de8e1387db2a4171e60228315c44501b5964",
+      "rowHighlighted": "ant-table-row ant-table-row-level-0 file-new",
+      "screenshot": "07-drag-upload-real.png"
+    },
+    {
+      "item": 8,
+      "result": "pass",
+      "oversizedAndTypeBlockedBeforeRequest": true,
+      "requestsSent": 0,
+      "disguisedHTMLStatus": 400,
+      "backendMessage": "不支持的文件类型：text/html",
+      "allowed": [
+        "application/json",
+        "application/pdf",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/x-ndjson",
+        "application/xml",
+        "application/yaml",
+        "application/zip",
+        "image/bmp",
+        "image/gif",
+        "image/jpeg",
+        "image/png",
+        "image/svg+xml",
+        "image/tiff",
+        "image/webp",
+        "image/x-icon",
+        "text/csv",
+        "text/markdown",
+        "text/plain",
+        "text/xml",
+        "text/yaml"
+      ],
+      "windowsCSVAliasUploadStatus": 201,
+      "windowsCSVMIME": "text/csv",
+      "screenshot": "08-upload-rejection-real.png"
+    },
+    {
+      "item": 9,
+      "result": "pass",
+      "originalFilename": true,
+      "bytesMatch": true,
+      "size": 49
+    },
+    {
+      "item": 10,
+      "result": "pass",
+      "freshPresign": true,
+      "expiresInSeconds": 300,
+      "clipboardReadable": true,
+      "newTabStatus": 200,
+      "bytesMatch": true,
+      "urlOmitted": true
+    },
+    {
+      "item": 11,
+      "result": "pass",
+      "confirmationShown": true,
+      "deleteStatus": 204,
+      "rowDisappeared": true,
+      "keywordFilterAndReset": true,
+      "screenshot": "11-delete-real.png"
+    },
+    {
+      "item": 13,
+      "result": "pass",
+      "storage404": true,
+      "uploadHidden": true,
+      "deleteHidden": true,
+      "noPermissionFileAPI": 403,
+      "screenshots": ["13-storage-404-real.png", "13-files-permission-real.png"]
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7WY3C1XB40PMPZS8HXMY0XB"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WY3CFDFKJGZKQDJJ5P7X8H"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WY3CQHG287DTHB5KNDCZ0X"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7WY3CRKRNGHY8BZW99NQS37"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7WY3CTSX50G66MMXAE0926X"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2/test",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2/default",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2/test",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2",
+      "method": "PUT",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/3/default",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/1/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WY45W0QHW0QFZZ7JPAE35E"
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 400
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/2/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WY4BF0HJ1R1X3R73M7E90S"
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/1",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/1/url",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7WY4PYEWD3NPDRM7ATSP5X1"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 404,
+      "traceId": "01M7WY4Q6EJQV022V9NDGD5EBJ"
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 403,
+      "traceId": "01M7WY4Q6YEB0BWKBKKZ5K9NJS"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7WY4QACKSG0Z4HMJ6WQ3X8M"
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WY4QS64NCPMBFBKSX33JPQ"
+    },
+    {
+      "path": "/api/v1/admin/files/2",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WY4Z7CYBEXZ3BHM8YN3KD9"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/3",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M7WY4Z8T59BDEH2EFKMY807M"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/3",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/2/roles",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/users/2",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/4/menus",
+      "method": "PUT",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/roles/4",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/30",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/29",
+      "method": "DELETE",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "fixture": {
+    "menus": [29, 30],
+    "reader": 2,
+    "role": 4
+  },
+  "passed": true,
+  "objectCleanup": [
+    {
+      "id": 1,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 2,
+      "statusAfterCleanup": 404
+    }
+  ],
+  "cleanupPassed": true,
+  "finishedAt": "2026-11-20T16:55:34.183Z"
+}

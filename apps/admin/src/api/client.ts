@@ -63,6 +63,8 @@ export function createApiClient(
         throw new CanceledError('登录状态已变更');
       }
       if (response.status === 204) return undefined;
+      if (config.responseType === 'blob' && response.data instanceof Blob)
+        return response.data;
       // Vben's interceptor signature describes raw responses; its unwrapping
       // interceptors intentionally return the payload through this boundary.
       const body = response.data as ApiEnvelope<any>;
@@ -81,6 +83,14 @@ export function createApiClient(
   client.addResponseInterceptor({
     rejected: async (failure: unknown) => {
       if (isCancel(failure)) throw failure;
+      const response = (failure as { response?: { data?: unknown } })?.response;
+      if (response?.data instanceof Blob) {
+        try {
+          response.data = JSON.parse(await response.data.text());
+        } catch {
+          // A non-JSON download failure still follows normal HTTP error handling.
+        }
+      }
       const error = toApiError(failure);
       const config = error.config as ApiRequestConfig | undefined;
       if (

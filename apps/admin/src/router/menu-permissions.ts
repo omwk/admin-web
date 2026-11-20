@@ -1,7 +1,7 @@
 import type { IdentityMenu } from '#/api/model/menu';
 import type { TenantIdentity } from '#/auth/tenant';
 
-import { isPlatformAdministrator } from '#/auth/tenant';
+import { isPlatformAdministrator, platformTenantId } from '#/auth/tenant';
 
 /** Filter projected nodes; permissions never create a missing business route. */
 export function authorizedMenus(
@@ -16,6 +16,14 @@ export function authorizedMenus(
     ).replace(/\/$/, '');
     const tenant =
       path === '/system/tenants' || path.startsWith('/system/tenants/');
+    const storage =
+      path === '/system/storage' || path.startsWith('/system/storage/');
+    if (
+      storage &&
+      (user?.tenantId !== platformTenantId ||
+        !codes.includes('system:storage:manage'))
+    )
+      return [];
     if (menu.permission_code && !codes.includes(menu.permission_code))
       return [];
     if (
@@ -30,7 +38,7 @@ export function authorizedMenus(
         ...menu,
         children,
         // Invitation credentials must disappear on navigation.
-        keep_alive: tenant ? false : menu.keep_alive,
+        keep_alive: tenant || storage ? false : menu.keep_alive,
       },
     ];
   });

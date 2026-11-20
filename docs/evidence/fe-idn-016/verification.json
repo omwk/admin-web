@@ -1,0 +1,46 @@
+{
+  "task": "FE-IDN-016",
+  "branch": "feat/fe-idn-016-storage",
+  "base": "03b88c5",
+  "backend": "40ee3d7",
+  "migration": 38,
+  "commands": [
+    {
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "log": "verification/lint.txt"
+    },
+    {
+      "command": "pnpm -F @vben/web-antd typecheck",
+      "exitCode": 0,
+      "log": "verification/typecheck.txt"
+    },
+    {
+      "command": "pnpm test:unit --maxWorkers=4",
+      "exitCode": 0,
+      "testFilesPassed": 164,
+      "testsPassed": 1180,
+      "log": "verification/unit-workspace.txt"
+    },
+    {
+      "command": "pnpm -F @vben/web-antd test:unit --maxWorkers=4",
+      "exitCode": 0,
+      "testFilesPassed": 69,
+      "testsPassed": 473,
+      "log": "verification/unit-admin.txt"
+    },
+    {
+      "command": "pnpm -F @vben/web-antd build",
+      "exitCode": 0,
+      "log": "verification/build.txt"
+    },
+    {
+      "command": "bun --env-file=D:/code/go-admin-api/.env apps/admin/e2e/fe-idn-016-runtime.mjs",
+      "exitCode": 0,
+      "acceptanceItems": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+      "realBackend": true,
+      "realMinIO": true,
+      "log": "verification/runtime.txt"
+    }
+  ]
+}

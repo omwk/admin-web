@@ -4,6 +4,17 @@ import { defineConfig } from 'oxfmt';
 
 export default defineConfig({
   ...oxfmtConfig,
+  overrides: [
+    ...(oxfmtConfig.overrides ?? []),
+    {
+      // Keep Ant Design component boundaries consistent with Vue's newline rules.
+      files: [
+        'apps/admin/src/views/system/storage/*.vue',
+        'apps/admin/src/views/system/files/*.vue',
+      ],
+      options: { htmlWhitespaceSensitivity: 'ignore' },
+    },
+  ],
   ignorePatterns: [
     'dist',
     'dev-dist',

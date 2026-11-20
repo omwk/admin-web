@@ -22,6 +22,38 @@ function setup() {
 }
 
 describe('identity request client', () => {
+  it('downloads original binary bytes with authentication', async () => {
+    const { client } = setup();
+    const blob = new Blob(['original file']);
+    client.instance.defaults.adapter = (config) => {
+      expect(config.headers.Authorization).toBe('Bearer old-access');
+      return respond(config, blob);
+    };
+    const result = await client.get<Blob>('/admin/files/1', {
+      responseType: 'blob',
+    });
+    expect(result).toBe(blob);
+  });
+
+  it('decodes blob HTTP 401 errors before refreshing a binary download', async () => {
+    const { auth, client } = setup();
+    const blob = new Blob(['original file']);
+    client.instance.defaults.adapter = (config) =>
+      config.headers.Authorization === 'Bearer old-access'
+        ? respond(
+            config,
+            new Blob([JSON.stringify(envelope(null, 20_102))], {
+              type: 'application/json',
+            }),
+            401,
+          )
+        : respond(config, blob);
+    await expect(
+      client.get('/admin/files/1', { responseType: 'blob' }),
+    ).resolves.toBe(blob);
+    expect(auth.refreshAccessToken).toHaveBeenCalledTimes(1);
+  });
+
   it.each([200, 400])(
     'retains backend field details through HTTP %i errors',
     async (status) => {

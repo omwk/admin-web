@@ -52,6 +52,33 @@ const system: IdentityMenu = {
 };
 
 describe('backend menu permission boundaries', () => {
+  it('hides storage from other tenants and missing permissions, disabling cache for granted operators', () => {
+    const storage: IdentityMenu = {
+      ...system,
+      type: 'menu',
+      path: '/system/storage',
+      children: [],
+    };
+    const permission = ['system:storage:manage'];
+    expect(authorizedMenus([storage], [], platform)).toEqual([]);
+    expect(
+      authorizedMenus([storage], permission, {
+        ...platform,
+        tenantId: platformTenantId + 1,
+      }),
+    ).toEqual([]);
+    expect(
+      authorizedMenus([storage], permission, { ...platform, isSuper: false })[0]
+        ?.keep_alive,
+    ).toBe(false);
+    expect(resolveMenuComponent('system/storage/index')).toBe(
+      '/system/storage/index.vue',
+    );
+    expect(resolveMenuComponent('system/files/index')).toBe(
+      '/system/files/index.vue',
+    );
+  });
+
   it('requires platform tenant membership, super status and list permission', () => {
     for (const user of [
       undefined,
