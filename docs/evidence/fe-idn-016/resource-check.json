@@ -1,0 +1,8 @@
+{
+  "checkedAt": "2026-11-20T16:57:34.436Z",
+  "remainingTaskSchemas": 0,
+  "redisDB": 14,
+  "remainingRedisKeys": 0,
+  "ownedPortsClosed": [5667, 18081],
+  "sharedPortsStillListening": [5666, 18080]
+}

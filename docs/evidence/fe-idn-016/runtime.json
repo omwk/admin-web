@@ -1,0 +1,373 @@
+{
+  "task": "FE-IDN-016",
+  "schema": "feidn016_runtime_1795193658189",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "redisDB": 14,
+  "startedAt": "2026-11-20T16:54:18.192Z",
+  "commands": [
+    {
+      "name": "build-api",
+      "code": 0
+    },
+    {
+      "name": "build-cli",
+      "code": 0
+    },
+    {
+      "name": "build-worker",
+      "code": 0
+    },
+    {
+      "name": "migrate",
+      "code": 0
+    },
+    {
+      "name": "seed",
+      "code": 0
+    },
+    {
+      "name": "browser",
+      "code": 0
+    },
+    {
+      "name": "audit-prune",
+      "code": 0
+    }
+  ],
+  "originalPublicRows": {
+    "tenant": 2,
+    "sys_user": 5,
+    "sys_role": 4,
+    "sys_menu": 49,
+    "sys_permission": 239,
+    "sys_dept": 9,
+    "sys_setting": 2,
+    "channel_provider": 1,
+    "notify_template": 17,
+    "storage_provider": 1,
+    "file_object": 0
+  },
+  "originalAudits": [
+    {
+      "id": "2127",
+      "hash": "50474cb4c64cbd857ba1b930d2b3590c"
+    },
+    {
+      "id": "2128",
+      "hash": "7a36eda37bf563ca9bdac8f6c4398fcd"
+    },
+    {
+      "id": "2129",
+      "hash": "61786c76b4e628e6b56c166fbba3885e"
+    },
+    {
+      "id": "2130",
+      "hash": "ad05493224ceec0b63f1b2597a0697c0"
+    },
+    {
+      "id": "2131",
+      "hash": "464aa5abf1efccca0c7b0e7faae8a26a"
+    },
+    {
+      "id": "2132",
+      "hash": "4cd7bf8a501c53054224ac9bcc03cf5d"
+    },
+    {
+      "id": "2133",
+      "hash": "7e1ed6c6447cdd08cc0349e898720428"
+    },
+    {
+      "id": "2134",
+      "hash": "edd40da335a43764dcac6f0a3e16c23e"
+    },
+    {
+      "id": "2140",
+      "hash": "eb390ae1fab5c31c245c6e5b0e8341b5"
+    },
+    {
+      "id": "2141",
+      "hash": "a0531e66c801feb66de5f5eb32f6c320"
+    },
+    {
+      "id": "2142",
+      "hash": "641a54ab293986deb93d43455aa3c230"
+    },
+    {
+      "id": "2143",
+      "hash": "31e47e0bdb3b6479bcd9a8babb781787"
+    },
+    {
+      "id": "2144",
+      "hash": "5cfb82c25c9294c632437f9741efef39"
+    },
+    {
+      "id": "2553",
+      "hash": "f050d9faac93ac8ec7aa8cc3f77bcd1f"
+    },
+    {
+      "id": "2554",
+      "hash": "edc4c5d411a586af11447daabf67b4f0"
+    },
+    {
+      "id": "2555",
+      "hash": "6024f7780db48910c47044fae92db283"
+    },
+    {
+      "id": "2556",
+      "hash": "f3a8fab3e7836d70b80fc06bd01b0fe3"
+    },
+    {
+      "id": "2557",
+      "hash": "1a36305324a230ea0488bd2f4dd6d9f5"
+    },
+    {
+      "id": "2558",
+      "hash": "92ee44cf833349ff89b15270d72f5ee6"
+    },
+    {
+      "id": "2559",
+      "hash": "f3467c76b776c8f7dc821e7c414277d4"
+    },
+    {
+      "id": "2560",
+      "hash": "4ee74bb8df4365bafe4d029948088977"
+    },
+    {
+      "id": "2561",
+      "hash": "fb915bede6a45030abe89f7930fc4cf5"
+    },
+    {
+      "id": "2562",
+      "hash": "a1d6033d3ac8103055eeebd10253f2e8"
+    },
+    {
+      "id": "2563",
+      "hash": "eac408d8756a722de0063aa03dc45b2f"
+    },
+    {
+      "id": "2564",
+      "hash": "a43862b47769f75370376b5c6e74c8c4"
+    },
+    {
+      "id": "2565",
+      "hash": "e966b95ce61f7da031c2284cc5c25784"
+    },
+    {
+      "id": "2566",
+      "hash": "85305788b44ba5e7f736733330ddfeac"
+    },
+    {
+      "id": "2567",
+      "hash": "e1efdbc13ae30e81daaf15e12042ed8d"
+    },
+    {
+      "id": "2568",
+      "hash": "8867af556b24cab779151fdf6080e795"
+    },
+    {
+      "id": "2569",
+      "hash": "edcf8009a3940831139ee5d216a3e91d"
+    },
+    {
+      "id": "2570",
+      "hash": "10c1f938c8dd91a6d73a2ac62b83702d"
+    },
+    {
+      "id": "2571",
+      "hash": "925c9556e64f5f4fe09f6d280cac4638"
+    },
+    {
+      "id": "2572",
+      "hash": "e53a159f1b6676b62f3fba8b8a94c437"
+    },
+    {
+      "id": "2573",
+      "hash": "1652ab3b4d9d20ded08f345ebd2e297f"
+    },
+    {
+      "id": "2574",
+      "hash": "40071c55c94bee3896539d78089c63d5"
+    },
+    {
+      "id": "2575",
+      "hash": "6ed42bdca901f3a2d2e4ab01a1b5e13d"
+    },
+    {
+      "id": "2576",
+      "hash": "11e98a0d6fbf29c3dc4425d3ee0b78f0"
+    },
+    {
+      "id": "2577",
+      "hash": "18ad992a3b08fa3eaf7d580970c6e222"
+    },
+    {
+      "id": "2578",
+      "hash": "47693a14bbc65c5a8920951ec296403a"
+    },
+    {
+      "id": "2579",
+      "hash": "5455221f60efb4fdcc2e93ead8ded50b"
+    },
+    {
+      "id": "2580",
+      "hash": "3e5a914e2c48b025b4f0b6232450b317"
+    },
+    {
+      "id": "2581",
+      "hash": "9f195ac7bc9a0c4d79c108e79d84c38a"
+    },
+    {
+      "id": "2582",
+      "hash": "6d13f4d44a9fd9a97ec5e979c7710ec9"
+    },
+    {
+      "id": "2583",
+      "hash": "bc4bf1771139430c7654e38748256d87"
+    },
+    {
+      "id": "2584",
+      "hash": "e313d9f053758bc2612249d0d8f8d52b"
+    },
+    {
+      "id": "2585",
+      "hash": "8d60985e6d08711318f914d251f401c7"
+    },
+    {
+      "id": "2586",
+      "hash": "efcf23e0d898dc96be26817e574ae57d"
+    },
+    {
+      "id": "2587",
+      "hash": "5140afc5d7b8e99634c0d3161de6bdfe"
+    },
+    {
+      "id": "2588",
+      "hash": "25208916848fe60cf9a52e3137cda572"
+    }
+  ],
+  "redisInitialKeys": 0,
+  "processExitResults": [143, 143, 143],
+  "ownedProcessesStopped": true,
+  "ownedSchemaRowsBeforeDrop": {
+    "schema_migrations": 1,
+    "tenant": 1,
+    "sys_setting": 0,
+    "audit_log": 0,
+    "outbox_event": 6,
+    "idempotency_key": 11,
+    "notification": 0,
+    "sys_dept": 1,
+    "sys_user": 1,
+    "sys_permission": 121,
+    "sys_menu": 28,
+    "sys_user_role": 1,
+    "sys_role": 3,
+    "sys_role_menu": 34,
+    "sys_role_permission": 124,
+    "sys_role_dept": 0,
+    "sys_refresh_token": 3,
+    "platform": 3,
+    "shop": 0,
+    "shop_credential": 0,
+    "credential_version": 0,
+    "credential_audit": 0,
+    "raw_dedup": 0,
+    "raw_payload": 0,
+    "raw_payload_202611": 0,
+    "raw_payload_202612": 0,
+    "schema_baseline": 0,
+    "schema_drift_event": 0,
+    "mapping_profile": 0,
+    "mapping_version": 0,
+    "listing": 0,
+    "quarantine_record": 0,
+    "listing_sku": 0,
+    "sync_cursor": 0,
+    "sync_run": 0,
+    "sync_error": 0,
+    "dead_letter": 0,
+    "category": 0,
+    "platform_category": 0,
+    "category_mapping": 0,
+    "product_spu": 0,
+    "product_sku": 0,
+    "product_media": 0,
+    "inventory_snapshot": 0,
+    "export_job_row": 0,
+    "sales_order": 0,
+    "replay_run_item": 0,
+    "replay_run": 0,
+    "raw_partition_pin": 0,
+    "order_item": 0,
+    "export_job": 0,
+    "order_sync_pending": 0,
+    "order_status_history": 0,
+    "order_address": 0,
+    "price_list": 0,
+    "customer": 0,
+    "price_list_item": 0,
+    "inquiry": 0,
+    "share_link": 0,
+    "share_snapshot": 0,
+    "share_visit": 0,
+    "share_inquiry_receipt": 0,
+    "share_privacy_run": 0,
+    "credential_refresh_run": 0,
+    "credential_refresh_stage": 0,
+    "credential_refresh_reconciliation": 0,
+    "api_client_secret": 0,
+    "credential_maintenance": 0,
+    "credential_refresh_invocation": 0,
+    "sync_job": 0,
+    "credential_notification_dedup": 0,
+    "credential_notification_setting": 0,
+    "api_client": 0,
+    "api_client_route": 0,
+    "api_client_resource_grant": 0,
+    "api_call_log": 0,
+    "api_call_meter": 0,
+    "api_quota": 0,
+    "api_call": 0,
+    "api_call_log_202610": 0,
+    "api_call_log_202611": 0,
+    "wallet": 0,
+    "recharge_code": 0,
+    "call_charge": 0,
+    "api_route": 0,
+    "pricing_plan": 0,
+    "entitlement": 0,
+    "wallet_txn": 0,
+    "api_call_log_202612": 0,
+    "api_call_log_202701": 0,
+    "billing_reconcile_run": 0,
+    "usage_daily": 0,
+    "billing_reconcile_alert": 0,
+    "unit_txn": 0,
+    "billing_compensation": 0,
+    "billing_reconcile_diff": 0,
+    "channel_provider": 0,
+    "notify_template": 17,
+    "billing_statement_line": 0,
+    "billing_statement": 0,
+    "billing_adjustment": 0,
+    "notify_delivery": 0,
+    "notify_outbox": 0,
+    "password_history": 0,
+    "sys_dict": 9,
+    "auth_token": 0,
+    "sys_dict_item": 33,
+    "file_object": 0,
+    "tenant_template": 0,
+    "storage_provider": 0,
+    "sys_user_channel": 0,
+    "notification_preference": 0
+  },
+  "schemaCleanupSQL": "DROP SCHEMA feidn016_runtime_1795193658189 CASCADE",
+  "remainingSchemas": 0,
+  "redisKeysDeleted": 18,
+  "remainingRedisKeys": 0,
+  "originalDevelopmentDataPreserved": true,
+  "originalAuditDataPreserved": true,
+  "finishedAt": "2026-11-20T16:55:35.870Z"
+}

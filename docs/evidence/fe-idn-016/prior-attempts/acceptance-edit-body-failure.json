@@ -1,0 +1,179 @@
+{
+  "task": "FE-IDN-016",
+  "startedAt": "2026-11-20T16:07:54.992Z",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [
+    {
+      "item": 12,
+      "result": "pass",
+      "storage": "还没有对象存储配置 / 未配置时上传功能不可用 / 新建配置",
+      "files": "暂无文件 / 上传与配置引导",
+      "screenshots": ["12-storage-empty.png", "12-files-empty.png"]
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "createStatus": 201,
+      "testStatus": "ok",
+      "screenshot": "02-create-test-real.png"
+    },
+    {
+      "item": 1,
+      "result": "pass",
+      "providers": 1,
+      "defaultMarks": 1,
+      "screenshot": "01-list-real.png"
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "plaintextMatchesAPI": true,
+      "copiedMatchesAPI": true,
+      "types": ["text", "password", "text"],
+      "screenshot": "03-secret-visible-copy-real.png",
+      "credentialPixelsMasked": true
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7WVDRW0H1BQ0H0YZ1SYVD0V"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WVDS2SWP0BX657JHWEAJCZ"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WVDS5083AJNZR1WT6B0ZMS"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7WVDS5BCZMWS54BNJ0NWNXX"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7WVDS638GQZ5A0YNR3D3YX4"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2/test",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2/default",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2",
+      "method": "PUT",
+      "status": 400
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7WVE43967EATF70ED8BMS1R"
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WVE49PN1J51E92X6JSE8R9"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7WVE4G9GB2SR8E3HENTVD62"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/2",
+      "method": "PUT",
+      "status": 400,
+      "traceId": "01M7WVE4GHYS9E2WXTH6JASKWG"
+    }
+  ],
+  "browserErrors": [],
+  "fixture": {
+    "menus": [29, 30],
+    "reader": 2,
+    "role": 4
+  },
+  "failure": "Expected values to be strictly equal:\n\n400 !== 200\n",
+  "objectCleanup": [],
+  "cleanupFailure": "PUT /admin/storage-providers/2: 400 参数校验失败",
+  "finishedAt": "2026-11-20T16:08:07.403Z"
+}

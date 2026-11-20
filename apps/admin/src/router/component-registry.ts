@@ -34,6 +34,8 @@ export const componentRegistry: ComponentRecordType = {
   '/system/dict/index.vue': () => import('#/views/system/dict/index.vue'),
   '/system/dicts/index.vue': () => import('#/views/system/dict/index.vue'),
   '/system/setting/index.vue': () => import('#/views/system/setting/index.vue'),
+  '/system/storage/index.vue': () => import('#/views/system/storage/index.vue'),
+  '/system/files/index.vue': () => import('#/views/system/files/index.vue'),
   '/system/settings/index.vue': () =>
     import('#/views/system/setting/index.vue'),
   '/system/notification/index.vue': () =>
