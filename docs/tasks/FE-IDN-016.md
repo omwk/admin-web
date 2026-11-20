@@ -3,7 +3,7 @@
 - ID: FE-IDN-016
 - 类型: 新增
 - 仓库: 前端
-- 状态: 已完成（14/14 验收通过）
+- 状态: 待实现
 - 预计: 1.5 人日
 - 分支: `feat/fe-idn-016-storage`
 - 依赖: BE-IDN-021
@@ -130,13 +130,3 @@ deliveries.vue（列表/空态/上传进度参考）
 验收按卡片 §3 十四条逐条贴证据；第 3、5、7 条要截图。
 完成后停下报告，并按 AGENTS §12 清理测试数据。
 ```
-
-## 6. 验收记录（2026-11-21）
-
-14/14 通过；逐条断言、HTTP 状态、截图及构建日志见 [验收报告](../evidence/fe-idn-016/README.md)。第 3、5、7 项截图已附，使用真实后端 `40ee3d7`、迁移 38 与真实 MinIO；生产构建上的浏览器验收通过。
-
-`pnpm lint`、admin typecheck、全仓 unit（164 文件 / 1180 测试）、admin unit（69 文件 / 473 测试）、admin build 均退出 0；unit 使用 `--maxWorkers=4` 控制本机资源占用。
-
-已清理：真实 API 删除文件/配置/测试身份/菜单 → worker 对象清理后原 URL 404；`audit-prune --before <当前 RFC3339>` → 删除 29 条；SQL 清理残留并 `DROP SCHEMA feidn016_runtime_1795193658189 CASCADE`、清空独占 Redis DB 14 → schema 0、Redis key 0、文件/配置 0。原 public 业务表及审计哈希保留；本次端口 5667/18081 已关闭，共享端口 5666/18080 仍在。SQL 与影响行数见 [清理回执](../evidence/fe-idn-016/cleanup.json)，最终资源检查见 [resource-check.json](../evidence/fe-idn-016/resource-check.json)。
-
-接入说明：后端需配置 `/system/storage`、`/system/files` 菜单；具体组件/权限见验收报告。测试连接要求先保存；当前 API 无上传人字段，该列显示 `—`。
