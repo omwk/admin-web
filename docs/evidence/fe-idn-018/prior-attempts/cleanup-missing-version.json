@@ -1,0 +1,19 @@
+{
+  "task": "FE-IDN-018",
+  "schema": "feidn018_runtime_1795270630026",
+  "reason": "Original cleanup API token expired after manual browser checks; resumed cleanup with a fresh login.",
+  "startedAt": "2026-11-21T15:35:05.420Z",
+  "requests": [
+    {
+      "path": "/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/admin/products/1",
+      "method": "DELETE",
+      "status": 400
+    }
+  ],
+  "publicCountsMatchBeforeAcceptance": true
+}

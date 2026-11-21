@@ -1,0 +1,156 @@
+$ vitest run --config vitest.config.ts "src/router/__tests__/component-registry.test.ts"
+
+ RUN  v4.1.11 D:/code/admin-web/apps/admin
+
+ ❯ src/router/__tests__/component-registry.test.ts (20 tests | 20 failed) 16ms
+     × stores only shorthand keys and resolves every registered loader exactly 5ms
+     × normalizes system/user/index to the same explicit loader 2ms
+     × normalizes /system/user/index to the same explicit loader 0ms
+     × normalizes system/user/index.vue to the same explicit loader 0ms
+     × normalizes /system/user/index.vue to the same explicit loader 0ms
+     × normalizes ///system/user/index.vue to the same explicit loader 1ms
+     × normalizes /views/system/user/index.vue to the same explicit loader 0ms
+     × normalizes /src/views/system/user/index.vue to the same explicit loader 0ms
+     × renders forbidden and warns for system/user without guessing a path 1ms
+     × renders forbidden and warns for system/user/index/ without guessing a path 0ms
+     × renders forbidden and warns for system/User/index without guessing a path 0ms
+     × renders forbidden and warns for ../system/user/index.vue without guessing a path 0ms
+     × renders forbidden and warns for ../../secret without guessing a path 0ms
+     × renders forbidden and warns for unregistered/index without guessing a path 0ms
+     × renders forbidden and warns for constructor without guessing a path 0ms
+     × renders forbidden and warns for __proto__ without guessing a path 0ms
+     × renders forbidden and warns for  without guessing a path 0ms
+     × renders forbidden and warns for null without guessing a path 0ms
+     × renders forbidden and warns for undefined without guessing a path 0ms
+     × resolves every backend seed page, including hidden and pending pages 1ms
+
+⎯⎯⎯⎯⎯⎯ Failed Tests 20 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > stores only shorthand keys and resolves every registered loader exactly
+AssertionError: expected '/home/index.vue' to match /^[\w-]+(?:\/[\w-]+)+$/[\w-]+)+$
+
+- Expected:
+/^[\w-]+(?:\/[\w-]+)+$/
+
++ Received:
+"/home/index.vue"
+
+ ❯ src/router/__tests__/component-registry.test.ts:13:19
+     11|   it('stores only shorthand keys and resolves every registered loader …
+     12|     for (const [key, loader] of Object.entries(componentRegistry)) {
+     13|       expect(key).toMatch(/^[\w-]+(?:\/[\w-]+)+$/);
+       |                   ^
+     14|       expect(key).not.toMatch(/\.vue$/);
+     15|       expect(loader).toBeTypeOf('function');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/20]⎯
+
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > normalizes system/user/index to the same explicit loader
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > normalizes /system/user/index to the same explicit loader
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > normalizes system/user/index.vue to the same explicit loader
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > normalizes /system/user/index.vue to the same explicit loader
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > normalizes /views/system/user/index.vue to the same explicit loader
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > normalizes /src/views/system/user/index.vue to the same explicit loader
+AssertionError: expected '/system/user/index.vue' to be 'system/user/index' // Object.is equality
+
+Expected: "system/user/index"
+Received: "/system/user/index.vue"
+
+ ❯ src/router/__tests__/component-registry.test.ts:30:17
+     28|   ])('normalizes %s to the same explicit loader', (input) => {
+     29|     const key = resolveMenuComponent(input);
+     30|     expect(key).toBe('system/user/index');
+       |                 ^
+     31|     expect(componentRegistry[key]).toBe(componentRegistry['system/user…
+     32|     expect(componentRegistry[key]).toBeTypeOf('function');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/20]⎯
+
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > normalizes ///system/user/index.vue to the same explicit loader
+AssertionError: expected '/_core/fallback/not-found.vue' to be 'system/user/index' // Object.is equality
+
+Expected: "system/user/index"
+Received: "/_core/fallback/not-found.vue"
+
+ ❯ src/router/__tests__/component-registry.test.ts:30:17
+     28|   ])('normalizes %s to the same explicit loader', (input) => {
+     29|     const key = resolveMenuComponent(input);
+     30|     expect(key).toBe('system/user/index');
+       |                 ^
+     31|     expect(componentRegistry[key]).toBe(componentRegistry['system/user…
+     32|     expect(componentRegistry[key]).toBeTypeOf('function');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[3/20]⎯
+
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for system/user without guessing a path
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for system/user/index/ without guessing a path
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for system/User/index without guessing a path
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for ../../secret without guessing a path
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for unregistered/index without guessing a path
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for constructor without guessing a path
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for __proto__ without guessing a path
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for  without guessing a path
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for null without guessing a path
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for undefined without guessing a path
+AssertionError: expected '/_core/fallback/not-found.vue' to be undefined // Object.is equality
+
+- Expected:
+undefined
+
++ Received:
+"/_core/fallback/not-found.vue"
+
+ ❯ src/router/__tests__/component-registry.test.ts:49:41
+     47|   ])('renders forbidden and warns for %s without guessing a path', (in…
+     48|     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {}…
+     49|     expect(resolveMenuComponent(input)).toBe(FORBIDDEN_COMPONENT);
+       |                                         ^
+     50|     expect(componentRegistry[FORBIDDEN_COMPONENT]).toBeTypeOf('functio…
+     51|     expect(warn).toHaveBeenCalledExactlyOnceWith(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[4/20]⎯
+
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > renders forbidden and warns for ../system/user/index.vue without guessing a path
+AssertionError: expected '/system/user/index.vue' to be undefined // Object.is equality
+
+- Expected:
+undefined
+
++ Received:
+"/system/user/index.vue"
+
+ ❯ src/router/__tests__/component-registry.test.ts:49:41
+     47|   ])('renders forbidden and warns for %s without guessing a path', (in…
+     48|     const warn = vi.spyOn(console, 'warn').mockImplementation(() => {}…
+     49|     expect(resolveMenuComponent(input)).toBe(FORBIDDEN_COMPONENT);
+       |                                         ^
+     50|     expect(componentRegistry[FORBIDDEN_COMPONENT]).toBeTypeOf('functio…
+     51|     expect(warn).toHaveBeenCalledExactlyOnceWith(
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[5/20]⎯
+
+ FAIL  src/router/__tests__/component-registry.test.ts > menu component registry contract > resolves every backend seed page, including hidden and pending pages
+AssertionError: /system/users: expected '/system/user/index.vue' to be 'system/user/index' // Object.is equality
+
+Expected: "system/user/index"
+Received: "/system/user/index.vue"
+
+ ❯ src/router/__tests__/component-registry.test.ts:64:25
+     62|     for (const { component, path } of pages) {
+     63|       const key = resolveMenuComponent(component);
+     64|       expect(key, path).toBe(component);
+       |                         ^
+     65|       expect(key, path).not.toBe(FORBIDDEN_COMPONENT);
+     66|       expect(componentRegistry[key], path).toBeTypeOf('function');
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[6/20]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  20 failed (20)
+   Start at  22:06:07
+   Duration  899ms (transform 64ms, setup 0ms, import 81ms, tests 16ms, environment 457ms)
+
+D:\code\admin-web\apps\admin:
+[ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL] @vben/web-antd@5.8.0 test:unit: `vitest run --config vitest.config.ts "src/router/__tests__/component-registry.test.ts"`
+Exit status 1

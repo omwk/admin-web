@@ -1,0 +1,26 @@
+[
+  {
+    "command": "pnpm lint",
+    "startedAt": "2026-11-21T15:49:43.8891306Z",
+    "finishedAt": "2026-11-21T15:50:54.8639403Z",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm --filter @vben/web-antd typecheck",
+    "startedAt": "2026-11-21T15:49:43.8702915Z",
+    "finishedAt": "2026-11-21T15:51:16.4747832Z",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm test:unit --maxWorkers=4",
+    "startedAt": "2026-11-21T15:49:43.8968803Z",
+    "finishedAt": "2026-11-21T15:52:22.9766459Z",
+    "exitCode": 0
+  },
+  {
+    "command": "pnpm --filter @vben/web-antd build",
+    "startedAt": "2026-11-21T15:49:43.8898808Z",
+    "finishedAt": "2026-11-21T15:50:35.6319464Z",
+    "exitCode": 0
+  }
+]

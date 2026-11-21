@@ -38,7 +38,7 @@ const system: IdentityMenu = {
           name: '模板编辑',
           type: 'menu',
           path: 'templates/:id',
-          component: '/system/tenant/template-editor.vue',
+          component: 'system/tenant/template-editor',
           sort: 1,
           is_external: false,
           keep_alive: true,
@@ -72,10 +72,10 @@ describe('backend menu permission boundaries', () => {
         ?.keep_alive,
     ).toBe(false);
     expect(resolveMenuComponent('system/storage/index')).toBe(
-      '/system/storage/index.vue',
+      'system/storage/index',
     );
     expect(resolveMenuComponent('system/files/index')).toBe(
-      '/system/files/index.vue',
+      'system/files/index',
     );
   });
 
@@ -133,7 +133,7 @@ describe('backend menu permission boundaries', () => {
       'system/tenants/index',
       'system/tenant/template-editor',
     ]) {
-      expect(resolveMenuComponent(component)).toBe(`/${component}.vue`);
+      expect(resolveMenuComponent(component)).toBe(component);
     }
     expect(
       authorizedMenus([], [...codes, 'system:tenant:manage'], platform),

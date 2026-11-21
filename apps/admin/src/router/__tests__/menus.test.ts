@@ -13,7 +13,7 @@ import { hasPermission } from '#/auth/permission';
 import { generateAccess } from '../access';
 import {
   componentRegistry,
-  NOT_FOUND_COMPONENT,
+  FORBIDDEN_COMPONENT,
   resolveMenuComponent,
 } from '../component-registry';
 import { findHomePath, menusToRoutes } from '../menu-adapter';
@@ -50,6 +50,7 @@ function menu(id: number, values: Partial<IdentityMenu> = {}): IdentityMenu {
 }
 
 beforeEach(async () => {
+  vi.restoreAllMocks();
   localStorage.clear();
   await initStores(createApp({}), { namespace: 'fe1-menus' });
   state.menus = [];
@@ -75,7 +76,7 @@ describe('backend menus and permissions', () => {
     const routes = await getAllMenusApi();
     expect(routes).toHaveLength(1);
     expect(routes[0]).toMatchObject({
-      component: '/system/dept/index.vue',
+      component: 'system/dept/index',
       path: '/system/depts',
     });
     for (const action of ['create', 'update', 'delete']) {
@@ -121,7 +122,7 @@ describe('backend menus and permissions', () => {
     });
     expect(routes[0]?.children).toHaveLength(1);
     expect(routes[0]?.children?.[0]).toMatchObject({
-      component: '/system/user/index.vue',
+      component: 'system/user/index',
       meta: { keepAlive: true, title: '用户' },
     });
     expect(routes[0]?.children?.[0]?.meta).not.toHaveProperty('ignoreAccess');
@@ -129,22 +130,43 @@ describe('backend menus and permissions', () => {
     expect(findHomePath(routes)).toBe('/system/users');
   });
 
-  it('uses an explicit registry and routes all unknown components to the existing 404 loader', () => {
-    expect(resolveMenuComponent('system/user/index')).toBe(
-      '/system/user/index.vue',
+  it('uses an explicit registry and routes all unknown components to the forbidden loader', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    expect(resolveMenuComponent('system/user/index')).toBe('system/user/index');
+    expect(resolveMenuComponent('system/dept/index')).toBe('system/dept/index');
+    expect(resolveMenuComponent('views/system/user/index')).toBe(
+      'system/user/index',
     );
-    expect(resolveMenuComponent('system/dept/index')).toBe(
-      '/system/dept/index.vue',
-    );
-    expect(resolveMenuComponent('/views/system/user/index.vue')).toBe(
-      '/system/user/index.vue',
-    );
-    expect(resolveMenuComponent('../../secret')).toBe(NOT_FOUND_COMPONENT);
+    expect(resolveMenuComponent('../../secret')).toBe(FORBIDDEN_COMPONENT);
     expect(
       menusToRoutes([menu(1, { component: 'unregistered/index' })])[0]
         ?.component,
-    ).toBe(NOT_FOUND_COMPONENT);
-    expect(componentRegistry[NOT_FOUND_COMPONENT]).toBeTypeOf('function');
+    ).toBe(FORBIDDEN_COMPONENT);
+    expect(componentRegistry[FORBIDDEN_COMPONENT]).toBeTypeOf('function');
+    expect(warn).toHaveBeenCalledWith(
+      '[router] Unknown menu component:',
+      'unregistered/index',
+    );
+    expect(
+      menusToRoutes([
+        menu(1, { component: 'system/user', keep_alive: true }),
+      ])[0]?.meta?.keepAlive,
+    ).toBe(false);
+  });
+
+  it('does not resolve directory or external-link components', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const routes = menusToRoutes([
+      menu(1, { component: null, type: 'dir', children: [menu(2)] }),
+      menu(3, {
+        component: null,
+        type: 'link',
+        path: 'https://example.com/docs',
+      }),
+    ]);
+    expect(routes[0]?.component).toBe('MenuOutlet');
+    expect(routes[1]?.component).toBe('pending/index');
+    expect(warn).not.toHaveBeenCalled();
   });
 
   it('keeps external URLs in menu metadata and rejects unsafe protocols', () => {
@@ -206,10 +228,10 @@ describe('backend menus and permissions', () => {
     expect(useUserStore().userInfo?.homePath).toBe('/home');
     expect(
       router.resolve('/system/users').matched.at(-1)?.components?.default,
-    ).toBe(componentRegistry[NOT_FOUND_COMPONENT]);
+    ).toBe(componentRegistry[FORBIDDEN_COMPONENT]);
     expect(
       router.resolve('/system/roles').matched.at(-1)?.components?.default,
-    ).toBe(componentRegistry['/system/role/index.vue']);
+    ).toBe(componentRegistry['system/role/index']);
     resetRoutes();
     useAccessStore().$reset();
     state.menus = [menu(2, { name: '角色', path: '/system/roles' })];
@@ -245,7 +267,7 @@ describe('backend menus and permissions', () => {
     );
     expect(router.resolve('/system/users').matched).toEqual([]);
     expect(router.resolve('/403').matched.at(-1)?.components?.default).toBe(
-      componentRegistry['/_core/fallback/forbidden.vue'],
+      componentRegistry['_core/fallback/forbidden'],
     );
   });
 });

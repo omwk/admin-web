@@ -1,0 +1,41 @@
+{
+  "checkedAt": "2026-11-21T17:40:58.424Z",
+  "remainingSchemas": 0,
+  "remainingRedisKeys": 0,
+  "screenshotCount": 20,
+  "backendPageCount": 20,
+  "allPagesHaveExistingScreenshot": true,
+  "temporaryLoginFileExists": false,
+  "publicRows": {
+    "tenant": 2,
+    "sys_user": 5,
+    "sys_role": 4,
+    "sys_menu": 51,
+    "sys_permission": 239,
+    "sys_dept": 9,
+    "sys_setting": 2,
+    "channel_provider": 1,
+    "notify_template": 17,
+    "storage_provider": 1,
+    "file_object": 1,
+    "audit_log": 2
+  },
+  "remainingOwnedListeners": 0,
+  "gitDiffCheckExitCode": 0,
+  "originalPublicAuditRowsPreserved": true,
+  "additionalPublicAudits": [
+    {
+      "id": "2633",
+      "createdAt": "2026-11-21T17:33:17.776Z"
+    }
+  ],
+  "publicChangesSinceCompletedCleanup": [
+    {
+      "table": "sys_user",
+      "id": "109",
+      "kind": "updated",
+      "updatedAt": "2026-11-21T17:33:17.780402+00:00"
+    }
+  ],
+  "note": "Runtime verified public rows and audits unchanged during cleanup at 2026-11-21T15:41:36.691Z. Later public changes are recorded without modifying shared data."
+}

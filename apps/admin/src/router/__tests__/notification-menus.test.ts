@@ -42,7 +42,7 @@ describe('notification menu permissions', () => {
       ]),
     ).toBe(false);
     expect(resolveMenuComponent('system/notification/broadcasts')).toBe(
-      '/system/notification/broadcasts.vue',
+      'system/notification/broadcasts',
     );
   });
   const inbox = menu(1, '/system/notifications');
@@ -76,10 +76,10 @@ describe('notification menu permissions', () => {
   });
   it('resolves both exact backend projected components', () => {
     expect(resolveMenuComponent('system/notification/index')).toBe(
-      '/system/notification/index.vue',
+      'system/notification/index',
     );
     expect(resolveMenuComponent('system/notification/channels')).toBe(
-      '/system/notification/channels.vue',
+      'system/notification/channels',
     );
   });
 });

@@ -1,0 +1,249 @@
+{
+  "source": {
+    "repository": "omwk/go-admin-api",
+    "commit": "23872a6c572d8e2253fa65c82f83b590e049c000",
+    "file": "internal/modules/identity/seed_catalog.go"
+  },
+  "menus": [
+    {
+      "name": "系统",
+      "type": "dir",
+      "path": "/system",
+      "parentPath": "",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "用户",
+      "type": "menu",
+      "path": "/system/users",
+      "parentPath": "/system",
+      "component": "system/user/index",
+      "visible": true
+    },
+    {
+      "name": "菜单",
+      "type": "menu",
+      "path": "/system/menus",
+      "parentPath": "/system",
+      "component": "system/menu/index",
+      "visible": true
+    },
+    {
+      "name": "角色",
+      "type": "menu",
+      "path": "/system/roles",
+      "parentPath": "/system",
+      "component": "system/role/index",
+      "visible": true
+    },
+    {
+      "name": "部门",
+      "type": "menu",
+      "path": "/system/depts",
+      "parentPath": "/system",
+      "component": "system/dept/index",
+      "visible": true
+    },
+    {
+      "name": "通知中心",
+      "type": "menu",
+      "path": "/system/notifications",
+      "parentPath": "/system",
+      "component": "system/notification/index",
+      "visible": true
+    },
+    {
+      "name": "通知渠道",
+      "type": "menu",
+      "path": "/system/notifications/channels",
+      "parentPath": "/system",
+      "component": "system/notification/channels",
+      "visible": true
+    },
+    {
+      "name": "标记已读",
+      "type": "button",
+      "path": "/system/notifications/read",
+      "parentPath": "/system/notifications",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "新建部门",
+      "type": "button",
+      "path": "/system/depts/create",
+      "parentPath": "/system/depts",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "编辑部门",
+      "type": "button",
+      "path": "/system/depts/update",
+      "parentPath": "/system/depts",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "删除部门",
+      "type": "button",
+      "path": "/system/depts/delete",
+      "parentPath": "/system/depts",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "交易",
+      "type": "dir",
+      "path": "/trade",
+      "parentPath": "",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "订单",
+      "type": "menu",
+      "path": "/trade/orders",
+      "parentPath": "/trade",
+      "component": "trade/order/index",
+      "visible": true
+    },
+    {
+      "name": "查看订单",
+      "type": "button",
+      "path": "/trade/orders/view",
+      "parentPath": "/trade/orders",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "客户",
+      "type": "dir",
+      "path": "/crm",
+      "parentPath": "",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "客户列表",
+      "type": "menu",
+      "path": "/crm/customers",
+      "parentPath": "/crm",
+      "component": "crm/customer/index",
+      "visible": true
+    },
+    {
+      "name": "询盘",
+      "type": "menu",
+      "path": "/crm/inquiries",
+      "parentPath": "/crm",
+      "component": "crm/inquiry/index",
+      "visible": true
+    },
+    {
+      "name": "审计日志",
+      "type": "menu",
+      "path": "/system/audit-logs",
+      "parentPath": "/system",
+      "component": "system/audit-log/index",
+      "visible": true
+    },
+    {
+      "name": "登录历史",
+      "type": "menu",
+      "path": "/system/login-logs",
+      "parentPath": "/system",
+      "component": "system/login-log/index",
+      "visible": true
+    },
+    {
+      "name": "租户管理",
+      "type": "menu",
+      "path": "/system/tenants",
+      "parentPath": "/system",
+      "component": "system/tenant/index",
+      "visible": true
+    },
+    {
+      "name": "管理租户",
+      "type": "button",
+      "path": "/system/tenants/manage",
+      "parentPath": "/system/tenants",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "租户模板",
+      "type": "menu",
+      "path": "/system/tenants/templates",
+      "parentPath": "/system/tenants",
+      "component": "system/tenant/index",
+      "visible": false
+    },
+    {
+      "name": "模板编辑",
+      "type": "menu",
+      "path": "/system/tenants/templates/:id",
+      "parentPath": "/system/tenants",
+      "component": "system/tenant/template-editor",
+      "visible": false
+    },
+    {
+      "name": "数据字典",
+      "type": "menu",
+      "path": "/system/dicts",
+      "parentPath": "/system",
+      "component": "system/dict/index",
+      "visible": true
+    },
+    {
+      "name": "系统配置",
+      "type": "menu",
+      "path": "/system/settings",
+      "parentPath": "/system",
+      "component": "system/setting/index",
+      "visible": true
+    },
+    {
+      "name": "存储配置",
+      "type": "menu",
+      "path": "/system/storage",
+      "parentPath": "/system",
+      "component": "system/storage/index",
+      "visible": true
+    },
+    {
+      "name": "文件管理",
+      "type": "menu",
+      "path": "/system/files",
+      "parentPath": "/system",
+      "component": "system/files/index",
+      "visible": true
+    },
+    {
+      "name": "商品",
+      "type": "dir",
+      "path": "/catalog",
+      "parentPath": "",
+      "component": null,
+      "visible": true
+    },
+    {
+      "name": "商品管理",
+      "type": "menu",
+      "path": "/catalog/products",
+      "parentPath": "/catalog",
+      "component": "catalog/product/index",
+      "visible": true
+    },
+    {
+      "name": "商品详情",
+      "type": "menu",
+      "path": "/catalog/products/:id",
+      "parentPath": "/catalog/products",
+      "component": "catalog/product/detail",
+      "visible": false
+    }
+  ]
+}

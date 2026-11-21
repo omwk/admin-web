@@ -1,0 +1,110 @@
+{
+  "result": "pass",
+  "source": {
+    "repository": "omwk/go-admin-api",
+    "commit": "23872a6c572d8e2253fa65c82f83b590e049c000",
+    "file": "internal/modules/identity/seed_catalog.go"
+  },
+  "pages": [
+    {
+      "path": "/catalog/products",
+      "component": "catalog/product/index",
+      "visible": true
+    },
+    {
+      "path": "/catalog/products/:id",
+      "component": "catalog/product/detail",
+      "visible": false
+    },
+    {
+      "path": "/crm/customers",
+      "component": "crm/customer/index",
+      "visible": true
+    },
+    {
+      "path": "/crm/inquiries",
+      "component": "crm/inquiry/index",
+      "visible": true
+    },
+    {
+      "path": "/system/audit-logs",
+      "component": "system/audit-log/index",
+      "visible": true
+    },
+    {
+      "path": "/system/depts",
+      "component": "system/dept/index",
+      "visible": true
+    },
+    {
+      "path": "/system/dicts",
+      "component": "system/dict/index",
+      "visible": true
+    },
+    {
+      "path": "/system/files",
+      "component": "system/files/index",
+      "visible": true
+    },
+    {
+      "path": "/system/login-logs",
+      "component": "system/login-log/index",
+      "visible": true
+    },
+    {
+      "path": "/system/menus",
+      "component": "system/menu/index",
+      "visible": true
+    },
+    {
+      "path": "/system/notifications",
+      "component": "system/notification/index",
+      "visible": true
+    },
+    {
+      "path": "/system/notifications/channels",
+      "component": "system/notification/channels",
+      "visible": true
+    },
+    {
+      "path": "/system/roles",
+      "component": "system/role/index",
+      "visible": true
+    },
+    {
+      "path": "/system/settings",
+      "component": "system/setting/index",
+      "visible": true
+    },
+    {
+      "path": "/system/storage",
+      "component": "system/storage/index",
+      "visible": true
+    },
+    {
+      "path": "/system/tenants",
+      "component": "system/tenant/index",
+      "visible": true
+    },
+    {
+      "path": "/system/tenants/templates",
+      "component": "system/tenant/index",
+      "visible": false
+    },
+    {
+      "path": "/system/tenants/templates/:id",
+      "component": "system/tenant/template-editor",
+      "visible": false
+    },
+    {
+      "path": "/system/users",
+      "component": "system/user/index",
+      "visible": true
+    },
+    {
+      "path": "/trade/orders",
+      "component": "trade/order/index",
+      "visible": true
+    }
+  ]
+}
