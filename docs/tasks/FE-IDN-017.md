@@ -3,7 +3,7 @@
 - ID: FE-IDN-017
 - 类型: 修复
 - 仓库: 前端
-- 状态: 已实现，已验收（工作区待提交）
+- 状态: 待实现
 - 预计: 1.5 人日
 - 分支: `feat/fe-idn-017-file-model`
 - 依赖: BE-IDN-025
@@ -122,11 +122,3 @@ apps/admin/src/api/core/files.ts
 验收按卡片 §4 十二条逐条贴证据；第 3、4、9 条要截图。
 完成后停下报告，并按 AGENTS §12 清理测试数据。
 ```
-
-## 6. 验收记录（2026-11-21）
-
-已按 §4 十二条全部验收通过，逐项断言、截图和日志见 [完整验收记录](../evidence/fe-idn-017/README.md)。第 3、4、9 条分别附缩略图、原图预览和头像截图。lint / typecheck / unit / build 均退出 0；单元测试 166 个文件、1193 项通过。
-
-已清理：本卡 8 个文件及对象、独立 provider、8 条已完成 outbox 清理事件；cli audit-prune --before <当前 RFC3339> → deleted=27；DROP SCHEMA feidn017_runtime_1795266505767 CASCADE → 剩余 0；独占 Redis DB14 删除 19 键 → 剩余 0；临时菜单已恢复，进程与 MinIO 容器已移除。原有开发数据及审计记录保留，无测试业务数据遗留。[最终资源复查](../evidence/fe-idn-017/final-resource-check.json)。
-
-菜单夹具采用现有组件全路径 system/files/index；FE-IDN-018 的简写解析未纳入本卡。改动停留在 feat/fe-idn-017-file-model 工作区，基线 65364b9，未提交或推送。
