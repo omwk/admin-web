@@ -1,0 +1,46 @@
+{
+  "task": "FE-IDN-017",
+  "recordedAt": "2026-11-21T13:21:44.150Z",
+  "branch": "feat/fe-idn-017-file-model",
+  "base": "65364b9",
+  "commands": [
+    {
+      "command": "pnpm lint",
+      "exitCode": 0,
+      "log": "lint.txt"
+    },
+    {
+      "command": "pnpm check:type",
+      "exitCode": 0,
+      "log": "typecheck.txt",
+      "successfulTasks": 38,
+      "totalTasks": 38
+    },
+    {
+      "command": "pnpm test:unit --maxWorkers=4",
+      "exitCode": 0,
+      "log": "unit.txt",
+      "passedFiles": 166,
+      "passedTests": 1193
+    },
+    {
+      "command": "pnpm --filter @vben/web-antd build",
+      "exitCode": 0,
+      "log": "build.txt"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0
+    }
+  ],
+  "browser": {
+    "command": "bun --env-file=D:/code/go-admin-api/.env apps/admin/e2e/fe-idn-017-runtime.mjs",
+    "exitCode": 0,
+    "acceptance": "acceptance.json",
+    "log": "runtime.json"
+  },
+  "acceptanceItemsPassed": 12,
+  "cleanupPassed": true,
+  "finalResourceCheck": "final-resource-check.json",
+  "passed": true
+}

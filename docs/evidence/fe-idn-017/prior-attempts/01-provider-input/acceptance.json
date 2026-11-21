@@ -1,0 +1,50 @@
+{
+  "task": "FE-IDN-017",
+  "startedAt": "2026-11-21T12:50:59.528Z",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7Z2HXATC6N1ZVEKC65S7D9V"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z2HXHQJN74P57H7YTWJJ8H"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 400,
+      "traceId": "01M7Z2HXK7QJNSNA12VVZRBJFG"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7Z2HXKJ9FP570MHF311DGMG"
+    },
+    {
+      "path": "/api/v1/admin/files?include_avatar=true&page_size=100",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z2HXT9GSZKHX2NF1R98AE5"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 400,
+      "traceId": "01M7Z2HY25DHYF2JA0KRKT5EKK"
+    }
+  ],
+  "browserErrors": [],
+  "failure": "PUT /admin/storage-providers/1: 400 参数校验失败",
+  "objectCleanup": [],
+  "cleanupFailure": "PUT /admin/storage-providers/1: 400 参数校验失败",
+  "finishedAt": "2026-11-21T12:51:00.299Z"
+}

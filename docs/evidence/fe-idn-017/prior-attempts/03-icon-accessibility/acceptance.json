@@ -1,0 +1,340 @@
+{
+  "task": "FE-IDN-017",
+  "startedAt": "2026-11-21T13:00:15.868Z",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [
+    {
+      "item": 2,
+      "result": "pass",
+      "uploadPurposeAbsent": true,
+      "sourceAbsent": true,
+      "multipartOnlyFile": true
+    },
+    {
+      "item": 1,
+      "result": "pass",
+      "all": 5,
+      "filters": [
+        {
+          "category": "image",
+          "count": 1
+        },
+        {
+          "category": "document",
+          "count": 1
+        },
+        {
+          "category": "sheet",
+          "count": 1
+        },
+        {
+          "category": "archive",
+          "count": 1
+        },
+        {
+          "category": "text",
+          "count": 1
+        }
+      ],
+      "noAvatarFiles": true
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7Z32WMJWVSCT6KS4MZP6CWK"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7Z32WXQF9YXZMV6J0NWW04E"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M7Z32X00HQ8MR5M7C725BDQJ"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z32X0S0MM204EH61RTH4BD"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7Z32X16H7N4541CXEDBVGG6"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7Z333TWSYNHMFB1T081PQW7"
+    },
+    {
+      "path": "/api/v1/admin/files?include_avatar=true&page_size=100",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3341KEZGFYGD4X9YJK0R5"
+    },
+    {
+      "path": "/api/v1/admin/files/5/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3341Z1HGVT6T50GMPZZEP"
+    },
+    {
+      "path": "/api/v1/admin/files/5",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/4/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3342XXQQR1J9YN7V3M3CR"
+    },
+    {
+      "path": "/api/v1/admin/files/4",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/3/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3343XME7XGM6P8PFBKVK6"
+    },
+    {
+      "path": "/api/v1/admin/files/3",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/2/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3344WKT9CH2Y7FYWFWA8D"
+    },
+    {
+      "path": "/api/v1/admin/files/2",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/1/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3345RKRYP5WSJBT228AV3"
+    },
+    {
+      "path": "/api/v1/admin/files/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M7Z334YWBD0A6M193DTEVEN2"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/31",
+      "method": "DELETE",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "menuFixture": {
+    "sql": "UPDATE sys_menu SET component='system/files/index' WHERE id=$1 AND path='/system/files' RETURNING id",
+    "id": 31,
+    "rows": 1,
+    "reason": "Existing registry full-path format; shorthand resolver belongs to FE-IDN-018"
+  },
+  "fixture": {
+    "menuIDs": [31],
+    "providerID": 1,
+    "prefix": "feidn017_1795266015868"
+  },
+  "failure": "Expected values to be strictly equal:\n\n0 !== 1\n",
+  "objectCleanup": [
+    {
+      "id": 5,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 4,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 3,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 2,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 1,
+      "statusAfterCleanup": 404
+    }
+  ],
+  "configurationRestored": {
+    "accessMode": "public",
+    "quotaPerUserMB": 1,
+    "isolatedProviderDeleted": true
+  },
+  "cleanupPassed": true,
+  "finishedAt": "2026-11-21T13:00:25.206Z"
+}

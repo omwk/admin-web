@@ -52,6 +52,24 @@ export const updateMyProfileApi = (input: ProfileInput) =>
     Pick<IdentityUser, 'avatar' | 'email' | 'nickname' | 'phone'>
   >('/auth/profile', input, profileWrite);
 
+export function uploadMyAvatarApi(file: File, signal?: AbortSignal) {
+  const data = new FormData();
+  data.append('file', file);
+  return requestClient.post<{ avatar: string; file_id: number }>(
+    '/auth/profile/avatar',
+    data,
+    {
+      ...profileWrite,
+      signal,
+      timeout: 120_000,
+      headers: {
+        'Content-Type': undefined,
+        'Idempotency-Key': crypto.randomUUID(),
+      },
+    },
+  );
+}
+
 export const changeMyEmailApi = (email: string) =>
   requestClient.post<{ pending: boolean; expires_in_hours: number }>(
     '/auth/profile/email/change',

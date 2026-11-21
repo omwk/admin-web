@@ -1,0 +1,5 @@
+FE-IDN-017 acceptance 2: passed
+Expected values to be strictly equal:
+
+500 !== 201
+

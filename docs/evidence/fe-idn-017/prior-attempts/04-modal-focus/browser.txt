@@ -1,0 +1,9 @@
+FE-IDN-017 acceptance 2: passed
+FE-IDN-017 acceptance 1: passed
+FE-IDN-017 acceptance 3: passed
+FE-IDN-017 acceptance 5: passed
+locator.waitFor: Timeout 30000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('dialog') to be hidden[22m
+[2m    63 × locator resolved to visible <div tabindex="-1" role="dialog" class="ant-modal-wrap" aria-labelledby="vcDialogTitle0">…</div>[22m
+

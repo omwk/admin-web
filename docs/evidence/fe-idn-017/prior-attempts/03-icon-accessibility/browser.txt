@@ -1,0 +1,6 @@
+FE-IDN-017 acceptance 2: passed
+FE-IDN-017 acceptance 1: passed
+Expected values to be strictly equal:
+
+0 !== 1
+

@@ -1,0 +1,362 @@
+{
+  "task": "FE-IDN-017",
+  "startedAt": "2026-11-21T13:05:30.969Z",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [
+    {
+      "item": 2,
+      "result": "pass",
+      "uploadPurposeAbsent": true,
+      "sourceAbsent": true,
+      "multipartOnlyFile": true
+    },
+    {
+      "item": 1,
+      "result": "pass",
+      "all": 5,
+      "filters": [
+        {
+          "category": "image",
+          "count": 1
+        },
+        {
+          "category": "document",
+          "count": 1
+        },
+        {
+          "category": "sheet",
+          "count": 1
+        },
+        {
+          "category": "archive",
+          "count": 1
+        },
+        {
+          "category": "text",
+          "count": 1
+        }
+      ],
+      "noAvatarFiles": true
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "thumbnail": {
+        "width": 48,
+        "height": 48,
+        "loaded": true
+      },
+      "otherTypeIcons": 4,
+      "screenshot": "03-thumbnails.png"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "uploadedByName": "admin",
+      "rows": 5
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7Z3CGBFB7PT5GDWAHN0Y67H"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7Z3CGKMZ9TJQDBCK411Y91M"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M7Z3CGNH4TDTNE2RENNPSQ46"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3CGPMFV41NKRY7CH1Q00G"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/1/url",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/1/url",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7Z3DPDK4R622B1QJY3YSX9Q"
+    },
+    {
+      "path": "/api/v1/admin/files?include_avatar=true&page_size=100",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3DPM0J43Q74V6V0MW5E9Q"
+    },
+    {
+      "path": "/api/v1/admin/files/5/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3DPM933SCR4KP5RQ18XQS"
+    },
+    {
+      "path": "/api/v1/admin/files/5",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/4/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3DPN2WMMG7VNEP11MCP63"
+    },
+    {
+      "path": "/api/v1/admin/files/4",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/3/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3DPNVJ562MTEAD4ST9S28"
+    },
+    {
+      "path": "/api/v1/admin/files/3",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/2/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3DPPM1SCTR12TCJYN6DRR"
+    },
+    {
+      "path": "/api/v1/admin/files/2",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/1/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z3DPQB53A2PCHY5QF4KCQ8"
+    },
+    {
+      "path": "/api/v1/admin/files/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M7Z3DQD6XA7Z3FQGGXQF7CPW"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/27",
+      "method": "DELETE",
+      "status": 409,
+      "traceId": "01M7Z3DQEJ296ZXNS9BTA0HPNK"
+    }
+  ],
+  "browserErrors": [],
+  "menuFixture": {
+    "sql": "UPDATE sys_menu SET component='system/files/index' WHERE id=$1 AND path='/system/files' RETURNING id",
+    "id": 27,
+    "rows": 1,
+    "reason": "Existing registry full-path format; shorthand resolver belongs to FE-IDN-018"
+  },
+  "fixture": {
+    "menuIDs": [27],
+    "providerID": 1,
+    "prefix": "feidn017_1795266330969"
+  },
+  "failure": "locator.waitFor: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByRole('dialog') to be hidden\u001b[22m\n\u001b[2m    63 × locator resolved to visible <div tabindex=\"-1\" role=\"dialog\" class=\"ant-modal-wrap\" aria-labelledby=\"vcDialogTitle0\">…</div>\u001b[22m\n",
+  "objectCleanup": [
+    {
+      "id": 5,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 4,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 3,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 2,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 1,
+      "statusAfterCleanup": 404
+    }
+  ],
+  "configurationRestored": {
+    "accessMode": "public",
+    "quotaPerUserMB": 1,
+    "isolatedProviderDeleted": true
+  },
+  "cleanupFailure": "DELETE /admin/menus/27: 409 菜单仍被引用\n\n409 !== 204\n",
+  "finishedAt": "2026-11-21T13:06:11.441Z"
+}

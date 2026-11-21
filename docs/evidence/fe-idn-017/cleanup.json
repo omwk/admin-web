@@ -1,0 +1,12 @@
+{
+  "sql": [
+    {
+      "sql": "DELETE FROM outbox_event WHERE event_type='file.cleanup' AND status='sent' RETURNING id",
+      "rows": 8
+    }
+  ],
+  "remaining": {
+    "storage_provider": 0,
+    "file_object": 0
+  }
+}

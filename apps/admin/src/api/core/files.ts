@@ -1,6 +1,6 @@
 import type { ApiRequestConfig } from '#/api/client';
 import type { PageResult } from '#/api/model/response';
-import type { FilePurpose, LibraryFile } from '#/api/model/storage';
+import type { FileCategory, FileUsage, LibraryFile } from '#/api/model/storage';
 
 import { requestClient } from '#/api/request';
 
@@ -8,20 +8,20 @@ const read: ApiRequestConfig = { silent: true, preserveBusinessMessage: true };
 export const getFilesApi = (
   page: number,
   pageSize: number,
-  filters: { keyword?: string; purpose?: FilePurpose },
+  filters: { category?: FileCategory; keyword?: string },
 ) =>
   requestClient.get<PageResult<LibraryFile>>('/admin/files', {
     ...read,
     params: { page, page_size: pageSize, ...filters },
   });
+export const getFileUsageApi = () =>
+  requestClient.get<FileUsage>('/admin/files/usage', read);
 export function uploadFileApi(
   file: File,
-  purpose: FilePurpose,
   progress: (percent: number) => void,
   signal?: AbortSignal,
 ) {
   const data = new FormData();
-  data.append('purpose', purpose);
   data.append('file', file);
   return requestClient.post<LibraryFile>('/admin/files', data, {
     ...read,

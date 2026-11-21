@@ -57,12 +57,18 @@ const mimes = new Set([
   'text/xml',
   'text/yaml',
 ]);
-export const purposeOptions = [
-  { value: 'attachment', label: '附件' },
-  { value: 'export', label: '导出' },
-  { value: 'shop', label: '店铺' },
-  { value: 'snapshot', label: '快照' },
+export const categoryOptions = [
+  { value: 'image', label: '图片' },
+  { value: 'document', label: '文档' },
+  { value: 'sheet', label: '表格' },
+  { value: 'archive', label: '压缩包' },
+  { value: 'text', label: '文本' },
 ];
+export function categoryLabel(category: LibraryFile['category']) {
+  return (
+    categoryOptions.find((option) => option.value === category)?.label ?? '其他'
+  );
+}
 const mimeAliases: Record<string, { extensions: string[]; type: string }> = {
   'application/vnd.ms-excel': { extensions: ['csv'], type: 'text/csv' },
   'application/x-zip-compressed': {

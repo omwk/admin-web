@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { FilePurpose, LibraryFile } from '#/api/model/storage';
+import type { LibraryFile } from '#/api/model/storage';
 
 import { onUnmounted, reactive, ref } from 'vue';
 
-import { Alert, Button, message, Progress, Select } from 'ant-design-vue';
+import { Alert, Button, message, Progress } from 'ant-design-vue';
 
 import { uploadFileApi } from '#/api/core/files';
 
@@ -11,7 +11,6 @@ import {
   fileAccept,
   fileHint,
   normalizeUploadFile,
-  purposeOptions,
   uploadError,
   validateFile,
 } from './options';
@@ -19,7 +18,6 @@ import {
 const props = defineProps<{ canConfigure: boolean }>();
 const emit = defineEmits<{ uploaded: [file: LibraryFile] }>();
 const picker = ref<HTMLInputElement>();
-const purpose = ref<FilePurpose>('attachment');
 const busy = ref(false);
 const dragging = ref(false);
 const jobs = ref<
@@ -44,7 +42,6 @@ async function upload(files: File[]) {
   if (busy.value || disposed) return;
   busy.value = true;
   jobs.value = [];
-  const uploadPurpose = purpose.value;
   try {
     for (const original of files) {
       if (disposed) break;
@@ -65,7 +62,6 @@ async function upload(files: File[]) {
       try {
         const saved = await uploadFileApi(
           file,
-          uploadPurpose,
           (percent) => {
             state.percent = percent;
           },
@@ -101,16 +97,9 @@ function drop(event: DragEvent) {
   <section aria-label="文件上传" class="mb-5">
     <div class="mb-3 flex flex-wrap items-center gap-3">
       <Button type="primary" :loading="busy" @click="choose">上传文件</Button>
-      <label class="flex items-center gap-2">
-        上传用途
-        <Select
-          v-model:value="purpose"
-          aria-label="上传用途"
-          :options="purposeOptions"
-          :disabled="busy"
-          class="w-28"
-        />
-      </label>
+      <span class="text-sm text-muted-foreground">
+        拖拽或点击，单个文件 ≤20 MB
+      </span>
     </div>
     <input
       ref="picker"

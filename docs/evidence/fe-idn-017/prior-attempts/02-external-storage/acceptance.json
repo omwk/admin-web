@@ -1,0 +1,136 @@
+{
+  "task": "FE-IDN-017",
+  "startedAt": "2026-11-21T12:53:30.547Z",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [
+    {
+      "item": 2,
+      "result": "pass",
+      "uploadPurposeAbsent": true,
+      "sourceAbsent": true,
+      "multipartOnlyFile": true
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7Z2PGT6SEM0501G3YPTXEDT"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z2PH0Y364XTT6JH2V3YVPR"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M7Z2PH2KQK1CSKZJV7JTC0YH"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z2PH3M8T24CD372K5J7344"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M7Z2PH42RVFH99VDTEEQR018"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 500
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M7Z2PY09VGEB21HTZX9TYR35"
+    },
+    {
+      "path": "/api/v1/admin/files?include_avatar=true&page_size=100",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M7Z2PY6XG8VV0AC62P297D2D"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M7Z2PYDJ4N0CS0AJEZ3AD1XB"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/menus/31",
+      "method": "DELETE",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "menuFixture": {
+    "sql": "UPDATE sys_menu SET component='system/files/index' WHERE id=$1 AND path='/system/files' RETURNING id",
+    "id": 31,
+    "rows": 1,
+    "reason": "Existing registry full-path format; shorthand resolver belongs to FE-IDN-018"
+  },
+  "fixture": {
+    "menuIDs": [31],
+    "providerID": 1,
+    "prefix": "feidn017_1795265610547"
+  },
+  "failure": "Expected values to be strictly equal:\n\n500 !== 201\n",
+  "objectCleanup": [],
+  "configurationRestored": {
+    "accessMode": "public",
+    "quotaPerUserMB": 1024,
+    "isolatedProviderDeleted": true
+  },
+  "cleanupPassed": true,
+  "finishedAt": "2026-11-21T12:53:45.187Z"
+}
