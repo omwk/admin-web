@@ -4,6 +4,7 @@ import type { LibraryFile } from '#/api/model/storage';
 import { computed } from 'vue';
 
 import { Page } from '@vben/common-ui';
+import { createIconifyIcon } from '@vben/icons';
 import { useUserStore } from '@vben/stores';
 
 import {
@@ -12,7 +13,10 @@ import {
   Card,
   Empty,
   Input,
+  Modal,
+  Progress,
   Select,
+  Spin,
   Table,
   Tag,
   Tooltip,
@@ -23,7 +27,7 @@ import { platformTenantId } from '#/auth/tenant';
 import { formatDateTime } from '#/utils/datetime';
 
 import FileUpload from './file-upload.vue';
-import { fileSize, fileType, purposeOptions } from './options';
+import { categoryLabel, categoryOptions, fileSize } from './options';
 import { useFilePage } from './use-file-page';
 
 defineOptions({ name: 'SystemFiles' });
@@ -33,6 +37,13 @@ const {
   loading,
   busy,
   error,
+  usage,
+  usageError,
+  usagePercent,
+  previewFile,
+  previewUrl,
+  previewLoading,
+  previewError,
   filters,
   highlighted,
   pagination,
@@ -41,6 +52,8 @@ const {
   reset,
   changePage,
   uploaded,
+  preview,
+  closePreview,
   download,
   copy,
   remove,
@@ -51,20 +64,28 @@ const canConfigure = computed(
     hasPermission('system:storage:manage'),
 );
 const columns = [
+  { title: '预览', dataIndex: 'preview', width: 80 },
   { title: '文件名', dataIndex: 'original_name', width: 260, ellipsis: true },
-  { title: '类型', dataIndex: 'mime', width: 100 },
+  { title: '分类', dataIndex: 'category', width: 90 },
   { title: '大小', dataIndex: 'size_bytes', width: 110 },
-  { title: '用途', dataIndex: 'purpose', width: 90 },
-  { title: '上传人', dataIndex: 'uploader', width: 100 },
+  { title: '上传人', dataIndex: 'uploaded_by_name', width: 120 },
   { title: '时间', dataIndex: 'created_at', width: 190 },
-  { title: '操作', dataIndex: 'actions', width: 230 },
+  { title: '操作', dataIndex: 'actions', width: 280 },
 ];
+const typeIcons = {
+  image: createIconifyIcon('lucide:image'),
+  document: createIconifyIcon('lucide:file-text'),
+  sheet: createIconifyIcon('lucide:sheet'),
+  archive: createIconifyIcon('lucide:file-archive'),
+  text: createIconifyIcon('lucide:file-code'),
+  other: createIconifyIcon('lucide:file'),
+};
 </script>
 
 <template>
   <Page
     title="文件管理"
-    description="上传、筛选和管理文件，分享链接有效期为 5 分钟。"
+    description="上传、分类和预览文件；复制链接可分享，下载可保存原文件。"
   >
     <Card data-testid="files-page">
       <FileUpload
@@ -84,11 +105,11 @@ const columns = [
         @submit.prevent="query"
       >
         <label class="flex items-center gap-2">
-          用途
+          分类
           <Select
-            v-model:value="filters.purpose"
-            aria-label="筛选用途"
-            :options="purposeOptions"
+            v-model:value="filters.category"
+            aria-label="筛选分类"
+            :options="categoryOptions"
             placeholder="全部"
             allow-clear
             class="w-28"
@@ -115,6 +136,28 @@ const columns = [
         </Button>
         <Button :disabled="busy || !allowed" @click="load">刷新</Button>
       </form>
+      <div v-if="allowed && usage" class="mb-5" data-testid="file-usage">
+        <p class="mb-1 text-sm">
+          已用 {{ fileSize(usage.used_bytes) }} /
+          {{ usage.quota_bytes ? fileSize(usage.quota_bytes) : '不限' }}
+          <span class="text-muted-foreground">
+            （{{ usage.file_count }} 个文件）
+          </span>
+        </p>
+        <Progress
+          :percent="usagePercent"
+          :show-info="false"
+          :stroke-color="usagePercent > 90 ? '#fa8c16' : undefined"
+          aria-label="存储配额使用率"
+        />
+      </div>
+      <Alert
+        v-if="usageError"
+        :message="`配额加载失败：${usageError}`"
+        type="error"
+        show-icon
+        class="mb-4"
+      />
       <Alert v-if="error" :message="error" type="error" show-icon class="mb-4">
         <template #action>
           <Button size="small" @click="load">重试</Button>
@@ -155,7 +198,39 @@ const columns = [
           <span v-else>{{ error ? '文件加载失败，请重试' : '正在加载' }}</span>
         </template>
         <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex === 'original_name'">
+          <template v-if="column.dataIndex === 'preview'">
+            <button
+              v-if="record.category === 'image' && record.thumb_url"
+              type="button"
+              :aria-label="`预览 ${record.original_name}`"
+              class="block h-12 w-12 overflow-hidden rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+              @click="preview(record as LibraryFile)"
+            >
+              <img
+                :src="record.thumb_url"
+                :alt="record.original_name"
+                width="48"
+                height="48"
+                loading="lazy"
+                class="h-12 w-12 object-cover"
+              />
+            </button>
+            <span
+              v-else
+              role="img"
+              :aria-label="`${categoryLabel(record.category)}文件`"
+              class="flex h-12 w-12 items-center justify-center text-muted-foreground"
+            >
+              <component
+                :is="
+                  typeIcons[record.category as LibraryFile['category']] ??
+                  typeIcons.other
+                "
+                class="size-6"
+              />
+            </span>
+          </template>
+          <template v-else-if="column.dataIndex === 'original_name'">
             <Tooltip :title="record.original_name">
               <span>{{ record.original_name }}</span>
             </Tooltip>
@@ -163,25 +238,29 @@ const columns = [
               新上传
             </Tag>
           </template>
-          <template v-else-if="column.dataIndex === 'mime'">
-            {{ fileType(record as LibraryFile) }}
+          <template v-else-if="column.dataIndex === 'category'">
+            {{ categoryLabel(record.category) }}
           </template>
           <template v-else-if="column.dataIndex === 'size_bytes'">
             {{ fileSize(record.size_bytes) }}
           </template>
-          <template v-else-if="column.dataIndex === 'purpose'">
+          <template v-else-if="column.dataIndex === 'uploaded_by_name'">
             {{
-              purposeOptions.find((option) => option.value === record.purpose)
-                ?.label ?? record.purpose
+              record.uploaded_by_name ||
+              (record.uploaded_by ? `#${record.uploaded_by}` : '未知上传人')
             }}
-          </template>
-          <template v-else-if="column.dataIndex === 'uploader'">
-            <Tooltip title="文件接口暂未提供上传人信息">—</Tooltip>
           </template>
           <template v-else-if="column.dataIndex === 'created_at'">
             {{ formatDateTime(record.created_at) }}
           </template>
           <div v-else-if="column.dataIndex === 'actions'" class="flex gap-1">
+            <Button
+              v-if="record.category === 'image'"
+              size="small"
+              @click="preview(record as LibraryFile)"
+            >
+              预览
+            </Button>
             <Button
               size="small"
               :disabled="busy"
@@ -209,6 +288,34 @@ const columns = [
         </template>
       </Table>
     </Card>
+    <Modal
+      :open="!!previewFile"
+      :title="previewFile?.original_name"
+      :footer="null"
+      :width="900"
+      @cancel="closePreview"
+    >
+      <p v-if="previewFile" class="mb-3 text-sm text-muted-foreground">
+        {{ fileSize(previewFile.size_bytes) }} · 原图
+      </p>
+      <Alert
+        v-if="previewError"
+        :message="previewError"
+        type="error"
+        show-icon
+      />
+      <Spin :spinning="previewLoading">
+        <div class="flex min-h-40 items-center justify-center">
+          <img
+            v-if="previewUrl"
+            :src="previewUrl"
+            :alt="previewFile?.original_name"
+            class="max-h-[65vh] max-w-full object-contain"
+            @error="previewError = '原图加载失败，请关闭后重试'"
+          />
+        </div>
+      </Spin>
+    </Modal>
   </Page>
 </template>
 

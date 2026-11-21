@@ -1,4 +1,4 @@
-import type { LibraryFile } from '#/api/model/storage';
+import type { FileCategory, FileUsage, LibraryFile } from '#/api/model/storage';
 
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
 
@@ -9,6 +9,7 @@ import {
   downloadFileApi,
   getFilesApi,
   getFileUrlApi,
+  getFileUsageApi,
 } from '#/api/core/files';
 import { toApiError } from '#/api/errors';
 import { hasPermission } from '#/auth/permission';
@@ -19,13 +20,26 @@ export function useFilePage() {
   const loading = ref(false);
   const busy = ref(false);
   const error = ref('');
+  const usage = ref<FileUsage>();
+  const usageError = ref('');
+  const usagePercent = computed(() =>
+    usage.value && usage.value.quota_bytes > 0
+      ? Math.min(100, (usage.value.used_bytes / usage.value.quota_bytes) * 100)
+      : 0,
+  );
+  const previewFile = ref<LibraryFile>();
+  const previewUrl = ref('');
+  const previewLoading = ref(false);
+  const previewError = ref('');
   const highlighted = ref<number>();
   const filters = reactive<{
     keyword: string;
-    purpose?: LibraryFile['purpose'];
+    category?: FileCategory;
   }>({ keyword: '' });
-  let applied: { keyword?: string; purpose?: LibraryFile['purpose'] } = {};
+  let applied: { category?: FileCategory; keyword?: string } = {};
   let sequence = 0;
+  let usageSequence = 0;
+  let previewSequence = 0;
   const pagination = reactive({
     current: 1,
     pageSize: 20,
@@ -33,7 +47,7 @@ export function useFilePage() {
     showSizeChanger: true,
     pageSizeOptions: ['20', '50', '100'],
   });
-  async function load() {
+  async function loadList() {
     if (!allowed.value) return;
     const current = ++sequence;
     loading.value = true;
@@ -48,7 +62,7 @@ export function useFilePage() {
           1,
           Math.ceil(data.total / pagination.pageSize),
         );
-        await load();
+        await loadList();
         return;
       }
       rows.value = data.list;
@@ -59,32 +73,73 @@ export function useFilePage() {
       if (current === sequence) loading.value = false;
     }
   }
+  async function loadUsage() {
+    if (!allowed.value) return;
+    const current = ++usageSequence;
+    usageError.value = '';
+    try {
+      const data = await getFileUsageApi();
+      if (current === usageSequence) usage.value = data;
+    } catch (error_) {
+      if (current === usageSequence)
+        usageError.value = toApiError(error_).message;
+    }
+  }
+  async function load() {
+    await Promise.all([loadList(), loadUsage()]);
+  }
   onMounted(load);
   onUnmounted(() => {
     sequence++;
+    usageSequence++;
+    previewSequence++;
   });
   function query() {
     applied = {
       keyword: filters.keyword.trim() || undefined,
-      purpose: filters.purpose,
+      category: filters.category,
     };
     pagination.current = 1;
-    void load();
+    void loadList();
   }
   function reset() {
     filters.keyword = '';
-    filters.purpose = undefined;
+    filters.category = undefined;
     query();
   }
   function changePage(page: { current?: number; pageSize?: number }) {
     pagination.current =
       page.pageSize === pagination.pageSize ? (page.current ?? 1) : 1;
     pagination.pageSize = page.pageSize ?? 20;
-    void load();
+    void loadList();
   }
   function uploaded(file: LibraryFile) {
     highlighted.value = file.id;
     reset();
+    void loadUsage();
+  }
+  function closePreview() {
+    previewSequence++;
+    previewFile.value = undefined;
+    previewUrl.value = '';
+    previewError.value = '';
+    previewLoading.value = false;
+  }
+  async function preview(file: LibraryFile) {
+    if (file.category !== 'image' || !allowed.value) return;
+    closePreview();
+    const current = ++previewSequence;
+    previewFile.value = file;
+    previewLoading.value = true;
+    try {
+      const data = await getFileUrlApi(file.id);
+      if (current === previewSequence) previewUrl.value = data.url;
+    } catch (error_) {
+      if (current === previewSequence)
+        previewError.value = toApiError(error_).message;
+    } finally {
+      if (current === previewSequence) previewLoading.value = false;
+    }
   }
   async function download(file: LibraryFile) {
     if (busy.value) return;
@@ -114,7 +169,7 @@ export function useFilePage() {
       try {
         await navigator.clipboard.writeText(signed.url);
         message.success(
-          `链接已复制，有效期 ${Math.round(signed.expires_in / 60)} 分钟`,
+          `链接已复制，${signed.expires_in === 0 ? '长期有效' : '5 分钟内有效'}`,
         );
       } catch {
         error.value = '复制失败，请允许浏览器访问剪贴板后重试';
@@ -155,6 +210,13 @@ export function useFilePage() {
     loading,
     busy,
     error,
+    usage,
+    usageError,
+    usagePercent,
+    previewFile,
+    previewUrl,
+    previewLoading,
+    previewError,
     filters,
     highlighted,
     pagination,
@@ -163,6 +225,8 @@ export function useFilePage() {
     reset,
     changePage,
     uploaded,
+    preview,
+    closePreview,
     download,
     copy,
     remove,

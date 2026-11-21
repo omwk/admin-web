@@ -12,6 +12,7 @@ import {
   logoutOthersApi,
   revokeMySessionApi,
   updateMyProfileApi,
+  uploadMyAvatarApi,
   verifyMyEmailApi,
 } from '../core/self-service';
 import { envelope, respond } from './transport';
@@ -25,6 +26,22 @@ const calls = vi.hoisted(() => ({
 vi.mock('#/api/request', () => ({ requestClient: calls }));
 
 describe('personal account contracts', () => {
+  it('uploads an avatar as multipart without overriding its browser boundary', async () => {
+    const file = new File(['image'], 'avatar.png', { type: 'image/png' });
+    const controller = new AbortController();
+    await uploadMyAvatarApi(file, controller.signal);
+    const [path, data, config] = calls.post.mock.lastCall ?? [];
+    expect(path).toBe('/auth/profile/avatar');
+    expect(data.get('file')).toBe(file);
+    expect([...data.keys()]).toEqual(['file']);
+    expect(config).toMatchObject({
+      silent: true,
+      preserveBusinessMessage: true,
+      signal: controller.signal,
+    });
+    expect(config.headers['Content-Type']).toBeUndefined();
+    expect(config.headers['Idempotency-Key']).toBeTruthy();
+  });
   it('uses server pagination and a separate logout-all endpoint', async () => {
     await getMySessionsApi(2, 20);
     expect(calls.get).toHaveBeenCalledWith('/auth/sessions', {

@@ -13,11 +13,14 @@ const state = vi.hoisted(() => ({
   change: vi.fn(),
   success: vi.fn(),
   saved: vi.fn(),
+  upload: vi.fn(),
 }));
 vi.mock('#/api/core/self-service', () => ({
   updateMyProfileApi: state.save,
   changeMyEmailApi: state.change,
+  uploadMyAvatarApi: state.upload,
 }));
+vi.mock('@vben/hooks', () => ({ useAppConfig: () => ({ apiURL: '/api' }) }));
 vi.mock('ant-design-vue', async (original) => ({
   ...(await original<typeof import('ant-design-vue')>()),
   message: { success: state.success },
@@ -216,13 +219,12 @@ describe('personal profile update', () => {
       '验证邮件已发送到新邮箱，24 小时内有效',
     );
   });
-  it('shows a round live avatar preview and saves it', async () => {
-    const url = 'https://example.test/avatar.png';
-    await mount();
-    await fill('头像 URL', url);
+  it('shows an existing avatar only through the round backend proxy and preserves the canonical value', async () => {
+    const url = '/api/v1/avatars/9';
+    await mount({ ...profile, avatar: url });
     expect(
       root.querySelector('.ant-avatar-circle img')?.getAttribute('src'),
-    ).toBe(url);
+    ).toMatch(/^\/api\/v1\/avatars\/9\?v=\d+$/);
     await submit();
     await vi.waitFor(() =>
       expect(state.saved).toHaveBeenCalledWith(
@@ -230,14 +232,14 @@ describe('personal profile update', () => {
       ),
     );
   });
-  it('rejects a non-web avatar without loading or saving it', async () => {
-    await mount();
-    await fill('头像 URL', 'javascript:alert(1)');
-    await submit();
-    await vi.waitFor(() =>
-      expect(root.textContent).toContain('头像须为 HTTP 或 HTTPS 地址'),
+  it('never loads a stored external URL directly or exposes a URL editor', async () => {
+    await mount({
+      ...profile,
+      avatar: 'https://bucket.example.test/private.png',
+    });
+    expect(root.querySelector('.ant-avatar img')?.getAttribute('src')).toMatch(
+      /^\/api\/v1\/avatars\/9\?/,
     );
-    expect(root.querySelector('.ant-avatar img')).toBeNull();
-    expect(state.save).not.toHaveBeenCalled();
+    expect(root.querySelector('input[aria-label="头像 URL"]')).toBeNull();
   });
 });

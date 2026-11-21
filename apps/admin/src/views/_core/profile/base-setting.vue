@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import type { IdentityUser, ProfileInput } from '#/api/model/identity';
 
-import { computed, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 
-import { Alert, Avatar, Button, Form, Input, message } from 'ant-design-vue';
+import { Alert, Button, Form, Input, message } from 'ant-design-vue';
 
 import { changeMyEmailApi, updateMyProfileApi } from '#/api/core/self-service';
 import { toApiError } from '#/api/errors';
+
+import AvatarSetting from './avatar-setting.vue';
 
 const props = defineProps<{ profile: IdentityUser }>();
 const emit = defineEmits<{
@@ -19,23 +21,23 @@ const form = reactive({
   avatar: props.profile.avatar || '',
 });
 const busy = ref(false);
+const avatarBusy = ref(false);
 const error = ref('');
-const fields = reactive({ email: '', phone: '', avatar: '' });
+const fields = reactive({ email: '', phone: '' });
 const pendingEmail = ref('');
-const avatarPreview = computed(() => {
-  try {
-    const url = new URL(form.avatar.trim());
-    return ['http:', 'https:'].includes(url.protocol) ? url.href : undefined;
-  } catch {
-    return undefined;
-  }
-});
+function avatarSaved(avatar: string) {
+  form.avatar = avatar;
+  emit('saved', {
+    nickname: props.profile.nickname,
+    phone: props.profile.phone,
+    avatar,
+  });
+}
 async function save() {
-  if (busy.value) return;
+  if (busy.value || avatarBusy.value) return;
   error.value = '';
   fields.email = '';
   fields.phone = '';
-  fields.avatar = '';
   const email = form.email.trim().toLowerCase();
   const emailChanged =
     email !== (props.profile.email || '').trim().toLowerCase();
@@ -46,9 +48,7 @@ async function save() {
   if (phone && !/^\+[1-9]\d{1,14}$/.test(phone))
     fields.phone =
       '请输入 E.164 格式的手机号，须以 + 和国家代码开头，最多 15 位数字';
-  if (avatar && !avatarPreview.value)
-    fields.avatar = '头像须为 HTTP 或 HTTPS 地址';
-  if (fields.email || fields.phone || fields.avatar) return;
+  if (fields.email || fields.phone) return;
   const input: ProfileInput = {
     nickname: form.nickname,
     avatar,
@@ -103,7 +103,7 @@ async function save() {
   <Form
     layout="vertical"
     :model="form"
-    :disabled="busy"
+    :disabled="busy || avatarBusy"
     novalidate
     @finish="save"
   >
@@ -141,29 +141,13 @@ async function save() {
         autocomplete="tel"
       />
     </Form.Item>
-    <Form.Item
-      label="头像 URL"
-      :validate-status="fields.avatar ? 'error' : undefined"
-      :help="fields.avatar"
-    >
-      <div class="flex items-center gap-3">
-        <Avatar
-          :src="avatarPreview"
-          :size="64"
-          shape="circle"
-          alt="头像预览"
-          class="shrink-0"
-        >
-          {{ form.nickname.slice(0, 1) || profile.username.slice(0, 1) }}
-        </Avatar>
-        <Input
-          v-model:value="form.avatar"
-          aria-label="头像 URL"
-          :aria-invalid="!!fields.avatar"
-          placeholder="https://example.com/avatar.png"
-          :maxlength="2048"
-        />
-      </div>
+    <Form.Item label="头像">
+      <AvatarSetting
+        :profile="profile"
+        :disabled="busy"
+        @busy="avatarBusy = $event"
+        @saved="avatarSaved"
+      />
     </Form.Item>
     <Form.Item label="部门">
       <Input

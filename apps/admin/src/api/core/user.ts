@@ -3,6 +3,7 @@ import type { UserInfo } from '@vben/types';
 import type { IdentityUser, Overview } from '#/api/model/identity';
 
 import { requestClient } from '#/api/request';
+import { avatarUrl } from '#/utils/avatar';
 
 export async function getUserInfoApi(): Promise<UserInfo> {
   const data = await requestClient.get<Overview>('/auth/me');
@@ -14,7 +15,7 @@ export async function getUserInfoApi(): Promise<UserInfo> {
 
 export function toUserInfo(user: IdentityUser): UserInfo {
   return {
-    avatar: user.avatar || '',
+    avatar: avatarUrl(user),
     desc: '',
     homePath: '/home',
     isSuper: user.is_super,
