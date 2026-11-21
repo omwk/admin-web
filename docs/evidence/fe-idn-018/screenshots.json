@@ -1,0 +1,122 @@
+[
+  {
+    "file": "01-users.jpg",
+    "url": "http://127.0.0.1:5667/#/system/users",
+    "title": "用户 - Vben Admin Antd",
+    "at": "2026-11-21T14:33:31.069Z"
+  },
+  {
+    "file": "02-menus.jpg",
+    "url": "http://127.0.0.1:5667/#/system/menus",
+    "title": "菜单 - Vben Admin Antd",
+    "at": "2026-11-21T14:34:27.472Z"
+  },
+  {
+    "file": "03-roles.jpg",
+    "url": "http://127.0.0.1:5667/#/system/roles",
+    "title": "角色 - Vben Admin Antd",
+    "at": "2026-11-21T14:35:26.713Z"
+  },
+  {
+    "file": "04-depts.jpg",
+    "url": "http://127.0.0.1:5667/#/system/depts",
+    "title": "部门 - Vben Admin Antd",
+    "at": "2026-11-21T14:36:36.510Z"
+  },
+  {
+    "file": "05-notifications.jpg",
+    "url": "http://127.0.0.1:5667/#/system/notifications",
+    "title": "通知中心 - Vben Admin Antd",
+    "at": "2026-11-21T14:37:42.186Z"
+  },
+  {
+    "file": "06-channels.jpg",
+    "url": "http://127.0.0.1:5667/#/system/notifications/channels",
+    "title": "通知渠道 - Vben Admin Antd",
+    "at": "2026-11-21T14:38:39.865Z"
+  },
+  {
+    "file": "07-audit-logs.jpg",
+    "url": "http://127.0.0.1:5667/#/system/audit-logs",
+    "title": "审计日志 - Vben Admin Antd",
+    "at": "2026-11-21T14:40:01.506Z"
+  },
+  {
+    "file": "08-login-logs.jpg",
+    "url": "http://127.0.0.1:5667/#/system/login-logs",
+    "title": "登录历史 - Vben Admin Antd",
+    "at": "2026-11-21T14:41:07.703Z"
+  },
+  {
+    "file": "09-tenants.jpg",
+    "url": "http://127.0.0.1:5667/#/system/tenants",
+    "title": "租户管理 - Vben Admin Antd",
+    "at": "2026-11-21T15:02:09.505Z"
+  },
+  {
+    "file": "10-tenant-templates.jpg",
+    "url": "http://127.0.0.1:5667/#/system/tenants/templates",
+    "title": "租户模板 - Vben Admin Antd",
+    "at": "2026-11-21T15:02:42.353Z"
+  },
+  {
+    "file": "11-template-editor.jpg",
+    "url": "http://127.0.0.1:5667/#/system/tenants/templates/1",
+    "title": "模板编辑 - Vben Admin Antd",
+    "at": "2026-11-21T15:03:17.409Z"
+  },
+  {
+    "file": "12-dicts.jpg",
+    "url": "http://127.0.0.1:5667/#/system/dicts",
+    "title": "数据字典 - Vben Admin Antd",
+    "at": "2026-11-21T15:03:50.405Z"
+  },
+  {
+    "file": "13-settings.jpg",
+    "url": "http://127.0.0.1:5667/#/system/settings",
+    "title": "系统配置 - Vben Admin Antd",
+    "at": "2026-11-21T15:04:29.714Z"
+  },
+  {
+    "file": "14-storage.jpg",
+    "url": "http://127.0.0.1:5667/#/system/storage",
+    "title": "存储配置 - Vben Admin Antd",
+    "at": "2026-11-21T15:14:56.452Z"
+  },
+  {
+    "file": "15-files.jpg",
+    "url": "http://127.0.0.1:5667/#/system/files",
+    "title": "文件管理 - Vben Admin Antd",
+    "at": "2026-11-21T15:15:50.231Z"
+  },
+  {
+    "file": "16-orders.jpg",
+    "url": "http://127.0.0.1:5667/#/trade/orders",
+    "title": "订单 - Vben Admin Antd",
+    "at": "2026-11-21T15:17:29.001Z"
+  },
+  {
+    "file": "17-products.jpg",
+    "url": "http://127.0.0.1:5667/#/catalog/products",
+    "title": "商品管理 - Vben Admin Antd",
+    "at": "2026-11-21T15:19:18.540Z"
+  },
+  {
+    "file": "18-product-detail.jpg",
+    "url": "http://127.0.0.1:5667/#/catalog/products/1",
+    "title": "商品详情 - Vben Admin Antd",
+    "at": "2026-11-21T15:20:10.791Z"
+  },
+  {
+    "file": "19-customers.jpg",
+    "url": "http://127.0.0.1:5667/#/crm/customers",
+    "title": "客户列表 - Vben Admin Antd",
+    "at": "2026-11-21T15:22:08.541Z"
+  },
+  {
+    "file": "20-inquiries.jpg",
+    "url": "http://127.0.0.1:5667/#/crm/inquiries",
+    "title": "询盘 - Vben Admin Antd",
+    "at": "2026-11-21T15:23:24.435Z"
+  }
+]

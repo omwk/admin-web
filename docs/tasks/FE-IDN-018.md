@@ -3,7 +3,7 @@
 - ID: FE-IDN-018
 - 类型: 重构
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 已实现，验收完成（2026-11-21）
 - 预计: 0.3 人日
 - 分支: `feat/fe-idn-018-registry`
 - 依赖: BE-IDN-026（菜单简写）
@@ -81,3 +81,23 @@ access.ts、menus 相关测试
 验收按卡片 §3 六条逐条贴证据；第 5 条要逐个菜单截图验证。
 完成后停下报告，并按 AGENTS §12 清理测试数据。
 ```
+
+## 5. 验收记录（2026-11-21）
+
+分支 `feat/fe-idn-018-registry`，基线 `ad8c47a`。
+后端 fixture 固定到 `23872a6`；当前后端 seed 源码与该提交一致，实际 `/auth/menus` 返回的 20 个页面逐项比对通过。
+
+| # | 结果 | 证据 |
+| --- | --- | --- |
+| 1 | 注册表全部使用无前导 `/`、无 `.vue` 的简写键 | `component-registry.test.ts` 全注册表断言；[完整报告](../evidence/fe-idn-018/acceptance.md) |
+| 2 | 简写、带前导斜杠、带 `.vue` 及旧 views 前缀均解析到同一 loader | 7 组归一化输入测试；旧前缀兼容注明 2027-02-28 后删除 |
+| 3 | 未知键返回 forbidden 并 warn，禁用缓存；不自动补 `/index` | 11 组拒绝输入测试及真实 Vben 路由 loader 断言 |
+| 4 | 后端 20 个页面全部可解析并生成真实路由，包括 3 个隐藏页 | [接口契约比对](../evidence/fe-idn-018/backend-menu-contract.json)、[运行记录](../evidence/fe-idn-018/runtime.json) |
+| 5 | 17 个可见菜单及 3 个隐藏页逐个点击、截图 | [20 页逐项截图索引](../evidence/fe-idn-018/acceptance.md)、[截图路径与时间](../evidence/fe-idn-018/screenshots.json) |
+| 6 | lint / typecheck / unit / build 通过 | [命令及退出码](../evidence/fe-idn-018/checks.json)、[lint](../evidence/fe-idn-018/lint.txt)、[typecheck](../evidence/fe-idn-018/typecheck.txt)、[unit](../evidence/fe-idn-018/unit.txt)、[build](../evidence/fe-idn-018/build.txt) |
+
+说明：`channels`、`detail`、`template-editor` 等后端明确指定的非 index 页面保留其实际文件名，未改成虚构的 `/index`。订单、客户列表、询盘沿用已有占位页。文件页在本卡隔离环境中显示未配置对象存储提示，页面正常渲染。
+
+已清理：在开发数据库的本卡独占 schema 中执行 `audit-prune --before 2026-11-21T15:39:50.505Z` → `deleted=12`；测试商品和模板经 API 删除，随后 `DROP SCHEMA feidn018_runtime_1795270630026 CASCADE` → 残留 0；独占 Redis DB13 残留 0。清理脚本修正令牌过期及商品删除 version 参数后重跑通过，原有 public 业务数据、审计行摘要一致。详见[浏览器验收清理记录](../evidence/fe-idn-018/cleanup-browser-run.json)及[完整重跑记录](../evidence/fe-idn-018/runtime.json)。未保留本卡测试数据，未修改开发库系统配置。
+
+上述摘要比较截至清理完成（2026-11-21 15:41:36 UTC）。后续只读复核发现共享库在 17:33:17 UTC 更新用户 109、新增审计 2633，已原样保留；本卡残留仍为 0，见[最终检查](../evidence/fe-idn-018/final-state.json)。

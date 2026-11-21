@@ -4,31 +4,31 @@ import type { RouteRecordStringComponent } from '@vben/types';
 export function personalRoutes(): RouteRecordStringComponent[] {
   return [
     {
-      component: '/home/index.vue',
+      component: 'home/index',
       path: '/home',
       name: 'Home',
       meta: { hideInMenu: true, title: '首页' },
     },
     {
-      component: '/_core/profile/index.vue',
+      component: '_core/profile/index',
       path: '/profile',
       name: 'Profile',
       meta: { hideInMenu: true, title: '个人资料', keepAlive: false },
     },
     {
-      component: '/_core/profile/notifications.vue',
+      component: '_core/profile/notifications',
       path: '/profile/notifications',
       name: 'PersonalNotifications',
       meta: { hideInMenu: true, title: '通知方式', keepAlive: false },
     },
     {
-      component: '/system/notification/preferences-page.vue',
+      component: 'system/notification/preferences-page',
       path: '/system/notifications/preferences',
       name: 'NotificationPreferences',
       meta: { hideInMenu: true, title: '通知偏好', keepAlive: false },
     },
     {
-      component: '/_core/profile/sessions.vue',
+      component: '_core/profile/sessions',
       path: '/profile/sessions',
       name: 'MySessions',
       meta: { hideInMenu: true, title: '我的会话', keepAlive: false },
@@ -42,7 +42,7 @@ export function forbiddenShellRoutes(): RouteRecordStringComponent[] {
     {
       path: '/403',
       name: 'Forbidden',
-      component: '/_core/fallback/forbidden.vue',
+      component: '_core/fallback/forbidden',
       meta: { hideInMenu: true, hideInTab: true, title: '403' },
     },
   ];

@@ -51,7 +51,7 @@ export function broadcastEntryRoutes(
     {
       path: '/system/notifications/broadcasts',
       name: 'SystemNotificationBroadcasts',
-      component: '/system/notification/broadcasts.vue',
+      component: 'system/notification/broadcasts',
       meta: { hideInMenu: true, title: '公告发布', keepAlive: false },
     },
   ];

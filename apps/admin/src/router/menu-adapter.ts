@@ -3,7 +3,7 @@ import type { RouteRecordStringComponent } from '@vben/types';
 import type { IdentityMenu } from '#/api/model/menu';
 
 import {
-  NOT_FOUND_COMPONENT,
+  FORBIDDEN_COMPONENT,
   resolveMenuComponent,
 } from './component-registry';
 
@@ -48,11 +48,13 @@ export function menusToRoutes(
       }
       const children = menusToRoutes(menu.children ?? [], path);
       const isDirectory = menu.type === 'dir' && children.length > 0;
-      let component = resolveMenuComponent(menu.component);
+      let component: string;
       if (link) {
-        component = '/pending/index.vue';
+        component = 'pending/index';
       } else if (isDirectory) {
         component = 'MenuOutlet';
+      } else {
+        component = resolveMenuComponent(menu.component);
       }
       const route: RouteRecordStringComponent = {
         children: isDirectory ? children : [],
@@ -62,7 +64,7 @@ export function menusToRoutes(
           // other frontend guard flags from the backend's free-form meta object.
           icon: menu.icon || undefined,
           hideInMenu: menu.visible === false,
-          keepAlive: menu.keep_alive && component !== NOT_FOUND_COMPONENT,
+          keepAlive: menu.keep_alive && component !== FORBIDDEN_COMPONENT,
           order: menu.sort,
           title:
             typeof menu.meta?.title === 'string' ? menu.meta.title : menu.name,

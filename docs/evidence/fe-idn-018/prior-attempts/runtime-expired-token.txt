@@ -1,0 +1,19 @@
+FE-IDN-018 runtime ready; 20 seed pages verified; waiting for browser checks
+109 |     ...(input === undefined ? {} : { body: JSON.stringify(input) }),
+110 |   });
+111 |   const body = response.status === 204 ? {} : await response.json();
+112 |   report.requests.push({ path, method, status: response.status });
+113 |   assert.ok(
+114 |     response.ok,
+               ^
+AssertionError: DELETE /admin/products/1: 401 token 过期
+ generatedMessage: false,
+     actual: false,
+   expected: true,
+   operator: "==",
+       code: "ERR_ASSERTION"
+
+      at api (D:\code\admin-web\apps\admin\e2e\fe-idn-018-runtime.mjs:114:10)
+      at processTicksAndRejections (native:7:39)
+
+Bun v1.3.6 (Windows x64)

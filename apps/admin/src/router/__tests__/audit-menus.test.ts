@@ -36,10 +36,10 @@ describe('audit menu boundary', () => {
   });
   it('resolves the backend component names', () => {
     expect(resolveMenuComponent('system/audit-log/index')).toBe(
-      '/system/audit-log/index.vue',
+      'system/audit-log/index',
     );
     expect(resolveMenuComponent('system/login-log/index')).toBe(
-      '/system/login-log/index.vue',
+      'system/login-log/index',
     );
   });
 });

@@ -1,0 +1,134 @@
+[
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:06:47.625Z",
+    "url": "http://127.0.0.1:5667/#/system/storage"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:12:31.879Z",
+    "url": "http://127.0.0.1:5667/#/auth/login?redirect=%252Fsystem%252Fstorage"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:12:31.880Z",
+    "url": "http://127.0.0.1:5667/#/auth/login?redirect=%252Fsystem%252Fstorage"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:12:31.880Z",
+    "url": "http://127.0.0.1:5667/#/auth/login?redirect=%252Fsystem%252Fstorage"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:12:31.880Z",
+    "url": "http://127.0.0.1:5667/#/auth/login?redirect=%252Fsystem%252Fstorage"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:12:31.880Z",
+    "url": "http://127.0.0.1:5667/#/auth/login?redirect=%252Fsystem%252Fstorage"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:12:31.880Z",
+    "url": "http://127.0.0.1:5667/#/auth/login?redirect=%252Fsystem%252Fstorage"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:12:31.880Z",
+    "url": "http://127.0.0.1:5667/#/auth/login?redirect=%252Fsystem%252Fstorage"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:14:56.762Z",
+    "url": "http://127.0.0.1:5667/#/system/files"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:16:37.005Z",
+    "url": "http://127.0.0.1:5667/#/trade/orders"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:16:37.005Z",
+    "url": "http://127.0.0.1:5667/#/trade/orders"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:17:29.132Z",
+    "url": "http://127.0.0.1:5667/#/trade/orders"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:17:29.132Z",
+    "url": "http://127.0.0.1:5667/#/trade/orders"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:17:29.132Z",
+    "url": "http://127.0.0.1:5667/#/trade/orders"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:18:22.629Z",
+    "url": "http://127.0.0.1:5667/#/trade/orders"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:18:22.629Z",
+    "url": "http://127.0.0.1:5667/#/trade/orders"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:19:18.755Z",
+    "url": "http://127.0.0.1:5667/#/catalog/products/1"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:19:18.773Z",
+    "url": "http://127.0.0.1:5667/#/catalog/products/1"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:21:07.127Z",
+    "url": "http://127.0.0.1:5667/#/crm/customers"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:21:07.139Z",
+    "url": "http://127.0.0.1:5667/#/crm/customers"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:22:08.690Z",
+    "url": "http://127.0.0.1:5667/#/crm/customers"
+  },
+  {
+    "level": "error",
+    "message": "Error: Could not establish connection. Receiving end does not exist.",
+    "timestamp": "2026-11-21T15:22:08.703Z",
+    "url": "http://127.0.0.1:5667/#/crm/customers"
+  }
+]

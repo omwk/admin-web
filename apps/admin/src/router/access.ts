@@ -45,7 +45,13 @@ async function generateAccess(options: GenerateMenuAndRoutesOptions) {
     },
     forbiddenComponent: () => import('#/views/_core/fallback/forbidden.vue'),
     layoutMap: { MenuOutlet: () => import('#/layouts/menu-outlet.vue') },
-    pageMap: componentRegistry,
+    // Vben expects file-style page-map keys; keep that convention at this boundary.
+    pageMap: Object.fromEntries(
+      Object.entries(componentRegistry).map(([key, loader]) => [
+        `/${key}.vue`,
+        loader,
+      ]),
+    ),
   });
 }
 

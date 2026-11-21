@@ -12,6 +12,7 @@ import { getAllMenusApi } from '#/api/core/menu';
 import { generateAccess } from '../access';
 import { componentRegistry, resolveMenuComponent } from '../component-registry';
 import { createStaticRouteResetter } from '../reset';
+import backend from './fixtures/backend-seed-menus.json';
 
 const state = vi.hoisted(() => ({
   menus: [] as IdentityMenu[],
@@ -115,12 +116,12 @@ describe('menu driven routing', () => {
         children: [
           menu(2, {
             path: '/catalog/products',
-            component: '/catalog/product/index.vue',
+            component: 'catalog/product/index',
             permission_code: 'product:spu:list',
             children: [
               menu(3, {
                 path: '/catalog/products/:id',
-                component: '/catalog/product/detail.vue',
+                component: 'catalog/product/detail',
                 visible: false,
                 permission_code: 'product:spu:read',
               }),
@@ -134,20 +135,20 @@ describe('menu driven routing', () => {
         children: [
           menu(5, {
             path: '/system/tenants',
-            component: '/system/tenant/index.vue',
+            component: 'system/tenant/index',
             keep_alive: true,
             permission_code: 'system:tenant:list',
             children: [
               menu(6, {
                 path: '/system/tenants/templates',
-                component: '/system/tenant/index.vue',
+                component: 'system/tenant/index',
                 keep_alive: true,
                 visible: false,
                 permission_code: 'system:tenant:manage',
               }),
               menu(7, {
                 path: '/system/tenants/templates/:id',
-                component: '/system/tenant/template-editor.vue',
+                component: 'system/tenant/template-editor',
                 keep_alive: true,
                 visible: false,
                 permission_code: 'system:tenant:manage',
@@ -166,9 +167,9 @@ describe('menu driven routing', () => {
     });
     const result = await generateAccess({ router, routes: [] });
     for (const [path, component] of [
-      ['/catalog/products/7', '/catalog/product/detail.vue'],
-      ['/system/tenants/templates', '/system/tenant/index.vue'],
-      ['/system/tenants/templates/3', '/system/tenant/template-editor.vue'],
+      ['/catalog/products/7', 'catalog/product/detail'],
+      ['/system/tenants/templates', 'system/tenant/index'],
+      ['/system/tenants/templates/3', 'system/tenant/template-editor'],
     ] as const) {
       const resolved = router.resolve(path);
       expect(resolved.name).not.toBe('NotFound');
@@ -200,23 +201,23 @@ describe('menu driven routing', () => {
           menu(2, {
             path: 'dicts',
             permission_code: 'system:dict:list',
-            component: '/system/dict/index.vue',
+            component: 'system/dict/index',
           }),
           menu(3, {
             path: 'settings',
             permission_code: 'system:setting:list',
-            component: '/system/setting/index.vue',
+            component: 'system/setting/index',
           }),
           menu(4, {
             path: 'tenants',
             permission_code: 'system:tenant:list',
-            component: '/system/tenant/index.vue',
+            component: 'system/tenant/index',
           }),
         ],
       }),
       menu(5, {
         path: '/catalog/products',
-        component: '/catalog/product/index.vue',
+        component: 'catalog/product/index',
         permission_code: 'product:spu:list',
       }),
     ];
@@ -257,7 +258,7 @@ describe('menu driven routing', () => {
     state.menus = [
       menu(1, {
         path: '/system/dicts',
-        component: '/system/dict/index.vue',
+        component: 'system/dict/index',
         permission_code: 'system:dict:list',
       }),
     ];
@@ -269,28 +270,49 @@ describe('menu driven routing', () => {
     expect(router.resolve('/system/dicts').name).toBe('NotFound');
   });
 
-  it('covers every backend seed page component while allowing unused registry entries', () => {
-    for (const component of [
-      '/system/user/index.vue',
-      '/system/role/index.vue',
-      '/system/menu/index.vue',
-      '/system/dept/index.vue',
-      '/system/dict/index.vue',
-      '/system/setting/index.vue',
-      '/system/tenant/index.vue',
-      '/system/tenant/template-editor.vue',
-      '/system/notification/index.vue',
-      '/system/notification/channels.vue',
-      '/system/audit-log/index.vue',
-      '/system/login-log/index.vue',
-      '/catalog/product/index.vue',
-      '/catalog/product/detail.vue',
-      '/trade/order/index.vue',
-      '/crm/customer/index.vue',
-      '/crm/inquiry/index.vue',
-    ]) {
-      expect(resolveMenuComponent(component)).toBe(component);
-      expect(componentRegistry[component]).toBeTypeOf('function');
+  it('generates a real route for every backend seed page while allowing unused registry entries', async () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const pages = backend.menus.filter((entry) => entry.type === 'menu');
+    state.menus = pages.map((entry, index) =>
+      menu(index + 1, {
+        component: entry.component,
+        path: entry.path,
+        visible: entry.visible,
+      }),
+    );
+    state.permissions = [
+      'system:tenant:list',
+      'system:tenant:manage',
+      'system:storage:manage',
+      'system:notify:list',
+      'system:notify:manage',
+      'system:audit:list',
+    ];
+    useUserStore().setUserInfo({
+      avatar: '',
+      realName: '平台管理员',
+      userId: '1',
+      username: 'admin',
+      tenantId: 1,
+      isSuper: true,
+    });
+    const router = createRouter({
+      history: createMemoryHistory(),
+      routes: [
+        { children: [], name: 'Root', path: '/', meta: { title: 'Root' } },
+      ],
+    });
+    await generateAccess({ router, routes: [] });
+    expect(pages).toHaveLength(20);
+    for (const { component, path } of pages) {
+      const key = resolveMenuComponent(component);
+      const concretePath = path.replace(':id', '7');
+      expect(
+        router.resolve(concretePath).matched.at(-1)?.components?.default,
+      ).toBe(componentRegistry[key]);
     }
+    expect(warn).not.toHaveBeenCalled();
+    expect(error).not.toHaveBeenCalled();
   });
 });
