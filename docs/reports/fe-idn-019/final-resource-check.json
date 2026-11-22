@@ -1,0 +1,37 @@
+{
+  "task": "FE-IDN-019",
+  "checkedAt": "2026-11-22T22:51:39.462Z",
+  "remainingSchemas": 0,
+  "remainingRedisKeys": 0,
+  "remainingMinioContainers": 0,
+  "ports": [
+    {
+      "port": 5667,
+      "listening": false
+    },
+    {
+      "port": 18081,
+      "listening": false
+    },
+    {
+      "port": 19000,
+      "listening": false
+    }
+  ],
+  "publicRows": {
+    "tenant": 2,
+    "sys_user": 5,
+    "sys_role": 4,
+    "sys_menu": 51,
+    "sys_permission": 239,
+    "sys_dept": 9,
+    "sys_setting": 2,
+    "channel_provider": 1,
+    "notify_template": 17,
+    "storage_provider": 1,
+    "file_object": 2
+  },
+  "originalPublicRowCountsPreserved": true,
+  "originalAuditRowsPreserved": true,
+  "passed": true
+}
