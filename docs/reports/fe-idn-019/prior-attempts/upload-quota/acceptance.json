@@ -1,0 +1,290 @@
+{
+  "task": "FE-IDN-019",
+  "startedAt": "2026-11-22T22:45:18.522Z",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "status": "ready",
+      "imageLoaded": true,
+      "screenshot": "01-ready.png"
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "status": "failed",
+      "typeIcon": true,
+      "emptyStatusTypeIcon": true,
+      "requestsDuringSixSeconds": 0,
+      "originalPreview": true,
+      "screenshot": "05-failed-and-empty.png"
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M82PYVJAN0NGMF452DQVWF1V"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M82PYVSEZ2M326D9VNAJYFMZ"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M82PYVVT71VK94AAJ5V5QZWY"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82PYVWVG45DW9ZD0G3C099R"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/2/url",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 413
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M82PZ9B28E706WC4DV46Z31C"
+    },
+    {
+      "path": "/api/v1/admin/files?include_avatar=true&page_size=100",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82PZ9HVMT9A45C43QWACQRD"
+    },
+    {
+      "path": "/api/v1/admin/files/3/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82PZ9J6TCXV3N3DVASTYNWY"
+    },
+    {
+      "path": "/api/v1/admin/files/3",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/2/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82PZ9K9VCX5ZPFR1H6JKPAG"
+    },
+    {
+      "path": "/api/v1/admin/files/2",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/1/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82PZ9M4T7D31MG5WN4K701W"
+    },
+    {
+      "path": "/api/v1/admin/files/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M82PZAA5MKMXXJ48HA6ZH3E1"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "DELETE",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "menuFixture": {
+    "sql": "UPDATE sys_menu SET component='system/files/index' WHERE id=$1 AND path='/system/files' RETURNING id",
+    "id": 27,
+    "originalComponent": "system/files/index",
+    "rows": 1,
+    "reason": "Existing registry full-path format; shorthand resolver belongs to FE-IDN-018"
+  },
+  "fixture": {
+    "menuIDs": [],
+    "providerID": 1,
+    "prefix": "feidn019_1795387518522"
+  },
+  "listResponses": [
+    {
+      "at": "2026-11-22T22:45:23.162Z",
+      "files": []
+    },
+    {
+      "at": "2026-11-22T22:45:23.414Z",
+      "files": [
+        {
+          "id": 1,
+          "thumb_status": "ready",
+          "hasThumb": true
+        }
+      ]
+    },
+    {
+      "at": "2026-11-22T22:45:23.890Z",
+      "files": [
+        {
+          "id": 2,
+          "thumb_status": "failed",
+          "hasThumb": false
+        },
+        {
+          "id": 1,
+          "thumb_status": "ready",
+          "hasThumb": true
+        }
+      ]
+    },
+    {
+      "at": "2026-11-22T22:45:24.058Z",
+      "files": [
+        {
+          "id": 3,
+          "thumb_status": "",
+          "hasThumb": false
+        },
+        {
+          "id": 2,
+          "thumb_status": "failed",
+          "hasThumb": false
+        },
+        {
+          "id": 1,
+          "thumb_status": "ready",
+          "hasThumb": true
+        }
+      ]
+    }
+  ],
+  "failure": "Expected values to be strictly equal:\n\n413 !== 201\n",
+  "failureStack": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n413 !== 201\n\n    at upload (file:///D:/code/admin-web/.temp/fe-idn-019.mjs:33:10)\n    at async file:///D:/code/admin-web/.temp/fe-idn-019.mjs:216:17",
+  "objectCleanup": [
+    {
+      "id": 3,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 2,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 1,
+      "statusAfterCleanup": 404
+    }
+  ],
+  "configurationRestored": {
+    "accessMode": "public",
+    "quotaPerUserMB": 1,
+    "isolatedProviderDeleted": true
+  },
+  "menuRestored": {
+    "sql": "UPDATE sys_menu SET component=$1 WHERE id=$2 RETURNING id",
+    "rows": 1,
+    "id": 27,
+    "restored": true
+  },
+  "cleanupPassed": true,
+  "finishedAt": "2026-11-22T22:45:34.587Z"
+}

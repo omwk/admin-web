@@ -200,7 +200,7 @@ const typeIcons = {
         <template #bodyCell="{ column, record }">
           <template v-if="column.dataIndex === 'preview'">
             <button
-              v-if="record.category === 'image' && record.thumb_url"
+              v-if="record.thumb_status === 'ready' && record.thumb_url"
               type="button"
               :aria-label="`预览 ${record.original_name}`"
               class="block h-12 w-12 overflow-hidden rounded-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
@@ -215,6 +215,18 @@ const typeIcons = {
                 class="h-12 w-12 object-cover"
               />
             </button>
+            <Tooltip
+              v-else-if="record.thumb_status === 'pending'"
+              title="正在生成预览"
+            >
+              <span
+                role="status"
+                aria-label="正在生成预览"
+                class="flex h-12 w-12 items-center justify-center rounded-md bg-muted"
+              >
+                <Spin size="small" />
+              </span>
+            </Tooltip>
             <span
               v-else
               role="img"

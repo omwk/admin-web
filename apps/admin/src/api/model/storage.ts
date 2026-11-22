@@ -41,6 +41,7 @@ export interface LibraryFile {
   original_name: string;
   sha256: string;
   size_bytes: number;
+  thumb_status?: '' | 'failed' | 'pending' | 'ready';
   thumb_url?: null | string;
   uploaded_by?: null | number;
   uploaded_by_name?: string;

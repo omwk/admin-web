@@ -1,6 +1,14 @@
 import type { FileCategory, FileUsage, LibraryFile } from '#/api/model/storage';
 
-import { computed, onMounted, onUnmounted, reactive, ref } from 'vue';
+import {
+  computed,
+  onActivated,
+  onDeactivated,
+  onMounted,
+  onUnmounted,
+  reactive,
+  ref,
+} from 'vue';
 
 import { message, Modal } from 'ant-design-vue';
 
@@ -40,6 +48,9 @@ export function useFilePage() {
   let sequence = 0;
   let usageSequence = 0;
   let previewSequence = 0;
+  let active = true;
+  let pollTimer: ReturnType<typeof setTimeout> | undefined;
+  let pollAttempts = 0;
   const pagination = reactive({
     current: 1,
     pageSize: 20,
@@ -47,16 +58,56 @@ export function useFilePage() {
     showSizeChanger: true,
     pageSizeOptions: ['20', '50', '100'],
   });
-  async function loadList() {
-    if (!allowed.value) return;
+  function clearPoll() {
+    clearTimeout(pollTimer);
+    pollTimer = undefined;
+  }
+  function schedulePoll() {
+    clearPoll();
+    if (
+      !active ||
+      !allowed.value ||
+      pollAttempts >= 12 ||
+      !rows.value.some((file) => file.thumb_status === 'pending')
+    )
+      return;
+    pollTimer = setTimeout(() => {
+      pollTimer = undefined;
+      pollAttempts++;
+      void loadList(true);
+    }, 5000);
+  }
+  function pausePolling() {
+    active = false;
+    clearPoll();
+    sequence++;
+    loading.value = false;
+  }
+  async function loadList(background = false) {
+    if (!allowed.value || !active) return;
+    clearPoll();
     const current = ++sequence;
-    loading.value = true;
-    error.value = '';
+    if (!background) {
+      pollAttempts = 0;
+      loading.value = true;
+      error.value = '';
+    }
     try {
       const data = await getFilesApi(pagination.current, pagination.pageSize, {
         ...applied,
       });
       if (current !== sequence) return;
+      if (background) {
+        const thumbnails = new Map(data.list.map((file) => [file.id, file]));
+        for (const row of rows.value) {
+          const updated = thumbnails.get(row.id);
+          if (updated) {
+            row.thumb_status = updated.thumb_status;
+            row.thumb_url = updated.thumb_url;
+          }
+        }
+        return;
+      }
       if (data.list.length === 0 && pagination.current > 1 && data.total > 0) {
         pagination.current = Math.max(
           1,
@@ -68,9 +119,13 @@ export function useFilePage() {
       rows.value = data.list;
       pagination.total = data.total;
     } catch (error_) {
-      if (current === sequence) error.value = toApiError(error_).message;
+      if (current === sequence && !background)
+        error.value = toApiError(error_).message;
     } finally {
-      if (current === sequence) loading.value = false;
+      if (current === sequence) {
+        if (!background) loading.value = false;
+        schedulePoll();
+      }
     }
   }
   async function loadUsage() {
@@ -89,8 +144,15 @@ export function useFilePage() {
     await Promise.all([loadList(), loadUsage()]);
   }
   onMounted(load);
+  onDeactivated(pausePolling);
+  onActivated(() => {
+    if (!active) {
+      active = true;
+      void load();
+    }
+  });
   onUnmounted(() => {
-    sequence++;
+    pausePolling();
     usageSequence++;
     previewSequence++;
   });

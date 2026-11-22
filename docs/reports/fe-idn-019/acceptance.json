@@ -1,0 +1,463 @@
+{
+  "task": "FE-IDN-019",
+  "startedAt": "2026-11-22T22:50:56.778Z",
+  "origin": "http://127.0.0.1:5667",
+  "backend": "http://127.0.0.1:18081",
+  "checks": [
+    {
+      "item": 1,
+      "result": "pass",
+      "status": "ready",
+      "imageLoaded": true,
+      "screenshot": "01-ready.png"
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "uploadStatus": "pending",
+      "spinner": true,
+      "tooltip": "正在生成预览",
+      "screenshot": "02-pending-tooltip.png"
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "fileID": 4,
+      "filename": "FE-IDN-019-12MB.png",
+      "bytes": 12586943,
+      "dimensions": [2048, 2048],
+      "uploadStatus": "pending",
+      "finalStatus": "ready",
+      "elapsedMs": 7068,
+      "manualRefreshes": 0,
+      "screenshot": "03-real-12MB-auto-thumbnail.png",
+      "beforeScroll": {
+        "left": 120,
+        "top": 0
+      },
+      "afterScroll": {
+        "left": 120,
+        "top": 0
+      },
+      "beforeVertical": 120,
+      "afterVertical": 120,
+      "draftFilterPreserved": true,
+      "previewStayedOpen": true
+    },
+    {
+      "item": 4,
+      "result": "pass",
+      "noPending": true,
+      "observationMs": 11000,
+      "additionalListRequests": 0
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "status": "failed",
+      "typeIcon": true,
+      "emptyStatusTypeIcon": true,
+      "requestsDuringSixSeconds": 0,
+      "originalPreview": true,
+      "screenshot": "05-failed-and-empty.png"
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "largeDimensions": [2048, 2048],
+      "failedDimensions": [640, 360],
+      "originalSHA256Matched": true,
+      "largeScreenshot": "06-large-original-preview.png",
+      "failedScreenshot": "06-failed-original-preview.png"
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "commands": [
+        {
+          "command": "pnpm lint",
+          "exitCode": 0,
+          "log": "lint.txt"
+        },
+        {
+          "command": "pnpm check:type",
+          "exitCode": 0,
+          "log": "typecheck.txt",
+          "successfulTasks": 38
+        },
+        {
+          "command": "pnpm test:unit --maxWorkers=4",
+          "exitCode": 0,
+          "log": "unit.txt",
+          "passedFiles": 168,
+          "passedTests": 1225
+        },
+        {
+          "command": "pnpm --filter @vben/web-antd build",
+          "exitCode": 0,
+          "log": "build.txt"
+        },
+        {
+          "command": "git diff --check",
+          "exitCode": 0
+        }
+      ],
+      "evidence": "verification.json"
+    }
+  ],
+  "requests": [
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M82Q95WRPPGQAP84VTTNJJJ7"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers",
+      "method": "POST",
+      "status": 201,
+      "traceId": "01M82Q963KSJPEQ5Z1WYYA0EPB"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M82Q965F24Q1QQ86H817572S"
+    },
+    {
+      "path": "/api/v1/admin/menus",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82Q9667FF3Q474R7DVS01QA"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/auth/menus",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications/unread-count",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/notifications",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/2/url",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "POST",
+      "status": 201
+    },
+    {
+      "path": "/api/v1/admin/files/usage",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/4/url",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "path": "/api/v1/admin/files/4/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82Q9R37YYM1K336P0T7YPY4"
+    },
+    {
+      "path": "/api/v1/auth/login",
+      "method": "POST",
+      "status": 200,
+      "traceId": "01M82QA2ZR2H5ARGZ2C2AJQKJ4"
+    },
+    {
+      "path": "/api/v1/admin/files?include_avatar=true&page_size=100",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82QA36ECKJ2EMGXC6WBEAZH"
+    },
+    {
+      "path": "/api/v1/admin/files/4/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82QA36SMCGBM71K6BY91Z10"
+    },
+    {
+      "path": "/api/v1/admin/files/4",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/3/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82QA37HRRHC1Z5JWHTZKAN2"
+    },
+    {
+      "path": "/api/v1/admin/files/3",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/2/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82QA38B23CR51K8YQCEAPPK"
+    },
+    {
+      "path": "/api/v1/admin/files/2",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/files/1/url",
+      "method": "GET",
+      "status": 200,
+      "traceId": "01M82QA392HBCG0Y80B0Q1T51Y"
+    },
+    {
+      "path": "/api/v1/admin/files/1",
+      "method": "DELETE",
+      "status": 204
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "PUT",
+      "status": 200,
+      "traceId": "01M82QA3ZHSFRDAMC20MFXJAWD"
+    },
+    {
+      "path": "/api/v1/admin/storage-providers/1",
+      "method": "DELETE",
+      "status": 204
+    }
+  ],
+  "browserErrors": [],
+  "menuFixture": {
+    "sql": "UPDATE sys_menu SET component='system/files/index' WHERE id=$1 AND path='/system/files' RETURNING id",
+    "id": 27,
+    "originalComponent": "system/files/index",
+    "rows": 1,
+    "reason": "Existing registry full-path format; shorthand resolver belongs to FE-IDN-018"
+  },
+  "fixture": {
+    "menuIDs": [],
+    "providerID": 1,
+    "prefix": "feidn019_1795387856778"
+  },
+  "listResponses": [
+    {
+      "at": "2026-11-22T22:51:00.421Z",
+      "files": []
+    },
+    {
+      "at": "2026-11-22T22:51:00.634Z",
+      "files": [
+        {
+          "id": 1,
+          "thumb_status": "ready",
+          "hasThumb": true
+        }
+      ]
+    },
+    {
+      "at": "2026-11-22T22:51:00.994Z",
+      "files": [
+        {
+          "id": 2,
+          "thumb_status": "failed",
+          "hasThumb": false
+        },
+        {
+          "id": 1,
+          "thumb_status": "ready",
+          "hasThumb": true
+        }
+      ]
+    },
+    {
+      "at": "2026-11-22T22:51:01.114Z",
+      "files": [
+        {
+          "id": 3,
+          "thumb_status": "",
+          "hasThumb": false
+        },
+        {
+          "id": 2,
+          "thumb_status": "failed",
+          "hasThumb": false
+        },
+        {
+          "id": 1,
+          "thumb_status": "ready",
+          "hasThumb": true
+        }
+      ]
+    },
+    {
+      "at": "2026-11-22T22:51:09.911Z",
+      "files": [
+        {
+          "id": 4,
+          "thumb_status": "pending",
+          "hasThumb": false
+        },
+        {
+          "id": 3,
+          "thumb_status": "",
+          "hasThumb": false
+        },
+        {
+          "id": 2,
+          "thumb_status": "failed",
+          "hasThumb": false
+        },
+        {
+          "id": 1,
+          "thumb_status": "ready",
+          "hasThumb": true
+        }
+      ]
+    },
+    {
+      "at": "2026-11-22T22:51:14.900Z",
+      "files": [
+        {
+          "id": 4,
+          "thumb_status": "ready",
+          "hasThumb": true
+        },
+        {
+          "id": 3,
+          "thumb_status": "",
+          "hasThumb": false
+        },
+        {
+          "id": 2,
+          "thumb_status": "failed",
+          "hasThumb": false
+        },
+        {
+          "id": 1,
+          "thumb_status": "ready",
+          "hasThumb": true
+        }
+      ]
+    }
+  ],
+  "passed": true,
+  "objectCleanup": [
+    {
+      "id": 4,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 3,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 2,
+      "statusAfterCleanup": 404
+    },
+    {
+      "id": 1,
+      "statusAfterCleanup": 404
+    }
+  ],
+  "configurationRestored": {
+    "accessMode": "public",
+    "quotaPerUserMB": 64,
+    "isolatedProviderDeleted": true
+  },
+  "menuRestored": {
+    "sql": "UPDATE sys_menu SET component=$1 WHERE id=$2 RETURNING id",
+    "rows": 1,
+    "id": 27,
+    "restored": true
+  },
+  "cleanupPassed": true,
+  "finishedAt": "2026-11-22T22:51:28.610Z"
+}
