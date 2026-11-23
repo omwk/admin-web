@@ -75,6 +75,16 @@ DELETE /api/v1/admin/api-clients/{id}/routes/{grant_id}
 - `quota_*` 为 0 表示不限
 - 同一客户端同一路由只有一条授权（重复提交按更新处理）
 
+### 1.4.1 网关信息（BE-IDN-032）
+
+```
+GET /api/v1/admin/gateway/info
+→ data: { public_base_url, allowed_origins }
+```
+
+用于客户端页展示调用示例：`{public_base_url}/open/v1/usage`。
+**只读**——域名由部署配置决定，界面不提供修改入口。
+
 ### 1.5 调用日志与统计（新增）
 
 ```
