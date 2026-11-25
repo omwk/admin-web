@@ -190,7 +190,8 @@ Query  [key=value 多行]    Body [JSON 编辑器]
 | 11  | 试调成功   | 返回 200 与响应体，提示「不计费」                  |
 | 12  | 试调失败   | 未授权路由显示 403/80104，不报前端错误             |
 | 13  | 权限       | 无 `gateway:*` 时菜单不可见，直访 403              |
-| 14  | 构建       | lint / typecheck / unit / build 全绿               |
+| 14  | 调用示例   | 客户端页示例 URL 与 gateway/info 返回一致          |
+| 15  | 构建       | lint / typecheck / unit / build 全绿               |
 
 ## 4. 不做
 
