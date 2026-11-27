@@ -41,6 +41,14 @@ export const componentRegistry: ComponentRecordType = {
     import('#/views/system/notification/broadcasts.vue'),
   'system/audit-log/index': () => import('#/views/system/audit-log/index.vue'),
   'system/login-log/index': () => import('#/views/system/login-log/index.vue'),
+  'open-platform/clients/index': () =>
+    import('#/views/open-platform/clients/index.vue'),
+  'open-platform/routes/index': () =>
+    import('#/views/open-platform/routes/index.vue'),
+  'open-platform/calls/index': () =>
+    import('#/views/open-platform/calls/index.vue'),
+  'open-platform/usage/index': () =>
+    import('#/views/open-platform/usage/index.vue'),
   'trade/order/index': placeholder,
   'crm/customer/index': placeholder,
   'crm/inquiry/index': placeholder,

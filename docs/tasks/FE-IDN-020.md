@@ -3,7 +3,7 @@
 - ID: FE-IDN-020
 - 类型: 新增
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 前端实现与验收已完成，第 4 项部分符合，客户端名称/IP 更新待 BE-IDN-034
 - 预计: 3 人日
 - 分支: `feat/fe-idn-020-gateway-console`
 - 依赖: BE-IDN-029（已合并）
@@ -17,19 +17,19 @@
 
 ```
 GET  /api/v1/admin/api-clients          → data: [ {id, app_id, name, owner_user_id, status, version, ip_whitelist} ]
-POST /api/v1/admin/api-clients          { name, owner_user_id, ip_whitelist, status }
-PUT  /api/v1/admin/api-clients/{id}     { name, ip_whitelist, status, version }
+POST /api/v1/admin/api-clients          { name, owner_user_id, ip_whitelist } → 创建状态固定为 active，传入 status 当前被忽略
+PUT  /api/v1/admin/api-clients/{id}     { status, version } → 当前只更新状态与版本
 ```
 
 字段校验：
 
-| 字段            | 规则                               |
-| --------------- | ---------------------------------- |
-| `name`          | 必填，≤100                         |
-| `owner_user_id` | 必填，必须本租户有效用户           |
-| `ip_whitelist`  | 可空；CIDR 或单 IP                 |
-| `status`        | `active` / `suspended`             |
-| `version`       | 更新时必传（乐观锁），取列表里的值 |
+| 字段            | 规则                                               |
+| --------------- | -------------------------------------------------- |
+| `name`          | 创建时必填，≤100；更新接口当前不处理               |
+| `owner_user_id` | 创建时必填，必须本租户有效用户                     |
+| `ip_whitelist`  | 创建时可空；CIDR 或单 IP；更新待 BE-IDN-034        |
+| `status`        | 创建默认 `active`；更新可用 `active` / `suspended` |
+| `version`       | 更新时必传（乐观锁），取列表里的值                 |
 
 ### 1.2 密钥
 
@@ -134,6 +134,7 @@ POST /api/v1/admin/api-clients/{id}/try
 列表：名称 / AppID / 状态 / 最近调用 / 操作（编辑、密钥、授权、试调）
 
 - 新建后自动生成 `app_id`，展示并提示「请记录」
+- 编辑抽屉目前只开放状态更新。名称与 IP 白名单更新待 BE-IDN-034，当前后端会静默忽略这两个更新字段。
 - 「密钥」抽屉：列表显示前缀 + 「查看」按钮（可随时取明文）+ 「生成新密钥」
   支持双密钥过渡（`overlap_seconds`）
 - 「授权」抽屉：勾选路由（只列 `visibility=public`），设置每日/每月配额与过期时间
@@ -207,13 +208,15 @@ Query  [key=value 多行]    Body [JSON 编辑器]
 
 ```
 实现 docs/tasks/FE-IDN-020.md。仓库 D:\code\admin-web。
-分支：feat/fe-idn-020-gateway-console（从最新 main 239ff51 开）
+分支：feat/fe-idn-020-gateway-console（从最新 main 0887e4f 开）
 
-后端已合并（d2531bb）：
+后端已合并（cf589bf，含 BE-IDN-033）：
   clients / routes 返回数组（无分页）
   calls / summary 返回分页与聚合
   try 返回 status_code/latency_ms/response/truncated/billing
-  密钥明文仅创建时返回一次
+  api-clients/{id}/routes 支持读取、upsert 和撤销
+  reveal 可随时查看密钥，需二次确认并在 60 秒后隐藏
+  客户端创建状态固定为 active，更新接口当前只支持状态
 
 必读：本卡、docs/design/api-gateway-console.md、
 apps/admin/src/views/system/（列表页与抽屉写法）、
@@ -231,6 +234,18 @@ api/core/ 模式
 - 不做请求/响应体留存
 - 权限码沿用 gateway:*
 
-验收按卡片 §3 十四条逐条贴证据；第 3、8、11 条要截图。
-完成后停下报告，并按 AGENTS §12 清理测试数据。
+验收按卡片 §3 十五条逐条贴证据；第 3、8、11、14 条要截图。
+完成后停下报告，并按 AGENTS §7 清理测试数据。
 ```
+
+## 早期实施记录（2026-11-26）
+
+当时四个页面的 API、校验和权限映射已完成，但授权读取接口、真实登录验收和四张截图仍待处理。该阶段没有创建验收数据。
+
+## 实施与验收记录（2026-11-28）
+
+授权回显、撤销和试调已按 BE-IDN-033 实现。真实环境完成 15 项逐项验收，第 3、8、11、14 项截图及完整结果见[验收记录](../evidence/fe-idn-020/acceptance.md)。第 4 项记录为部分符合，因后端重复吊销仍返回 200。
+
+当前后端只支持更新客户端状态与版本，名称和 IP 白名单更新待 BE-IDN-034。前端编辑抽屉将这两个字段设为只读，避免后端静默忽略后错误提示保存成功。创建接口也固定创建为 active，因此新建表单不显示无效的状态选项。
+
+清理命令已执行并复核为零：`go run ./scripts/cleanup/fe-idn-020 delete`。临时清理脚本已移除。

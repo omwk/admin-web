@@ -139,4 +139,42 @@ describe('backend menu permission boundaries', () => {
       authorizedMenus([], [...codes, 'system:tenant:manage'], platform),
     ).toEqual([]);
   });
+
+  it('resolves the four dynamically authorized gateway pages', () => {
+    const pages = [
+      [
+        '/open-platform/clients',
+        'open-platform/clients/index',
+        'gateway:client:list',
+      ],
+      [
+        '/open-platform/routes',
+        'open-platform/routes/index',
+        'gateway:route:list',
+      ],
+      [
+        '/open-platform/calls',
+        'open-platform/calls/index',
+        'gateway:call:read',
+      ],
+      [
+        '/open-platform/usage',
+        'open-platform/usage/index',
+        'gateway:call:read',
+      ],
+    ] as const;
+    for (const [path, component, permission] of pages) {
+      expect(resolveMenuComponent(component)).toBe(component);
+      const menu: IdentityMenu = {
+        ...system,
+        type: 'menu',
+        path,
+        component,
+        permission_code: permission,
+        children: [],
+      };
+      expect(authorizedMenus([menu], [permission])).toHaveLength(1);
+      expect(authorizedMenus([menu], [])).toEqual([]);
+    }
+  });
 });
