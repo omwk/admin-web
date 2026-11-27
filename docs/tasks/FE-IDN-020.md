@@ -3,7 +3,7 @@
 - ID: FE-IDN-020
 - 类型: 新增
 - 仓库: 前端
-- 状态: 待实现
+- 状态: 前端实现与验收已完成，第 4 项部分符合，客户端名称/IP 更新待 BE-IDN-034
 - 预计: 3 人日
 - 分支: `feat/fe-idn-020-gateway-console`
 - 依赖: BE-IDN-029（已合并）
@@ -17,19 +17,19 @@
 
 ```
 GET  /api/v1/admin/api-clients          → data: [ {id, app_id, name, owner_user_id, status, version, ip_whitelist} ]
-POST /api/v1/admin/api-clients          { name, owner_user_id, ip_whitelist, status }
-PUT  /api/v1/admin/api-clients/{id}     { name, ip_whitelist, status, version }
+POST /api/v1/admin/api-clients          { name, owner_user_id, ip_whitelist } → 创建状态固定为 active，传入 status 当前被忽略
+PUT  /api/v1/admin/api-clients/{id}     { status, version } → 当前只更新状态与版本
 ```
 
 字段校验：
 
-| 字段            | 规则                               |
-| --------------- | ---------------------------------- |
-| `name`          | 必填，≤100                         |
-| `owner_user_id` | 必填，必须本租户有效用户           |
-| `ip_whitelist`  | 可空；CIDR 或单 IP                 |
-| `status`        | `active` / `suspended`             |
-| `version`       | 更新时必传（乐观锁），取列表里的值 |
+| 字段            | 规则                                               |
+| --------------- | -------------------------------------------------- |
+| `name`          | 创建时必填，≤100；更新接口当前不处理               |
+| `owner_user_id` | 创建时必填，必须本租户有效用户                     |
+| `ip_whitelist`  | 创建时可空；CIDR 或单 IP；更新待 BE-IDN-034        |
+| `status`        | 创建默认 `active`；更新可用 `active` / `suspended` |
+| `version`       | 更新时必传（乐观锁），取列表里的值                 |
 
 ### 1.2 密钥
 
@@ -68,9 +68,13 @@ PUT  /api/v1/admin/api-routes/{id} 同上 + version
 ### 1.4 授权与配额
 
 ```
+GET    /api/v1/admin/api-clients/{id}/routes   → 已有授权（含 route_code/name/method/path、配额、状态）
 POST   /api/v1/admin/api-clients/{id}/routes   { route_id, status, expires_at, quota_daily, quota_monthly }
-DELETE /api/v1/admin/api-clients/{id}/routes/{grant_id}
+DELETE /api/v1/admin/api-clients/{id}/routes/{grant_id}   → 204 撤销
+GET    /api/v1/admin/api-clients/{id}          → 单个客户端
 ```
+
+授权抽屉打开时必须先拉 `GET .../routes` 回显已勾选项与配额（BE-IDN-033）。
 
 - `quota_*` 为 0 表示不限
 - 同一客户端同一路由只有一条授权（重复提交按更新处理）
@@ -130,6 +134,7 @@ POST /api/v1/admin/api-clients/{id}/try
 列表：名称 / AppID / 状态 / 最近调用 / 操作（编辑、密钥、授权、试调）
 
 - 新建后自动生成 `app_id`，展示并提示「请记录」
+- 编辑抽屉目前只开放状态更新。名称与 IP 白名单更新待 BE-IDN-034，当前后端会静默忽略这两个更新字段。
 - 「密钥」抽屉：列表显示前缀 + 「查看」按钮（可随时取明文）+ 「生成新密钥」
   支持双密钥过渡（`overlap_seconds`）
 - 「授权」抽屉：勾选路由（只列 `visibility=public`），设置每日/每月配额与过期时间
@@ -175,22 +180,23 @@ Query  [key=value 多行]    Body [JSON 编辑器]
 
 ## 3. 验收
 
-| #   | 项         | 断言                                               |
-| --- | ---------- | -------------------------------------------------- |
-| 1   | 客户端列表 | 显示 app_id/状态/最近调用；空态正确                |
-| 2   | 新建客户端 | 成功后 app_id 可见                                 |
-| 3   | 密钥       | 创建后显示完整 secret 并可复制；关闭后列表只剩前缀 |
-| 4   | 密钥吊销   | 吊销后状态变化，再次吊销/使用返回失败              |
-| 5   | 路由       | 新建 metered 路由（价格/单位）成功，列表回显       |
-| 6   | 路由校验   | 非 `/open/` 开头 400；metered 缺价格 400           |
-| 7   | 授权       | 勾选路由 + 配额保存成功，重开回显                  |
-| 8   | 调用日志   | 筛选与分页正确；trace 精确查询命中                 |
-| 9   | 时间范围   | 默认 24h；选 31 天提示超限                         |
-| 10  | 统计       | 三种分组切换正确，成功率与 P95 有值                |
-| 11  | 试调成功   | 返回 200 与响应体，提示「不计费」                  |
-| 12  | 试调失败   | 未授权路由显示 403/80104，不报前端错误             |
-| 13  | 权限       | 无 `gateway:*` 时菜单不可见，直访 403              |
-| 14  | 构建       | lint / typecheck / unit / build 全绿               |
+| #   | 项         | 断言                                                |
+| --- | ---------- | --------------------------------------------------- |
+| 1   | 客户端列表 | 显示 app_id/状态/最近调用；空态正确                 |
+| 2   | 新建客户端 | 成功后 app_id 可见                                  |
+| 3   | 密钥       | 创建后显示完整 secret 并可复制；关闭后列表只剩前缀  |
+| 4   | 密钥吊销   | 吊销后状态变化，再次吊销/使用返回失败               |
+| 5   | 路由       | 新建 metered 路由（价格/单位）成功，列表回显        |
+| 6   | 路由校验   | 非 `/open/` 开头 400；metered 缺价格 400            |
+| 7   | 授权       | 勾选路由 + 配额保存成功，重开回显；可撤销并即时消失 |
+| 8   | 调用日志   | 筛选与分页正确；trace 精确查询命中                  |
+| 9   | 时间范围   | 默认 24h；选 31 天提示超限                          |
+| 10  | 统计       | 三种分组切换正确，成功率与 P95 有值                 |
+| 11  | 试调成功   | 返回 200 与响应体，提示「不计费」                   |
+| 12  | 试调失败   | 未授权路由显示 403/80104，不报前端错误              |
+| 13  | 权限       | 无 `gateway:*` 时菜单不可见，直访 403               |
+| 14  | 调用示例   | 客户端页示例 URL 与 gateway/info 返回一致           |
+| 15  | 构建       | lint / typecheck / unit / build 全绿                |
 
 ## 4. 不做
 
@@ -202,13 +208,15 @@ Query  [key=value 多行]    Body [JSON 编辑器]
 
 ```
 实现 docs/tasks/FE-IDN-020.md。仓库 D:\code\admin-web。
-分支：feat/fe-idn-020-gateway-console（从最新 main 239ff51 开）
+分支：feat/fe-idn-020-gateway-console（从最新 main 0887e4f 开）
 
-后端已合并（d2531bb）：
+后端已合并（cf589bf，含 BE-IDN-033）：
   clients / routes 返回数组（无分页）
   calls / summary 返回分页与聚合
   try 返回 status_code/latency_ms/response/truncated/billing
-  密钥明文仅创建时返回一次
+  api-clients/{id}/routes 支持读取、upsert 和撤销
+  reveal 可随时查看密钥，需二次确认并在 60 秒后隐藏
+  客户端创建状态固定为 active，更新接口当前只支持状态
 
 必读：本卡、docs/design/api-gateway-console.md、
 apps/admin/src/views/system/（列表页与抽屉写法）、
@@ -226,6 +234,18 @@ api/core/ 模式
 - 不做请求/响应体留存
 - 权限码沿用 gateway:*
 
-验收按卡片 §3 十四条逐条贴证据；第 3、8、11 条要截图。
-完成后停下报告，并按 AGENTS §12 清理测试数据。
+验收按卡片 §3 十五条逐条贴证据；第 3、8、11、14 条要截图。
+完成后停下报告，并按 AGENTS §7 清理测试数据。
 ```
+
+## 早期实施记录（2026-11-26）
+
+当时四个页面的 API、校验和权限映射已完成，但授权读取接口、真实登录验收和四张截图仍待处理。该阶段没有创建验收数据。
+
+## 实施与验收记录（2026-11-28）
+
+授权回显、撤销和试调已按 BE-IDN-033 实现。真实环境完成 15 项逐项验收，第 3、8、11、14 项截图及完整结果见[验收记录](../evidence/fe-idn-020/acceptance.md)。第 4 项记录为部分符合，因后端重复吊销仍返回 200。
+
+当前后端只支持更新客户端状态与版本，名称和 IP 白名单更新待 BE-IDN-034。前端编辑抽屉将这两个字段设为只读，避免后端静默忽略后错误提示保存成功。创建接口也固定创建为 active，因此新建表单不显示无效的状态选项。
+
+清理命令已执行并复核为零：`go run ./scripts/cleanup/fe-idn-020 delete`。临时清理脚本已移除。

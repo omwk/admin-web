@@ -1,0 +1,1484 @@
+{
+  "task": "FE-IDN-020",
+  "startedAt": "2026-11-27T19:48:31.933Z",
+  "origin": "http://127.0.0.1:5666",
+  "backend": "http://127.0.0.1:18080",
+  "checks": [
+    {
+      "item": 13,
+      "result": "pass",
+      "evidence": "Administrator session loaded. Permission-specific menu tests are covered by router unit tests."
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "routeId": 2,
+      "billingMode": "per_call",
+      "priceCents": 5,
+      "units": 2,
+      "evidence": "Reused the acceptance route left by the preceding interrupted run."
+    },
+    {
+      "item": 5,
+      "result": "pass",
+      "staleVersionConflictMessage": true
+    },
+    {
+      "item": 6,
+      "result": "pass",
+      "invalidOpenPath": 400,
+      "missingPerCallPrice": 400
+    },
+    {
+      "item": 2,
+      "result": "pass",
+      "appIdVisible": true,
+      "initialSecretVisibleAndCopyable": true
+    },
+    {
+      "item": 1,
+      "result": "pass",
+      "clientListed": true,
+      "appIdVisible": true,
+      "statusVisible": true
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "revealableListed": true,
+      "secondConfirmationShown": true,
+      "secretCopied": true,
+      "screenshotRedactsPlaintext": true
+    },
+    {
+      "item": 3,
+      "result": "pass",
+      "autoHiddenAfter60Seconds": true,
+      "listKeepsPrefixOnly": true
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "grantSaved": true,
+      "dailyQuota": 100,
+      "monthlyQuota": 1000
+    },
+    {
+      "item": 7,
+      "result": "pass",
+      "reopenedQuotaEcho": true,
+      "revoke204": true,
+      "revokeActionRemoved": true
+    },
+    {
+      "item": 12,
+      "result": "pass",
+      "statusCode": 403,
+      "errorCode": 80104,
+      "renderedAsBusinessResult": true
+    },
+    {
+      "item": 11,
+      "result": "pass",
+      "routeId": 1,
+      "statusCode": 200,
+      "billed": false,
+      "responseVisible": true
+    },
+    {
+      "item": 8,
+      "result": "pass",
+      "clientRouteStatusTraceFilters": true,
+      "exactTraceId": "01M8F8X9GKGZHB588T8D466CAJ",
+      "page": 1,
+      "pageSize": 20,
+      "bodiesOmitted": true
+    },
+    {
+      "item": 9,
+      "result": "pass",
+      "defaultRangeHours": 24,
+      "thirtyOneDayRangeRejected": true
+    },
+    {
+      "item": 10,
+      "result": "pass",
+      "groups": ["client", "route", "day"],
+      "nonEmpty": true
+    },
+    {
+      "item": 14,
+      "result": "pass",
+      "url": "http://127.0.0.1:5555/open/v1/usage",
+      "source": "gateway/info.public_base_url"
+    },
+    {
+      "item": 4,
+      "result": "partial",
+      "statusAfterRevoke": "revoked",
+      "repeatActionDisabledInUi": true,
+      "repeatedDeleteStatus": 200,
+      "revealAfterRevoke": 404,
+      "note": "The UI disables a repeated revoke. The backend returns 200 for a repeated DELETE, while reveal after revoke returns 404."
+    }
+  ],
+  "requests": [
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/api-routes/2",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/api-routes/2",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/avatars/1",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/admin/api-routes/2",
+      "status": 409
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/admin/api-routes",
+      "status": 400
+    },
+    {
+      "method": "POST",
+      "path": "/admin/api-routes",
+      "status": 400
+    },
+    {
+      "method": "GET",
+      "path": "/admin/users?page=1&page_size=100",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/avatars/1",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/api-clients",
+      "status": 201
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-clients/7/secrets",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/secrets",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/secrets/7/reveal",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/avatars/1",
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/admin/api-clients/7/routes/5",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/api-clients/7/routes/6",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/avatars/1",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/api-clients/7/try",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/avatars/1",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/avatars/1",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/api-clients/7/try",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-calls?client_id=7&from=2026-11-26T19%3A49%3A54.982Z&page=1&page_size=20&route_id=1&status=success&to=2026-11-27T19%3A49%3A54.982Z",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/avatars/1",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-calls?from=2026-10-27T19%3A49%3A57.746Z&to=2026-11-27T19%3A49%3A54.982Z",
+      "status": 400
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls/summary",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-calls/summary?from=2026-11-26T19%3A49%3A54.982Z&to=2026-11-27T19%3A49%3A54.982Z&group_by=client",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-calls/summary?from=2026-11-26T19%3A49%3A54.982Z&to=2026-11-27T19%3A49%3A54.982Z&group_by=route",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls/summary",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-calls/summary?from=2026-11-26T19%3A49%3A54.982Z&to=2026-11-27T19%3A49%3A54.982Z&group_by=day",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls/summary",
+      "status": 200
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/refresh",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/menus",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/notifications/unread-count",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-clients/7/secrets",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/secrets",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/avatars/1",
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/admin/api-clients/7/secrets/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-clients/7/secrets",
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/api-clients/7/secrets/7",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients/7/secrets",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-clients/7/secrets/7/reveal",
+      "status": 404
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-clients",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/gateway/info",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-clients/7/routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/users",
+      "status": 200
+    },
+    {
+      "method": "DELETE",
+      "path": "/admin/api-clients/7/routes/7",
+      "status": 204
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-clients/7/secrets",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/admin/api-routes",
+      "status": 200
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/api-calls",
+      "status": 200
+    },
+    {
+      "method": "PUT",
+      "path": "/admin/api-routes/2",
+      "status": 200
+    }
+  ],
+  "browserErrors": [],
+  "gatewayMenuItems": [
+    {
+      "path": "/open-platform"
+    },
+    {
+      "path": "/open-platform/clients",
+      "component": "open-platform/clients/index",
+      "permission_code": "gateway:client:list"
+    },
+    {
+      "path": "/open-platform/routes",
+      "component": "open-platform/routes/index",
+      "permission_code": "gateway:route:list"
+    },
+    {
+      "path": "/open-platform/calls",
+      "component": "open-platform/calls/index",
+      "permission_code": "gateway:call:read"
+    },
+    {
+      "path": "/open-platform/usage",
+      "component": "open-platform/usage/index",
+      "permission_code": "gateway:call:read"
+    }
+  ],
+  "routeCreated": true,
+  "routeId": 2,
+  "routeSnapshot": {
+    "billing_mode": "per_call",
+    "code": "order.status",
+    "currency": "CNY",
+    "method": "GET",
+    "path": "/open/v1/orders/:id/status",
+    "price_cents": 5,
+    "route_group": "orders",
+    "status": "enabled",
+    "units_per_call": 2,
+    "version": 10,
+    "visibility": "public"
+  },
+  "clientId": 7,
+  "cleanupApi": "Test grants and active keys were revoked before database cleanup.",
+  "backendRevision": {
+    "branch": "main",
+    "head": "370f989",
+    "includes": "cf589bf"
+  },
+  "contractGaps": [
+    "Client creation always defaults to active. The current API ignores a posted status.",
+    "Client update currently changes only status and version. The current API ignores name and ip_whitelist."
+  ],
+  "cleanup": {
+    "database": "commercehub_test",
+    "deleted": {
+      "api_call": 4,
+      "api_call_log": 4,
+      "api_client": 4,
+      "api_client_secret": 4,
+      "api_route": 1,
+      "audit_log": 37
+    },
+    "remainingClients": 0,
+    "remainingRoutes": 0,
+    "verifiedBy": "go run ./scripts/cleanup/fe-idn-020 dry-run"
+  },
+  "finishedAt": "2026-11-27T19:50:01.384Z"
+}
