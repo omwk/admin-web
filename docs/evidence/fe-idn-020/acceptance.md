@@ -56,3 +56,21 @@ BE-IDN-034 已消除名称与 IP 白名单更新差异，编辑实现及本轮�
 自动化定向验收：`gateway.test.ts`、`gateway-error.test.ts`、`client-form-drawer.test.ts` 共 17 项通过，覆盖更新 payload 与 version、空数组清理、清空确认/取消、冲突提示与刷新事件、名称/IP 可编辑。真实 API 下改名及 CIDR 规范化尚未在本轮浏览器环境重复操作。
 
 收尾代码验证：`pnpm lint` 通过，格式检查覆盖 1,736 个文件；`pnpm check:type` 38 个任务通过；`pnpm test:unit` 174 个文件、1,256 项通过；`pnpm run build:antd` 11 个任务通过；`git diff --check` 通过。Lint 输出六条既有的图标名警告，Vitest 输出既有 sortable mock hoisting 警告。
+
+## FE-IDN-034 客户端元数据真实环境验收（2026-11-28）
+
+环境：`http://127.0.0.1:18080`，租户 `default`；`apps/admin` 开发服务器 `http://127.0.0.1:5667`。通过客户端页真实 UI 操作，并从浏览器 Network 事件记录请求 payload、响应状态与响应体。验收客户端 `id=11`，AppID `01M8GY2W8791WDSEXHWHF66G9R`。首次密钥只在创建成功弹窗短暂显示，未写入本记录。
+
+| 步骤 | 网络请求与结果 | 页面断言 |
+| --- | --- | --- |
+| 1. 新建 | `POST /api/v1/admin/api-clients`，payload `{"ip_whitelist":["10.0.0.0/8"],"name":"环境验收","owner_user_id":1}`，HTTP `201`。响应新建客户端 `id=11`、上述 AppID。 | 创建弹窗显示 AppID，列表显示「环境验收」。 |
+| 2. 改名 | `PUT /api/v1/admin/api-clients/11`，payload `{"ip_whitelist":["10.0.0.0/8"],"name":"环境验收-改","status":"active","version":1}`，HTTP `200`。 | 刷新后的列表显示「环境验收-改」，AppID 仍为 `01M8GY2W8791WDSEXHWHF66G9R`；重新打开编辑抽屉，名称回显为「环境验收-改」。 |
+| 3. 更新白名单 | `PUT /api/v1/admin/api-clients/11`，payload `{"ip_whitelist":["192.168.0.0/16","2001:db8::/32"],"name":"环境验收-改","status":"active","version":2}`，HTTP `200`。响应 `version=3`，`ip_whitelist=["192.168.0.0/16","2001:db8::/32"]`。 | 重新打开编辑抽屉，IPv4 与规范化 IPv6 均按上述值回显。 |
+| 4. 清空白名单 | 保存前显示「清空 IP 白名单？」确认及「清空后将允许所有 IP 访问该客户端。」提示。确认后 `PUT /api/v1/admin/api-clients/11`，payload `{"ip_whitelist":[],"name":"环境验收-改","status":"active","version":3}`，HTTP `200`。响应 `version=4`、`ip_whitelist=[]`。 | 列表刷新并保留客户端项；编辑抽屉白名单为空。 |
+| 5. 版本冲突 | 第二个编辑入口先提交 `version=5`、名称「环境验收-并发-新」，HTTP `200`。旧入口再提交 `{"ip_whitelist":[],"name":"环境验收-并发","status":"active","version":5}`，HTTP `409`，业务码 `10409`，响应消息「客户端已被修改，请刷新」。 | 前端映射提示为「已被他人修改，请刷新」；列表自动刷新为第二入口的新名，旧编辑抽屉保持打开并显示冲突提示。 |
+
+冲突提示首次真实复测暴露出父页面刷新列表时替换了抽屉当前客户端对象，导致表单重置并清除提示。已修正为仅刷新列表、保留当前编辑上下文，并再次通过上述双入口验收。
+
+已清理：在 `commercehub_test` 对 `tenant_id=1`、`client_id=11` 执行定向 PostgreSQL 维护事务，删除 `api_client_secret` 1 行、`api_client` 1 行以及本次客户端的 `audit_log` 6 行 → 复查客户端、密钥、授权、调用、配额和审计记录均为 0；没有调用记录、授权或上传文件需要清理。
+
+本次改动验证：`pnpm lint` 通过（保留六条既有图标名警告）；`pnpm check:type` 38/38 通过；客户端表单与网关错误定向单测 7/7 通过；`pnpm run build:antd` 11/11 task 通过；`git diff --check` 通过。完整全量测试已由 PR CI 在本次提交后复核。
