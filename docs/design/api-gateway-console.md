@@ -144,7 +144,7 @@ API 网关
 | `GET /api-clients` | `data` 是客户端数组。列表项为扁平字段，含 `id`、`app_id`、`name`、`status`、`version`、`ip_whitelist`。 |
 | `POST /api-clients` | 请求包含 `name`、`owner_user_id` 与 `ip_whitelist`，`data` 是 `{ client, key }`。当前后端创建状态固定为 `active`，请求中的 `status` 不生效。创建成功后在弹窗内展示 `client.app_id` 和 `key.secret`。 |
 | `GET /api-clients/{id}` | 单客户端详情。 |
-| `PUT /api-clients/{id}` | BE-IDN-033 当前实现读取 `status` 与 `version` 并更新状态。名称和 IP 白名单字段目前不会更新，完整编辑字段需以后端实际支持为准。 |
+| `PUT /api-clients/{id}` | BE-IDN-034 支持 `{ name?, ip_whitelist?, status?, version }`。`version` 必填，缺失字段不变，白名单传 `[]` 表示清空；拒绝 `0.0.0.0/0` 与 `::/0`，成功响应包含规范化白名单和递增版本，冲突返回 409/10409。 |
 | `GET /api-clients/{id}/routes` | 客户端授权数组，含 `grant_id` 对应的 `id`、`route_id`、路由信息、状态、配额、有效期和版本。已删除路由的 `route_code` 为 `#{route_id}`。 |
 | `POST /api-clients/{id}/routes` | 以 `{ route_id, status, expires_at, quota_daily, quota_monthly }` 创建或更新授权。同一路由重复提交为幂等 upsert。 |
 | `DELETE /api-clients/{id}/routes/{grant_id}` | 撤销授权，成功响应为 `204`。 |
@@ -164,5 +164,5 @@ API 网关
 - 试调路由选项来自该客户端已授权项，仅保留 `status=active` 且有效期为空或尚未过期的路由，并提交授权项的 `route_id`。试调失败的业务响应仍展示 `status_code` 与后端提供的错误字段，不把 403 当作页面级网络异常。
 - 每个页面和抽屉都覆盖加载、空、错误、正常状态。错误展示后端 `message` 并提供重试入口。路由更新遇到版本冲突时提示「已被他人修改，请刷新」。
 - 密钥明文仅留在当前弹窗组件内存，关闭或显示满 60 秒即清除。Reveal 需二次确认，失败响应包含 429 时按后端错误展示。不得把密钥写入 URL、浏览器存储或日志。
-- 客户端编辑当前只更新状态与版本，名称和 IP 白名单只读回显。BE-IDN-034 支持更新元数据后再开放编辑；新建客户端固定为 active。
+- 客户端编辑允许修改名称、IP 白名单与状态，提交客户端列表项的 version。遇到 409/10409 时显示「已被他人修改，请刷新」并刷新列表。清空原有白名单前需确认「清空后将允许所有 IP」。新建客户端固定为 active。
 - 试调请求体和响应体仅供当前页面查看，不保存到后端以外的前端持久存储，也不进入 URL 或日志。

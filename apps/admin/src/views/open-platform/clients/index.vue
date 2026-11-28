@@ -186,6 +186,12 @@ function openEdit(client?: GatewayClient) {
   formOpen.value = true;
 }
 
+async function refreshAfterClientConflict(clientId: number) {
+  await refresh();
+  const currentClient = rows.value.find((client) => client.id === clientId);
+  if (currentClient) editing.value = currentClient;
+}
+
 function openSecrets(client: GatewayClient) {
   selected.value = client;
   secretsOpen.value = true;
@@ -414,6 +420,7 @@ onBeforeUnmount(() => {
       "
       @saved="refresh"
       @created="showCreated"
+      @refresh="refreshAfterClientConflict"
     />
     <SecretsDrawer
       :open="secretsOpen"

@@ -27,11 +27,13 @@
 | 14 | 调用示例 | 通过。示例 URL 由 `gateway/info.public_base_url` 拼接，与接口返回一致。截图已保存。[14-example.png](14-example.png) |
 | 15 | 构建与检查 | 通过。lint、类型检查、全量单测、定向单测和构建结果见下方检查记录。 |
 
-## 已知后端契约差异
+## 原始验收时记录的后端契约差异
 
 - 当前 `POST /admin/api-clients` 创建客户端时固定为 active，传入的 `status` 不生效。新建表单不再展示无效的状态选择。
 - 当前 `PUT /admin/api-clients/{id}` 只更新状态与版本，名称和 IP 白名单字段被静默忽略。编辑表单保留名称和白名单只读回显，只允许修改状态。后端任务 BE-IDN-034 仍待实现，名称与 IP 白名单编辑需其支持后再启用。
 - 密钥吊销后界面阻止重复操作，后端重复 DELETE 仍返回 200；reveal 返回 404。第 4 项据此记录为部分符合。
+
+BE-IDN-034 已消除名称与 IP 白名单更新差异，编辑实现及本轮自动化证据见下方「客户端编辑收尾」。
 
 ## 检查记录
 
@@ -46,3 +48,11 @@
 ## 数据清理
 
 已清理：`go run ./scripts/cleanup/fe-idn-020 delete` → `commercehub_test` 删除 4 个验收客户端、1 条验收路由、4 条调用、4 条密钥和 37 条审计记录。前置预览确认目标路由没有外部授权或调用引用。清理后再次 dry-run，客户端、路由及关联数据均为 0。临时清理脚本已从后端工作区移除。
+
+## 客户端编辑收尾（BE-IDN-034，2026-11-28）
+
+后端 `1b1602a` 支持按客户端 version 更新名称、白名单和状态。客户端编辑抽屉已启用名称与 IP/CIDR 输入，清空原有白名单前显示「清空后将允许所有 IP」确认，确认后提交 `ip_whitelist: []`。版本冲突（HTTP 409 或业务码 10409）提示「已被他人修改，请刷新」并刷新客户端列表。成功保存后同样刷新列表，以回显后端规范化白名单。
+
+自动化定向验收：`gateway.test.ts`、`gateway-error.test.ts`、`client-form-drawer.test.ts` 共 17 项通过，覆盖更新 payload 与 version、空数组清理、清空确认/取消、冲突提示与刷新事件、名称/IP 可编辑。真实 API 下改名及 CIDR 规范化尚未在本轮浏览器环境重复操作。
+
+收尾代码验证：`pnpm lint` 通过，格式检查覆盖 1,736 个文件；`pnpm check:type` 38 个任务通过；`pnpm test:unit` 174 个文件、1,256 项通过；`pnpm run build:antd` 11 个任务通过；`git diff --check` 通过。Lint 输出六条既有的图标名警告，Vitest 输出既有 sortable mock hoisting 警告。

@@ -3,7 +3,7 @@
 - ID: FE-IDN-020
 - 类型: 新增
 - 仓库: 前端
-- 状态: 前端实现与验收已完成，第 4 项部分符合，客户端名称/IP 更新待 BE-IDN-034
+- 状态: 前端实现与验收已完成，第 4 项部分符合；客户端元数据编辑已按 BE-IDN-034 补齐
 - 预计: 3 人日
 - 分支: `feat/fe-idn-020-gateway-console`
 - 依赖: BE-IDN-029（已合并）
@@ -18,18 +18,19 @@
 ```
 GET  /api/v1/admin/api-clients          → data: [ {id, app_id, name, owner_user_id, status, version, ip_whitelist} ]
 POST /api/v1/admin/api-clients          { name, owner_user_id, ip_whitelist } → 创建状态固定为 active，传入 status 当前被忽略
-PUT  /api/v1/admin/api-clients/{id}     { status, version } → 当前只更新状态与版本
+PUT  /api/v1/admin/api-clients/{id}     { name?, ip_whitelist?, status?, version }
+                                         → version 必填；缺失字段不变；ip_whitelist: [] 清空
 ```
 
 字段校验：
 
-| 字段            | 规则                                               |
-| --------------- | -------------------------------------------------- |
-| `name`          | 创建时必填，≤100；更新接口当前不处理               |
-| `owner_user_id` | 创建时必填，必须本租户有效用户                     |
-| `ip_whitelist`  | 创建时可空；CIDR 或单 IP；更新待 BE-IDN-034        |
-| `status`        | 创建默认 `active`；更新可用 `active` / `suspended` |
-| `version`       | 更新时必传（乐观锁），取列表里的值                 |
+| 字段 | 规则 |
+| --- | --- |
+| `name` | 创建时必填，≤100；更新可选，trim 后非空且 ≤200 |
+| `owner_user_id` | 创建时必填，必须本租户有效用户 |
+| `ip_whitelist` | 创建/更新可空；IP 或 CIDR；`0.0.0.0/0`、`::/0` 拒绝；`[]` 清空 |
+| `status` | 创建默认 `active`；更新可选 `active` / `suspended` |
+| `version` | 更新时必传（乐观锁），取列表里的值；冲突返回 409/10409 |
 
 ### 1.2 密钥
 
@@ -134,7 +135,7 @@ POST /api/v1/admin/api-clients/{id}/try
 列表：名称 / AppID / 状态 / 最近调用 / 操作（编辑、密钥、授权、试调）
 
 - 新建后自动生成 `app_id`，展示并提示「请记录」
-- 编辑抽屉目前只开放状态更新。名称与 IP 白名单更新待 BE-IDN-034，当前后端会静默忽略这两个更新字段。
+- 编辑抽屉支持名称、IP 白名单和状态更新。保存带列表行的 version，409/10409 提示冲突并刷新列表；清空非空白名单前需确认「清空后将允许所有 IP」。
 - 「密钥」抽屉：列表显示前缀 + 「查看」按钮（可随时取明文）+ 「生成新密钥」
   支持双密钥过渡（`overlap_seconds`）
 - 「授权」抽屉：勾选路由（只列 `visibility=public`），设置每日/每月配额与过期时间
@@ -246,6 +247,12 @@ api/core/ 模式
 
 授权回显、撤销和试调已按 BE-IDN-033 实现。真实环境完成 15 项逐项验收，第 3、8、11、14 项截图及完整结果见[验收记录](../evidence/fe-idn-020/acceptance.md)。第 4 项记录为部分符合，因后端重复吊销仍返回 200。
 
-当前后端只支持更新客户端状态与版本，名称和 IP 白名单更新待 BE-IDN-034。前端编辑抽屉将这两个字段设为只读，避免后端静默忽略后错误提示保存成功。创建接口也固定创建为 active，因此新建表单不显示无效的状态选项。
+此前端实现阶段后端只支持更新客户端状态与版本，因此名称和 IP 白名单当时只读。创建接口仍固定创建为 active，因此新建表单不显示无效的状态选项。
 
 清理命令已执行并复核为零：`go run ./scripts/cleanup/fe-idn-020 delete`。临时清理脚本已移除。
+
+## 客户端元数据编辑收尾（2026-11-28）
+
+后端 BE-IDN-034 `1b1602a` 已支持按 version 乐观锁更新 name、ip_whitelist、status。编辑抽屉现开放名称和白名单输入，提示 IP/CIDR 格式；将非空白名单清空时先确认清空后会允许所有 IP。提交包含列表行 version；HTTP 409 或业务码 10409 显示「已被他人修改，请刷新」、重新加载客户端列表并保留抽屉以便查看提示。成功保存复用列表刷新事件，后端规范化后的白名单会在列表重载后回显。
+
+该收尾的 API、错误映射及抽屉定向测试共 17 项通过。完整 lint、typecheck、unit 与 build 结果见本轮最终检查。

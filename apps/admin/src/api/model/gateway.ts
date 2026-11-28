@@ -55,7 +55,9 @@ export interface GatewayClientInput {
 }
 
 export interface GatewayClientUpdate {
-  status: GatewayStatus;
+  ip_whitelist?: string[];
+  name?: string;
+  status?: GatewayStatus;
   version: number;
 }
 
