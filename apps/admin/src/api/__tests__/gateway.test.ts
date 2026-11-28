@@ -65,11 +65,21 @@ describe('gateway requests', () => {
     });
   });
 
-  it('updates only the client fields supported by the current backend', async () => {
-    await updateGatewayClientApi(9, { status: 'suspended', version: 3 });
+  it('updates client metadata and passes an empty whitelist through to the backend', async () => {
+    await updateGatewayClientApi(9, {
+      ip_whitelist: [],
+      name: '新名称',
+      status: 'suspended',
+      version: 3,
+    });
     expect(put).toHaveBeenCalledWith(
       '/admin/api-clients/9',
-      { status: 'suspended', version: 3 },
+      {
+        ip_whitelist: [],
+        name: '新名称',
+        status: 'suspended',
+        version: 3,
+      },
       { preserveBusinessMessage: true, silent: true },
     );
   });

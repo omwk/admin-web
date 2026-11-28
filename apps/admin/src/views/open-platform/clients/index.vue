@@ -121,8 +121,9 @@ async function loadRecentCalls(clients: GatewayClient[], current: number) {
   recentCalls.value = {};
   callError.value = '';
   if (!canReadCalls.value) return;
-  const from = dayjs().subtract(30, 'day').toISOString();
-  const to = dayjs().toISOString();
+  const end = dayjs();
+  const from = end.subtract(30, 'day').toISOString();
+  const to = end.toISOString();
   for (let start = 0; start < clients.length; start += 8) {
     const batch = clients.slice(start, start + 8);
     const results = await Promise.allSettled(
@@ -184,6 +185,10 @@ async function refresh() {
 function openEdit(client?: GatewayClient) {
   editing.value = client;
   formOpen.value = true;
+}
+
+function refreshAfterClientConflict() {
+  void refresh();
 }
 
 function openSecrets(client: GatewayClient) {
@@ -414,6 +419,7 @@ onBeforeUnmount(() => {
       "
       @saved="refresh"
       @created="showCreated"
+      @refresh="refreshAfterClientConflict"
     />
     <SecretsDrawer
       :open="secretsOpen"

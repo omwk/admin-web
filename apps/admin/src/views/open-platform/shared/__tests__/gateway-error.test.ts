@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { ApiError } from '#/api/errors';
 
 import {
+  gatewayClientSaveError,
   gatewayErrorMessage,
   gatewayRouteSaveError,
   isGatewayVersionConflict,
@@ -30,5 +31,11 @@ describe('gateway error messages', () => {
       ),
     ).toBe('路由 code 已存在');
     expect(isGatewayVersionConflict(new ApiError({ status: 400 }))).toBe(false);
+  });
+
+  it('recognizes the gateway client version-conflict code', () => {
+    const conflict = new ApiError({ code: 10_409 });
+    expect(isGatewayVersionConflict(conflict)).toBe(true);
+    expect(gatewayClientSaveError(conflict)).toBe('已被他人修改，请刷新');
   });
 });
